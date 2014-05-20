@@ -1,0 +1,208 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+html
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	height:			100%;
+	background-color:	#EEEEEE;
+	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+}
+
+body
+{
+	margin:			0;
+	border:			0;
+	padding:		4em 8em 4em 8em;
+	height:			100%;
+	background-image:	url('background.png');
+	background-position:	left top;
+	background-repeat:	no-repeat;
+	background-color:	#EEEEEE;
+}
+
+div.content
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	height:			100%;
+	background-color:	#EEEEEE;
+	color:			#111111;
+}
+
+form.header
+{
+	margin:				0;
+	border:				0;
+	padding:			0;
+	padding:			2em 2em 2em 2em;
+	background-color:		#EE7711;
+	border-top-left-radius:		1em;
+	-moz-border-radius-topleft:	1em;
+	border-top-right-radius:	1em;
+	-moz-border-radius-topright:	1em;
+}
+
+table.header
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			5em;
+}
+
+td.headertitle
+{
+	float:			left;
+}
+
+td.headeruser
+{
+	float:			right;
+}
+
+span.title
+{
+	color:			#EEEEEE;
+	font-size:		2.5em;
+	text-shadow:		1px 1px #AAAAAA;
+}
+
+table.user
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+}
+
+td.userlabels
+{
+	margin:			0;
+	border:			0;
+	padding:		0.125em 1em 0.125em 0;
+}
+
+td.uservalues
+{
+	margin:			0;
+	border:			0;
+	padding:		0.125em 0 0.125em 0;
+}
+
+span.userlabel
+{
+	color:			#EEEEEE;
+	font-size:		0.75em;
+}
+
+input.uservalue
+{
+	margin:			0;
+	border:			0;
+	padding:		0 0.5em 0 0.5em;
+	font-size:		0.75em;
+	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+}
+
+form.navigation
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 2em 0.5em 2em;
+	background-color:	#EEA05D;
+}
+
+div.navigation-end
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	clear:			both;
+}
+
+a.location-left
+{
+	margin:				0 1em 0 0;
+	border:				0;
+	padding:			0.125em 0.5em 0.125em 0.5em;
+	float:				left;
+	font-size:			1em;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.location-left:link
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-left:visited
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-left:hover
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-left:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.location-right
+{
+	margin:				0 0 0 1em;
+	border:				0;
+	padding:			0.125em 0.5em 0.125em 0.5em;
+	float:				right;
+	font-size:			1em;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.location-right:link
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-right:visited
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-right:hover
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.location-right:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}

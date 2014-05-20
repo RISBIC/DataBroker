@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">  
+    <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+</jboss-deployment-structure>

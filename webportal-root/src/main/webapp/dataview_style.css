@@ -1,0 +1,129 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.dataview
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataview
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataview-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.dataview-title
+{
+}
+
+table.dataview
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.dataview-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.dataview-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+td.dataview-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+span.dataview-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+span.dataview-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+a.dataview-button
+{
+	margin:				0 0.5em 0 0.5em;
+	border:				0;
+	padding:			0.5em 0.25em 0.5em 0.25em;
+	font-size:			1em;
+	font-weight:			normal;
+	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.dataview-button:link
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataview-button:visited
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataview-button:hover
+{
+	background-color:	#EEA05D;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataview-button:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+

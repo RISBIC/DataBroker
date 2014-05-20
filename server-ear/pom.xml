@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arjuna.databroker</groupId>
+        <artifactId>system</artifactId>
+        <version>1.0.0p1m1</version>
+    </parent>
+
+    <artifactId>server-ear</artifactId>
+
+    <packaging>ear</packaging>
+
+    <name>Server EAR</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>control-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-store</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>control-core</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-ws</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-ws</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>control-ws</artifactId>
+            <version>1.0.0p1m1</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <modules>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-common</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>metadata-common</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>control-common</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>metadata-store</artifactId>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>control-core</artifactId>
+                        </ejbModule>
+                        <webModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-ws</artifactId>
+                            <contextRoot>data</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>metadata-ws</artifactId>
+                            <contextRoot>metadata</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>control-ws</artifactId>
+                            <contextRoot>control</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>jbossas</id>
+    
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jboss.as.plugins</groupId>
+                        <artifactId>jboss-as-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                       </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>openshift</id>
+    
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <configuration>
+                            <outputDirectory>${deployments.dir}</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

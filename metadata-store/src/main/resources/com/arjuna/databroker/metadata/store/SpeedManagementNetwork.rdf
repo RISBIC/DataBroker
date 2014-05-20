@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:d="http://rdfs.arjuna.com/description#" xmlns:ds="http://rdfs.arjuna.com/datasource#">
+    <ds:DataSource rdf:about="http://newcastle.gov.uk/SMN">
+        <d:hasTitle>Speed Management Network Data Source</d:hasTitle>
+        <d:hasSummary>Summary: Speed Management Network Data Source</d:hasSummary>
+        <d:hasDetails>Details: Speed Management Network Data Source</d:hasDetails>
+        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#FeedService"/>
+        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
+    </ds:DataSource>
+
+    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#FeedService">
+        <d:hasTitle>Feed Service</d:hasTitle>
+        <d:hasSummary>Speed Management Network Data Feed Service</d:hasSummary>
+        <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecords"/>
+    </ds:DataService>
+
+    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#OutstationService">
+        <d:hasTitle>Outstation Service</d:hasTitle>
+        <d:hasSummary>Speed Management Network Data Outstation Service</d:hasSummary>
+        <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#Outstations"/>
+    </ds:DataService>
+
+    <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#VehicleRecords">
+        <d:hasTitle>VehicleRecords Data Set</d:hasTitle>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#OutstationId"/>
+    </ds:DataSet>
+
+    <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#Outstations">
+        <d:hasTitle>Outstations Data Set</d:hasTitle>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#OutstationId"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#Speed"/>
+    </ds:DataSet>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#OutstationId">
+        <ds:hasName>outstationId</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#Speed">
+        <ds:hasName>speed</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Integer"/>
+    </ds:Field>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#String">
+        <d:hasTitle>String</d:hasTitle>
+        <d:hasSummary>String Type</d:hasSummary>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Integer">
+        <d:hasTitle>Integer</d:hasTitle>
+        <d:hasSummary>Integer Type</d:hasSummary>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </ds:Type>
+</rdf:RDF>

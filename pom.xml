@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.arjuna.databroker</groupId>
+    <artifactId>system</artifactId>
+    <version>1.0.0p1m1</version>
+
+    <packaging>pom</packaging>
+
+    <name>DataBroker System</name>
+
+    <properties>
+        <version.com.arjuna.databroker>1.0.0p1m1</version.com.arjuna.databroker>
+
+        <jboss-as.username>username</jboss-as.username>
+        <jboss-as.password>password</jboss-as.password>
+        <jboss-as.hostname>databroker</jboss-as.hostname>
+        <jboss-as.domain>standalone-full</jboss-as.domain>
+
+        <deployments.dir>deployments</deployments.dir>
+
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <version.org.apache.jena>2.11.1</version.org.apache.jena>
+        <version.org.richfaces>4.3.5.Final</version.org.richfaces>
+    </properties>
+
+    <modules>
+        <module>control-common</module>
+        <module>control-core</module>
+        <module>control-ws</module>
+        <module>data-common</module>
+        <module>data-ws</module>
+        <module>metadata-common</module>
+        <module>metadata-ws</module>
+        <module>metadata-store</module>
+        <module>server-ear</module>
+        <module>webportal-store</module>
+        <module>webportal-comms</module>
+        <module>webportal-root</module>
+        <module>webportal-ear</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-dist</artifactId>
+                <version>7.1.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+      
+            <dependency>
+                <groupId>org.apache.jena</groupId>
+                <artifactId>apache-jena</artifactId>
+                <version>2.11.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <header><![CDATA[DataBroker Developer Manual]]></header>
+                    <bottom><![CDATA[Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.]]></bottom>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <version>6</version>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.5.Final</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

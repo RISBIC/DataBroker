@@ -1,0 +1,367 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.dataflow
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataflow
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 2em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataflow-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.dataflow-title
+{
+}
+
+div.dataflow-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.dataflow-error-title
+{
+	font-weight:		bold;
+}
+
+span.dataflow-error-message
+{
+	color:			#EEA05D;
+}
+
+div.dataflow-dataflownodes
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	width:			100%;
+}
+
+div.dataflow-dataflownodes-diagram
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			32em;
+}
+
+div.dataflow-operations
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 2em 1em 2em;
+}
+
+span.dataflow-operations-label
+{
+	margin:			0 2em 0 0;
+	border:			0;
+	padding:		0;
+}
+
+input.dataflow-operation[type="button"]
+{
+	margin:			0 0.5em 0 0.5em;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	font-size:		1em;
+}
+
+div.dataflow-attributes
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	width:			100%;
+}
+
+table.dataflow-attributes
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.dataflow-attributes-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.dataflow-attributes-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.dataflow-attributes-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataflow-attribute-name
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"][disabled].dataflow-attribute-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+div.dataflow-properties
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	width:			100%;
+}
+
+table.dataflow-properties
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.dataflow-properties-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.dataflow-properties-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.dataflow-properties-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataflow-property-name
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"][disabled].dataflow-property-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+div.dataflow-actions
+{
+	margin:			0 0 1em 0;
+	border:			0;
+	padding:		0;
+	text-align:		center;
+}
+
+a.dataflow-button
+{
+	margin:				0 1em 0 0;
+	border:				0;
+	padding:			0.25em 0.5em 0.25em 0.5em;
+	font-size:			1em;
+	font-weight:			normal;
+	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.dataflow-button:link
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-button:visited
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-button:hover
+{
+	background-color:	#EEA05D;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-button:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+div.dataflow-factories
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	width:			100%;
+}
+
+table.dataflow-factories
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.dataflow-factories-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.dataflow-factories-column-name
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			35%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+td.dataflow-factories-column-create
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			10%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+td.dataflow-factories-column-actions
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			15%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+a.dataflow-factory-button
+{
+	margin:				0 0.5em 0 0.5em;
+	border:				0;
+	padding:			0.5em 0.25em 0.5em 0.25em;
+	font-size:			1em;
+	font-weight:			normal;
+	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.dataflow-factory-button:link
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-factory-button:visited
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-factory-button:hover
+{
+	background-color:	#EEA05D;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.dataflow-factory-button:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}

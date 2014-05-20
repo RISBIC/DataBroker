@@ -1,0 +1,101 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.home
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			100%;
+	background-color:	#FFFFFF;
+}
+
+div.home
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 2em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.home-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.home-title
+{
+}
+
+div.home-text
+{
+	margin:			0.5em 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.home-text
+{
+}
+
+div.home-link
+{
+	margin:			1em 0 1em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.home-link
+{
+	color:			#CC7733;
+}
+
+a.home-link
+{
+	margin:			0 1em 0 0;
+	border:			0;
+	padding:		0.125em 0.5em 0.125em 0.5em;
+	font-size:		1em;
+}
+
+a.home-link
+{
+	margin:			0 1em 0 0;
+	border:			0;
+	padding:		0.125em 0.5em 0.125em 0.5em;
+	font-size:		1em;
+}
+
+a.home-link:link
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.home-link:visited
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.home-link:hover
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.home-link:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}

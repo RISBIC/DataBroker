@@ -1,0 +1,22 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+body
+{
+	font-family:		verdana,helvetica,arial,sans-serif;
+	background-color:	white;
+	margin:			2em 2em 0 2em;
+	padding:		0;
+}
+
+div.title
+{
+	margin:			0 0 1em 0;
+	padding:		0;
+}
+
+span.title
+{
+	font-size:		2em;
+}

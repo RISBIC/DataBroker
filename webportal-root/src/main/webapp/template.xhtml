@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+    <f:view>
+        <h:head>
+            <title><ui:insert name="title"/></title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" type="text/css" href="site_style.css"/>
+            <link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/>
+            <ui:insert name="head"/>
+        </h:head>
+
+        <h:body id="body">
+            <h:panelGroup styleClass="content" layout="block">
+                <ui:insert name="body"/>
+            </h:panelGroup>
+        </h:body>
+    </f:view>
+</html>

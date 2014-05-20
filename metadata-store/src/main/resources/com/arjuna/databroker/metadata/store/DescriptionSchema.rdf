@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/description#hasTitle">
+        <rdfs:label>Has Title</rdfs:label>
+        <rdfs:comment>Has Title</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/description#hasSummary">
+        <rdfs:label>Has Summary</rdfs:label>
+        <rdfs:comment>Has Summary</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/description#hasDetails">
+        <rdfs:label>Has Details</rdfs:label>
+        <rdfs:comment>Has Details</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+</rdf:RDF>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">Data Flow</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="dataflow_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
+                    <h:outputText styleClass="title" value="Data Flow"/>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <h:outputText styleClass="userlabel" value="Password:"/>
+                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:panelGroup>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:outputText styleClass="userlabel" value=" "/>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+            <h:form styleClass="navigation">
+                <ui:repeat value="#{navigation.locations}" var="location">
+                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
+                </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{dataflow.doReload}" value="Reload"/>
+                <h:panelGroup styleClass="navigation-end" layout="block"/>
+            </h:form>
+            <h:form styleClass="dataflow">
+                <h:panelGroup styleClass="dataflow" layout="block">
+                    <h:panelGroup styleClass="dataflow-error" layout="block" rendered="#{not empty dataflow.errorMessage}">
+                        <h:outputText styleClass="dataflow-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataflow-error-message" value="#{dataflow.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-attributes" layout="block" rendered="#{not empty dataflow.attributes}">
+                        <h:panelGroup styleClass="dataflow-title" layout="block">
+                            <h:outputText styleClass="dataflow-title" value="Data Flow Attributes"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflow-attributes" headerClass="dataflow-attributes-header" columnClasses="dataflow-attributes-column-one,dataflow-attributes-column-two" value="#{dataflow.attributes}" var="attribute">
+                            <h:column>
+                               <h:outputText styleClass="dataflow-attribute-name" value="#{attribute.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputText styleClass="dataflow-attribute-value" value="#{attribute.value}" disabled="true"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-properties" layout="block" rendered="#{not empty dataflow.properties}">
+                        <h:panelGroup styleClass="dataflow-title" layout="block">
+                            <h:outputText styleClass="dataflow-title" value="Data Flow Properties"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.properties}" var="property">
+                            <h:column>
+                                <h:outputText styleClass="dataflow-property-name" value="#{property.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputText styleClass="dataflow-property-value" value="#{property.value}" disabled="true"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-dataflownodes" layout="block" rendered="#{not empty dataflow.dataFlowNodesJSON}">
+                        <h:panelGroup styleClass="dataflow-title" layout="block">
+                            <h:outputText styleClass="dataflow-title" value="Data Flow Nodes"/>
+                        </h:panelGroup>
+                        <div class="dataflow-dataflownodes-diagram">
+                            <canvas id="diagram" onmousedown="dataFlowControl.doEvent(event)">
+                                Sorry, your browser does not support HTML5 Canvas.
+                            </canvas>
+                            <script type="text/javascript" src="dataflow/glyphs.js"></script>
+                            <script type="text/javascript" src="dataflow/control.js"></script>
+                            <script type="text/javascript">
+                                var dataFlowControl = new DataFlowControl('diagram');
+                                dataFlowControl.init(DataFlowGlyph.load(JSON.parse(<h:outputText escape="false" value="#{dataflow.dataFlowNodesJSON}"/>)));
+                                dataFlowControl.redraw();
+                                window.onresize = dataFlowControl.doResize();
+                            </script>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-actions" layout="block">
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Add Data Sink"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataService')}" value="Add Data Service"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataStore')}" value="Add Data Store"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-factories" layout="block" rendered="#{not empty dataflow.dataFlowNodeFactories}">
+                        <h:panelGroup styleClass="dataflow-title" layout="block">
+                            <h:outputText styleClass="dataflow-title" value="Data Flow Node Factories"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflow-factories" headerClass="dataflow-factories-header" columnClasses="dataflow-factories-column-name,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-actions" value="#{dataflow.dataFlowNodeFactories}" var="dataFlowNodeFactory">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Name"/>
+                                </f:facet>
+                                <h:outputText value="#{dataFlowNodeFactory.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Source"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataSourceFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Sink"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataSinkFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Processor"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataProcessorFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Service"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataServiceFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Store"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataStoreFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText styleClass="dataflow-factories-header" value="Actions"/>
+                                </f:facet>
+                                <h:commandLink styleClass="dataflow-factory-button" action="#" value="Examine"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

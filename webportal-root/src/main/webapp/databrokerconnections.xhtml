@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">DataBrokers</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="databrokerconnections_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
+                    <h:outputText styleClass="title" value="DataBrokers"/>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <h:outputText styleClass="userlabel" value="Password:"/>
+                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:panelGroup>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:outputText styleClass="userlabel" value=" "/>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+            <h:form styleClass="navigation">
+                <ui:repeat value="#{navigation.locations}" var="location">
+                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
+                </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{databrokerconnections.doLoad}" value="Reload"/>
+                <h:panelGroup styleClass="navigation-end" layout="block"/>
+            </h:form>
+            <h:form styleClass="databrokers">
+                <h:panelGroup styleClass="databrokers" layout="block">
+                    <h:panelGroup styleClass="databrokers-title" layout="block">
+                        <h:outputText styleClass="databrokers-title" value="DataBrokers"/>
+                    </h:panelGroup>
+                    <h:dataTable styleClass="databrokers" headerClass="databrokers-header" columnClasses="databrokers-column-one,databrokers-column-two,databrokers-column-three,databrokers-column-four,databrokers-column-five" value="#{databrokerconnections.dataBrokerConnections}" var="dataBrokerConnection">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databrokers-header" value="Name"/>
+                            </f:facet>
+                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databrokers-header" value="Summary"/>
+                            </f:facet>
+                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.summary}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databrokers-header" value="Service Root URL"/>
+                            </f:facet>
+                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.serviceRootURL}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databrokers-header" value="Requester Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.requesterId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databrokers-header" value="Actions"/>
+                                <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doAdd}" value="Add"/>
+                            </f:facet>
+                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doChange(dataBrokerConnection.id)}" value="Change"/>
+                            <h:commandLink styleClass="databrokers-button" action="#{databroker.doLoad(dataBrokerConnection.id)}" value="Examine"/>
+                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnections.doRemove(dataBrokerConnection.id)}" value="Remove"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

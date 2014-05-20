@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arjuna.databroker</groupId>
+        <artifactId>system</artifactId>
+        <version>1.0.0p1m1</version>
+    </parent>
+
+    <artifactId>control-ws</artifactId>
+
+    <packaging>war</packaging>
+
+    <name>Control WS</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-store</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>control-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>control-core</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

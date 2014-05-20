@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/datasource#DataSource">
+        <rdfs:label>Data Source</rdfs:label>
+        <rdfs:comment>Collection of Data Services</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/datasource#DataService">
+        <rdfs:label>Data Service</rdfs:label>
+        <rdfs:comment>Produces a Data Set</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/datasource#DataSet">
+        <rdfs:label>Data Set</rdfs:label>
+        <rdfs:comment>Collection of Field</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/datasource#Field">
+        <rdfs:label>Field</rdfs:label>
+        <rdfs:comment>Field of a Data Set</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/datasource#Type">
+        <rdfs:label>Type</rdfs:label>
+        <rdfs:comment>Type of a Field</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/datasource#hasDataService">
+        <rdfs:label>Has Data Service</rdfs:label>
+        <rdfs:comment>Data Service of Data Source</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#DataSource"/>
+        <rdfs:range rdf:resource="http://rdfs.arjuna.com/datasource#DataService"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/datasource#producesDataSet">
+        <rdfs:label>Produces Data Set</rdfs:label>
+        <rdfs:comment>Data Set produced by Data Service</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#DataService"/>
+        <rdfs:range rdf:resource="http://rdfs.arjuna.com/datasource#DataSet"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/datasource#hasField">
+        <rdfs:label>Has Field</rdfs:label>
+        <rdfs:comment>Field of Data Set</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#DataSet"/>
+        <rdfs:range rdf:resource="http://rdfs.arjuna.com/datasource#Field"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/datasource#hasType">
+        <rdfs:label>Has Type</rdfs:label>
+        <rdfs:comment>Type of Field</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#Field"/>
+        <rdfs:range rdf:resource="http://rdfs.arjuna.com/datasource#Type"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/datasource#hasRawType">
+        <rdfs:label>Has Raw Type</rdfs:label>
+        <rdfs:comment>Raw Type of Type</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#Type"/>
+        <rdfs:range rdf:resource="http://www.w3.org/TR/WD-rdf-schema#Type"/>
+    </rdfs:Property>
+</rdf:RDF>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">DataBroker</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="databroker_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
+                    <h:outputText styleClass="title" value="DataBroker"/>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <h:outputText styleClass="userlabel" value="Password:"/>
+                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:panelGroup>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:outputText styleClass="userlabel" value=" "/>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+            <h:form styleClass="navigation">
+                <ui:repeat value="#{navigation.locations}" var="location">
+                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
+                </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{databroker.doReload}" value="Reload"/>
+                <h:panelGroup styleClass="navigation-end" layout="block"/>
+            </h:form>
+            <h:form styleClass="databroker">
+                <h:panelGroup styleClass="databroker" layout="block">
+                    <h:panelGroup styleClass="databroker-title" layout="block">
+                        <h:outputText styleClass="databroker-title" value="Data Flows"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{databroker.errorMessage != null}">
+                        <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="databroker-error-message" value="#{databroker.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-column-one,databroker-column-two,databroker-column-three" value="#{databroker.dataFlowSummaries}" var="dataFlowSummary">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Name"/>
+                            </f:facet>
+                            <h:outputText value="#{dataFlowSummary.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databroker-header" value="Actions"/>
+                                <h:commandLink styleClass="databroker-button" action="#{dataflowcreate.doLoad(databroker.serviceRootURL)}" value="Add"/>
+                            </f:facet>
+                            <h:commandLink styleClass="databroker-button" action="#{dataflow.doLoad(databroker.serviceRootURL, dataFlowSummary.name)}" value="Examine"/>
+                            <h:commandLink styleClass="databroker-button" action="#{databroker.doRemoveDataFlow(dataFlowSummary.name)}" value="Remove"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:panelGroup styleClass="databroker-title" layout="block">
+                        <h:outputText styleClass="databroker-title" value="Data Flow Node Factories"/>
+                    </h:panelGroup>
+                    <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-factories-column-name,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-actions" value="#{databroker.dataFlowNodeFactorySummaries}" var="dataFlowNodeFactorySummary">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Name"/>
+                            </f:facet>
+                            <h:outputText value="#{dataFlowNodeFactorySummary.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Create Data Source"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSourceFactory}" disabled="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Create Data Sink"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSinkFactory}" disabled="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Create Data Processor"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataProcessorFactory}" disabled="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Create Data Service"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataServiceFactory}" disabled="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Create Data Store"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataStoreFactory}" disabled="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="databroker-header" value="Actions"/>
+                            </f:facet>
+                            <h:commandLink styleClass="databroker-button" action="#" value="Examine"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

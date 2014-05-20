@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arjuna.databroker</groupId>
+        <artifactId>system</artifactId>
+        <version>1.0.0p1m1</version>
+    </parent>
+
+    <artifactId>webportal-root</artifactId>
+
+    <packaging>war</packaging>
+
+    <name>WebPortal Root</name>
+
+    <dependencies>
+        <dependency>
+            <!-- Bodge for OpenShift -->
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>${version.org.apache.jena}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.core</groupId>
+            <artifactId>richfaces-core-impl</artifactId>
+            <version>${version.org.richfaces}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-components-ui</artifactId>
+            <version>${version.org.richfaces}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>webportal-store</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>webportal-comms</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

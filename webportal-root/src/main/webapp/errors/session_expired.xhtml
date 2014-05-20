@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">Session Expired</ui:define>
+
+        <ui:define name="head"/>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="1" border="0" cellpadding="0" cellspacing="0">
+                    <h:outputText styleClass="title" value="Session Expired"/>
+                </h:panelGrid>
+            </h:form>
+            <h:panelGrid styleClass="error" columns="1">
+                <h:outputText value="Sorry, your period of inactivity was to long!"/>
+                <h:outputLink value="/">
+                    <h:outputText value="To reselect Data Source..."/>
+                </h:outputLink>
+            </h:panelGrid>
+        </ui:define>
+    </ui:composition>
+</html>

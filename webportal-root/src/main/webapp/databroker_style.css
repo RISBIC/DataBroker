@@ -1,0 +1,211 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.databroker
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.databroker
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.databroker-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.databroker-title
+{
+}
+
+table.databroker
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.databroker-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.databroker-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			80%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+td.databroker-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			20%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+span.databroker-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+span.databroker-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+table.databroker-factories
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.databroker-factories-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.databroker-factories-column-name
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			35%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+td.databroker-factories-column-create
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			10%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+td.databroker-factories-column-actions
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	width:			15%;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	text-align:		center;
+}
+
+span.databroker-actions
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+span.databroker-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+a.databroker-button
+{
+	margin:				0 0.5em 0 0.5em;
+	border:				0;
+	padding:			0.5em 0.25em 0.5em 0.25em;
+	font-size:			1em;
+	font-weight:			normal;
+	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.databroker-button:link
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.databroker-button:visited
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.databroker-button:hover
+{
+	background-color:	#EEA05D;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.databroker-button:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+div.databroker-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.databroker-error-title
+{
+	font-weight:		bold;
+}
+
+span.databroker-error-message
+{
+	color:			#EEA05D;
+}

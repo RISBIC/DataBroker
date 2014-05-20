@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">Data View</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="dataview_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
+                    <h:outputText styleClass="title" value="Data View"/>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <h:outputText styleClass="userlabel" value="Password:"/>
+                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:panelGroup>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:outputText styleClass="userlabel" value=" "/>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+            <h:form styleClass="navigation">
+                <ui:repeat value="#{navigation.locations}" var="location">
+                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
+                </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{dataviews.doLoad}" value="Reload"/>
+                <h:panelGroup styleClass="navigation-end" layout="block"/>
+            </h:form>
+            <h:form styleClass="dataview">
+                <h:panelGroup styleClass="dataview" layout="block">
+                    <h:panelGroup styleClass="dataview-title" layout="block">
+                        <h:outputText styleClass="dataview-title" value="Data View"/>
+                    </h:panelGroup>
+                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="metadataId">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataview-header" value="Metadata Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataview-value" value="#{metadataId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataview-header" value="Actions"/>
+                            </f:facet>
+                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Examine"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

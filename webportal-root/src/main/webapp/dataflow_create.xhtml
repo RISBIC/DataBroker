@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">DataFlow Create</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="dataflow_create_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form styleClass="header">
+                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2">
+                    <h:outputText styleClass="title" value="DataFlow Create"/>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" rendered="#{! user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <h:outputText styleClass="userlabel" value="Password:"/>
+                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:panelGroup>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:outputText styleClass="userlabel" value=" "/>
+                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" rendered="#{user.loggedIn}">
+                        <h:outputText styleClass="userlabel" value="User name:"/>
+                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:outputText styleClass="userlabel" value=" "/>
+                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+            <h:form styleClass="navigation">
+                <ui:repeat value="#{navigation.locations}" var="location">
+                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
+                </ui:repeat>
+                <h:panelGroup styleClass="navigation-end" layout="block"/>
+            </h:form>
+            <h:form styleClass="dataflowcreate">
+                <h:panelGroup styleClass="dataflowcreate" layout="block">
+                    <h:panelGroup styleClass="dataflowcreate-title" layout="block">
+                        <h:outputText styleClass="dataflowcreate-title" value="DataFlow Create"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflowcreate-error" layout="block" rendered="#{dataflowcreate.errorMessage != null}">
+                        <h:outputText styleClass="dataflowcreate-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataflowcreate-error-message" value="#{dataflowcreate.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{dataflowcreate.metaProperties != null}">
+                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block" rendered="#{not empty dataflowcreate.metaProperties}">
+                            <h:outputText styleClass="dataflowcreate-subtitle" value="Meta Properties"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.metaProperties}" var="metaProperties">
+                            <h:column>
+                                <h:outputText styleClass="dataflowcreate-property-name" value="#{metaProperties.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputText styleClass="dataflowcreate-property-value" value="#{metaProperties.value}" disabled="#{dataflowcreate.properties != null}"/>
+                            </h:column>
+                        </h:dataTable>
+                        <h:panelGroup styleClass="dataflowcreate-actions" layout="block">
+                            <h:commandLink styleClass="dataflowcreate-button" action="#{dataflowcreate.doSubmit}" value="Submit" rendered="#{dataflowcreate.properties == null}"/>
+                            <h:commandLink styleClass="dataflowcreate-button" action="#{dataflowcreate.doReset}" value="Reset" rendered="#{dataflowcreate.properties != null}"/>
+                            <h:commandLink styleClass="dataflowcreate-button" action="#{dataflowcreate.doCancel}" value="Cancel" rendered="#{dataflowcreate.properties == null}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{dataflowcreate.properties != null}">
+                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
+                            <h:outputText styleClass="dataflowcreate-subtitle" value="Attributes"/>
+                        </h:panelGroup>
+                        <h:panelGrid styleClass="dataflowcreate-properties" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" columns="2">
+                            <h:outputText styleClass="dataflowcreate-property-name" value="Name"/>
+                            <h:inputText styleClass="dataflowcreate-property-value" value="#{dataflowcreate.name}"/>
+                        </h:panelGrid>
+                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block" rendered="#{not empty dataflowcreate.properties}">
+                            <h:outputText styleClass="dataflowcreate-subtitle" value="Properties"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.properties}" var="properties">
+                            <h:column>
+                                <h:outputText styleClass="dataflowcreate-property-name" value="#{properties.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputText styleClass="dataflowcreate-property-value" value="#{properties.value}"/>
+                            </h:column>
+                        </h:dataTable>
+                        <h:panelGroup styleClass="dataflowcreate-actions" layout="block">
+                            <h:commandLink styleClass="dataflowcreate-button" action="#{dataflowcreate.doCreate}" value="Create"/>
+                            <h:commandLink styleClass="dataflowcreate-button" action="#{dataflowcreate.doCancel}" value="Cancel"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
