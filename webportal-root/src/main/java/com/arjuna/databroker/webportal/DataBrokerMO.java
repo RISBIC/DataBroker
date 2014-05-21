@@ -7,9 +7,13 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import com.arjuna.databroker.webportal.comms.DataBrokerClient;
 import com.arjuna.databroker.webportal.comms.DataBrokerSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowFactoryClient;
@@ -24,12 +28,14 @@ public class DataBrokerMO implements Serializable
 {
     private static final long serialVersionUID = -2660820092730037733L;
 
+    private static final Logger logger = Logger.getLogger(DataBrokerMO.class.getName());
+
     public DataBrokerMO()
     {
         _serviceRootURL               = null;
-        _errorMessage                 = null;
         _dataFlowSummaries            = new LinkedList<DataFlowSummaryVO>();
         _dataFlowNodeFactorySummaries = new LinkedList<DataFlowNodeFactorySummaryVO>();
+        _errorMessage                 = null;
     }
 
     public String getServiceRootURL()
@@ -40,16 +46,6 @@ public class DataBrokerMO implements Serializable
     public void setServiceRootURL(String serviceRootURL)
     {
         _serviceRootURL = serviceRootURL;
-    }
-
-    public String getErrorMessage()
-    {
-        return _errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage)
-    {
-        _errorMessage = errorMessage;
     }
 
     public List<DataFlowSummaryVO> getDataFlowSummaries()
@@ -70,6 +66,17 @@ public class DataBrokerMO implements Serializable
     public void setDataFlowNodeFactorySummaries(List<DataFlowNodeFactorySummaryVO> dataFlowNodeFactorySummaries)
     {
         _dataFlowNodeFactorySummaries = dataFlowNodeFactorySummaries;
+    }
+
+    public String getErrorMessage()
+    {
+        logger.log(Level.INFO, "DataBrokerMO.getErrorMessage: " + _errorMessage);
+        return _errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage)
+    {
+        _errorMessage = errorMessage;
     }
 
     public String doLoad(String id)
@@ -139,13 +146,17 @@ public class DataBrokerMO implements Serializable
                 for (DataFlowNodeFactorySummary dataFlowNodeFactorySummary: dataBrokerSummary.getDataFlowNodeFactorySummaries())
                     _dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getName(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
             }
+            else
+                _errorMessage = "Unable to connect to DataBroker for information";
         }
+        else
+            _errorMessage = "No DataBroker specified";
     }
 
     private String                             _serviceRootURL;
-    private String                             _errorMessage;
     private List<DataFlowSummaryVO>            _dataFlowSummaries;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactorySummaries;
+    private String                             _errorMessage;
 
     @EJB
     private DataBrokerUtils _dataBrokerUtils;

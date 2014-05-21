@@ -34,6 +34,30 @@ span.databroker-title
 {
 }
 
+div.databroker-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.databroker-error-title
+{
+	font-weight:		bold;
+}
+
+span.databroker-error-message
+{
+	color:			#EEA05D;
+}
+
+div.databroker-summary
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+}
+
 table.databroker
 {
 	margin:			0 -0.5em 0 -0.5em;
@@ -191,21 +215,4 @@ a.databroker-button:active
 	background-color:	#777777;
 	color:			#EEEEEE;
 	text-decoration:	none;
-}
-
-div.databroker-error
-{
-	margin:			0 0 0.5em 0;
-	border:			0;
-	padding:		0;
-}
-
-span.databroker-error-title
-{
-	font-weight:		bold;
-}
-
-span.databroker-error-message
-{
-	color:			#EEA05D;
 }

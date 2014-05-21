@@ -48,73 +48,75 @@
                     <h:panelGroup styleClass="databroker-title" layout="block">
                         <h:outputText styleClass="databroker-title" value="Data Flows"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{databroker.errorMessage != null}">
+                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databroker.errorMessage}">
                         <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
                         <h:outputText styleClass="databroker-error-message" value="#{databroker.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-column-one,databroker-column-two,databroker-column-three" value="#{databroker.dataFlowSummaries}" var="dataFlowSummary">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Name"/>
-                            </f:facet>
-                            <h:outputText value="#{dataFlowSummary.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databroker-header" value="Actions"/>
-                                <h:commandLink styleClass="databroker-button" action="#{dataflowcreate.doLoad(databroker.serviceRootURL)}" value="Add"/>
-                            </f:facet>
-                            <h:commandLink styleClass="databroker-button" action="#{dataflow.doLoad(databroker.serviceRootURL, dataFlowSummary.name)}" value="Examine"/>
-                            <h:commandLink styleClass="databroker-button" action="#{databroker.doRemoveDataFlow(dataFlowSummary.name)}" value="Remove"/>
-                        </h:column>
-                    </h:dataTable>
-                    <h:panelGroup styleClass="databroker-title" layout="block">
-                        <h:outputText styleClass="databroker-title" value="Data Flow Node Factories"/>
+                    <h:panelGroup styleClass="databroker-summary" layout="block" rendered="#{empty databroker.errorMessage}">
+                        <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-column-one,databroker-column-two,databroker-column-three" value="#{databroker.dataFlowSummaries}" var="dataFlowSummary">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Name"/>
+                                </f:facet>
+                                <h:outputText value="#{dataFlowSummary.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText styleClass="databroker-header" value="Actions"/>
+                                    <h:commandLink styleClass="databroker-button" action="#{dataflowcreate.doLoad(databroker.serviceRootURL)}" value="Add"/>
+                                </f:facet>
+                                <h:commandLink styleClass="databroker-button" action="#{dataflow.doLoad(databroker.serviceRootURL, dataFlowSummary.name)}" value="Examine"/>
+                                <h:commandLink styleClass="databroker-button" action="#{databroker.doRemoveDataFlow(dataFlowSummary.name)}" value="Remove"/>
+                            </h:column>
+                        </h:dataTable>
+                        <h:panelGroup styleClass="databroker-title" layout="block">
+                            <h:outputText styleClass="databroker-title" value="Data Flow Node Factories"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-factories-column-name,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-actions" value="#{databroker.dataFlowNodeFactorySummaries}" var="dataFlowNodeFactorySummary">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Name"/>
+                                </f:facet>
+                                <h:outputText value="#{dataFlowNodeFactorySummary.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Source"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSourceFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Sink"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSinkFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Processor"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataProcessorFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Service"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataServiceFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Create Data Store"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataStoreFactory}" disabled="true"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText styleClass="databroker-header" value="Actions"/>
+                                </f:facet>
+                                <h:commandLink styleClass="databroker-button" action="#" value="Examine"/>
+                            </h:column>
+                        </h:dataTable>
                     </h:panelGroup>
-                    <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-factories-column-name,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-actions" value="#{databroker.dataFlowNodeFactorySummaries}" var="dataFlowNodeFactorySummary">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Name"/>
-                            </f:facet>
-                            <h:outputText value="#{dataFlowNodeFactorySummary.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Create Data Source"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSourceFactory}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Create Data Sink"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataSinkFactory}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Create Data Processor"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataProcessorFactory}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Create Data Service"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataServiceFactory}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Create Data Store"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox value="#{dataFlowNodeFactorySummary.dataStoreFactory}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databroker-header" value="Actions"/>
-                            </f:facet>
-                            <h:commandLink styleClass="databroker-button" action="#" value="Examine"/>
-                        </h:column>
-                    </h:dataTable>
                 </h:panelGroup>
             </h:form>
         </ui:define>

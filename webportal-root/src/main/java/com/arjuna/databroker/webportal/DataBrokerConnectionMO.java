@@ -28,7 +28,7 @@ public class DataBrokerConnectionMO implements Serializable
         _summary        = "";
         _serviceRootURL = "";
         _requesterId    = "";
-        _errorMessage   = "";
+        _errorMessage   = null;
     }
 
     public String getId()
@@ -86,7 +86,7 @@ public class DataBrokerConnectionMO implements Serializable
         return _errorMessage;
     }
 
-    public void getErrorMessage(String errorMessage)
+    public void setErrorMessage(String errorMessage)
     {
         _errorMessage = errorMessage;
     }
@@ -94,7 +94,7 @@ public class DataBrokerConnectionMO implements Serializable
     public String doAdd()
     {
         clear();
-        _errorMessage = "";
+        _errorMessage = null;
 
         return "databrokerconnection_add?faces-redirect=true";
     }
@@ -102,7 +102,7 @@ public class DataBrokerConnectionMO implements Serializable
     public String doAddSubmit()
     {
         _dataBrokerUtils.createDataBroker(_name, _summary, _serviceRootURL, _requesterId);
-        _errorMessage = "";
+        _errorMessage = null;
 
         return "databrokerconnection?faces-redirect=true";
     }

@@ -47,7 +47,7 @@
                     <h:panelGroup styleClass="dataflow-title" layout="block">
                         <h:outputText styleClass="dataflow-title" value="Data Flow"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="dataflow-error" layout="block" rendered="#{dataflow.errorMessage != null}">
+                    <h:panelGroup styleClass="dataflow-error" layout="block" rendered="#{not empty dataflow.errorMessage}">
                         <h:outputText styleClass="dataflow-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataflow-error-message" value="#{dataflow.errorMessage}"/>
                     </h:panelGroup>

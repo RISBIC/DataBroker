@@ -17,7 +17,7 @@ div.metadata
 {
 	margin:			0;
 	border:			0;
-	padding:		0 2em 1em 2em;
+	padding:		1em 2em 1em 2em;
 	color:			#111111;
 	background-color:	#FFFFFF;
 }
@@ -32,6 +32,23 @@ div.metadata-title
 
 span.metadata-title
 {
+}
+
+div.metadata-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.metadata-error-title
+{
+	font-weight:		bold;
+}
+
+span.metadata-error-message
+{
+	color:			#EEA05D;
 }
 
 table.metadata-info
@@ -55,7 +72,7 @@ td.metadata-descriptioncolumn
 {
 	margin:			0;
 	border:			0;
-	padding:		0;
+	padding:		0 0 0 1em;
 	vertical-align:		top;
 }
 

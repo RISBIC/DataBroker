@@ -5,7 +5,6 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -13,6 +12,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 
 @SessionScoped
@@ -25,7 +25,11 @@ public class DataViewMO implements Serializable
 
     public DataViewMO()
     {
-        _metadataIds = new LinkedList<String>();
+        _serviceRootURL = null;
+        _requesterId    = null;
+        _userId         = null;
+        _metadataIds    = new LinkedList<String>();
+        _errorMessage   = null;
     }
 
     public String getServiceRootURL()
@@ -68,6 +72,16 @@ public class DataViewMO implements Serializable
         _metadataIds = metadataIds;
     }
 
+    public String getErrorMessage()
+    {
+        return _errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage)
+    {
+        _errorMessage = errorMessage;
+    }
+
     public String doLoad(String serviceRootURL, String requesterId, String userId)
     {
         logger.log(Level.INFO, "DataViewMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
@@ -77,13 +91,15 @@ public class DataViewMO implements Serializable
             _requesterId    = requesterId;
             _userId         = userId;
 
-            _metadataIds = _metadataClient.listMetadata(serviceRootURL, requesterId, userId);
-            logger.log(Level.INFO, "DataViewMO.doLoad: " + _metadataIds);
+            _metadataIds.clear();
+            _metadataIds.addAll(_metadataClient.listMetadata(serviceRootURL, requesterId, userId));
+            _errorMessage = null;
         }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem getting metadata ids", throwable);
-            _metadataIds = Collections.emptyList();
+            _metadataIds.clear();
+            _errorMessage = "Problem getting metadata ids";
         }
 
         return "dataview?faces-redirect=true";
@@ -93,6 +109,7 @@ public class DataViewMO implements Serializable
     private String       _requesterId;
     private String       _userId;
     private List<String> _metadataIds;
+    private String       _errorMessage;
 
     @EJB
     private MetadataClient _metadataClient;

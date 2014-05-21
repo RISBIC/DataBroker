@@ -47,7 +47,11 @@
                     <h:panelGroup styleClass="metadata-title" layout="block">
                         <h:outputText styleClass="metadata-title" value="Data View"/>
                     </h:panelGroup>
-                    <h:panelGrid styleClass="metadata-info" columnClasses="metadata-treecolumn,metadata-descriptioncolumn" columns="2" border="0" cellpadding="0" cellspacing="1em">
+                    <h:panelGroup styleClass="metadata-error" layout="block" rendered="#{not empty metadata.errorMessage}">
+                        <h:outputText styleClass="metadata-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="metadata-error-message" value="#{metadata.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:panelGrid styleClass="metadata-info" columnClasses="metadata-treecolumn,metadata-descriptioncolumn" columns="2" border="0" cellpadding="0" cellspacing="1em" rendered="#{empty metadata.errorMessage}">
                         <rich:tree styleClass="metadata-tree" var="metadataNode" toggleType="client" selectionType="ajax" selectionChangeListener="${metadatanode.selectionChanged}">
                             <rich:treeModelRecursiveAdaptor roots="#{metadata.rootNodes}" nodes="#{metadataNode.subNodes}">
                                 <rich:treeNode>
