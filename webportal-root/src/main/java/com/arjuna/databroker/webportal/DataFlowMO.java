@@ -12,11 +12,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
+import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkClient;
 
 @SessionScoped
 @ManagedBean(name="dataflow")
@@ -39,6 +42,8 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeAttributes     = null;
         _dataFlowNodeProperties     = null;
         _dataFlowNodeFactories      = null;
+        _sourceDataFlowNode         = null;
+        _sinkDataFlowNode           = null;
 
         _errorMessage = null;
     }
@@ -105,6 +110,26 @@ public class DataFlowMO implements Serializable
         return _dataFlowNodeFactories;
     }
 
+    public String getSourceDataFlowNode()
+    {
+        return _sourceDataFlowNode;
+    }
+
+    public void setSourceDataFlowNode(String sourceDataFlowNode)
+    {
+        _sourceDataFlowNode = sourceDataFlowNode;
+    }
+
+    public String getSinkDataFlowNode()
+    {
+        return _sinkDataFlowNode;
+    }
+
+    public void setSinkDataFlowNode(String sinkDataFlowNode)
+    {
+        _sinkDataFlowNode = sinkDataFlowNode;
+    }
+
     public String getErrorMessage()
     {
         return _errorMessage;
@@ -128,6 +153,17 @@ public class DataFlowMO implements Serializable
 
         load();
 
+        return "dataflow?faces-redirect=true";
+    }
+
+    public String doCreateLink()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doCreateLink: [" + _sourceDataFlowNode + "] [" + _sinkDataFlowNode + "]");
+
+        _dataFlowNodeLinkClient.createDataFlowNodeLink(_serviceRootURL, _id, _sourceDataFlowNode, _sinkDataFlowNode);
+        
+        load();
+        
         return "dataflow?faces-redirect=true";
     }
 
@@ -238,9 +274,14 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeAttributes;
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
+    private String                             _sourceDataFlowNode;
+    private String                             _sinkDataFlowNode;
 
     private String _errorMessage;
 
     @EJB
     private DataFlowClient _dataFlowClient;
+
+    @EJB
+    private DataFlowNodeLinkClient _dataFlowNodeLinkClient;
 }

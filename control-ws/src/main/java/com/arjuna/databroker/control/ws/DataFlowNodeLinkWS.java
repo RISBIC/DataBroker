@@ -4,7 +4,8 @@
 
 package com.arjuna.databroker.control.ws;
 
-import java.net.HttpURLConnection;import java.util.Collection;
+import java.net.HttpURLConnection;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class DataFlowNodeLinkWS
 
     @POST
     @Path("{dataflowid}")
-    @Consumes(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public <T> String createDataFlowNodeLinkJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("sourcedataflownodeid") String sourceDataFlowNodeId, @QueryParam("sinkdataflownodeid") String sinkDataFlowNodeId)
     {

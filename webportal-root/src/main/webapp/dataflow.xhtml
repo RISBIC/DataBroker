@@ -85,20 +85,30 @@
                             </canvas>
                             <script type="text/javascript" src="dataflow/glyphs.js"></script>
                             <script type="text/javascript" src="dataflow/control.js"></script>
+                            <script type="text/javascript" src="dataflow/edit-link.js"></script>
                             <script type="text/javascript">
                                 var dataFlowControl = new DataFlowControl('diagram');
                                 dataFlowControl.init(DataFlowGlyph.load(JSON.parse(<h:outputText escape="false" value="#{dataflow.dataFlowNodesJSON}"/>)));
                                 dataFlowControl.redraw();
                                 window.onresize = dataFlowControl.doResize();
+                                var dataFlowEdit = new DataFlowLinkEdit(dataFlowControl);
+                                dataFlowControl.eventListener = dataFlowEdit;
                             </script>
                         </div>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="dataflow-actions" layout="block">
+                    <a4j:jsFunction name="selectSourceDataFlowNode" render="operations">
+                        <a4j:param name="name" assignTo="#{dataflow.sourceDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectSinkDataFlowNode" render="operations">
+                        <a4j:param name="name" assignTo="#{dataflow.sinkDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <h:panelGroup id="operations" styleClass="dataflow-actions" layout="block">
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Add Data Sink"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataService')}" value="Add Data Service"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataStore')}" value="Add Data Store"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doCreateLink()}" value="Add Link" rendered="#{(not empty dataflow.sourceDataFlowNode) and (not empty dataflow.sinkDataFlowNode)}"/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="dataflow-factories" layout="block" rendered="#{not empty dataflow.dataFlowNodeFactories}">
                         <h:panelGroup styleClass="dataflow-title" layout="block">
