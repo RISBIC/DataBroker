@@ -64,7 +64,7 @@ td.metadata-treecolumn
 {
 	margin:			0 1em 0 0;
 	border:			1px #C4C0B9 solid;
-	padding:		0;
+	padding:		0.25em 0.25em 0.25em 0.25em;
 	vertical-align:		top;
 }
 

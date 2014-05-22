@@ -70,7 +70,6 @@ public class DataBrokerMO implements Serializable
 
     public String getErrorMessage()
     {
-        logger.log(Level.INFO, "DataBrokerMO.getErrorMessage: " + _errorMessage);
         return _errorMessage;
     }
 

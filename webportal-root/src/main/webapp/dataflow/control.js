@@ -35,8 +35,8 @@ DataFlowControl.prototype.doResize = function()
 DataFlowControl.prototype.doEvent = function(event)
 {
 //    var type = event.type;
-    var x    = event.pageX - event.currentTarget.offsetLeft;
-    var y    = event.pageY - event.currentTarget.offsetTop;
+    var x = event.pageX - event.currentTarget.offsetLeft;
+    var y = event.pageY - event.currentTarget.offsetTop;
 
     this.doUnselect(this.item);
     this.item = this.dataFlow.itemAt(x, y);
