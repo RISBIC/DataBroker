@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
+import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkClient;
 
@@ -42,6 +43,7 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeAttributes     = null;
         _dataFlowNodeProperties     = null;
         _dataFlowNodeFactories      = null;
+        _dataFlowNodeLinks          = null;
         _sourceDataFlowNode         = null;
         _sinkDataFlowNode           = null;
 
@@ -181,8 +183,9 @@ public class DataFlowMO implements Serializable
             Map<String, Map<String, String>> dataFlowNodeAttributesMap = new HashMap<String, Map<String, String>>();
             Map<String, Map<String, String>> dataFlowNodePropertiesMap = new HashMap<String, Map<String, String>>();
             List<DataFlowNodeFactorySummary> dataFlowNodeFactories     = new LinkedList<DataFlowNodeFactorySummary>();
+            List<DataFlowNodeLinkSummary>        dataFlowNodeLinkSummary   = new LinkedList<DataFlowNodeLinkSummary>();
 
-            String id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeFactories);
+            String id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeFactories, dataFlowNodeLinkSummary);
 
             if (id != null)
             {
@@ -191,6 +194,10 @@ public class DataFlowMO implements Serializable
 
                 _dataFlowNodesJSON = dataFlowNodesToJSON(dataFlowNodeAttributesMap, dataFlowNodePropertiesMap);
                 logger.log(Level.FINER, "DataFlowMO.load - dataFlowNodesJSON = " + _dataFlowNodesJSON);
+
+                _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
+                for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
+                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
                 for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
@@ -206,6 +213,7 @@ public class DataFlowMO implements Serializable
                 _dataFlowNodeAttributes     = null;
                 _dataFlowNodeProperties     = null;
                 _dataFlowNodeFactories      = null;
+                _dataFlowNodeLinks          = null;
 
                 _errorMessage = "Unsuccessful query of DataBroker!";
             }
@@ -274,6 +282,7 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeAttributes;
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
+    private List<DataFlowNodeLinkVO>           _dataFlowNodeLinks;
     private String                             _sourceDataFlowNode;
     private String                             _sinkDataFlowNode;
 

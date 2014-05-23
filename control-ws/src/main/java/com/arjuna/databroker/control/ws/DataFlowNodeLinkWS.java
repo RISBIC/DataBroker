@@ -43,7 +43,7 @@ public class DataFlowNodeLinkWS
     @Produces(MediaType.APPLICATION_JSON)
     public <T> String createDataFlowNodeLinkJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("sourcedataflownodeid") String sourceDataFlowNodeId, @QueryParam("sinkdataflownodeid") String sinkDataFlowNodeId)
     {
-        logger.log(Level.INFO, "DataFlowLinkWS.createDataFlowNodeLinkJSON: " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
+        logger.log(Level.FINE, "DataFlowNodeLinkWS.createDataFlowNodeLinkJSON: " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
 
         if (_dataFlowInventory != null)
         {
@@ -62,7 +62,7 @@ public class DataFlowNodeLinkWS
                         Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
 
                         DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
-                        DataConsumer<T> dataConsumer = getSinkConsumer(sourceDataFlowNode, linkClass);
+                        DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
 
                         if ((dataProvider != null) && (dataConsumer != null))
                             dataProvider.addDataConsumer(dataConsumer);
@@ -89,7 +89,7 @@ public class DataFlowNodeLinkWS
     @Produces(MediaType.APPLICATION_JSON)
     public <T> Boolean removeDataFlowNodeLinkJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("sourcedataflownodeid") String sourceDataFlowNodeId, @QueryParam("sinkdataflownodeid") String sinkDataFlowNodeId)
     {
-        logger.log(Level.FINE, "DataFlowWS.removeDataFlowNodeLinkJSON: " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
+        logger.log(Level.FINE, "DataFlowNodeLinkWS.removeDataFlowNodeLinkJSON: " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
 
         if (_dataFlowInventory != null)
         {

@@ -23,17 +23,19 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import com.arjuna.databroker.control.comms.CreatePropertiesDTO;
 import com.arjuna.databroker.control.comms.DataFlowDTO;
-import com.arjuna.databroker.control.comms.DataFlowLinkDTO;
+import com.arjuna.databroker.control.comms.DataFlowNodeLinkDTO;
 import com.arjuna.databroker.control.comms.DataFlowNodeDTO;
 import com.arjuna.databroker.control.comms.DataFlowNodeFactoryDTO;
 import com.arjuna.databroker.control.comms.FactoryNamesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
+import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataProcessor;
+import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
@@ -291,13 +293,24 @@ public class DataFlowWS
                         dataFlowNodeFactories.add(new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory));
                     }
                     dataFlowDTO.setDataFlowNodeFactories(dataFlowNodeFactories);
-                    
-                    List<DataFlowLinkDTO> dataFlowLinks = new LinkedList<DataFlowLinkDTO>();
+
+                    List<DataFlowNodeLinkDTO> dataFlowNodeLinks = new LinkedList<DataFlowNodeLinkDTO>();
                     for (DataFlowNode dataFlowNode: dataFlow.getDataFlowNodeInventory().getDataFlowNodes())
                     {
-                        // TODO: Add Data Flow Nodes Links
+                        if (dataFlowNode instanceof DataSource)
+                            for (Class<?> dataClass: ((DataSource) dataFlowNode).getDataProviderDataClasses())
+                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataSource) dataFlowNode).getDataProvider(dataClass)));
+                        else if (dataFlowNode instanceof DataProcessor)
+                            for (Class<?> dataClass: ((DataProcessor) dataFlowNode).getDataProviderDataClasses())
+                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataProcessor) dataFlowNode).getDataProvider(dataClass)));
+                        else if (dataFlowNode instanceof DataService)
+                            for (Class<?> dataClass: ((DataService) dataFlowNode).getDataProviderDataClasses())
+                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataService) dataFlowNode).getDataProvider(dataClass)));
+                        else if (dataFlowNode instanceof DataStore)
+                            for (Class<?> dataClass: ((DataStore) dataFlowNode).getDataProviderDataClasses())
+                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataStore) dataFlowNode).getDataProvider(dataClass)));
                     }
-                    dataFlowDTO.setDataFlowLinks(dataFlowLinks);
+                    dataFlowDTO.setDataFlowNodeLinks(dataFlowNodeLinks);
                 }
                 else
                     throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
@@ -335,7 +348,17 @@ public class DataFlowWS
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
-    
+
+    private List<DataFlowNodeLinkDTO> getDataFlowLinks(DataProvider<?> dataProducer)
+    {
+        List<DataFlowNodeLinkDTO> dataFlowLinks = new LinkedList<DataFlowNodeLinkDTO>();
+
+        for (DataConsumer<?> dataConsumer: dataProducer.getDataConsumers())
+        	dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
+
+        return dataFlowLinks;
+    }
+
     @EJB(name="DataFlowInventory")
     private DataFlowInventory _dataFlowInventory;
 }

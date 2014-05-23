@@ -4,8 +4,11 @@
 
 package com.arjuna.databroker.data.spi;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
+
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataProvider;
@@ -23,12 +26,17 @@ public class DefaultDataProvider<T> implements DataProvider<T>
         return _dataFlowNode;
     }
 
+	public Collection<DataConsumer<T>> getDataConsumers()
+	{
+		return Collections.unmodifiableList(_dataConsumers);
+	}
+
     public void addDataConsumer(DataConsumer<T> dataConsumer)
     {
         _dataConsumers.add(dataConsumer);
     }
 
-    public void removeDataConsumer(DataConsumer<T> dataConsumer)
+	public void removeDataConsumer(DataConsumer<T> dataConsumer)
     {
         _dataConsumers.remove(dataConsumer);
     }

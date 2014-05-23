@@ -22,7 +22,7 @@ public class DataFlowDTO implements Serializable
         _properties            = null;
         _dataFlowNodes         = null;
         _dataFlowNodeFactories = null;
-        _dataFlowLinks         = null;
+        _dataFlowNodeLinks     = null;
     }
 
     public String getId()
@@ -75,14 +75,14 @@ public class DataFlowDTO implements Serializable
         _dataFlowNodeFactories = dataFlowNodeFactories;
     }
 
-    public List<DataFlowLinkDTO> getDataFlowLinks()
+    public List<DataFlowNodeLinkDTO> getDataFlowNodeLinks()
     {
-        return _dataFlowLinks;
+        return _dataFlowNodeLinks;
     }
 
-    public void setDataFlowLinks(List<DataFlowLinkDTO> dataFlowLinks)
+    public void setDataFlowNodeLinks(List<DataFlowNodeLinkDTO> dataFlowNodeLinks)
     {
-        _dataFlowLinks = dataFlowLinks;
+    	_dataFlowNodeLinks = dataFlowNodeLinks;
     }
 
     private String                       _id;
@@ -90,5 +90,5 @@ public class DataFlowDTO implements Serializable
     private PropertiesDTO                _properties;
     private List<DataFlowNodeDTO>        _dataFlowNodes;
     private List<DataFlowNodeFactoryDTO> _dataFlowNodeFactories;
-    private List<DataFlowLinkDTO>        _dataFlowLinks;
+    private List<DataFlowNodeLinkDTO>    _dataFlowNodeLinks;
 }

@@ -2,22 +2,22 @@
  * Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.control.comms;
+package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 
-public class DataFlowLinkDTO implements Serializable
+public class DataFlowNodeLinkVO implements Serializable
 {
-    private static final long serialVersionUID = 2409761182447148435L;
+	private static final long serialVersionUID = -8747057966712002057L;
 
-    public DataFlowLinkDTO()
+	public DataFlowNodeLinkVO()
     {
     }
 
-    public DataFlowLinkDTO(String sourceDataFlowNodeName, String sinkDataFlowNodeName)
+    public DataFlowNodeLinkVO(String sourceDataFlowNodeName, String sinkDataFlowNodeName)
     {
-        _sourceDataFlowNodeName = sourceDataFlowNodeName;
-        _sinkDataFlowNodeName   = sinkDataFlowNodeName;
+    	_sourceDataFlowNodeName = sourceDataFlowNodeName;
+    	_sinkDataFlowNodeName   = sinkDataFlowNodeName;
     }
 
     public String getSourceDataFlowNodeName()
