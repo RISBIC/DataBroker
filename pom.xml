@@ -50,12 +50,19 @@
         <module>webportal-ear</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>JBoss repository</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-dist</artifactId>
-                <version>7.1.1.Final</version>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-dist</artifactId>
+                <version>8.1.0.CR1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
