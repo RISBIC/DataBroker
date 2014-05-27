@@ -55,8 +55,6 @@ public interface DataFlowFactory
      * @return the list of property names required
      * @throws InvalidMetaPropertyException thrown if a meta property is invalid
      * @throws MissingMetaPropertyException thrown if a meta property is missing
-     * @throws InvalidPropertyException thrown if a property is invalid
-     * @throws MissingPropertyException thrown if a property is missing
      */
     public List<String> getPropertyNames(Map<String, String> metaProperties)
         throws InvalidMetaPropertyException, MissingMetaPropertyException;
