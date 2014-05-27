@@ -21,14 +21,6 @@
 
     <dependencies>
         <dependency>
-            <!-- Bodge for OpenShift -->
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
             <type>jar</type>
