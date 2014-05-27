@@ -40,6 +40,11 @@ public class DataFlowNodeLinkSummary implements Serializable
         _sinkDataFlowNodeName = sinkDataFlowNodeName;
     }
 
+    public String toString()
+    {
+    	return "(" + _sourceDataFlowNodeName + "->" + _sinkDataFlowNodeName + ")";
+    }
+
     private String _sourceDataFlowNodeName;
     private String _sinkDataFlowNodeName;
 }

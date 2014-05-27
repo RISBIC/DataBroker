@@ -188,9 +188,9 @@ public class DataFlowClient
         }
     }
 
-    public String getDataFlow(String serviceRootURL, String dataFlowId, Map<String, String> attributes, Map<String, String> properties, Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeFactorySummary> dataFlowNodeFactories, List<DataFlowNodeLinkSummary> dataFlowNodeLinks)
+    public String getDataFlow(String serviceRootURL, String dataFlowId, Map<String, String> attributes, Map<String, String> properties, Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeLinkSummary> dataFlowNodeLinks, List<DataFlowNodeFactorySummary> dataFlowNodeFactories)
     {
-        logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeFactories + ", " + dataFlowNodeLinks);
+        logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
         try
         {
@@ -224,15 +224,15 @@ public class DataFlowClient
                     dataFlowNodePropertiesMap.put(dataflowNode.getName(), dataFlowNodeProperties);
                 }
 
-                dataFlowNodeFactories.clear();
-                for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataFlow.getDataFlowNodeFactories())
-                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
-
                 dataFlowNodeLinks.clear();
                 for (DataFlowNodeLinkDTO dataFlowNodeLinkDTO: dataFlow.getDataFlowNodeLinks())
                 	dataFlowNodeLinks.add(new DataFlowNodeLinkSummary(dataFlowNodeLinkDTO.getSourceDataFlowNodeName(), dataFlowNodeLinkDTO.getSinkDataFlowNodeName()));
 
-                logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks);
+                dataFlowNodeFactories.clear();
+                for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataFlow.getDataFlowNodeFactories())
+                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+
+                logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
                 return dataFlow.getId();
             }

@@ -43,7 +43,6 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeAttributes     = null;
         _dataFlowNodeProperties     = null;
         _dataFlowNodeFactories      = null;
-        _dataFlowNodeLinks          = null;
         _sourceDataFlowNode         = null;
         _sinkDataFlowNode           = null;
 
@@ -182,22 +181,18 @@ public class DataFlowMO implements Serializable
             Map<String, String>              propertiesMap             = new HashMap<String, String>();
             Map<String, Map<String, String>> dataFlowNodeAttributesMap = new HashMap<String, Map<String, String>>();
             Map<String, Map<String, String>> dataFlowNodePropertiesMap = new HashMap<String, Map<String, String>>();
+            List<DataFlowNodeLinkSummary>    dataFlowNodeLinks         = new LinkedList<DataFlowNodeLinkSummary>();
             List<DataFlowNodeFactorySummary> dataFlowNodeFactories     = new LinkedList<DataFlowNodeFactorySummary>();
-            List<DataFlowNodeLinkSummary>        dataFlowNodeLinkSummary   = new LinkedList<DataFlowNodeLinkSummary>();
 
-            String id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeFactories, dataFlowNodeLinkSummary);
+            String id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeLinks, dataFlowNodeFactories);
 
             if (id != null)
             {
                 _attributes = PropertyVO.fromMap(attributesMap);
                 _properties = PropertyVO.fromMap(propertiesMap);
 
-                _dataFlowNodesJSON = dataFlowNodesToJSON(dataFlowNodeAttributesMap, dataFlowNodePropertiesMap);
+                _dataFlowNodesJSON = dataFlowNodesToJSON(dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeLinks);
                 logger.log(Level.FINER, "DataFlowMO.load - dataFlowNodesJSON = " + _dataFlowNodesJSON);
-
-                _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
-                for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
-                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
                 for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
@@ -213,7 +208,6 @@ public class DataFlowMO implements Serializable
                 _dataFlowNodeAttributes     = null;
                 _dataFlowNodeProperties     = null;
                 _dataFlowNodeFactories      = null;
-                _dataFlowNodeLinks          = null;
 
                 _errorMessage = "Unsuccessful query of DataBroker!";
             }
@@ -222,11 +216,12 @@ public class DataFlowMO implements Serializable
             _errorMessage = "Unable to query DataBroker";
     }
 
-    private String dataFlowNodesToJSON(Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap)
+    private String dataFlowNodesToJSON(Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeLinkSummary> dataFlowNodeLinks)
     {
         StringBuffer dataFlowNodesJSONBuffer = new StringBuffer();
 
-        dataFlowNodesJSONBuffer.append("'{ \"dataFlowNodes\": [ ");
+        dataFlowNodesJSONBuffer.append("'{ ");
+        dataFlowNodesJSONBuffer.append("\"dataFlowNodes\": [ ");
         boolean firstDataFlowNode = true;
         for (String dataFlowNodeName: dataFlowNodeAttributesMap.keySet())
         {
@@ -266,7 +261,28 @@ public class DataFlowMO implements Serializable
 
             dataFlowNodesJSONBuffer.append(" }");
         }
-        dataFlowNodesJSONBuffer.append(" ] }'");
+        dataFlowNodesJSONBuffer.append(" ], ");
+
+        dataFlowNodesJSONBuffer.append("\"dataFlowNodeLinks\": [ ");
+        boolean firstDataFlowNodeLink = true;
+        for (DataFlowNodeLinkSummary dataFlowNodeLink: dataFlowNodeLinks)
+        {
+            if (firstDataFlowNodeLink)
+            	firstDataFlowNodeLink = false;
+            else
+                dataFlowNodesJSONBuffer.append(", ");
+
+            dataFlowNodesJSONBuffer.append(" { ");
+            dataFlowNodesJSONBuffer.append("\"sourceDataFlowNodeName\": \"" + dataFlowNodeLink.getSourceDataFlowNodeName() + "\", ");
+            dataFlowNodesJSONBuffer.append("\"sinkDataFlowNodeName\": \"" + dataFlowNodeLink.getSinkDataFlowNodeName() + "\"");
+            dataFlowNodesJSONBuffer.append(" }");
+        }
+        dataFlowNodesJSONBuffer.append(" ]");
+
+        dataFlowNodesJSONBuffer.append(" }'");
+       
+        if (logger.isLoggable(Level.FINE))
+            logger.log(Level.FINE, "DataFlowMO.dataFlowNodesToJSON: <" + dataFlowNodesJSONBuffer.toString() + ">");
 
         return dataFlowNodesJSONBuffer.toString();
     }
@@ -282,7 +298,6 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeAttributes;
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
-    private List<DataFlowNodeLinkVO>           _dataFlowNodeLinks;
     private String                             _sourceDataFlowNode;
     private String                             _sinkDataFlowNode;
 

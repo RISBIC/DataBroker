@@ -227,6 +227,33 @@ DataFlowGlyph.prototype.itemAt = function(x, y)
     return item;
 }
 
+DataFlowGlyph.prototype.findDataFlowNodeByName = function(dataFlowNodeName)
+{
+    var item = null;
+
+    for (var index = 0; (item == null) && (index < this.stores.length); index++)
+        if (dataFlowNodeName == this.stores[index].name)
+        	item = this.stores[index];
+
+    for (var index = 0; (item == null) && (index < this.services.length); index++)
+        if (dataFlowNodeName == this.services[index].name)
+        	item = this.services[index];
+
+    for (var index = 0; (item == null) && (index < this.processors.length); index++)
+        if (dataFlowNodeName == this.processors[index].name)
+        	item = this.processors[index];
+
+    for (var index = 0; (item == null) && (index < this.sources.length); index++)
+        if (dataFlowNodeName == this.sources[index].name)
+        	item = this.sources[index];
+
+    for (var index = 0; (item == null) && (index < this.sinks.length); index++)
+        if (dataFlowNodeName == this.sinks[index].name)
+        	item = this.sinks[index];
+
+    return item;
+}
+
 DataFlowGlyph.load = function(dataFlow)
 {
     var dataFlowGlyph = new DataFlowGlyph();
@@ -251,6 +278,22 @@ DataFlowGlyph.load = function(dataFlow)
             alert("Problem: type = " + type + ", name = " + name);
     }
 
+    for (var index = 0; index < dataFlow.dataFlowNodeLinks.length; index++)
+    {
+        var dataFlowNodeLinks      = dataFlow.dataFlowNodeLinks[index];
+        var sourceDataFlowNodeName = dataFlowNodeLinks.sourceDataFlowNodeName;
+        var sinkDataFlowNodeName   = dataFlowNodeLinks.sinkDataFlowNodeName;
+
+        if (sourceDataFlowNodeName && sinkDataFlowNodeName)
+        {
+        	var sourceDataFlowNode = dataFlowGlyph.findDataFlowNodeByName(sourceDataFlowNodeName);
+            var sinkDataFlowNode   = dataFlowGlyph.findDataFlowNodeByName(sinkDataFlowNodeName);
+
+            if (sourceDataFlowNode && sinkDataFlowNode)
+            	dataFlowGlyph.links.push(new LinkGlyph(sourceDataFlowNode.producer, sinkDataFlowNode.consumer));
+        }
+    }
+
     return dataFlowGlyph;
 }
 
@@ -262,7 +305,7 @@ function SourceGlyph(name, parent)
     this.parent = parent;
 
     this.borderStyle = SourceGlyph.DEFAULT_BORDERSTYLE;
-    this.labelStyle  = SourceGlyph.DEFAULT_LABELSTYLE
+    this.labelStyle  = SourceGlyph.DEFAULT_LABELSTYLE;
     this.bodyStyle   = SourceGlyph.DEFAULT_BODYSTYLE;
 
     this.bodyX  = undefined;
@@ -344,7 +387,7 @@ function ProcessorGlyph(name, parent)
     this.parent = parent;
 
     this.borderStyle = ProcessorGlyph.DEFAULT_BORDERSTYLE;
-    this.labelStyle  = ProcessorGlyph.DEFAULT_LABELSTYLE
+    this.labelStyle  = ProcessorGlyph.DEFAULT_LABELSTYLE;
     this.bodyStyle   = ProcessorGlyph.DEFAULT_BODYSTYLE;
 
     this.bodyX  = undefined;
@@ -442,7 +485,7 @@ function SinkGlyph(name, parent)
     this.parent = parent;
 
     this.borderStyle = SinkGlyph.DEFAULT_BORDERSTYLE;
-    this.labelStyle  = SinkGlyph.DEFAULT_LABELSTYLE
+    this.labelStyle  = SinkGlyph.DEFAULT_LABELSTYLE;
     this.bodyStyle   = SinkGlyph.DEFAULT_BODYSTYLE;
 
     this.bodyX  = undefined;
@@ -524,7 +567,7 @@ function ServiceGlyph(name, parent)
     this.parent = parent;
 
     this.borderStyle = ServiceGlyph.DEFAULT_BORDERSTYLE;
-    this.labelStyle  = ServiceGlyph.DEFAULT_LABELSTYLE
+    this.labelStyle  = ServiceGlyph.DEFAULT_LABELSTYLE;
     this.bodyStyle   = ServiceGlyph.DEFAULT_BODYSTYLE;
 
     this.bodyX  = undefined;
@@ -606,7 +649,7 @@ function StoreGlyph(name, parent)
     this.parent = parent;
 
     this.borderStyle = SourceGlyph.DEFAULT_BORDERSTYLE;
-    this.labelStyle  = SourceGlyph.DEFAULT_LABELSTYLE
+    this.labelStyle  = SourceGlyph.DEFAULT_LABELSTYLE;
     this.bodyStyle   = SourceGlyph.DEFAULT_BODYSTYLE;
 
     this.bodyX  = undefined;
