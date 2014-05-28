@@ -144,6 +144,8 @@ public class DataFlowWS
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Problem while obtaining meta property names from data flow node factory: ", throwable);
+
                             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                         }
                     }
@@ -188,6 +190,8 @@ public class DataFlowWS
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Problem while obtaining property names from data flow node factory: ", throwable);
+
                             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                         }
                     }
@@ -236,6 +240,8 @@ public class DataFlowWS
                             }
                             catch (Throwable throwable)
                             {
+                                logger.log(Level.WARNING, "Problem while creating a data flow node: ", throwable);
+
                                 throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                             }
                         }
