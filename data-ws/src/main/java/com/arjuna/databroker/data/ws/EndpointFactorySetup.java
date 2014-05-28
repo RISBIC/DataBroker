@@ -11,7 +11,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 
-@Startup
+// @Startup
 @Singleton
 public class EndpointFactorySetup
 {

@@ -8,9 +8,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Singleton;
+
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.InvalidNameException;
@@ -44,11 +47,8 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     public List<String> getMetaPropertyNames()
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.getMetaPropertyNames");
-        List<String> metaPropertyNames = new LinkedList<String>();
 
-        metaPropertyNames.add("Type");
-
-        return metaPropertyNames;
+        return Collections.emptyList();
     }
 
     @Override
@@ -57,23 +57,14 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.getPropertyNames: " + metaProperties);
 
-        String type = metaProperties.get("Type");
-        if (type == null)
-            throw new MissingMetaPropertyException("Expected property called \"Type\"", "Type");
-        else if (type.equals("Standard"))
+        if (metaProperties.isEmpty())
             return Collections.emptyList();
-        else if (type.equalsIgnoreCase("3D"))
-        {
-            List<String> propertyNames = new LinkedList<String>();
-
-            propertyNames.add("Height");
-            propertyNames.add("Width");
-            propertyNames.add("Depth");
-
-            return propertyNames;
-        }
         else
-            throw new InvalidMetaPropertyException("Expected value for \"Type\": \"" + type + "\" expecting \"Standard\" or \"3D\"", "Type", type);
+        {
+            Entry<String, String> entry = metaProperties.entrySet().iterator().next();
+
+            throw new InvalidMetaPropertyException("Unexpected meta properties", entry.getKey(), entry.getValue());
+        }
     }
 
     @Override

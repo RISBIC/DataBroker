@@ -100,20 +100,6 @@ public class DataFlowFactoryWS
                         dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
                     _dataFlowInventory.addDataFlow(dataFlow);
 
-                    DataFlowNodeFactory dataFlowNodeFactory = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory("Endpoint Data Source Factory");
-                    if (dataFlowNodeFactory != null)
-                    {
-                        Map<String, String> dataFlowNodeMetaProperties = new HashMap<String, String>();
-
-                        Map<String, String> dataFlowNodeProperties = new HashMap<String, String>();
-                        dataFlowNodeProperties.put("TestPropName", "TestPropValue");
-
-                        DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory("Endpoint Data Source Factory").createDataFlowNode("Test Data Flow Node", DataSource.class, dataFlowNodeMetaProperties, dataFlowNodeProperties);
-                        dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
-                    }
-                    else
-                        logger.log(Level.WARNING, "GlobalDataFlowFactory.createDataFlow: Unable to find Data Flow Node Factory");
-
                     return dataFlow.getName();
                 }
                 catch (Throwable throwable)
