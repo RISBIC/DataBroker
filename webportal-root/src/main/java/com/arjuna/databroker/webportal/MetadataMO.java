@@ -57,7 +57,7 @@ public class MetadataMO implements Serializable
 
     public String doLoad(String serviceRootURL, String requesterId, String userId, String metadataId)
     {
-        logger.log(Level.INFO, "MetadataMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId + ", " + metadataId);
+        logger.log(Level.FINE, "MetadataMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId + ", " + metadataId);
         try
         {
             String content = _metadataClient.getContent(serviceRootURL, requesterId, userId, metadataId);

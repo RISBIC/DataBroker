@@ -281,8 +281,8 @@ public class DataFlowMO implements Serializable
 
         dataFlowNodesJSONBuffer.append(" }'");
        
-        if (logger.isLoggable(Level.FINE))
-            logger.log(Level.FINE, "DataFlowMO.dataFlowNodesToJSON: <" + dataFlowNodesJSONBuffer.toString() + ">");
+        if (logger.isLoggable(Level.FINER))
+            logger.log(Level.FINER, "DataFlowMO.dataFlowNodesToJSON: <" + dataFlowNodesJSONBuffer.toString() + ">");
 
         return dataFlowNodesJSONBuffer.toString();
     }

@@ -84,7 +84,7 @@ public class DataViewMO implements Serializable
 
     public String doLoad(String serviceRootURL, String requesterId, String userId)
     {
-        logger.log(Level.INFO, "DataViewMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
+        logger.log(Level.FINE, "DataViewMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
         try
         {
             _serviceRootURL = serviceRootURL;

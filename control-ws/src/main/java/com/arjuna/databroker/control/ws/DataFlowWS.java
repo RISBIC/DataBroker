@@ -55,7 +55,7 @@ public class DataFlowWS
     @Produces(MediaType.APPLICATION_JSON)
     public FactoryNamesDTO getDataFlowNodeClassNamesJSON(@PathParam("dataflowid") String dataFlowId)
     {
-        logger.log(Level.INFO, "DataFlowWS.getDataFlowNodeClassNamesJSON: " + dataFlowId);
+        logger.log(Level.FINE, "DataFlowWS.getDataFlowNodeClassNamesJSON: " + dataFlowId);
 
         if (_dataFlowInventory != null)
         {
@@ -87,7 +87,7 @@ public class DataFlowWS
     @Produces(MediaType.APPLICATION_JSON)
     public FactoryNamesDTO getFactoryNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName)
     {
-        logger.log(Level.INFO, "DataFlowWS.getFactoryNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName);
+        logger.log(Level.FINE, "DataFlowWS.getFactoryNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName);
 
         if (_dataFlowInventory != null)
         {
@@ -123,7 +123,7 @@ public class DataFlowWS
     public PropertyNamesDTO getMetaPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName)
         throws InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.getMetaPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName);
+        logger.log(Level.FINE, "DataFlowWS.getMetaPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName);
 
         if (_dataFlowInventory != null)
         {
@@ -167,7 +167,7 @@ public class DataFlowWS
     public PropertyNamesDTO getPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, PropertiesDTO metaProperties)
         throws InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.getPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName + ", " + metaProperties);
+        logger.log(Level.FINE, "DataFlowWS.getPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName + ", " + metaProperties);
 
         if (_dataFlowInventory != null)
         {
@@ -211,7 +211,7 @@ public class DataFlowWS
     public String createDataFlowNodeJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, @QueryParam("name") String name, CreatePropertiesDTO createProperties)
         throws InvalidNameException, InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.createDataFlowNodeJSON: " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName + ", " + name + ", " + createProperties);
+        logger.log(Level.FINE, "DataFlowWS.createDataFlowNodeJSON: " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName + ", " + name + ", " + createProperties);
 
         if (_dataFlowInventory != null)
         {

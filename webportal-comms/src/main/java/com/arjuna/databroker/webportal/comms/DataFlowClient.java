@@ -36,7 +36,7 @@ public class DataFlowClient
 
     public List<String> getDataFlowNodeClassNames(String serviceRootURL, String dataflowId, String factoryName)
     {
-        logger.fine("DataFlowClient.getDataFlowNodeClassNames: " + serviceRootURL + ", " + dataflowId + ", " + factoryName);
+    	logger.log(Level.FINE, "DataFlowClient.getDataFlowNodeClassNames: " + serviceRootURL + ", " + dataflowId + ", " + factoryName);
 
         try
         {
@@ -66,7 +66,7 @@ public class DataFlowClient
 
     public List<String> getFactoryNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName)
     {
-        logger.fine("DataFlowClient.getFactoryNames: " + serviceRootURL + ", " + dataFlowId);
+    	logger.log(Level.FINE, "DataFlowClient.getFactoryNames: " + serviceRootURL + ", " + dataFlowId);
 
         try
         {
@@ -96,7 +96,7 @@ public class DataFlowClient
 
     public List<String> getMetaPropertyNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName)
     {
-        logger.info("DataFlowClient.getMetaPropertyNames: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName);
+        logger.log(Level.FINE, "DataFlowClient.getMetaPropertyNames: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName);
 
         try
         {
@@ -127,7 +127,7 @@ public class DataFlowClient
 
     public List<String> getPropertyNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName, Map<String, String> metaProperties)
     {
-        logger.fine("DataFlowClient.getPropertyNames: " + serviceRootURL + ", " + dataFlowId + "," + dataFlowNodeClassName + "," + factoryName + "," + metaProperties);
+    	logger.log(Level.FINE, "DataFlowClient.getPropertyNames: " + serviceRootURL + ", " + dataFlowId + "," + dataFlowNodeClassName + "," + factoryName + "," + metaProperties);
 
         try
         {
@@ -158,7 +158,7 @@ public class DataFlowClient
 
     public String createDataFlowNode(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName, Map<String, String> metaProperties, String name, Map<String, String> properties)
     {
-        logger.fine("DataFlowClient.createDataFlowNode: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName +  ", "  + factoryName + ", " + metaProperties + ", " + name + ", " + properties);
+    	logger.log(Level.FINE, "DataFlowClient.createDataFlowNode: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName +  ", "  + factoryName + ", " + metaProperties + ", " + name + ", " + properties);
 
         try
         {
@@ -190,7 +190,7 @@ public class DataFlowClient
 
     public String getDataFlow(String serviceRootURL, String dataFlowId, Map<String, String> attributes, Map<String, String> properties, Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeLinkSummary> dataFlowNodeLinks, List<DataFlowNodeFactorySummary> dataFlowNodeFactories)
     {
-        logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
+    	logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
         try
         {
@@ -232,7 +232,7 @@ public class DataFlowClient
                 for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataFlow.getDataFlowNodeFactories())
                     dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
-                logger.fine("DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
+                logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
                 return dataFlow.getId();
             }

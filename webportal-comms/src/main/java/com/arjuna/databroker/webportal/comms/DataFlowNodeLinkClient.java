@@ -20,7 +20,7 @@ public class DataFlowNodeLinkClient
 
     public String createDataFlowNodeLink(String serviceRootURL, String dataFlowId, String sourceDataFlowNodeId, String sinkDataFlowNodeId)
     {
-        logger.fine("DataFlowNodeLinkClient.createDataFlowNodeLink: " + serviceRootURL + ", " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
+    	logger.log(Level.FINE, "DataFlowNodeLinkClient.createDataFlowNodeLink: " + serviceRootURL + ", " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
 
         try
         {
@@ -51,7 +51,7 @@ public class DataFlowNodeLinkClient
 
     public boolean removeDataFlowNodeLink(String serviceRootURL, String dataFlowId, String sourceDataFlowNodeId, String sinkDataFlowNodeId)
     {
-        logger.fine("DataFlowNodeLinkClient.removeDataFlowNodeLink: " + serviceRootURL + ", " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
+    	logger.log(Level.FINE, "DataFlowNodeLinkClient.removeDataFlowNodeLink: " + serviceRootURL + ", " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
 
         try
         {

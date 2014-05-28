@@ -28,7 +28,7 @@ public class MetadataClient
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
 
-                logger.log(Level.INFO, "MetaDataWS URL: \"" + request.getUri() + "\"");
+                logger.log(Level.FINE, "MetaDataWS URL: \"" + request.getUri() + "\"");
 
                 ClientResponse<List<String>> response = request.get(new GenericType<List<String>>() {});
 

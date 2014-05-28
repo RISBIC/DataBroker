@@ -4,7 +4,9 @@
 
 package com.arjuna.databroker.metadata.store;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -22,7 +24,7 @@ public class MetadataUtils
 
     public String getContent(String id)
     {
-        logger.fine("MetadataUtils.getContent: \"" + id + "\"");
+    	logger.log(Level.FINE, "MetadataUtils.getContent: \"" + id + "\"");
 
         try
         {
@@ -42,7 +44,7 @@ public class MetadataUtils
 
     public boolean setContent(String id, String content)
     {
-        logger.fine("MetadataUtils.setContent: \"" + id + "\"");
+    	logger.log(Level.FINE, "MetadataUtils.setContent: \"" + id + "\"");
 
         try
         {
@@ -67,7 +69,7 @@ public class MetadataUtils
 
     public String createChild(String parentId, String content)
     {
-        logger.fine("MetadataUtils.setContent: \"" + parentId + "\"");
+    	logger.log(Level.FINE, "MetadataUtils.setContent: \"" + parentId + "\"");
 
         try
         {
