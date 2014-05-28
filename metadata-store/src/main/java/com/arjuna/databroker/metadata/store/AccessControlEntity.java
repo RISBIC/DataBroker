@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class AccessControlEntity implements Serializable
 {
-    private static final long serialVersionUID = 6595365591149062175L;
+    private static final long serialVersionUID = -396262545228429102L;
 
     public AccessControlEntity()
     {

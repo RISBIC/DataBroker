@@ -6,7 +6,7 @@ package com.arjuna.databroker.data;
 
 public class InvalidMetaPropertyException extends Exception
 {
-    private static final long serialVersionUID = -4250867381387567203L;
+    private static final long serialVersionUID = 3982639730236754146L;
 
     public InvalidMetaPropertyException(String reason, String propertyName, String propertyValue)
     {

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class DataFlowNodeVO implements Serializable
 {
-    private static final long serialVersionUID = -2269934804224020901L;
+    private static final long serialVersionUID = -5484820596283701590L;
 
     public DataFlowNodeVO()
     {

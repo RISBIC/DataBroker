@@ -17,7 +17,7 @@ import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 @ManagedBean(name="databrokerconnection")
 public class DataBrokerConnectionMO implements Serializable
 {
-    private static final long serialVersionUID = 5608639674146189356L;
+    private static final long serialVersionUID = 4978082246302656043L;
 
     private static final Logger logger = Logger.getLogger(DataBrokerConnectionMO.class.getName());
 
