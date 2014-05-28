@@ -74,7 +74,7 @@ public class EndpointWS
     @Consumes(MediaType.APPLICATION_JSON)
     public void receiveDataJSON(@PathParam("dataFlowId") String dataFlowId, @PathParam("dataSourceId") String dataSourceId, String data)
     {
-    	logger.log(Level.FINE, "receiveDataJSON: " + dataFlowId + ", " + dataSourceId);
+        logger.log(Level.FINE, "receiveDataJSON: " + dataFlowId + ", " + dataSourceId);
         if (_dataFlowInventory != null)
         {
             DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);

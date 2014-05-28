@@ -35,21 +35,21 @@ public abstract class AbstractDataFlowNodeFactoryInventory implements DataFlowNo
 
     public void addDataFlowNodeFactory(DataFlowNodeFactory dataFlowNodeFactory)
     {
-    	logger.log(Level.FINE, "addDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
+        logger.log(Level.FINE, "addDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
 
         _inventory.put(dataFlowNodeFactory.getName(), dataFlowNodeFactory);
     }
 
     public boolean removeDataFlowNodeFactory(String name)
     {
-    	logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + name + "'");
+        logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + name + "'");
 
         return _inventory.remove(name) != null;
     }
 
     public boolean removeDataFlowNodeFactory(DataFlowNodeFactory dataFlowNodeFactory)
     {
-    	logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
+        logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
 
         return _inventory.remove(dataFlowNodeFactory.getName()) != null;
     }

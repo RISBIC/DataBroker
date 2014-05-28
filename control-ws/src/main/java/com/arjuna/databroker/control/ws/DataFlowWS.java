@@ -299,16 +299,16 @@ public class DataFlowWS
                     {
                         if (dataFlowNode instanceof DataSource)
                             for (Class<?> dataClass: ((DataSource) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataSource) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataSource) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataProcessor)
                             for (Class<?> dataClass: ((DataProcessor) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataProcessor) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataProcessor) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataService)
                             for (Class<?> dataClass: ((DataService) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataService) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataService) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataStore)
                             for (Class<?> dataClass: ((DataStore) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataStore) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataStore) dataFlowNode).getDataProvider(dataClass)));
                     }
                     dataFlowDTO.setDataFlowNodeLinks(dataFlowNodeLinks);
                 }
@@ -354,7 +354,7 @@ public class DataFlowWS
         List<DataFlowNodeLinkDTO> dataFlowLinks = new LinkedList<DataFlowNodeLinkDTO>();
 
         for (DataConsumer<?> dataConsumer: dataProducer.getDataConsumers())
-        	dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
+            dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
 
         return dataFlowLinks;
     }

@@ -268,7 +268,7 @@ public class DataFlowMO implements Serializable
         for (DataFlowNodeLinkSummary dataFlowNodeLink: dataFlowNodeLinks)
         {
             if (firstDataFlowNodeLink)
-            	firstDataFlowNodeLink = false;
+                firstDataFlowNodeLink = false;
             else
                 dataFlowNodesJSONBuffer.append(", ");
 

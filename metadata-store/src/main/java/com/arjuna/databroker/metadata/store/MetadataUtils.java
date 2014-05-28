@@ -24,7 +24,7 @@ public class MetadataUtils
 
     public String getContent(String id)
     {
-    	logger.log(Level.FINE, "MetadataUtils.getContent: \"" + id + "\"");
+        logger.log(Level.FINE, "MetadataUtils.getContent: \"" + id + "\"");
 
         try
         {
@@ -44,7 +44,7 @@ public class MetadataUtils
 
     public boolean setContent(String id, String content)
     {
-    	logger.log(Level.FINE, "MetadataUtils.setContent: \"" + id + "\"");
+        logger.log(Level.FINE, "MetadataUtils.setContent: \"" + id + "\"");
 
         try
         {
@@ -69,7 +69,7 @@ public class MetadataUtils
 
     public String createChild(String parentId, String content)
     {
-    	logger.log(Level.FINE, "MetadataUtils.setContent: \"" + parentId + "\"");
+        logger.log(Level.FINE, "MetadataUtils.setContent: \"" + parentId + "\"");
 
         try
         {

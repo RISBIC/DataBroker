@@ -27,7 +27,7 @@ public class DataBrokerUtils
 
     public List<DataBrokerEntity> listDataBrokers()
     {
-    	logger.log(Level.FINE, "DataBrokerUtils.listDataBrokers");
+        logger.log(Level.FINE, "DataBrokerUtils.listDataBrokers");
 
         try
         {
@@ -44,7 +44,7 @@ public class DataBrokerUtils
 
     public void createDataBroker(String name, String summary, String serviceRootURL, String requesterId)
     {
-    	logger.log(Level.FINE, "DataBrokerUtils.createDataBroker: " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
+        logger.log(Level.FINE, "DataBrokerUtils.createDataBroker: " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = new DataBrokerEntity(name, summary, serviceRootURL, requesterId);
 
@@ -55,14 +55,14 @@ public class DataBrokerUtils
 
     public DataBrokerEntity retrieveDataBroker(String id)
     {
-    	logger.log(Level.FINE, "DataBrokerUtils.retrieveDataBroker: " + id);
+        logger.log(Level.FINE, "DataBrokerUtils.retrieveDataBroker: " + id);
 
         return _entityManager.find(DataBrokerEntity.class, id);
     }
 
     public void replaceDataBroker(String id, String name, String summary, String serviceRootURL, String requesterId)
     {
-    	logger.log(Level.FINE, "DataBrokerUtils.replaceDataBroker: " + id + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
+        logger.log(Level.FINE, "DataBrokerUtils.replaceDataBroker: " + id + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
         dataBroker.setName(name);
@@ -75,7 +75,7 @@ public class DataBrokerUtils
 
     public void removeDataBroker(String id)
     {
-    	logger.log(Level.FINE, "DataBrokerUtils.removeDataBroker: " + id);
+        logger.log(Level.FINE, "DataBrokerUtils.removeDataBroker: " + id);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
 

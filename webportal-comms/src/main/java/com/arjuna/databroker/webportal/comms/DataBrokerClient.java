@@ -24,7 +24,7 @@ public class DataBrokerClient
 
     public DataBrokerSummary getDataBrokerSummaries(String serviceRootURL)
     {
-    	logger.log(Level.FINE, "DataBrokerClient.getDataBrokerSummaries: " + serviceRootURL);
+        logger.log(Level.FINE, "DataBrokerClient.getDataBrokerSummaries: " + serviceRootURL);
 
         try
         {
