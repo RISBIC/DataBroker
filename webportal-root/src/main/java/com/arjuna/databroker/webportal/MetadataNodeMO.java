@@ -36,6 +36,11 @@ public class MetadataNodeMO implements Serializable
         return _name;
     }
 
+    public String getResourceURI()
+    {
+        return _resourceURI;
+    }
+
     public String getTitle()
     {
         return _title;
@@ -75,7 +80,7 @@ public class MetadataNodeMO implements Serializable
 
             _name = abstractTreeNode.getName();
 
-            logger.log(Level.INFO, "Name = \"" + _name + "\"");
+            _resourceURI = resource.getURI();
 
             if (titleStatement != null)
                 _title = titleStatement.getString();
@@ -95,16 +100,18 @@ public class MetadataNodeMO implements Serializable
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem while processing rdf", throwable);
-            _name    = "";
-            _title   = "";
-            _summary = "";
-            _details = "";
+            _name        = "";
+            _resourceURI = "";
+            _title       = "";
+            _summary     = "";
+            _details     = "";
         }
 
         tree.setRowKey(key);
     }
 
     private String _name;
+    private String _resourceURI;
     private String _title;
     private String _summary;
     private String _details;

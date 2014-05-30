@@ -47,12 +47,12 @@
                     <h:panelGroup styleClass="metadatanode-title" layout="block">
                         <h:outputText styleClass="metadatanode-title" value="Data View Description"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{empty metadata.errorMessage}">
+                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{empty metadatanodeedit.errorMessage}">
                         <h:outputText styleClass="metadatanode-message" value="Update to Data View completed successfully."/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{not empty metadata.errorMessage}">
+                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{not empty metadatanodeedit.errorMessage}">
                         <h:outputText styleClass="metadatanode-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="metadatanode-error-message" value="#{metadata.errorMessage}"/>
+                        <h:outputText styleClass="metadatanode-error-message" value="#{metadatanodeedit.errorMessage}"/>
                     </h:panelGroup>
                     <h:panelGrid id="metadatanode" styleClass="metadatanode-description" columnClasses="metadatanode-descriptionlabels,metadatanode-descriptionvalues" columns="2" border="0" cellpadding="0" cellspacing="1em">
                         <h:outputText styleClass="metadatanode-descriptionlabel" value="Title: "/>

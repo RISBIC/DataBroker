@@ -153,12 +153,12 @@ public class ContentWS
     {
         try
         {
-            if ((requesterId == null) || (userId == null))
+            if ((requesterId == null) && (userId == null))
                 logger.log(Level.WARNING, "putMetadata: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
             
             if (_accessControlUtils.canUpdate(id, requesterId, userId))
             {
-                if (_metadataUtils.setContent(id, content))
+                if (! _metadataUtils.setContent(id, content))
                     logger.log(Level.WARNING, "putMetadata: Can't be replaced");
             }
             else

@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.util.GenericType;
+import org.jboss.resteasy.util.HttpResponseCodes;
 
 @Stateless
 public class MetadataClient
@@ -32,7 +34,7 @@ public class MetadataClient
 
                 ClientResponse<List<String>> response = request.get(new GenericType<List<String>>() {});
 
-                if (response.getStatus() == 200)
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
                     metadataIds = response.getEntity();
                 else
                     logger.log(Level.WARNING, "Problem in 'listMetadata' getting entity " + response.getStatus());
@@ -62,13 +64,13 @@ public class MetadataClient
 
                 ClientResponse<String> response = request.get(new GenericType<String>() {});
 
-                if (response.getStatus() == 200)
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
                     content =  response.getEntity();
                 else
                     logger.log(Level.WARNING, "Problem in 'getContent' getting entity " + response.getStatus());
             }
             else
-                logger.log(Level.WARNING, "Invalid parameter for in 'getContent' getting content");
+                logger.log(Level.WARNING, "Invalid parameter in 'getContent' for getting content");
         }
         catch (Throwable throwable)
         {
@@ -76,5 +78,35 @@ public class MetadataClient
         }
 
         return content;
+    }
+
+    public boolean setContent(String serviceRootURL, String requesterId, String userId, String metadataId, String content)
+    {
+        try
+        {
+            if ((serviceRootURL != null) && (requesterId != null) && (userId != null) && (metadataId != null))
+            {
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/content/{metadataid}");
+                request.pathParameter("metadataid", metadataId);
+                request.queryParameter("requesterid", requesterId);
+                request.queryParameter("userId", userId);
+                request.body(MediaType.TEXT_PLAIN, content);
+
+                ClientResponse<String> response = request.put(new GenericType<String>() {});
+
+                if (response.getStatus() != HttpResponseCodes.SC_OK)
+                    logger.log(Level.WARNING, "Problem in 'setContent' getting entity " + response.getStatus());
+                else
+                    return true;
+            }
+            else
+                logger.log(Level.WARNING, "Invalid parameter in 'setContent' for setting content");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'setContent'", throwable);
+        }
+
+        return false;
     }
 }
