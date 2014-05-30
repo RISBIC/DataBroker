@@ -41,6 +41,10 @@ div.metadatanode-error
 	padding:		0;
 }
 
+span.metadatanode-message
+{
+}
+
 span.metadatanode-error-title
 {
 	font-weight:		bold;
