@@ -5,10 +5,8 @@
 package com.arjuna.databroker.control.ws;
 
 import java.net.HttpURLConnection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -29,10 +27,8 @@ import com.arjuna.databroker.control.comms.PropertyNamesDTO;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowInventory;
-import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
-import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;

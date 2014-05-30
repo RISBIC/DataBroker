@@ -7,6 +7,7 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,6 +29,11 @@ public class MetadataNodeMO implements Serializable
 
     public MetadataNodeMO()
     {
+    }
+
+    public String getName()
+    {
+        return _name;
     }
 
     public String getTitle()
@@ -67,6 +73,10 @@ public class MetadataNodeMO implements Serializable
             Statement summaryStatement = resource.getProperty(hasSummary);
             Statement detailsStatement = resource.getProperty(hasDetails);
 
+            _name = abstractTreeNode.getName();
+
+            logger.log(Level.INFO, "Name = \"" + _name + "\"");
+
             if (titleStatement != null)
                 _title = titleStatement.getString();
             else
@@ -84,7 +94,8 @@ public class MetadataNodeMO implements Serializable
         }
         catch (Throwable throwable)
         {
-            throwable.printStackTrace();
+            logger.log(Level.WARNING, "Problem while processing rdf", throwable);
+            _name    = "";
             _title   = "";
             _summary = "";
             _details = "";
@@ -93,6 +104,7 @@ public class MetadataNodeMO implements Serializable
         tree.setRowKey(key);
     }
 
+    private String _name;
     private String _title;
     private String _summary;
     private String _details;

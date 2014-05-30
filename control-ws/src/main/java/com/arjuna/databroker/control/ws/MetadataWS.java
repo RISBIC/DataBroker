@@ -34,6 +34,7 @@ public class MetadataWS
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> listMetadata(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
     {
+        logger.log(Level.FINE, "MetadataWS.listMetadata: [" + requesterId + "][" + userId + "]");
         try
         {
             if ((requesterId == null) && (userId != null))
@@ -64,7 +65,7 @@ public class MetadataWS
     {
         try
         {
-            logger.log(Level.WARNING, "getMetadata: Reading [" + id + "][" + requesterId + "][" + requesterId + "]");
+            logger.log(Level.FINE, "MetadataWS.getMetadata [" + id + "][" + requesterId + "][" + userId + "]");
             if (_accessControlUtils.canRead(id, requesterId, userId))
             {
                 String content = _metadataUtils.getContent(id);
@@ -95,6 +96,8 @@ public class MetadataWS
     @Consumes(MediaType.APPLICATION_JSON)
     public String postMetadata(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, String content)
     {
+        logger.log(Level.FINE, "MetadataWS.postMetadata [" + requesterId + "][" + userId + "]");
+
         if ((requesterId == null) || (userId == null))
         {
             logger.log(Level.WARNING, "postMetadata: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
@@ -123,6 +126,8 @@ public class MetadataWS
     @Consumes(MediaType.APPLICATION_JSON)
     public String postMetadata(@QueryParam("parentid") String parentId, @QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, String content)
     {
+        logger.log(Level.FINE, "MetadataWS.postMetadata [" + parentId + "][" + requesterId + "][" + userId + "]");
+
         try
         {
             if ((parentId == null) || (requesterId == null) || (userId == null))
@@ -151,6 +156,8 @@ public class MetadataWS
     @Consumes(MediaType.TEXT_PLAIN)
     public void putMetadata(@PathParam("id") String id, @QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, String content)
     {
+        logger.log(Level.FINE, "MetadataWS.putMetadata [" + id + "][" + requesterId + "][" + userId + "]");
+
         try
         {
             if ((requesterId == null) || (userId == null))

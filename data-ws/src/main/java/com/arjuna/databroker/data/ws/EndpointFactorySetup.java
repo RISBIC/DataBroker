@@ -8,7 +8,7 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
+// import javax.ejb.Startup;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 
 // @Startup

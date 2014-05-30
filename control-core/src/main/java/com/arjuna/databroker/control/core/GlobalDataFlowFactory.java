@@ -5,15 +5,12 @@
 package com.arjuna.databroker.control.core;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.Singleton;
-
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.InvalidNameException;

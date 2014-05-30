@@ -7,16 +7,13 @@ package com.arjuna.databroker.webportal;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
-import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
 import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
@@ -55,12 +52,75 @@ public class MetadataMO implements Serializable
         _errorMessage = errorMessage;
     }
 
+    public String getServiceRootURL()
+    {
+        return _serviceRootURL;
+    }
+
+    public void setServiceRootURL(String serviceRootURL)
+    {
+        _serviceRootURL = serviceRootURL;
+    }
+
+    public String getRequesterId()
+    {
+        return _requesterId;
+    }
+
+    public void setRequesterId(String requesterId)
+    {
+        _requesterId = requesterId;
+    }
+
+    public String getUserId()
+    {
+        return _userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        _userId = userId;
+    }
+
+    public String getMetadataId()
+    {
+        return _metadataId;
+    }
+
+    public void setMetadataId(String metadataId)
+    {
+        _metadataId = metadataId;
+    }
+
     public String doLoad(String serviceRootURL, String requesterId, String userId, String metadataId)
     {
         logger.log(Level.FINE, "MetadataMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId + ", " + metadataId);
+
+        _serviceRootURL = serviceRootURL;
+        _requesterId    = requesterId;
+        _userId         = userId;
+        _metadataId     = metadataId;
+
+        load();
+
+        return "metadata?faces-redirect=true";
+    }
+
+    public String doReload()
+    {
+        logger.log(Level.FINE, "MetadataMO.doReload: " + _serviceRootURL + ", " + _requesterId + ", " + _userId + ", " + _metadataId);
+
+        load();
+
+        return "metadata?faces-redirect=true";
+    }
+
+    private void load()
+    {
+        logger.log(Level.FINE, "MetadataMO.load");
         try
         {
-            String content = _metadataClient.getContent(serviceRootURL, requesterId, userId, metadataId);
+            String content = _metadataClient.getContent(_serviceRootURL, _requesterId, _userId, _metadataId);
 
             if (content != null)
             {
@@ -94,14 +154,16 @@ public class MetadataMO implements Serializable
             _rootNodes.clear();
             _errorMessage = "Problem occured while generating presentation of metadata";
         }
-
-        return "metadata?faces-redirect=true";
     }
 
     private Model _model;
 
     private List<AbstractTreeNode> _rootNodes;
     private String                 _errorMessage;
+    private String                 _serviceRootURL;
+    private String                 _requesterId;
+    private String                 _userId;
+    private String                 _metadataId;
 
     @EJB
     private MetadataClient _metadataClient;
