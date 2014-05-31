@@ -56,6 +56,15 @@ public class MetadataNodeMO implements Serializable
         return _details;
     }
 
+    public void clearSelection()
+    {
+        _name        = "";
+        _resourceURI = "";
+        _title       = "";
+        _summary     = "";
+        _details     = "";
+    }
+
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent)
     {
         List<Object> selection    = new ArrayList<Object>(selectionChangeEvent.getNewSelection());

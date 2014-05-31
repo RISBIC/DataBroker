@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
 import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
@@ -92,6 +93,16 @@ public class MetadataMO implements Serializable
         _metadataId = metadataId;
     }
 
+    public MetadataNodeMO getMetadataNode()
+    {
+        return _metadataNode;
+    }
+
+    public void getMetadataNode(MetadataNodeMO metadataNode)
+    {
+        _metadataNode = metadataNode;
+    }
+
     public String doLoad(String serviceRootURL, String requesterId, String userId, String metadataId)
     {
         logger.log(Level.FINE, "MetadataMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId + ", " + metadataId);
@@ -120,6 +131,8 @@ public class MetadataMO implements Serializable
         logger.log(Level.FINE, "MetadataMO.load");
         try
         {
+            _metadataNode.clearSelection();
+
             String content = _metadataClient.getContent(_serviceRootURL, _requesterId, _userId, _metadataId);
 
             if (content != null)
@@ -164,6 +177,9 @@ public class MetadataMO implements Serializable
     private String                 _requesterId;
     private String                 _userId;
     private String                 _metadataId;
+
+    @ManagedProperty(value="#{metadatanode}")
+    private MetadataNodeMO _metadataNode;
 
     @EJB
     private MetadataClient _metadataClient;
