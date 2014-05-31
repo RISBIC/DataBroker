@@ -149,7 +149,8 @@ public class ContentWS
     @PUT
     @Path("/content/{id}")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void putMetadata(@PathParam("id") String id, @QueryParam("requesterId") String requesterId, @QueryParam("userId") String userId, String content)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean putMetadata(@PathParam("id") String id, @QueryParam("requesterId") String requesterId, @QueryParam("userId") String userId, String content)
     {
         try
         {
@@ -160,6 +161,8 @@ public class ContentWS
             {
                 if (! _metadataUtils.setContent(id, content))
                     logger.log(Level.WARNING, "putMetadata: Can't be replaced");
+                else
+                    return true;
             }
             else
                 logger.log(Level.WARNING, "putMetadata: Can't be access");
@@ -168,6 +171,8 @@ public class ContentWS
         {
             logger.log(Level.WARNING, "putMetadata: Problem in 'putMetadata'", throwable);
         }
+        
+        return false;
     }
 
     @EJB

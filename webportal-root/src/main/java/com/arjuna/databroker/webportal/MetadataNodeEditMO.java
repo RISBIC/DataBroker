@@ -133,7 +133,7 @@ public class MetadataNodeEditMO implements Serializable
         _metadataId     = metadataId;
         _resourceURI    = resourceURI;
 
-        logger.log(Level.INFO, "doEdit: resourceURI = " + _resourceURI);
+        _errorMessage = null;
 
         _title   = title;
         _summary = summary;

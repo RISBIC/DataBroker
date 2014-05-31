@@ -92,12 +92,12 @@ public class MetadataClient
                 request.queryParameter("userId", userId);
                 request.body(MediaType.TEXT_PLAIN, content);
 
-                ClientResponse<String> response = request.put(new GenericType<String>() {});
+                ClientResponse<Boolean> response = request.put(new GenericType<Boolean>() {});
 
-                if (response.getStatus() != HttpResponseCodes.SC_OK)
-                    logger.log(Level.WARNING, "Problem in 'setContent' getting entity " + response.getStatus());
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
+                    return response.getEntity();
                 else
-                    return true;
+                    logger.log(Level.WARNING, "Problem in 'setContent' getting entity " + response.getStatus());
             }
             else
                 logger.log(Level.WARNING, "Invalid parameter in 'setContent' for setting content");
