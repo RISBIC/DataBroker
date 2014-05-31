@@ -98,7 +98,7 @@ public class MetadataMO implements Serializable
         return _metadataNode;
     }
 
-    public void getMetadataNode(MetadataNodeMO metadataNode)
+    public void setMetadataNode(MetadataNodeMO metadataNode)
     {
         _metadataNode = metadataNode;
     }
@@ -178,7 +178,7 @@ public class MetadataMO implements Serializable
     private String                 _userId;
     private String                 _metadataId;
 
-    @ManagedProperty(value="#{metadatanode}")
+    @ManagedProperty(name="metadataNode", value="#{metadatanode}")
     private MetadataNodeMO _metadataNode;
 
     @EJB

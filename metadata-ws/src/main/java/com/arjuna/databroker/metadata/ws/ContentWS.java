@@ -154,8 +154,11 @@ public class ContentWS
     {
         try
         {
-            if ((requesterId == null) || (userId == null))
-                logger.log(Level.WARNING, "putMetadata: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
+            if (requesterId == null)
+            {
+                logger.log(Level.WARNING, "putMetadata: Invalid parameters: requesterId=[" + requesterId + "]");
+                return false;
+            }
             
             if (_accessControlUtils.canUpdate(id, requesterId, userId))
             {
