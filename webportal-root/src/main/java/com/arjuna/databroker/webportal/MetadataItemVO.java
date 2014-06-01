@@ -5,10 +5,7 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class MetadataItemVO implements Serializable
 {
@@ -16,14 +13,13 @@ public class MetadataItemVO implements Serializable
 
     public MetadataItemVO()
     {
-        _name  = null;
-        _value = null;
     }
 
-    public MetadataItemVO(String name, String value)
+    public MetadataItemVO(String name, String value, List<MetadataItemVO> items)
     {
         _name  = name;
         _value = value;
+        _items = items;
     }
 
     public String getName()
@@ -46,36 +42,17 @@ public class MetadataItemVO implements Serializable
         _value = value;
     }
 
-    public static Map<String, String> toMap(List<MetadataItemVO> properties)
+    public List<MetadataItemVO> getItems()
     {
-        if (properties != null)
-        {
-            Map<String, String> map = new HashMap<String, String>();
-
-            for (MetadataItemVO property: properties)
-                map.put(property.getName(), property.getValue());
-
-            return map;
-        }
-        else
-            return null;
+        return _items;
     }
 
-    public static List<MetadataItemVO> fromMap(Map<String, String> properties)
+    public void setItems(List<MetadataItemVO> items)
     {
-        if (properties != null)
-        {
-            List<MetadataItemVO> list = new LinkedList<MetadataItemVO>();
-
-            for (Map.Entry<String, String> property: properties.entrySet())
-                list.add(new MetadataItemVO(property.getKey(), property.getValue()));
-
-            return list;
-        }
-        else
-            return null;
+        _items = items;
     }
 
-    private String _name;
-    private String _value;
+    private String               _name;
+    private String               _value;
+    private List<MetadataItemVO> _items;
 }

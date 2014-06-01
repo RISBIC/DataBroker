@@ -104,7 +104,7 @@ public class MetadataListMO implements Serializable
 
         load();
 
-        return "metadata?faces-redirect=true";
+        return "metadatalist?faces-redirect=true";
     }
 
     public String doReload()
@@ -113,7 +113,7 @@ public class MetadataListMO implements Serializable
 
         load();
 
-        return "metadata?faces-redirect=true";
+        return "metadatalist?faces-redirect=true";
     }
 
     private void load()
@@ -139,7 +139,7 @@ public class MetadataListMO implements Serializable
                 while (statements.hasNext())
                 {
                     Statement statement = statements.nextStatement();
-                    _items.add(new MetadataItemVO("Name", "Value"));
+                    _items.add(new MetadataItemVO("Name", "Value", new LinkedList<MetadataItemVO>()));
                 }
                 _errorMessage = null;
             }
