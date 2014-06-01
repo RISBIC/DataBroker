@@ -191,13 +191,13 @@ public class MetadataListMO implements Serializable
 
             MetadataItemVO subItem = null;
             if (hasDataService.equals(subStatement.getPredicate()))
-                subItem = buildItem(model, subStatement.getSubject(), "Data Service");
+                subItem = buildItem(model, subStatement.getResource(), "Data Service");
             else if (producesDataSet.equals(subStatement.getPredicate()))
-                subItem = buildItem(model, subStatement.getSubject(), "Data Set");
+                subItem = buildItem(model, subStatement.getResource(), "Data Set");
             else if (hasField.equals(subStatement.getPredicate()))
-                subItem = buildItem(model, subStatement.getSubject(), "Data Field");
+                subItem = buildItem(model, subStatement.getResource(), "Data Field");
             else if (hasType.equals(subStatement.getPredicate()))
-                subItem = buildItem(model, subStatement.getSubject(), "Data Type");
+                subItem = buildItem(model, subStatement.getResource(), "Data Type");
 
             if (subItem != null)
                 items.add(subItem);
