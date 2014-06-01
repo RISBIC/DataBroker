@@ -57,37 +57,37 @@
                             <h:panelGroup styleClass="metadatalist-level1" layout="block">
                                 <h:outputText styleClass="metadatalist-level1-name" value="#{itemLevel1.name}" rendered="#{not empty itemLevel1.name}"/>
                                 <h:outputText styleClass="metadatalist-level1-value" value="#{itemLevel1.value}"  rendered="#{not empty itemLevel1.value}"/>
-                            </h:panelGroup>
-                            <ui:repeat value="#{itemLevel1.items}" var="itemLevel2">
-                                <h:panelGroup styleClass="metadatalist-level2" layout="block">
-                                    <h:outputText styleClass="metadatalist-level2-name" value="#{itemLevel2.name}" rendered="#{not empty itemLevel2.name}"/>
-                                    <h:outputText styleClass="metadatalist-level2-value" value="#{itemLevel2.value}"  rendered="#{not empty itemLevel2.value}"/>
-                                </h:panelGroup>
-                                <ui:repeat value="#{itemLevel2.items}" var="itemLevel3">
-                                    <h:panelGroup styleClass="metadatalist-level3" layout="block">
-                                        <h:outputText styleClass="metadatalist-level3-name" value="#{itemLevel3.name}" rendered="#{not empty itemLevel3.name}"/>
-                                        <h:outputText styleClass="metadatalist-level3-value" value="#{itemLevel3.value}"  rendered="#{not empty itemLevel3.value}"/>
-                                    </h:panelGroup>
-                                    <ui:repeat value="#{itemLevel3.items}" var="itemLevel4">
-                                        <h:panelGroup styleClass="metadatalist-level4" layout="block">
-                                            <h:outputText styleClass="metadatalist-level4-name" value="#{itemLevel4.name}" rendered="#{not empty itemLevel4.name}"/>
-                                            <h:outputText styleClass="metadatalist-level4-value" value="#{itemLevel4.value}"  rendered="#{not empty itemLevel4.value}"/>
-                                        </h:panelGroup>
-                                        <ui:repeat value="#{itemLevel4.items}" var="itemLevel5">
-                                            <h:panelGroup styleClass="metadatalist-level5" layout="block">
-                                                <h:outputText styleClass="metadatalist-level5-name" value="#{itemLevel5.name}" rendered="#{not empty itemLevel5.name}"/>
-                                                <h:outputText styleClass="metadatalist-level5-value" value="#{itemLevel5.value}"  rendered="#{not empty itemLevel5.value}"/>
+                                <ui:repeat value="#{itemLevel1.items}" var="itemLevel2">
+                                    <h:panelGroup styleClass="metadatalist-level2" layout="block">
+                                        <h:outputText styleClass="metadatalist-level2-name" value="#{itemLevel2.name}" rendered="#{not empty itemLevel2.name}"/>
+                                        <h:outputText styleClass="metadatalist-level2-value" value="#{itemLevel2.value}"  rendered="#{not empty itemLevel2.value}"/>
+                                        <ui:repeat value="#{itemLevel2.items}" var="itemLevel3">
+                                            <h:panelGroup styleClass="metadatalist-level3" layout="block">
+                                                <h:outputText styleClass="metadatalist-level3-name" value="#{itemLevel3.name}" rendered="#{not empty itemLevel3.name}"/>
+                                                <h:outputText styleClass="metadatalist-level3-value" value="#{itemLevel3.value}"  rendered="#{not empty itemLevel3.value}"/>
+                                                <ui:repeat value="#{itemLevel3.items}" var="itemLevel4">
+                                                    <h:panelGroup styleClass="metadatalist-level4" layout="block">
+                                                        <h:outputText styleClass="metadatalist-level4-name" value="#{itemLevel4.name}" rendered="#{not empty itemLevel4.name}"/>
+                                                        <h:outputText styleClass="metadatalist-level4-value" value="#{itemLevel4.value}"  rendered="#{not empty itemLevel4.value}"/>
+                                                        <ui:repeat value="#{itemLevel4.items}" var="itemLevel5">
+                                                            <h:panelGroup styleClass="metadatalist-level5" layout="block">
+                                                                <h:outputText styleClass="metadatalist-level5-name" value="#{itemLevel5.name}" rendered="#{not empty itemLevel5.name}"/>
+                                                                <h:outputText styleClass="metadatalist-level5-value" value="#{itemLevel5.value}"  rendered="#{not empty itemLevel5.value}"/>
+                                                                <ui:repeat value="#{itemLevel5.items}" var="itemLevel6">
+                                                                    <h:panelGroup styleClass="metadatalist-level6" layout="block">
+                                                                        <h:outputText styleClass="metadatalist-level6-name" value="#{itemLevel6.name}" rendered="#{not empty itemLevel6.name}"/>
+                                                                        <h:outputText styleClass="metadatalist-level6-value" value="#{itemLevel6.value}"  rendered="#{not empty itemLevel6.value}"/>
+                                                                    </h:panelGroup>
+                                                                 </ui:repeat>
+                                                            </h:panelGroup>
+                                                        </ui:repeat>
+                                                    </h:panelGroup>
+                                                </ui:repeat>
                                             </h:panelGroup>
-                                            <ui:repeat value="#{itemLevel5.items}" var="itemLevel6">
-                                                <h:panelGroup styleClass="metadatalist-level6" layout="block">
-                                                    <h:outputText styleClass="metadatalist-level6-name" value="#{itemLevel6.name}" rendered="#{not empty itemLevel6.name}"/>
-                                                    <h:outputText styleClass="metadatalist-level6-value" value="#{itemLevel6.value}"  rendered="#{not empty itemLevel6.value}"/>
-                                                </h:panelGroup>
-                                            </ui:repeat>
                                         </ui:repeat>
-                                    </ui:repeat>
+                                    </h:panelGroup>
                                 </ui:repeat>
-                            </ui:repeat>
+                            </h:panelGroup>
                         </ui:repeat>
                     </h:panelGroup>
                     <h:panelGroup styleClass="metadatalist-buttons" layout="block">
