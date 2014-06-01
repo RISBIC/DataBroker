@@ -7,20 +7,24 @@ package com.arjuna.databroker.webportal;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
+import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedProperty;
+
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
 import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
@@ -125,21 +129,20 @@ public class MetadataListMO implements Serializable
 
             if (content != null)
             {
-                _model = ModelFactory.createDefaultModel();
+                Model model = ModelFactory.createDefaultModel();
                 Reader reader = new StringReader(content);
-                _model.read(reader, null);
+                model.read(reader, null);
                 reader.close();
 
-                Property rdfTypeProperty    = _model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
-                Property dataSourceProperty = _model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
+                Property rdfTypeProperty    = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
+                Property dataSourceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
 
-                StmtIterator statements = _model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+                StmtIterator statements = model.listStatements(null, rdfTypeProperty, dataSourceProperty);
 
                 _items.clear();
                 while (statements.hasNext())
                 {
-                    Statement statement = statements.nextStatement();
-                    _items.add(new MetadataItemVO("Name", "Value", new LinkedList<MetadataItemVO>()));
+                    _items.add(buildItem(model, statements.nextStatement().getSubject(), "Data Source"));
                 }
                 _errorMessage = null;
             }
@@ -157,7 +160,32 @@ public class MetadataListMO implements Serializable
         }
     }
 
-    private Model _model;
+    private MetadataItemVO buildItem(Model model, Resource resource, String type)
+    {
+        List<MetadataItemVO> items   = new LinkedList<MetadataItemVO>();
+
+        Property hasTitle        = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+        Property hasSummary      = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+        Property hasDetails      = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+        Property hasDataService  = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasDataService");
+        Property producesDataSet = model.getProperty("http://rdfs.arjuna.com/datasource#", "producesDataSet");
+        Property hasField        = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasField");
+        Property hasType         = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasType");
+
+        Statement summaryStatement = resource.getProperty(hasSummary);
+        if (summaryStatement != null)
+            items.add(new MetadataItemVO("Summary: ", summaryStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement detailsStatement = resource.getProperty(hasDetails);
+        if (detailsStatement != null)
+            items.add(new MetadataItemVO("Details: ", detailsStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement titleStatement = resource.getProperty(hasTitle);
+        if (titleStatement != null)
+            return new MetadataItemVO(type + " - ", titleStatement.getString(), items);
+        else
+            return new MetadataItemVO(type + " - unknown", null, items);
+    }
 
     private List<MetadataItemVO> _items;
     private String               _errorMessage;

@@ -53,7 +53,7 @@ span.metadatalist-error-message
 
 div.metadatalist-level1
 {
-	margin:				0 0 0 1em;
+	margin:				0 0 0 0;
 	border:				0;
 	padding:			0;
 	border-top-left-radius:		1em;
@@ -169,6 +169,14 @@ span.metadatalist-level6-name
 
 span.metadatalist-level6-value
 {
+}
+
+div.metadatalist-buttons
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
 }
 
 a.metadatalist-button
