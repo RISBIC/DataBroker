@@ -6,16 +6,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="template.xhtml">
-        <ui:define name="title">Data View</ui:define>
+        <ui:define name="title">Data View Report</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="dataview_style.css"/>
+            <link rel="stylesheet" type="text/css" href="metadata_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <h:form styleClass="header">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="Data View"/>
+                    <h:outputText styleClass="title" value="Data View Report"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <h:inputText styleClass="uservalue" value="#{user.username}"/>
@@ -40,34 +40,28 @@
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
                 </ui:repeat>
-                <h:commandLink styleClass="location-right" action="#{dataviews.doLoad}" value="Reload"/>
+                <h:commandLink styleClass="location-right" action="#{metadata.doReload}" value="Reload"/>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="dataview">
-                <h:panelGroup styleClass="dataview" layout="block">
-                    <h:panelGroup styleClass="dataview-title" layout="block">
-                        <h:outputText styleClass="dataview-title" value="Data View"/>
+            <h:form styleClass="metadatalist">
+                <h:panelGroup styleClass="metadatalist" layout="block">
+                    <h:panelGroup styleClass="metadatalist-title" layout="block">
+                        <h:outputText styleClass="metadatalist-title" value="Data View Report"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="dataview-error" layout="block" rendered="#{not empty dataview.errorMessage}">
-                        <h:outputText styleClass="dataview-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="dataview-error-message" value="#{dataview.errorMessage}"/>
+                    <h:panelGroup styleClass="metadatalist-error" layout="block" rendered="#{not empty metadatalist.errorMessage}">
+                        <h:outputText styleClass="metadatalist-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="metadatalist-error-message" value="#{metadatalist.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="metadataId" rendered="#{empty dataview.errorMessage}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataview-header" value="Metadata Id"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataview-value" value="#{metadataId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataview-header" value="Actions"/>
-                            </f:facet>
-                            <h:commandLink styleClass="dataview-button" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Report"/>
-                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Edit"/>
-                        </h:column>
-                    </h:dataTable>
+                    <h:panelGroup layout="block" rendered="#{empty metadatalist.errorMessage}">
+                        <ui:repeat value="#{metadatalist.nodes}" var="nodeLevel1">
+                            <h:panelgroup styleClass="metadatalist-level1" layout="block" rendered="#{not empty nodeLevel1.title}">
+                                <h:outputText styleClass="metadatalist-level1-name" value="#{nodeLevel1.name}"/>
+                                <h:outputText styleClass="metadatalist-level1-value" value="#{nodeLevel1.value}"/>
+                            </h:panelgroup>
+                        </ui:repeat>
+                    </h:panelGroup>
                 </h:panelGroup>
+                <h:commandLink styleClass="metadatalist-button" action="#{dataview.doReload()}" value="Done"/>
             </h:form>
         </ui:define>
     </ui:composition>
