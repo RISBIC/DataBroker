@@ -24,6 +24,7 @@ import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -142,7 +143,10 @@ public class MetadataListMO implements Serializable
                 _items.clear();
                 while (statements.hasNext())
                 {
-                    _items.add(buildItem(model, statements.nextStatement().getSubject(), "Data Source"));
+                    MetadataItemVO item = buildItem(model, statements.nextStatement().getSubject(), "Data Source");
+
+                    if (item != null)
+                        _items.add(item);
                 }
                 _errorMessage = null;
             }
@@ -180,11 +184,32 @@ public class MetadataListMO implements Serializable
         if (detailsStatement != null)
             items.add(new MetadataItemVO("Details: ", detailsStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
+        StmtIterator statements = model.listStatements(resource, (Property) null, (RDFNode) null);
+        while (statements.hasNext())
+        {
+            Statement subStatement = statements.nextStatement();
+
+            MetadataItemVO subItem = null;
+            if (hasDataService.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getSubject(), "Data Service");
+            else if (producesDataSet.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getSubject(), "Data Set");
+            else if (hasField.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getSubject(), "Data Field");
+            else if (hasType.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getSubject(), "Data Type");
+
+            if (subItem != null)
+                items.add(subItem);
+        }
+
         Statement titleStatement = resource.getProperty(hasTitle);
         if (titleStatement != null)
             return new MetadataItemVO(type + " - ", titleStatement.getString(), items);
-        else
+        else if (! items.isEmpty())
             return new MetadataItemVO(type + " - unknown", null, items);
+        else
+            return null;
     }
 
     private List<MetadataItemVO> _items;
