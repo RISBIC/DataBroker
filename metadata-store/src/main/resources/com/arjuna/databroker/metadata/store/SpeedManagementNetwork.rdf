@@ -9,13 +9,13 @@
         <d:hasTitle>Speed Management Network Data Source</d:hasTitle>
         <d:hasSummary>Summary: Speed Management Network Data Source</d:hasSummary>
         <d:hasDetails>Details: Speed Management Network Data Source</d:hasDetails>
-        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#FeedService"/>
+        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecordFeedService"/>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
     </ds:DataSource>
 
-    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#FeedService">
-        <d:hasTitle>Feed Service</d:hasTitle>
-        <d:hasSummary>Speed Management Network Data Feed Service</d:hasSummary>
+    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#VehicleRecordFeedService">
+        <d:hasTitle>Vehicle Record Feed Service</d:hasTitle>
+        <d:hasSummary>Speed Management Network Vehicle Record Feed Service</d:hasSummary>
         <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecords"/>
     </ds:DataService>
 
@@ -26,7 +26,7 @@
     </ds:DataService>
 
     <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#VehicleRecords">
-        <d:hasTitle>VehicleRecords Data Set</d:hasTitle>
+        <d:hasTitle>Vehicle Records Data Set</d:hasTitle>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#OutstationId"/>
     </ds:DataSet>
 
@@ -37,24 +37,24 @@
     </ds:DataSet>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#OutstationId">
+        <d:hasTitle>outstationId</d:hasTitle>
         <ds:hasName>outstationId</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#Speed">
+        <d:hasTitle>speed</d:hasTitle>
         <ds:hasName>speed</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Integer"/>
     </ds:Field>
 
     <ds:Type rdf:about="http://newcastle.gov.uk/SMN#String">
         <d:hasTitle>String</d:hasTitle>
-        <d:hasSummary>String Type</d:hasSummary>
         <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </ds:Type>
 
     <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Integer">
         <d:hasTitle>Integer</d:hasTitle>
-        <d:hasSummary>Integer Type</d:hasSummary>
         <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </ds:Type>
 </rdf:RDF>
