@@ -6,9 +6,9 @@
 
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:d="http://rdfs.arjuna.com/description#" xmlns:ds="http://rdfs.arjuna.com/datasource#">
     <ds:DataSource rdf:about="http://newcastle.gov.uk/SMN">
-        <d:hasTitle>Speed Management Network Data Source</d:hasTitle>
-        <d:hasSummary>Summary: Speed Management Network Data Source</d:hasSummary>
-        <d:hasDetails>Details: Speed Management Network Data Source</d:hasDetails>
+        <d:hasTitle>Newcastle Speed Management Network</d:hasTitle>
+        <d:hasSummary>The Speed Management Network Data Source from Newcastle City Council</d:hasSummary>
+        <d:hasDetails>Speed Management Network Data Source</d:hasDetails>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecordFeedService"/>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
     </ds:DataSource>
