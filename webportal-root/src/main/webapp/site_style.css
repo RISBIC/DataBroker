@@ -16,7 +16,7 @@ body
 {
 	margin:			0;
 	border:			0;
-	padding:		4em 8em 4em 8em;
+	padding:		1em 8em 1em 8em;
 	height:			100%;
 	background-image:	url('background.png');
 	background-position:	left top;
@@ -39,7 +39,7 @@ form.header
 	margin:				0;
 	border:				0;
 	padding:			0;
-	padding:			2em 2em 2em 2em;
+	padding:			0.5em 2em 0.5em 2em;
 	background-color:		#EE7711;
 	border-top-left-radius:		1em;
 	-moz-border-radius-topleft:	1em;
