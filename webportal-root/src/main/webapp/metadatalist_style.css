@@ -54,8 +54,8 @@ span.metadatalist-error-message
 div.metadatalist-level1
 {
 	margin:			1em 0 1em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#fafafa;
@@ -73,8 +73,8 @@ span.metadatalist-level1-value
 div.metadatalist-level2
 {
 	margin:			0.5em 0 0.5em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#eeeeee;
@@ -92,8 +92,8 @@ span.metadatalist-level2-value
 div.metadatalist-level3
 {
 	margin:			0.25em 0 0.25em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#e9e9e9;
@@ -111,8 +111,8 @@ span.metadatalist-level3-value
 div.metadatalist-level4
 {
 	margin:			0.25em 0 0.25em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#dddddd;
@@ -130,8 +130,8 @@ span.metadatalist-level4-value
 div.metadatalist-level5
 {
 	margin:			0.25em 0 0.25em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#d8d8d8;
@@ -149,8 +149,8 @@ span.metadatalist-level5-value
 div.metadatalist-level6
 {
 	margin:			0.25em 0 0.25em 0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
 	border-radius:		1em;
 	-moz-border-radius:	1em;
 	background-color:	#cccccc;

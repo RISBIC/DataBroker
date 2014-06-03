@@ -39,6 +39,12 @@
     <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#Outstations">
         <d:hasTitle>Outstations Data Set</d:hasTitle>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#name"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#description"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#orientation"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#speedlimit"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#latitude"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#longitude"/>
     </ds:DataSet>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#time">
@@ -90,6 +96,42 @@
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
 
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#name">
+        <d:hasTitle>name</d:hasTitle>
+        <ds:hasName>name</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#description">
+        <d:hasTitle>description</d:hasTitle>
+        <ds:hasName>description</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#orientation">
+        <d:hasTitle>orientation</d:hasTitle>
+        <ds:hasName>orientation</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#speedlimit">
+        <d:hasTitle>speedlimit</d:hasTitle>
+        <ds:hasName>speedlimit</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#latitude">
+        <d:hasTitle>latitude</d:hasTitle>
+        <ds:hasName>latitude</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#longitude">
+        <d:hasTitle>longitude</d:hasTitle>
+        <ds:hasName>longitude</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
+    </ds:Field>
+
     <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Short">
         <d:hasTitle>Short</d:hasTitle>
         <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
@@ -98,5 +140,15 @@
     <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Long">
         <d:hasTitle>Long</d:hasTitle>
         <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#String">
+        <d:hasTitle>String</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Float">
+        <d:hasTitle>Float</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
     </ds:Type>
 </rdf:RDF>
