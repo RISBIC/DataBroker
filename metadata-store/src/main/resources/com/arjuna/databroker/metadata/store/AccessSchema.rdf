@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <rdfs:Class rdf:about="http://rdfs.arjuna.com/access#AccessInfo">
+        <rdfs:label>Access Info</rdfs:label>
+        <rdfs:comment>Access Info</rdfs:comment>
+    </rdfs:Class>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/access#hasAccessInfo">
+        <rdfs:label>Has Access Info</rdfs:label>
+        <rdfs:comment>Access Info of Data Service</rdfs:comment>
+        <rdfs:domain rdf:resource="http://rdfs.arjuna.com/datasource#DataService"/>
+        <rdfs:range rdf:resource="http://rdfs.arjuna.com/access#AccessInfo"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/access#useUsername">
+        <rdfs:label>Use Username</rdfs:label>
+        <rdfs:comment>Use Username</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/access#usePassword">
+        <rdfs:label>Use Password</rdfs:label>
+        <rdfs:comment>Use Password</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/access#useServiceURL">
+        <rdfs:label>Use Service URL</rdfs:label>
+        <rdfs:comment>Use Service URL</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/access#useProtocol">
+        <rdfs:label>Use Protocol</rdfs:label>
+        <rdfs:comment>Use Protocol</rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </rdfs:Property>
+</rdf:RDF>

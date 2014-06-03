@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:d="http://rdfs.arjuna.com/description#" xmlns:ds="http://rdfs.arjuna.com/datasource#" xmlns:a="http://rdfs.arjuna.com/access#">
+    <ds:DataSource rdf:about="http://newcastle.gov.uk/SMN">
+        <d:hasTitle>Speed Management Network</d:hasTitle>
+        <d:hasSummary>The Speed Management Network Data Source from Newcastle City Council</d:hasSummary>
+        <d:hasDetails>The vehicle flow data at 120 outstations pulled every 5 minutes</d:hasDetails>
+        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecordFeedService"/>
+        <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
+    </ds:DataSource>
+
+    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#VehicleRecordFeedService">
+        <d:hasTitle>Vehicle Record Feed Service</d:hasTitle>
+        <d:hasSummary>Speed Management Network Vehicle Record Feed Service</d:hasSummary>
+        <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
+        <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecords"/>
+    </ds:DataService>
+
+    <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#OutstationService">
+        <d:hasTitle>Outstation Service</d:hasTitle>
+        <d:hasSummary>Speed Management Network Data Outstation Service</d:hasSummary>
+        <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
+        <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#Outstations"/>
+    </ds:DataService>
+
+    <a:AccessInfo rdf:about="http://newcastle.gov.uk/SMN#AccessInfo">
+        <d:hasTitle>SMN Access Info</d:hasTitle>
+        <a:useUsername>ncc</a:useUsername>
+        <a:usePassword>68006f9fa9b5a29be610f95bef1b0ca0</a:usePassword>
+        <a:useServiceURL>http://smn-testarjuna.rhcloud.com/smn</a:useServiceURL>
+        <a:useProtocol>HTTP-1.1/SOAP-1.2</a:useProtocol>
+    </a:AccessInfo>
+
+    <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#VehicleRecords">
+        <d:hasTitle>Vehicle Records Data Set</d:hasTitle>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#time"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#lane"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#site"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#direction"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#speed"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#class"/>
+    </ds:DataSet>
+
+    <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#Outstations">
+        <d:hasTitle>Outstations Data Set</d:hasTitle>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#name"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#description"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#orientation"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#speedlimit"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#latitude"/>
+        <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#longitude"/>
+    </ds:DataSet>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#time">
+        <d:hasTitle>time</d:hasTitle>
+        <d:hasSummary>The time at which the vehicle record was generated (The time at which the vehicle record was generated in milliseconds since midnight Coordinated Universal Time (UTC), 1 January 1970, not counting leap seconds)</d:hasSummary>
+        <ds:hasName>time</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Long"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#outstationId">
+        <d:hasTitle>outstationId</d:hasTitle>
+        <d:hasSummary>The outstation id at which the vehicle record was generated</d:hasSummary>
+        <ds:hasName>outstationId</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#lane">
+        <d:hasTitle>lane</d:hasTitle>
+        <d:hasSummary>The lane at which the vehicle record was generated</d:hasSummary>
+        <ds:hasName>lane</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#site">
+        <d:hasTitle>site</d:hasTitle>
+        <d:hasSummary>The site at which the vehicle record was generated</d:hasSummary>
+        <ds:hasName>site</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#direction">
+        <d:hasTitle>direction</d:hasTitle>
+        <d:hasSummary>The direction of the vehicle</d:hasSummary>
+        <ds:hasName>direction</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#speed">
+        <d:hasTitle>speed</d:hasTitle>
+        <d:hasSummary>The speed of the vehicle (The speed of the vehicle in kilometre per hour (km/h))</d:hasSummary>
+        <ds:hasName>speed</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#class">
+        <d:hasTitle>class</d:hasTitle>
+        <d:hasSummary>The class code of the vehicle</d:hasSummary>
+        <ds:hasName>class</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#name">
+        <d:hasTitle>name</d:hasTitle>
+        <ds:hasName>name</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#description">
+        <d:hasTitle>description</d:hasTitle>
+        <ds:hasName>description</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#String"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#orientation">
+        <d:hasTitle>orientation</d:hasTitle>
+        <ds:hasName>orientation</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#speedlimit">
+        <d:hasTitle>speedlimit</d:hasTitle>
+        <ds:hasName>speedlimit</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#latitude">
+        <d:hasTitle>latitude</d:hasTitle>
+        <ds:hasName>latitude</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
+    </ds:Field>
+
+    <ds:Field rdf:about="http://newcastle.gov.uk/SMN#longitude">
+        <d:hasTitle>longitude</d:hasTitle>
+        <ds:hasName>longitude</ds:hasName>
+        <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
+    </ds:Field>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Short">
+        <d:hasTitle>Short</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Long">
+        <d:hasTitle>Long</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#String">
+        <d:hasTitle>String</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </ds:Type>
+
+    <ds:Type rdf:about="http://newcastle.gov.uk/SMN#Float">
+        <d:hasTitle>Float</d:hasTitle>
+        <ds:hasRawType rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </ds:Type>
+</rdf:RDF>

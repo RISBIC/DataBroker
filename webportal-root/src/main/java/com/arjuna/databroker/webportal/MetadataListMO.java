@@ -12,15 +12,10 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedProperty;
-
 import com.arjuna.databroker.webportal.comms.MetadataClient;
-import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
-import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -171,6 +166,11 @@ public class MetadataListMO implements Serializable
         Property hasTitle        = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
         Property hasSummary      = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
         Property hasDetails      = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+        Property hasAccessInfo   = model.getProperty("http://rdfs.arjuna.com/access#", "hasAccessInfo");
+        Property useUsername     = model.getProperty("http://rdfs.arjuna.com/access#", "useUsername");
+        Property usePassword     = model.getProperty("http://rdfs.arjuna.com/access#", "usePassword");
+        Property useServiceURL   = model.getProperty("http://rdfs.arjuna.com/access#", "useServiceURL");
+        Property useProtocol     = model.getProperty("http://rdfs.arjuna.com/access#", "useProtocol");
         Property hasDataService  = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasDataService");
         Property producesDataSet = model.getProperty("http://rdfs.arjuna.com/datasource#", "producesDataSet");
         Property hasField        = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasField");
@@ -184,6 +184,22 @@ public class MetadataListMO implements Serializable
         if (detailsStatement != null)
             items.add(new MetadataItemVO("Details: ", detailsStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
+        Statement usernameStatement = resource.getProperty(useUsername);
+        if (usernameStatement != null)
+            items.add(new MetadataItemVO("Username: ", usernameStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement passwordStatement = resource.getProperty(usePassword);
+        if (passwordStatement != null)
+            items.add(new MetadataItemVO("Password: ", passwordStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement serviceURLStatement = resource.getProperty(useServiceURL);
+        if (serviceURLStatement != null)
+            items.add(new MetadataItemVO("Service URL: ", serviceURLStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement protocolStatement = resource.getProperty(useProtocol);
+        if (protocolStatement != null)
+            items.add(new MetadataItemVO("Protocol: ", protocolStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
         StmtIterator statements = model.listStatements(resource, (Property) null, (RDFNode) null);
         while (statements.hasNext())
         {
@@ -192,6 +208,8 @@ public class MetadataListMO implements Serializable
             MetadataItemVO subItem = null;
             if (hasDataService.equals(subStatement.getPredicate()))
                 subItem = buildItem(model, subStatement.getResource(), "Data Service");
+            else if (hasAccessInfo.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getResource(), "Access");
             else if (producesDataSet.equals(subStatement.getPredicate()))
                 subItem = buildItem(model, subStatement.getResource(), "Data Set");
             else if (hasField.equals(subStatement.getPredicate()))
