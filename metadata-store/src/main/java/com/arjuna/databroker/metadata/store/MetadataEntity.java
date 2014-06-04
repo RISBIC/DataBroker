@@ -9,10 +9,10 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
+// import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import org.hibernate.annotations.GenericGenerator;
+// import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class MetadataEntity implements Serializable
@@ -23,8 +23,9 @@ public class MetadataEntity implements Serializable
     {
     }
 
-    public MetadataEntity(MetadataEntity parent, String content)
+    public MetadataEntity(String id, MetadataEntity parent, String content)
     {
+        _id      = id;
         _parent  = parent;
         _content = content;
     }
@@ -61,8 +62,8 @@ public class MetadataEntity implements Serializable
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+//    @GeneratedValue(generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     protected String _id;
 
     @Basic(fetch = FetchType.LAZY)
