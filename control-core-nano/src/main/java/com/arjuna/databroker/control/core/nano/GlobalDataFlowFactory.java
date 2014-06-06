@@ -71,7 +71,7 @@ public class GlobalDataFlowFactory implements DataFlowFactory
         return new StandardDataFlow(name, properties);
     }
 
-    public DataFlowFactory getInstance()
+    public static DataFlowFactory getInstance()
     {
         synchronized (_syncObject)
         {

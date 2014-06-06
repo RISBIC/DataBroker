@@ -50,7 +50,7 @@ public class GlobalDataFlowInventory implements DataFlowInventory
 
     private Map<String, DataFlow> _inventory;
 
-    public DataFlowInventory getInstance()
+    public static DataFlowInventory getInstance()
     {
         synchronized (_syncObject)
         {

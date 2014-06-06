@@ -13,7 +13,7 @@ public class GlobalDataFlowNodeFactoryInventory extends AbstractDataFlowNodeFact
     {
     }
 
-    public DataFlowNodeFactoryInventory getInstance()
+    public static DataFlowNodeFactoryInventory getInstance()
     {
         synchronized (_syncObject)
         {
