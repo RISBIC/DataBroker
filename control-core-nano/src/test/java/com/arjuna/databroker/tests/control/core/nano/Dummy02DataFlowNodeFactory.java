@@ -57,10 +57,16 @@ public class Dummy02DataFlowNodeFactory implements DataFlowNodeFactory
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends DataFlowNode> T createDataFlowNode(String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
-        return null;
+        if (dataFlowNodeClass.isAssignableFrom(Dummy01DataSink.class))
+        {
+            return (T) new Dummy01DataSink(name, properties);
+        }
+        else
+            return null;
     }
 
     private String              _name;

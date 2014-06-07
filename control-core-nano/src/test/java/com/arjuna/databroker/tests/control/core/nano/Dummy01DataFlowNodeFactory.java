@@ -7,6 +7,8 @@ package com.arjuna.databroker.tests.control.core.nano;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.InvalidClassException;
@@ -57,10 +59,20 @@ public class Dummy01DataFlowNodeFactory implements DataFlowNodeFactory
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends DataFlowNode> T createDataFlowNode(String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
-        return null;
+        if (dataFlowNodeClass.isAssignableFrom(Dummy01DataSource.class))
+        {
+            Timer             timer             = new Timer(true);
+            Dummy01DataSource dummy01DataSource = new Dummy01DataSource(name, properties);
+            timer.scheduleAtFixedRate(dummy01DataSource, 0, 1000);
+
+            return (T) dummy01DataSource;
+        }
+        else
+            return null;
     }
 
     private String              _name;

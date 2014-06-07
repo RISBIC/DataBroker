@@ -27,11 +27,20 @@
     </dataFlowNodeFactory>
 
     <dataFlowNode name="DFN1" type="datasource" factoryName="DFNF1">
-        <!-- metaProperties>
+        <metaProperties>
             <metaProperty name="MetaName01" value="MetaValue01"/>
         </metaProperties>
         <properties>
             <property name="Name01" value="Value01"/>
-        </properties -->
+        </properties>
+    </dataFlowNode>
+
+    <dataFlowNode name="DFN2" type="datasink" factoryName="DFNF2">
+        <metaProperties>
+            <metaProperty name="MetaName01" value="MetaValue01"/>
+        </metaProperties>
+        <properties>
+            <property name="Name01" value="Value01"/>
+        </properties>
     </dataFlowNode>
 </dataflow>

@@ -30,11 +30,11 @@ import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
 
-public class XMLConfigParse
+public class LoadXMLConfig
 {
-    private static final Logger logger = Logger.getLogger(XMLConfigParse.class.getName());
+    private static final Logger logger = Logger.getLogger(LoadXMLConfig.class.getName());
 
-    public boolean parse(InputStream inputStream)
+    public boolean load(InputStream inputStream)
     {
         try
         {
@@ -435,7 +435,11 @@ public class XMLConfigParse
                 return true;
             }
             else
+            {
+                logger.log(Level.WARNING, "Unable to create data flow node");
+
                 return false;
+            }
         }
         catch (Throwable throwable)
         {
