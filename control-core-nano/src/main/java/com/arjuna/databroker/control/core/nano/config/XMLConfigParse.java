@@ -9,21 +9,21 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import com.arjuna.databroker.control.core.nano.GlobalDataFlowFactory;
-import com.arjuna.databroker.control.core.nano.GlobalDataFlowInventory;
-import com.arjuna.databroker.control.core.nano.GlobalDataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
-import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.DataProcessor;
 import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
@@ -78,32 +78,58 @@ public class XMLConfigParse
         Map<String, String> metaProperties = new HashMap<String, String>();
         Map<String, String> properties     = new HashMap<String, String>();
 
-        NodeList childNodes = element.getChildNodes();
-        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
-        {
-            Node childNode = childNodes.item(childNodeIndex);
+        DataFlow dataFlow = null;
 
-            if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+        NodeList childNodes = element.getChildNodes();
+        int childNodePhaseStart = childNodes.getLength();
+        for (int childNodePhase1Index = 0; (dataFlow == null) && (childNodePhase1Index < childNodes.getLength()); childNodePhase1Index++)
+        {
+            Node childNode = childNodes.item(childNodePhase1Index);
+
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                parseProperties((Element) childNode, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                parseProperties((Element) childNode, properties);
+                valid &= parseProperties((Element) childNode, properties);
+            else
+            {
+                dataFlow = createDataFlow(name, metaProperties, properties);
+                childNodePhaseStart = childNodePhase1Index;
+            }
+        }
+
+        for (int childNodePhase2Index = childNodePhaseStart; childNodePhase2Index < childNodes.getLength(); childNodePhase2Index++)
+        {
+            Node childNode = childNodes.item(childNodePhase2Index);
+
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+                continue;
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNodeFactory"))
+                valid &= parseDataFlowNodeFactory((Element) childNode, dataFlow);
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNode"))
+                valid &= parseDataFlowNode((Element) childNode, dataFlow);
             else
             {
                 processUnexpectedNode(childNode);
                 valid = false;
             }
         }
-
+        
         return valid;
     }
 
-    private DataFlowFactory parseDataFlowFactory(Element element)
+    @SuppressWarnings("unchecked")
+    private boolean parseDataFlowNodeFactory(Element element, DataFlow dataFlow)
     {
         boolean valid = true;
 
-        String name = null;
+        String name      = null;
+        String className = null;
         NamedNodeMap attributes = element.getAttributes();
         for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
         {
@@ -111,6 +137,8 @@ public class XMLConfigParse
 
             if (attribute.getNodeName().equals("name"))
                 name = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("class"))
+                className = attribute.getNodeValue();
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
@@ -126,58 +154,14 @@ public class XMLConfigParse
         {
             Node childNode = childNodes.item(childNodeIndex);
 
-            if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                parseProperties((Element) childNode, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                parseProperties((Element) childNode, properties);
-            else
-            {
-                processUnexpectedNode(childNode);
-                valid = false;
-            }
-        }
-
-        return null;
-    }
-
-    private boolean parseDataFlowNode(DataFlow dataFlow, Element element)
-    {
-        boolean valid = true;
-
-        String name        = null;
-        String className   = null;
-        String factoryName = null;
-        NamedNodeMap attributes = element.getAttributes();
-        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
-        {
-            Node attribute = attributes.item(attributeIndex);
-
-            if (attribute.getNodeName().equals("name"))
-                name = attribute.getNodeValue();
-            else if (attribute.getNodeName().equals("class"))
-                className = attribute.getNodeValue();
-            else if (attribute.getNodeName().equals("factoryName"))
-                factoryName = attribute.getNodeValue();
-            else
-            {
-                logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
-                valid = false;
-            }
-        }
-
-        Map<String, String> properties = new HashMap<String, String>();
-        
-        NodeList childNodes = element.getChildNodes();
-        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
-        {
-            Node childNode = childNodes.item(childNodeIndex);
-
-            if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
-                continue;
-            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                parseProperties((Element) childNode, properties);
+                valid &= parseProperties((Element) childNode, properties);
             else
             {
                 processUnexpectedNode(childNode);
@@ -187,21 +171,123 @@ public class XMLConfigParse
 
         if (valid)
         {
-            if ("datasource".equals(className))
-                return deployDataFlowNode(dataFlow, name, DataSource.class, factoryName, properties);
-            else if ("dataprocessor".equals(className))
-                return deployDataFlowNode(dataFlow, name, DataProcessor.class, factoryName, properties);
-            else if ("dataservice".equals(className))
-                return deployDataFlowNode(dataFlow, name, DataService.class, factoryName, properties);
-            else if ("datastore".equals(className))
-                return deployDataFlowNode(dataFlow, name,  DataStore.class, factoryName, properties);
-            else if ("datasink".equals(className))
-                return deployDataFlowNode(dataFlow, name,  DataSink.class, factoryName, properties);
-            else
+            try
+            {
+                return deployDataFlowNodeFactory(dataFlow, (Class<? extends DataFlowNodeFactory>) Class.forName(className), name, properties);
+            }
+            catch (Throwable throwable)
+            {
+                logger.log(Level.WARNING, "Unable to create data flow", throwable);
+
                 return false;
+            }
         }
         else
             return false;
+    }
+
+    private boolean parseDataFlowNode(Element element, DataFlow dataFlow)
+    {
+        boolean valid = true;
+
+        String name        = null;
+        String type        = null;
+        String factoryName = null;
+        NamedNodeMap attributes = element.getAttributes();
+        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
+        {
+            Node attribute = attributes.item(attributeIndex);
+
+            if (attribute.getNodeName().equals("name"))
+                name = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("type"))
+                type = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("factoryName"))
+                factoryName = attribute.getNodeValue();
+            else
+            {
+                logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                valid = false;
+            }
+        }
+
+        Map<String, String> metaProperties = new HashMap<String, String>();
+        Map<String, String> properties     = new HashMap<String, String>();
+        
+        NodeList childNodes = element.getChildNodes();
+        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
+        {
+            Node childNode = childNodes.item(childNodeIndex);
+
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+                continue;
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
+                valid &= parseMetaProperties((Element) childNode, metaProperties);
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
+                valid &= parseProperties((Element) childNode, properties);
+            else
+            {
+                processUnexpectedNode(childNode);
+                valid = false;
+            }
+        }
+
+        if (valid)
+        {
+            if ("datasource".equals(type))
+                return deployDataFlowNode(dataFlow, factoryName, DataSource.class, name, metaProperties, properties);
+            else if ("dataprocessor".equals(type))
+                return deployDataFlowNode(dataFlow, factoryName, DataProcessor.class, name, metaProperties, properties);
+            else if ("dataservice".equals(type))
+                return deployDataFlowNode(dataFlow, factoryName, DataService.class, name, metaProperties, properties);
+            else if ("datastore".equals(type))
+                return deployDataFlowNode(dataFlow, factoryName, DataStore.class, name, metaProperties, properties);
+            else if ("datasink".equals(type))
+                return deployDataFlowNode(dataFlow, factoryName, DataSink.class, name, metaProperties, properties);
+            else
+            {
+                logger.log(Level.WARNING, "Unknown data flow node type \"" + type + "\"");
+                return false;
+            }
+        }
+        else
+            return false;
+    }
+
+    private boolean parseMetaProperties(Element element, Map<String, String> metaProperties)
+    {
+        boolean valid = true;
+
+        NamedNodeMap attributes = element.getAttributes();
+        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
+        {
+            Node attribute = attributes.item(attributeIndex);
+
+            logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+            valid = false;
+        }
+
+        NodeList childNodes = element.getChildNodes();
+        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
+        {
+            Node childNode = childNodes.item(childNodeIndex);
+
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+                continue;
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperty"))
+                valid &= parseProperty((Element) childNode, metaProperties);
+            else 
+            {
+                processUnexpectedNode(childNode);
+                valid = false;
+            }
+        }
+
+        return valid;
     }
 
     private boolean parseProperties(Element element, Map<String, String> properties)
@@ -222,7 +308,9 @@ public class XMLConfigParse
         {
             Node childNode = childNodes.item(childNodeIndex);
 
-            if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("property"))
                 valid &= parseProperty((Element) childNode, properties);
@@ -317,14 +405,14 @@ public class XMLConfigParse
         }
     }
 
-    private <T extends DataFlowNodeFactory> boolean deployDataFlowFactory(DataFlow dataFlow, String name, Class<T> dataFlowNodeFactoryClass, Map<String, String> properties)
+    private <T extends DataFlowNodeFactory> boolean deployDataFlowNodeFactory(DataFlow dataFlow, Class<T> dataFlowNodeFactoryClass, String name, Map<String, String> properties)
     {
         try
         {
-            T dataFlowNodeFactory = dataFlowNodeFactoryClass.newInstance();
-            dataFlowNodeFactory.createDataFlow(name, properties);
-
-            if 
+            T dataFlowNodeFactory = dataFlowNodeFactoryClass.getDeclaredConstructor(String.class, Map.class).newInstance(name, properties);
+            dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
+            
+            return true;
         }
         catch (Throwable throwable)
         {
@@ -334,7 +422,7 @@ public class XMLConfigParse
         }
     }
 
-    private <T extends DataFlowNode> boolean deployDataFlowNode(DataFlow dataFlow, String dataFlowNodeName, Class<T> dataFlowNodeClass, String dataFlowNodeFactoryName, Map<String, String> dataFlowNodeMetaProperties, Map<String, String> dataFlowNodeProperties)
+    private <T extends DataFlowNode> boolean deployDataFlowNode(DataFlow dataFlow, String dataFlowNodeFactoryName, Class<T> dataFlowNodeClass, String dataFlowNodeName, Map<String, String> dataFlowNodeMetaProperties, Map<String, String> dataFlowNodeProperties)
     {
         try
         {

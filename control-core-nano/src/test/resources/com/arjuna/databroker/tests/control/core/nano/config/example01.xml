@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataflow name="Example 01">
+    <metaProperties>
+        <metaProperty name="MetaName01" value="MetaValue01"/>
+    </metaProperties>
+    <properties>
+        <property name="Name01" value="Value01"/>
+    </properties>
+</dataflow>
