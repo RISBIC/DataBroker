@@ -43,4 +43,16 @@ public class ExamplesTest
         
         Thread.sleep(10000);
     }
+
+    @Test
+    public void example04()
+        throws IOException, InterruptedException
+    {
+        LoadXMLConfig xmlConfigParse = new LoadXMLConfig();
+        InputStream inputStream = ExamplesTest.class.getResourceAsStream("example04.xml");
+        assertTrue("Problem in Example04", xmlConfigParse.load(inputStream));
+        inputStream.close();
+        
+        Thread.sleep(10000);
+    }
 }

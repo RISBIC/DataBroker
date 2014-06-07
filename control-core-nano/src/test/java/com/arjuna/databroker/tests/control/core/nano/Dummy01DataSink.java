@@ -36,7 +36,7 @@ public class Dummy01DataSink implements DataSink, DataDispatcher<String>
     @Override
     public void dispatch(String data)
     {
-        System.out.println("[" + data + "]");
+        System.out.println("Sink:   [" + data + "]");
     }
 
     @Override

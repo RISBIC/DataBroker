@@ -5,6 +5,8 @@
 package com.arjuna.databroker.control.core.nano.config;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -20,11 +22,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.arjuna.databroker.control.core.nano.GlobalDataFlowFactory;
+import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataProcessor;
+import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
@@ -113,6 +117,8 @@ public class LoadXMLConfig
                 valid &= parseDataFlowNodeFactory((Element) childNode, dataFlow);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNode"))
                 valid &= parseDataFlowNode((Element) childNode, dataFlow);
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowLink"))
+                valid &= parseDataFlowLink((Element) childNode, dataFlow);
             else
             {
                 processUnexpectedNode(childNode);
@@ -249,6 +255,51 @@ public class LoadXMLConfig
             else
             {
                 logger.log(Level.WARNING, "Unknown data flow node type \"" + type + "\"");
+                return false;
+            }
+        }
+        else
+            return false;
+    }
+
+    private boolean parseDataFlowLink(Element element, DataFlow dataFlow)
+    {
+        boolean valid = true;
+
+        String sourceDataFlowNodeName = null;
+        String sinkDataFlowNodeName   = null;
+        NamedNodeMap attributes = element.getAttributes();
+        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
+        {
+            Node attribute = attributes.item(attributeIndex);
+
+            if (attribute.getNodeName().equals("sourceDataFlowNode"))
+                sourceDataFlowNodeName = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("sinkDataFlowNode"))
+                sinkDataFlowNodeName = attribute.getNodeValue();
+            else
+            {
+                logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                valid = false;
+            }
+        }
+        
+        NodeList childNodes = element.getChildNodes();
+        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
+        {
+            Node childNode = childNodes.item(childNodeIndex);
+
+            processUnexpectedNode(childNode);
+            valid = false;
+        }
+
+        if (valid)
+        {
+            if ((sourceDataFlowNodeName != null) && (sinkDataFlowNodeName != null))
+                return deployDataFlowLink(dataFlow, sourceDataFlowNodeName, sinkDataFlowNodeName);
+            else
+            {
+                logger.log(Level.WARNING, "Unknown source/sink of data flow link \"" + sourceDataFlowNodeName + "\" -> \"" + sourceDataFlowNodeName + "\"");
                 return false;
             }
         }
@@ -447,5 +498,119 @@ public class LoadXMLConfig
 
             return false;
         }
+    }
+
+    private <T> boolean deployDataFlowLink(DataFlow dataFlow, String sourceDataFlowNodeName, String sinkDataFlowNodeName)
+    {
+        try
+        {
+            DataFlowNode sourceDataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(sourceDataFlowNodeName);
+            DataFlowNode sinkDataFlowNode   = dataFlow.getDataFlowNodeInventory().getDataFlowNode(sinkDataFlowNodeName);
+
+            if ((sourceDataFlowNode != null) && (sinkDataFlowNode != null))
+            {
+                @SuppressWarnings("unchecked")
+                Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
+
+                DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
+                DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
+
+                if ((dataProvider != null) && (dataConsumer != null))
+                {
+                    dataProvider.addDataConsumer(dataConsumer);
+                    return true;
+                }
+                else
+                {
+                    logger.log(Level.WARNING, "Unable to find links provider or consumer");
+                    return false;
+                }
+            }
+            else
+            {
+                logger.log(Level.WARNING, "Unable to find source or sink node");
+                return false;
+            }
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem while creating data flow link", throwable);
+
+            return false;
+        }
+    }
+    
+    private Class<?> getLinkClass(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode)
+    {
+        Collection<Class<?>> sourceDataClasses = getSourceProviderClasses(sourceDataFlowNode);
+        Collection<Class<?>> sinkDataClasses   = getSinkConsumerClasses(sinkDataFlowNode);
+        
+        if ((sourceDataClasses != null) && (sinkDataClasses != null))
+        {
+            for (Class<?> sourceDataClass: sourceDataClasses)
+                for (Class<?> sinkDataClass: sinkDataClasses)
+                    if (sourceDataClass.equals(sinkDataClass))
+                        return sourceDataClass;
+
+            return null;
+        }
+        else
+            return null;
+    }
+
+    private Collection<Class<?>> getSourceProviderClasses(DataFlowNode sourceDataFlowNode)
+    {
+        if (sourceDataFlowNode instanceof DataSource)
+            return ((DataSource) sourceDataFlowNode).getDataProviderDataClasses();
+        else if (sourceDataFlowNode instanceof DataProcessor)
+            return ((DataProcessor) sourceDataFlowNode).getDataProviderDataClasses();
+        else if (sourceDataFlowNode instanceof DataService)
+            return ((DataService) sourceDataFlowNode).getDataProviderDataClasses();
+        else if (sourceDataFlowNode instanceof DataStore)
+            return ((DataStore) sourceDataFlowNode).getDataProviderDataClasses();
+        else
+            return Collections.emptySet();
+    }
+
+    private Collection<Class<?>> getSinkConsumerClasses(DataFlowNode sinkDataFlowNode)
+    {
+        if (sinkDataFlowNode instanceof DataProcessor)
+            return ((DataProcessor) sinkDataFlowNode).getDataConsumerDataClasses();
+        else if (sinkDataFlowNode instanceof DataService)
+            return ((DataService) sinkDataFlowNode).getDataConsumerDataClasses();
+        else if (sinkDataFlowNode instanceof DataStore)
+            return ((DataStore) sinkDataFlowNode).getDataConsumerDataClasses();
+        else if (sinkDataFlowNode instanceof DataSink)
+            return ((DataSink) sinkDataFlowNode).getDataConsumerDataClasses();
+        else
+            return Collections.emptySet();
+    }
+
+    private <T> DataProvider<T> getSourceProvider(DataFlowNode sourceDataFlowNode, Class<T> dataClass)
+    {
+        if (sourceDataFlowNode instanceof DataSource)
+            return ((DataSource) sourceDataFlowNode).getDataProvider(dataClass);
+        else if (sourceDataFlowNode instanceof DataProcessor)
+            return ((DataProcessor) sourceDataFlowNode).getDataProvider(dataClass);
+        else if (sourceDataFlowNode instanceof DataService)
+            return ((DataService) sourceDataFlowNode).getDataProvider(dataClass);
+        else if (sourceDataFlowNode instanceof DataStore)
+            return ((DataStore) sourceDataFlowNode).getDataProvider(dataClass);
+        else
+            return null;
+    }
+
+    private <T> DataConsumer<T> getSinkConsumer(DataFlowNode sinkDataFlowNode, Class<T> dataClass)
+    {
+        if (sinkDataFlowNode instanceof DataProcessor)
+            return ((DataProcessor) sinkDataFlowNode).getDataConsumer(dataClass);
+        else if (sinkDataFlowNode instanceof DataService)
+            return ((DataService) sinkDataFlowNode).getDataConsumer(dataClass);
+        else if (sinkDataFlowNode instanceof DataStore)
+            return ((DataStore) sinkDataFlowNode).getDataConsumer(dataClass);
+        else if (sinkDataFlowNode instanceof DataSink)
+            return ((DataSink) sinkDataFlowNode).getDataConsumer(dataClass);
+        else
+            return null;
     }
 }

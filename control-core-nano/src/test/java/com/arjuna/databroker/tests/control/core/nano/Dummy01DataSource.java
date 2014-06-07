@@ -39,7 +39,9 @@ public class Dummy01DataSource extends TimerTask implements DataSource
     @Override
     public void run()
     {
-        _dataProvider.produce(UUID.randomUUID().toString());
+        String data = UUID.randomUUID().toString();
+        System.out.println("Source: [" + data + "]");
+        _dataProvider.produce(data);
     }
 
     @Override

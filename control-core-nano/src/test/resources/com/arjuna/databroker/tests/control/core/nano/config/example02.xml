@@ -16,5 +16,4 @@
             <property name="Name01" value="Value01"/>
         </properties>
     </dataFlowNodeFactory>
-    
 </dataflow>
