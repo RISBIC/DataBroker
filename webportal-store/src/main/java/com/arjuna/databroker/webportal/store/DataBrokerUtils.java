@@ -6,7 +6,9 @@ package com.arjuna.databroker.webportal.store;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -25,7 +27,7 @@ public class DataBrokerUtils
 
     public List<DataBrokerEntity> listDataBrokers()
     {
-        logger.fine("DataBrokerUtils.listDataBrokers");
+        logger.log(Level.FINE, "DataBrokerUtils.listDataBrokers");
 
         try
         {
@@ -42,25 +44,25 @@ public class DataBrokerUtils
 
     public void createDataBroker(String name, String summary, String serviceRootURL, String requesterId)
     {
-        logger.fine("DataBrokerUtils.createDataBroker: " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
+        logger.log(Level.FINE, "DataBrokerUtils.createDataBroker: " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = new DataBrokerEntity(name, summary, serviceRootURL, requesterId);
 
-        logger.fine("DataBrokerUtils.createDataBroker: " + dataBroker.getName() + ", " + dataBroker.getSummary() + ", " + dataBroker.getServiceRootURL() + ", " + dataBroker.getRequesterId());
+        logger.log(Level.FINE, "DataBrokerUtils.createDataBroker: " + dataBroker.getName() + ", " + dataBroker.getSummary() + ", " + dataBroker.getServiceRootURL() + ", " + dataBroker.getRequesterId());
 
         _entityManager.persist(dataBroker);
     }
 
     public DataBrokerEntity retrieveDataBroker(String id)
     {
-        logger.fine("DataBrokerUtils.retrieveDataBroker: " + id);
+        logger.log(Level.FINE, "DataBrokerUtils.retrieveDataBroker: " + id);
 
         return _entityManager.find(DataBrokerEntity.class, id);
     }
 
     public void replaceDataBroker(String id, String name, String summary, String serviceRootURL, String requesterId)
     {
-        logger.fine("DataBrokerUtils.replaceDataBroker: " + id + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
+        logger.log(Level.FINE, "DataBrokerUtils.replaceDataBroker: " + id + ", " + name + ", " + summary + ", " + serviceRootURL + ", " + requesterId);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
         dataBroker.setName(name);
@@ -73,7 +75,7 @@ public class DataBrokerUtils
 
     public void removeDataBroker(String id)
     {
-        logger.fine("DataBrokerUtils.removeDataBroker: " + id);
+        logger.log(Level.FINE, "DataBrokerUtils.removeDataBroker: " + id);
 
         DataBrokerEntity dataBroker = _entityManager.find(DataBrokerEntity.class, id);
 

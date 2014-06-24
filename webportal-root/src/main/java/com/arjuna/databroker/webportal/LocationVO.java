@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class LocationVO implements Serializable
 {
-    private static final long serialVersionUID = 4384414923929789797L;
+    private static final long serialVersionUID = 2400294141291623071L;
 
     public LocationVO()
     {

@@ -51,8 +51,8 @@
                         <h:outputText styleClass="dataflowcreate-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataflowcreate-error-message" value="#{dataflowcreate.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGroup layout="block" rendered="#{dataflowcreate.metaProperties != null}">
-                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block" rendered="#{not empty dataflowcreate.metaProperties}">
+                    <h:panelGroup layout="block" rendered="#{not empty dataflowcreate.metaProperties}">
+                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
                             <h:outputText styleClass="dataflowcreate-subtitle" value="Meta Properties"/>
                         </h:panelGroup>
                         <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.metaProperties}" var="metaProperties">

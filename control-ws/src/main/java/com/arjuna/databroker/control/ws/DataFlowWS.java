@@ -55,7 +55,7 @@ public class DataFlowWS
     @Produces(MediaType.APPLICATION_JSON)
     public FactoryNamesDTO getDataFlowNodeClassNamesJSON(@PathParam("dataflowid") String dataFlowId)
     {
-        logger.log(Level.INFO, "DataFlowWS.getDataFlowNodeClassNamesJSON: " + dataFlowId);
+        logger.log(Level.FINE, "DataFlowWS.getDataFlowNodeClassNamesJSON: " + dataFlowId);
 
         if (_dataFlowInventory != null)
         {
@@ -87,7 +87,7 @@ public class DataFlowWS
     @Produces(MediaType.APPLICATION_JSON)
     public FactoryNamesDTO getFactoryNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName)
     {
-        logger.log(Level.INFO, "DataFlowWS.getFactoryNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName);
+        logger.log(Level.FINE, "DataFlowWS.getFactoryNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName);
 
         if (_dataFlowInventory != null)
         {
@@ -123,7 +123,7 @@ public class DataFlowWS
     public PropertyNamesDTO getMetaPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName)
         throws InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.getMetaPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName);
+        logger.log(Level.FINE, "DataFlowWS.getMetaPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName);
 
         if (_dataFlowInventory != null)
         {
@@ -144,6 +144,8 @@ public class DataFlowWS
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Problem while obtaining meta property names from data flow node factory: ", throwable);
+
                             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                         }
                     }
@@ -167,7 +169,7 @@ public class DataFlowWS
     public PropertyNamesDTO getPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, PropertiesDTO metaProperties)
         throws InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.getPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName + ", " + metaProperties);
+        logger.log(Level.FINE, "DataFlowWS.getPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName + ", " + metaProperties);
 
         if (_dataFlowInventory != null)
         {
@@ -188,6 +190,8 @@ public class DataFlowWS
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Problem while obtaining property names from data flow node factory: ", throwable);
+
                             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                         }
                     }
@@ -211,7 +215,7 @@ public class DataFlowWS
     public String createDataFlowNodeJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, @QueryParam("name") String name, CreatePropertiesDTO createProperties)
         throws InvalidNameException, InvalidPropertyException, MissingPropertyException
     {
-        logger.log(Level.INFO, "DataFlowWS.createDataFlowNodeJSON: " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName + ", " + name + ", " + createProperties);
+        logger.log(Level.FINE, "DataFlowWS.createDataFlowNodeJSON: " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName + ", " + name + ", " + createProperties);
 
         if (_dataFlowInventory != null)
         {
@@ -236,6 +240,8 @@ public class DataFlowWS
                             }
                             catch (Throwable throwable)
                             {
+                                logger.log(Level.WARNING, "Problem while creating a data flow node: ", throwable);
+
                                 throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
                             }
                         }
@@ -299,16 +305,16 @@ public class DataFlowWS
                     {
                         if (dataFlowNode instanceof DataSource)
                             for (Class<?> dataClass: ((DataSource) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataSource) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataSource) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataProcessor)
                             for (Class<?> dataClass: ((DataProcessor) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataProcessor) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataProcessor) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataService)
                             for (Class<?> dataClass: ((DataService) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataService) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataService) dataFlowNode).getDataProvider(dataClass)));
                         else if (dataFlowNode instanceof DataStore)
                             for (Class<?> dataClass: ((DataStore) dataFlowNode).getDataProviderDataClasses())
-                            	dataFlowNodeLinks.addAll(getDataFlowLinks(((DataStore) dataFlowNode).getDataProvider(dataClass)));
+                                dataFlowNodeLinks.addAll(getDataFlowLinks(((DataStore) dataFlowNode).getDataProvider(dataClass)));
                     }
                     dataFlowDTO.setDataFlowNodeLinks(dataFlowNodeLinks);
                 }
@@ -354,7 +360,7 @@ public class DataFlowWS
         List<DataFlowNodeLinkDTO> dataFlowLinks = new LinkedList<DataFlowNodeLinkDTO>();
 
         for (DataConsumer<?> dataConsumer: dataProducer.getDataConsumers())
-        	dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
+            dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
 
         return dataFlowLinks;
     }

@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 public class DataFlowNodeLinkVO implements Serializable
 {
-	private static final long serialVersionUID = -8747057966712002057L;
+    private static final long serialVersionUID = -8747057966712002057L;
 
-	public DataFlowNodeLinkVO()
+    public DataFlowNodeLinkVO()
     {
     }
 
     public DataFlowNodeLinkVO(String sourceDataFlowNodeName, String sinkDataFlowNodeName)
     {
-    	_sourceDataFlowNodeName = sourceDataFlowNodeName;
-    	_sinkDataFlowNodeName   = sinkDataFlowNodeName;
+        _sourceDataFlowNodeName = sourceDataFlowNodeName;
+        _sinkDataFlowNodeName   = sinkDataFlowNodeName;
     }
 
     public String getSourceDataFlowNodeName()

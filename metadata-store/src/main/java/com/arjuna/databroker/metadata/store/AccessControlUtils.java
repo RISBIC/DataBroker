@@ -6,7 +6,9 @@ package com.arjuna.databroker.metadata.store;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -25,7 +27,7 @@ public class AccessControlUtils
 
     public List<String> listAccessable(String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.listAccessableIds: \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.listAccessableIds: \"" + requesterId + "\", \"" + userId + "\"");
 
         try
         {
@@ -44,7 +46,7 @@ public class AccessControlUtils
 
     public boolean canRead(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canRead: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.canRead: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
 
         try
         {
@@ -69,7 +71,7 @@ public class AccessControlUtils
 
     public boolean canUpdate(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canUpdate: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.canUpdate: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
         
         try
         {
@@ -94,7 +96,7 @@ public class AccessControlUtils
 
     public boolean canRemove(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canRemove: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.canRemove: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
         
         try
         {
@@ -119,7 +121,7 @@ public class AccessControlUtils
 
     public boolean canCreateChild(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canCreateChild: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.canCreateChild: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
     
         try
         {
@@ -152,7 +154,7 @@ public class AccessControlUtils
 
     public boolean canChangeAccess(String id, String requesterId, String userId)
     {
-        logger.fine("AccessControlUtils.canChangeAccess: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
+        logger.log(Level.FINE, "AccessControlUtils.canChangeAccess: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
     
         try
         {

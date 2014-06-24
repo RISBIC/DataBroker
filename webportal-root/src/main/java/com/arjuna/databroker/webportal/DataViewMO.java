@@ -84,15 +84,33 @@ public class DataViewMO implements Serializable
 
     public String doLoad(String serviceRootURL, String requesterId, String userId)
     {
-        logger.log(Level.INFO, "DataViewMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
+        logger.log(Level.FINE, "DataViewMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
+
+        _serviceRootURL = serviceRootURL;
+        _requesterId    = requesterId;
+        _userId         = userId;
+
+        load();
+
+        return "dataview?faces-redirect=true";
+    }
+
+    public String doReload()
+    {
+        logger.log(Level.FINE, "DataViewMO.doReload: " + _serviceRootURL + ", " + _requesterId + ", " + _userId);
+
+        load();
+
+        return "dataview?faces-redirect=true";
+    }
+
+    public void load()
+    {
+        logger.log(Level.FINE, "DataViewMO.load");
         try
         {
-            _serviceRootURL = serviceRootURL;
-            _requesterId    = requesterId;
-            _userId         = userId;
-
             _metadataIds.clear();
-            _metadataIds.addAll(_metadataClient.listMetadata(serviceRootURL, requesterId, userId));
+            _metadataIds.addAll(_metadataClient.listMetadata(_serviceRootURL, _requesterId, _userId));
             _errorMessage = null;
         }
         catch (Throwable throwable)
@@ -101,8 +119,6 @@ public class DataViewMO implements Serializable
             _metadataIds.clear();
             _errorMessage = "Problem getting metadata ids";
         }
-
-        return "dataview?faces-redirect=true";
     }
 
     private String       _serviceRootURL;

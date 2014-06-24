@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class DataBrokerConnectionVO implements Serializable
 {
-    private static final long serialVersionUID = 4384414923929789797L;
+    private static final long serialVersionUID = -5107686173297463045L;
 
     public DataBrokerConnectionVO()
     {

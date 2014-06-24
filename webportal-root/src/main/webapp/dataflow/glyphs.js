@@ -233,23 +233,23 @@ DataFlowGlyph.prototype.findDataFlowNodeByName = function(dataFlowNodeName)
 
     for (var index = 0; (item == null) && (index < this.stores.length); index++)
         if (dataFlowNodeName == this.stores[index].name)
-        	item = this.stores[index];
+            item = this.stores[index];
 
     for (var index = 0; (item == null) && (index < this.services.length); index++)
         if (dataFlowNodeName == this.services[index].name)
-        	item = this.services[index];
+            item = this.services[index];
 
     for (var index = 0; (item == null) && (index < this.processors.length); index++)
         if (dataFlowNodeName == this.processors[index].name)
-        	item = this.processors[index];
+            item = this.processors[index];
 
     for (var index = 0; (item == null) && (index < this.sources.length); index++)
         if (dataFlowNodeName == this.sources[index].name)
-        	item = this.sources[index];
+            item = this.sources[index];
 
     for (var index = 0; (item == null) && (index < this.sinks.length); index++)
         if (dataFlowNodeName == this.sinks[index].name)
-        	item = this.sinks[index];
+            item = this.sinks[index];
 
     return item;
 }
@@ -286,11 +286,11 @@ DataFlowGlyph.load = function(dataFlow)
 
         if (sourceDataFlowNodeName && sinkDataFlowNodeName)
         {
-        	var sourceDataFlowNode = dataFlowGlyph.findDataFlowNodeByName(sourceDataFlowNodeName);
+            var sourceDataFlowNode = dataFlowGlyph.findDataFlowNodeByName(sourceDataFlowNodeName);
             var sinkDataFlowNode   = dataFlowGlyph.findDataFlowNodeByName(sinkDataFlowNodeName);
 
             if (sourceDataFlowNode && sinkDataFlowNode)
-            	dataFlowGlyph.links.push(new LinkGlyph(sourceDataFlowNode.producer, sinkDataFlowNode.consumer));
+                dataFlowGlyph.links.push(new LinkGlyph(sourceDataFlowNode.producer, sinkDataFlowNode.consumer));
         }
     }
 
@@ -899,22 +899,22 @@ LabelUtil.generateLabel = function(context, text, x, y, width, height, lineSepar
     var currentText = text.replace(/\s+/g, ' ').trim();
     while ((currentText !== "") && (labels.length < maxLabels))
     {
-    	var bestLabel      = currentText.substring(0, 1);
-    	var testLabel      = currentText.substring(0, 2);
-    	var testLabelWidth = context.measureText(testLabel).width;
-    	while ((bestLabel !== currentText) && (testLabelWidth < width))
+        var bestLabel      = currentText.substring(0, 1);
+        var testLabel      = currentText.substring(0, 2);
+        var testLabelWidth = context.measureText(testLabel).width;
+        while ((bestLabel !== currentText) && (testLabelWidth < width))
         {
-    		bestLabel      = testLabel;
-    		testLabel      = currentText.substring(0, testLabel.length + 1);
-    		testLabelWidth = context.measureText(testLabel).width;
+            bestLabel      = testLabel;
+            testLabel      = currentText.substring(0, testLabel.length + 1);
+            testLabelWidth = context.measureText(testLabel).width;
         }
 
-    	if ((bestLabel.length >= 3) && (bestLabel[bestLabel.length - 2] === ' '))
-    		bestLabel = bestLabel.substring(0, bestLabel.length - 1);
+        if ((bestLabel.length >= 3) && (bestLabel[bestLabel.length - 2] === ' '))
+            bestLabel = bestLabel.substring(0, bestLabel.length - 1);
 
         currentText = currentText.substring(bestLabel.length, currentText.length).trim();
 
-    	var label = new Object();
+        var label = new Object();
         label.text = bestLabel.trim();
 
         labels.push(label);
@@ -923,7 +923,7 @@ LabelUtil.generateLabel = function(context, text, x, y, width, height, lineSepar
     if ((labels.length == maxLabels) && (currentText !== ""))
     {
         var lastLabelText = labels[labels.length - 1].text;
-    	labels[labels.length - 1].text = lastLabelText.substring(0, lastLabelText.length - 3).concat("...");
+        labels[labels.length - 1].text = lastLabelText.substring(0, lastLabelText.length - 3).concat("...");
     }
 
     var currentLabelY = y - ((lineSeparation * (labels.length - 1)) / 2.0);

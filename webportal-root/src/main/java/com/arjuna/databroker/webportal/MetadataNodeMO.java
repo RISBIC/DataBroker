@@ -7,6 +7,7 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,6 +31,16 @@ public class MetadataNodeMO implements Serializable
     {
     }
 
+    public String getName()
+    {
+        return _name;
+    }
+
+    public String getResourceURI()
+    {
+        return _resourceURI;
+    }
+
     public String getTitle()
     {
         return _title;
@@ -43,6 +54,15 @@ public class MetadataNodeMO implements Serializable
     public String getDetails()
     {
         return _details;
+    }
+
+    public void clearSelection()
+    {
+        _name        = "";
+        _resourceURI = "";
+        _title       = "";
+        _summary     = "";
+        _details     = "";
     }
 
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent)
@@ -67,6 +87,10 @@ public class MetadataNodeMO implements Serializable
             Statement summaryStatement = resource.getProperty(hasSummary);
             Statement detailsStatement = resource.getProperty(hasDetails);
 
+            _name = abstractTreeNode.getName();
+
+            _resourceURI = resource.getURI();
+
             if (titleStatement != null)
                 _title = titleStatement.getString();
             else
@@ -84,15 +108,19 @@ public class MetadataNodeMO implements Serializable
         }
         catch (Throwable throwable)
         {
-            throwable.printStackTrace();
-            _title   = "";
-            _summary = "";
-            _details = "";
+            logger.log(Level.WARNING, "Problem while processing rdf", throwable);
+            _name        = "";
+            _resourceURI = "";
+            _title       = "";
+            _summary     = "";
+            _details     = "";
         }
 
         tree.setRowKey(key);
     }
 
+    private String _name;
+    private String _resourceURI;
     private String _title;
     private String _summary;
     private String _details;

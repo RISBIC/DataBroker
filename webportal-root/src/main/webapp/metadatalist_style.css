@@ -1,0 +1,215 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.metadatalist
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	height:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.metadatalist
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 2em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.metadatalist-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.metadatalist-title
+{
+}
+
+div.metadatalist-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.metadatalist-error-title
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-error-message
+{
+	color:			#EEA05D;
+}
+
+div.metadatalist-level1
+{
+	margin:			1em 0 1em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#fafafa;
+}
+
+span.metadatalist-level1-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level1-value
+{
+}
+
+div.metadatalist-level2
+{
+	margin:			0.5em 0 0.5em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#eeeeee;
+}
+
+span.metadatalist-level2-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level2-value
+{
+}
+
+div.metadatalist-level3
+{
+	margin:			0.25em 0 0.25em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#e9e9e9;
+}
+
+span.metadatalist-level3-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level3-value
+{
+}
+
+div.metadatalist-level4
+{
+	margin:			0.25em 0 0.25em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#dddddd;
+}
+
+span.metadatalist-level4-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level4-value
+{
+}
+
+div.metadatalist-level5
+{
+	margin:			0.25em 0 0.25em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#d8d8d8;
+}
+
+span.metadatalist-level5-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level5-value
+{
+}
+
+div.metadatalist-level6
+{
+	margin:			0.25em 0 0.25em 0;
+	border:			1px solid #bbbbbb;
+	padding:		0.5em 1em 0.5em 1em;
+	border-radius:		1em;
+	-moz-border-radius:	1em;
+	background-color:	#cccccc;
+}
+
+span.metadatalist-level6-name
+{
+	font-weight:		bold;
+}
+
+span.metadatalist-level6-value
+{
+}
+
+div.metadatalist-buttons
+{
+	margin:			1em 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+a.metadatalist-button
+{
+	margin:				0 1em 0 0;
+	border:				0;
+	padding:			0.25em 0.5em 0.25em 0.5em;
+	font-size:			1em;
+	font-weight:			normal;
+	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	border-top-left-radius:		0.5em;
+	-moz-border-radius-topleft:	0.5em;
+	border-bottom-right-radius:	0.5em;
+	-moz-border-radius-bottomright:	0.5em;
+}
+
+a.metadatalist-button:link
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.metadatalist-button:visited
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.metadatalist-button:hover
+{
+	background-color:	#EEA05D;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+a.metadatalist-button:active
+{
+	background-color:	#777777;
+	color:			#EEEEEE;
+	text-decoration:	none;
+}

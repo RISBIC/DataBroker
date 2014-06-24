@@ -31,9 +31,9 @@ public class DataSourceTreeNode extends AbstractTreeNode
 
     public AbstractTreeNode processSubNodeStatement(Model model, Statement statement)
     {
-        Property hasDataSourceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasDataService");
+        Property hasDataServiceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasDataService");
 
-        if (hasDataSourceProperty.equals(statement.getPredicate()))
+        if (hasDataServiceProperty.equals(statement.getPredicate()))
             return new DataServiceTreeNode(model, statement.getResource());
         else
             return null;

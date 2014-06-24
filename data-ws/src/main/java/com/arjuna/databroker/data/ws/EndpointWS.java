@@ -5,7 +5,9 @@
 package com.arjuna.databroker.data.ws;
 
 import java.net.HttpURLConnection;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -14,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNodeInventory;
@@ -31,7 +34,7 @@ public class EndpointWS
     @Consumes(MediaType.TEXT_PLAIN)
     public void receiveDataText(@PathParam("dataFlowId") String dataFlowId, @PathParam("dataSourceId") String dataSourceId, String data)
     {
-        logger.fine("receiveDataText: " + dataFlowId + ", " + dataSourceId);
+        logger.log(Level.FINE, "receiveDataText: " + dataFlowId + ", " + dataSourceId);
         if (_dataFlowInventory != null)
         {
             DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
@@ -71,7 +74,7 @@ public class EndpointWS
     @Consumes(MediaType.APPLICATION_JSON)
     public void receiveDataJSON(@PathParam("dataFlowId") String dataFlowId, @PathParam("dataSourceId") String dataSourceId, String data)
     {
-        logger.warning("receiveDataJSON: " + dataFlowId + ", " + dataSourceId);
+        logger.log(Level.FINE, "receiveDataJSON: " + dataFlowId + ", " + dataSourceId);
         if (_dataFlowInventory != null)
         {
             DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);

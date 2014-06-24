@@ -5,10 +5,8 @@
 package com.arjuna.databroker.control.ws;
 
 import java.net.HttpURLConnection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -29,10 +27,8 @@ import com.arjuna.databroker.control.comms.PropertyNamesDTO;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowInventory;
-import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
-import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
@@ -99,20 +95,6 @@ public class DataFlowFactoryWS
                     for (DataFlowNodeFactory dataFlowNodeFactory: _dataFlowNodeFactoryInventory.getDataFlowNodeFactorys())
                         dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
                     _dataFlowInventory.addDataFlow(dataFlow);
-
-                    DataFlowNodeFactory dataFlowNodeFactory = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory("Endpoint Data Source Factory");
-                    if (dataFlowNodeFactory != null)
-                    {
-                        Map<String, String> dataFlowNodeMetaProperties = new HashMap<String, String>();
-
-                        Map<String, String> dataFlowNodeProperties = new HashMap<String, String>();
-                        dataFlowNodeProperties.put("TestPropName", "TestPropValue");
-
-                        DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory("Endpoint Data Source Factory").createDataFlowNode("Test Data Flow Node", DataSource.class, dataFlowNodeMetaProperties, dataFlowNodeProperties);
-                        dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
-                    }
-                    else
-                        logger.log(Level.WARNING, "GlobalDataFlowFactory.createDataFlow: Unable to find Data Flow Node Factory");
 
                     return dataFlow.getName();
                 }

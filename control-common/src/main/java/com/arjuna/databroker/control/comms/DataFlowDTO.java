@@ -82,7 +82,7 @@ public class DataFlowDTO implements Serializable
 
     public void setDataFlowNodeLinks(List<DataFlowNodeLinkDTO> dataFlowNodeLinks)
     {
-    	_dataFlowNodeLinks = dataFlowNodeLinks;
+        _dataFlowNodeLinks = dataFlowNodeLinks;
     }
 
     private String                       _id;

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class DataFlowNodeFactorySummary implements Serializable
 {
-    private static final long serialVersionUID = 4020025506840808805L;
+    private static final long serialVersionUID = 6270651164484806102L;
 
     public DataFlowNodeFactorySummary()
     {

@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 
@@ -33,21 +35,21 @@ public abstract class AbstractDataFlowNodeFactoryInventory implements DataFlowNo
 
     public void addDataFlowNodeFactory(DataFlowNodeFactory dataFlowNodeFactory)
     {
-        logger.fine("addDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
+        logger.log(Level.FINE, "addDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
 
         _inventory.put(dataFlowNodeFactory.getName(), dataFlowNodeFactory);
     }
 
     public boolean removeDataFlowNodeFactory(String name)
     {
-        logger.fine("removeDataFlowNodeFactory: '" + name + "'");
+        logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + name + "'");
 
         return _inventory.remove(name) != null;
     }
 
     public boolean removeDataFlowNodeFactory(DataFlowNodeFactory dataFlowNodeFactory)
     {
-        logger.fine("removeDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
+        logger.log(Level.FINE, "removeDataFlowNodeFactory: '" + dataFlowNodeFactory.getName() + "'");
 
         return _inventory.remove(dataFlowNodeFactory.getName()) != null;
     }

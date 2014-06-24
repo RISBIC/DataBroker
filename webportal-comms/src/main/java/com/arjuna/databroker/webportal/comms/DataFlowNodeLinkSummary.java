@@ -8,16 +8,16 @@ import java.io.Serializable;
 
 public class DataFlowNodeLinkSummary implements Serializable
 {
-	private static final long serialVersionUID = 7778986720559309969L;
+    private static final long serialVersionUID = 7778986720559309969L;
 
-	public DataFlowNodeLinkSummary()
+    public DataFlowNodeLinkSummary()
     {
     }
 
     public DataFlowNodeLinkSummary(String sourceDataFlowNodeName, String sinkDataFlowNodeName)
     {
-    	_sourceDataFlowNodeName = sourceDataFlowNodeName;
-    	_sinkDataFlowNodeName   = sinkDataFlowNodeName;
+        _sourceDataFlowNodeName = sourceDataFlowNodeName;
+        _sinkDataFlowNodeName   = sinkDataFlowNodeName;
     }
 
     public String getSourceDataFlowNodeName()
@@ -42,7 +42,7 @@ public class DataFlowNodeLinkSummary implements Serializable
 
     public String toString()
     {
-    	return "(" + _sourceDataFlowNodeName + "->" + _sinkDataFlowNodeName + ")";
+        return "(" + _sourceDataFlowNodeName + "->" + _sinkDataFlowNodeName + ")";
     }
 
     private String _sourceDataFlowNodeName;
