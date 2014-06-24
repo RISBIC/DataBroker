@@ -32,6 +32,17 @@
 
         <version.org.apache.jena>2.11.1</version.org.apache.jena>
         <version.org.richfaces>4.3.5.Final</version.org.richfaces>
+
+        <!-- JBossAS-7.1.1.Final
+        <servlet-api.version>3.0</servlet-api.version>
+        <jsf-api.version>2.1</jsf-api.version>
+        <ejb-api.version>3.1</ejb-api.version>
+        <jpa-api.version>2.0</jpa-api.version>
+        -->
+        <servlet-api.version>3.1</servlet-api.version>
+        <jsf-api.version>2.2</jsf-api.version>
+        <ejb-api.version>3.2</ejb-api.version>
+        <jpa-api.version>2.1</jpa-api.version>
     </properties>
 
     <modules>
@@ -59,10 +70,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- JBossAS-7.1.1.Final
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-dist</artifactId>
+                <version>7.1.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            -->
             <dependency>
                 <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-dist</artifactId>
-                <version>8.1.0.CR1</version>
+                <version>8.1.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
