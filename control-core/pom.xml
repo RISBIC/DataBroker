@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <artifactId>jboss-ejb-api_${ejb-api.version}_spec</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
