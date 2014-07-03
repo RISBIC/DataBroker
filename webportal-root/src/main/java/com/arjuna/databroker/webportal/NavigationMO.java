@@ -21,7 +21,7 @@ public class NavigationMO implements Serializable
     {
         _locations = new LinkedList<LocationVO>();
         
-        _locations.add(new LocationVO("Home", "index?faces-redirect=true"));
+        _locations.add(new LocationVO("Home", "/index?faces-redirect=true"));
     }
 
     public List<LocationVO> getLocations()

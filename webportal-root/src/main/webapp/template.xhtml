@@ -11,8 +11,8 @@
         <h:head>
             <title><ui:insert name="title"/></title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="site_style.css"/>
-            <link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/>
+            <h:outputStylesheet name="site_style.css"/>
+            <link rel="icon" type="image/png" sizes="32x32" href="#{resource['favicon.png']}"/>
             <ui:insert name="head"/>
         </h:head>
 

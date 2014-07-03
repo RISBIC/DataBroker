@@ -5,17 +5,17 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
-        <ui:define name="title">DataBroker Connection</ui:define>
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">Data View Description Edit</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="databrokerconnection_style.css"/>
+            <link rel="stylesheet" type="text/css" href="metadatanode_edit_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <h:form styleClass="header">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="DataBroker Connection"/>
+                    <h:outputText styleClass="title" value="Data View Description"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <h:inputText styleClass="uservalue" value="#{user.username}"/>
@@ -28,7 +28,7 @@
                             <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
                         </h:panelGroup>
                     </h:panelGrid>
-                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" rendered="#{user.loggedIn}">
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
                         <h:outputText styleClass="userlabel" value=" "/>
@@ -42,27 +42,26 @@
                 </ui:repeat>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="databroker">
-                <h:panelGroup styleClass="databroker" layout="block">
-                   <h:panelGroup styleClass="databroker-title" layout="block">
-                        <h:outputText styleClass="databroker-title" value="DataBroker Connection"/>
+            <h:form styleClass="metadatanode">
+                <h:panelGroup styleClass="metadatanode" layout="block">
+                    <h:panelGroup styleClass="metadatanode-title" layout="block">
+                        <h:outputText styleClass="metadatanode-title" value="Data View Description Edit"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databrokerconnection.errorMessage}">
-                        <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="databroker-error-message" value="#{databrokerconnection.errorMessage}"/>
+                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{not empty metadatanodeedit.errorMessage}">
+                        <h:outputText styleClass="metadatanode-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="metadatanode-error-message" value="#{metadatanodeedit.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGrid styleClass="databroker" columnClasses="databroker-column-one,databroker-column-two" columns="2">
-                        <h:outputText styleClass="databroker-header" value="Name"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.name}" disabled="true"/>
-                        <h:outputText styleClass="databroker-header" value="Summary"/>
-                        <h:inputTextarea styleClass="databroker-value" rows="4" value="#{databrokerconnection.summary}" disabled="true"/>
-                        <h:outputText styleClass="databroker-header" value="Service Root URL"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.serviceRootURL}" disabled="true"/>
-                        <h:outputText styleClass="databroker-header" value="Requester Id"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.requesterId}" disabled="true"/>
-                        <h:outputText styleClass="databroker-empty" value=""/>
+                    <h:panelGrid id="metadatanode" styleClass="metadatanode-description" columnClasses="metadatanode-descriptionlabels,metadatanode-descriptionvalues" columns="2" border="0" cellpadding="0" cellspacing="1em">
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Title: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="1" value="#{metadatanodeedit.title}"/>
+                        <h:outputText styleClass="metadata-descriptionlabel" value="Summary: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="4" value="#{metadatanodeedit.summary}"/>
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Details: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="24" value="#{metadatanodeedit.details}"/>
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value=" "/>
                         <h:panelGroup>
-                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnections.doLoad}" value="Done"/>
+                            <h:commandLink styleClass="metadatanode-button" action="#{metadatanodeedit.doChangeSubmit}" value="Change"/>
+                            <h:commandLink styleClass="metadatanode-button" action="#{metadata.doReload}" value="Cancel"/>
                         </h:panelGroup>
                     </h:panelGrid>
                 </h:panelGroup>

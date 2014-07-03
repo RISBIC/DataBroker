@@ -5,10 +5,12 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich">
-    <ui:composition template="template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">Session Expired</ui:define>
 
-        <ui:define name="head"/>
+        <ui:define name="head">
+            <h:outputStylesheet name="error_style.css"/>
+        </ui:define>
 
         <ui:define name="body">
             <h:form styleClass="header">
@@ -16,12 +18,16 @@
                     <h:outputText styleClass="title" value="Session Expired"/>
                 </h:panelGrid>
             </h:form>
-            <h:panelGrid styleClass="error" columns="1">
-                <h:outputText value="Sorry, your period of inactivity was to long!"/>
-                <h:outputLink value="/">
-                    <h:outputText value="To reselect Data Source..."/>
-                </h:outputLink>
-            </h:panelGrid>
+            <h:form styleClass="error">
+                <h:panelGroup styleClass="error" layout="block">
+                    <h:panelGroup styleClass="error-title" layout="block">
+                        <h:outputText styleClass="error-title" value="Sorry, your period of inactivity was to long!"/>
+                    </h:panelGroup>
+                    <h:outputLink value="/">
+                        <h:outputText value="To reselect Data Source..."/>
+                    </h:outputLink>
+                </h:panelGroup>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

@@ -96,7 +96,7 @@ public class DataBrokerConnectionMO implements Serializable
         clear();
         _errorMessage = null;
 
-        return "databrokerconnection_add?faces-redirect=true";
+        return "/databrokers/databrokerconnection_add?faces-redirect=true";
     }
 
     public String doAddSubmit()
@@ -104,14 +104,14 @@ public class DataBrokerConnectionMO implements Serializable
         _dataBrokerUtils.createDataBroker(_name, _summary, _serviceRootURL, _requesterId);
         _errorMessage = null;
 
-        return "databrokerconnection?faces-redirect=true";
+        return "/databrokers/databrokerconnection?faces-redirect=true";
     }
 
     public String doChange(String id)
     {
         load(id);
 
-        return "databrokerconnection_change?faces-redirect=true";
+        return "/databrokers/databrokerconnection_change?faces-redirect=true";
     }
 
     public String doChangeSubmit()
@@ -121,7 +121,7 @@ public class DataBrokerConnectionMO implements Serializable
         else
             _errorMessage = "Unable to update information.";
 
-        return "databrokerconnection?faces-redirect=true";
+        return "/databrokers/databrokerconnection?faces-redirect=true";
     }
 
     private void clear()

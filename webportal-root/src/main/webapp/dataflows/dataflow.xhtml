@@ -5,7 +5,7 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">Data Flow</ui:define>
 
         <ui:define name="head">
@@ -83,9 +83,9 @@
                             <canvas id="diagram" onmousedown="dataFlowControl.doEvent(event)">
                                 Sorry, your browser does not support HTML5 Canvas.
                             </canvas>
-                            <script type="text/javascript" src="dataflow/glyphs.js"></script>
-                            <script type="text/javascript" src="dataflow/control.js"></script>
-                            <script type="text/javascript" src="dataflow/edit-link.js"></script>
+                            <h:outputScript name="dataflow/glyphs.js"/>
+                            <h:outputScript name="dataflow/control.js"/>
+                            <h:outputScript name="dataflow/edit-link.js"/>
                             <script type="text/javascript">
                                 var dataFlowControl = new DataFlowControl('diagram');
                                 dataFlowControl.init(DataFlowGlyph.load(JSON.parse(<h:outputText escape="false" value="#{dataflow.dataFlowNodesJSON}"/>)));

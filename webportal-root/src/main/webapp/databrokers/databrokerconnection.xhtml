@@ -5,7 +5,7 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">DataBroker Connection</ui:define>
 
         <ui:define name="head">
@@ -28,7 +28,7 @@
                             <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
                         </h:panelGroup>
                     </h:panelGrid>
-                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" rendered="#{user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
                         <h:outputText styleClass="userlabel" value=" "/>
@@ -44,26 +44,25 @@
             </h:form>
             <h:form styleClass="databroker">
                 <h:panelGroup styleClass="databroker" layout="block">
-                    <h:panelGroup styleClass="databroker-title" layout="block">
-                        <h:outputText styleClass="databroker-title" value="Add DataBroker Connection"/>
+                   <h:panelGroup styleClass="databroker-title" layout="block">
+                        <h:outputText styleClass="databroker-title" value="DataBroker Connection"/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databrokerconnection.errorMessage}">
                         <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
                         <h:outputText styleClass="databroker-error-message" value="#{databrokerconnection.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGrid styleClass="databroker" columnClasses="databroker-column-one,databroker-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
+                    <h:panelGrid styleClass="databroker" columnClasses="databroker-column-one,databroker-column-two" columns="2">
                         <h:outputText styleClass="databroker-header" value="Name"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.name}"/>
+                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.name}" disabled="true"/>
                         <h:outputText styleClass="databroker-header" value="Summary"/>
-                        <h:inputTextarea styleClass="databroker-value" rows="4" value="#{databrokerconnection.summary}"/>
+                        <h:inputTextarea styleClass="databroker-value" rows="4" value="#{databrokerconnection.summary}" disabled="true"/>
                         <h:outputText styleClass="databroker-header" value="Service Root URL"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.serviceRootURL}"/>
+                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.serviceRootURL}" disabled="true"/>
                         <h:outputText styleClass="databroker-header" value="Requester Id"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.requesterId}"/>
+                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.requesterId}" disabled="true"/>
                         <h:outputText styleClass="databroker-empty" value=""/>
                         <h:panelGroup>
-                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnection.doAddSubmit}" value="Add"/>
-                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnections.doLoad}" value="Cancel"/>
+                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnections.doLoad}" value="Done"/>
                         </h:panelGroup>
                     </h:panelGrid>
                 </h:panelGroup>

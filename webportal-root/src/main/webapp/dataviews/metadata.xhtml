@@ -5,11 +5,11 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
+    <ui:composition template="../template.xhtml">
         <ui:define name="title">Data View Description</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="metadatanode_edit_style.css"/>
+            <link rel="stylesheet" type="text/css" href="metadata_style.css"/>
         </ui:define>
 
         <ui:define name="body">
@@ -40,29 +40,38 @@
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
                 </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{metadata.doReload}" value="Reload"/>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="metadatanode">
-                <h:panelGroup styleClass="metadatanode" layout="block">
-                    <h:panelGroup styleClass="metadatanode-title" layout="block">
-                        <h:outputText styleClass="metadatanode-title" value="Data View Description"/>
+            <h:form styleClass="metadata">
+                <h:panelGroup styleClass="metadata" layout="block">
+                    <h:panelGroup styleClass="metadata-title" layout="block">
+                        <h:outputText styleClass="metadata-title" value="Data View Description"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{empty metadatanodeedit.errorMessage}">
-                        <h:outputText styleClass="metadatanode-message" value="Update to Data View completed successfully."/>
+                    <h:panelGroup styleClass="metadata-error" layout="block" rendered="#{not empty metadata.errorMessage}">
+                        <h:outputText styleClass="metadata-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="metadata-error-message" value="#{metadata.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="metadatanode-error" layout="block" rendered="#{not empty metadatanodeedit.errorMessage}">
-                        <h:outputText styleClass="metadatanode-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="metadatanode-error-message" value="#{metadatanodeedit.errorMessage}"/>
-                    </h:panelGroup>
-                    <h:panelGrid id="metadatanode" styleClass="metadatanode-description" columnClasses="metadatanode-descriptionlabels,metadatanode-descriptionvalues" columns="2" border="0" cellpadding="0" cellspacing="1em">
-                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Title: "/>
-                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="1" readonly="true" value="#{metadatanodeedit.title}"/>
-                        <h:outputText styleClass="metadata-descriptionlabel" value="Summary: "/>
-                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="4" readonly="true" value="#{metadatanodeedit.summary}"/>
-                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Details: "/>
-                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="24" readonly="true" value="#{metadatanodeedit.details}"/>
-                        <h:outputText styleClass="metadatanode-descriptionlabel" value=" "/>
-                        <h:commandLink styleClass="metadatanode-button" action="#{metadata.doReload}" value="Done"/>
+                    <h:panelGrid styleClass="metadata-info" columnClasses="metadata-treecolumn,metadata-descriptioncolumn" columns="2" border="0" cellpadding="0" cellspacing="1em" rendered="#{empty metadata.errorMessage}">
+                        <rich:tree styleClass="metadata-tree" var="metadataNode" toggleType="client" selectionType="ajax" selectionChangeListener="${metadatanode.selectionChanged}">
+                            <rich:treeModelRecursiveAdaptor roots="#{metadata.rootNodes}" nodes="#{metadataNode.subNodes}">
+                                <rich:treeNode>
+                                    <h:outputText value="#{metadataNode.name}"/>
+                                </rich:treeNode>
+                            </rich:treeModelRecursiveAdaptor>
+                        </rich:tree>
+                        <a4j:outputPanel ajaxRendered="true" layout="block">
+                            <h:panelGrid id="metadatanode" styleClass="metadata-description" columnClasses="metadata-descriptionlabels,metadata-descriptionvalues" columns="2" border="0" cellpadding="0" cellspacing="1em">
+                                <h:outputText styleClass="metadata-descriptionlabel" value="Title: "/>
+                                <h:inputTextarea styleClass="metadata-descriptionvalue" rows="1" readonly="true" value="#{metadatanode.title}"/>
+                                <h:outputText styleClass="metadata-descriptionlabel" value="Summary: "/>
+                                <h:inputTextarea styleClass="metadata-descriptionvalue" rows="4" readonly="true" value="#{metadatanode.summary}"/>
+                                <h:outputText styleClass="metadata-descriptionlabel" value="Details: "/>
+                                <h:inputTextarea styleClass="metadata-descriptionvalue" rows="24" readonly="true" value="#{metadatanode.details}"/>
+                                <h:outputText styleClass="metadata-descriptionlabel" value=""/>
+                                <h:commandLink styleClass="metadata-button" action="#{metadatanodeedit.doEdit(metadata.serviceRootURL, metadata.requesterId, metadata.userId, metadata.metadataId, metadatanode.resourceURI, metadatanode.title, metadatanode.summary, metadatanode.details)}" value="Edit"/>
+                            </h:panelGrid>
+                        </a4j:outputPanel>
                     </h:panelGrid>
                 </h:panelGroup>
             </h:form>

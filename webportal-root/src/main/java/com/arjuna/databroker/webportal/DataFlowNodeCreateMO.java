@@ -174,7 +174,7 @@ public class DataFlowNodeCreateMO implements Serializable
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "dataflownode_create?faces-redirect=true";
+        return "/dataflows/dataflownode_create?faces-redirect=true";
     }
 
     public String doSubmit()
@@ -187,7 +187,7 @@ public class DataFlowNodeCreateMO implements Serializable
         for (String propertyName: propertyNames)
             _properties.add(new PropertyVO(propertyName, ""));
 
-        return "dataflownode_create?faces-redirect=true";
+        return "/dataflows/dataflownode_create?faces-redirect=true";
     }
 
     public String doReset()
@@ -201,7 +201,7 @@ public class DataFlowNodeCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doCancel");
 
-        return "dataflow?faces-redirect=true";
+        return "/dataflows/dataflow?faces-redirect=true";
     }
 
     public String doCreate()
@@ -213,14 +213,14 @@ public class DataFlowNodeCreateMO implements Serializable
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "dataflownode_create_done?faces-redirect=true";
+        return "/dataflows/dataflownode_create_done?faces-redirect=true";
     }
 
     public String doDone()
     {
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doDone");
 
-        return "dataflow?faces-redirect=true";
+        return "/dataflows/dataflow?faces-redirect=true";
     }
 
     private Map<String, String> listToMap(List<PropertyVO> properties)

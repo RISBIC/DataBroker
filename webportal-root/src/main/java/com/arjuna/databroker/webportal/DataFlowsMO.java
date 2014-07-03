@@ -14,31 +14,31 @@ import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 
 @SessionScoped
-@ManagedBean(name="dataviews")
-public class DataViewsMO implements Serializable
+@ManagedBean(name="dataflows")
+public class DataFlowsMO implements Serializable
 {
-    private static final long serialVersionUID = 1726666225697565917L;
+    private static final long serialVersionUID = 8838447133924702147L;
 
-    public DataViewsMO()
+    public DataFlowsMO()
     {
-        _dataViews = new LinkedList<DataBrokerConnectionVO>();
+        _dataFlows = new LinkedList<DataBrokerConnectionVO>();
     }
 
-    public List<DataBrokerConnectionVO> getDataViews()
+    public List<DataBrokerConnectionVO> getDataFlows()
     {
-        return _dataViews;
+        return _dataFlows;
     }
 
-    public void setDataViews(List<DataBrokerConnectionVO> dataViews)
+    public void setDataFlows(List<DataBrokerConnectionVO> dataFlows)
     {
-        _dataViews = dataViews;
+        _dataFlows = dataFlows;
     }
 
     public String doLoad()
     {
         load();
 
-        return "/dataviews/dataviews?faces-redirect=true";
+        return "/dataflows/dataflows?faces-redirect=true";
     }
 
     public boolean load()
@@ -47,22 +47,22 @@ public class DataViewsMO implements Serializable
         {
             List<DataBrokerEntity> dataBrokers = _dataBrokerUtils.listDataBrokers();
 
-            _dataViews.clear();
+            _dataFlows.clear();
             for (DataBrokerEntity dataBroker: dataBrokers)
-                _dataViews.add(new DataBrokerConnectionVO(dataBroker.getId().toString(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
+                _dataFlows.add(new DataBrokerConnectionVO(dataBroker.getId().toString(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
 
             return true;
         }
         catch (Throwable throwable)
         {
             throwable.printStackTrace();
-            _dataViews.clear();
+            _dataFlows.clear();
 
             return false;
         }
     }
 
-    private List<DataBrokerConnectionVO> _dataViews;
+    private List<DataBrokerConnectionVO> _dataFlows;
 
     @EJB
     private DataBrokerUtils _dataBrokerUtils;
