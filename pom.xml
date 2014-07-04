@@ -61,6 +61,7 @@
         <module>data-common</module>
         <module>data-ws</module>
         <module>metadata-common</module>
+        <module>metadata-rdf</module>
         <module>metadata-ws</module>
         <module>metadata-store</module>
         <module>server-ear</module>
