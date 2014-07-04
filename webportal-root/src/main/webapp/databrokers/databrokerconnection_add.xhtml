@@ -13,14 +13,14 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form styleClass="header">
+            <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
                     <h:outputText styleClass="title" value="DataBroker Connection"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
-                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <input class="uservalue" type="text" name="j_username"/>
                         <h:outputText styleClass="userlabel" value="Password:"/>
-                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <input class="uservalue" type="password" name="j_password"/>
                         <h:outputText styleClass="userlabel" value=" "/>
                         <h:panelGroup>
                             <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
@@ -35,7 +35,7 @@
                         <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
                     </h:panelGrid>
                 </h:panelGrid>
-            </h:form>
+            </form>
             <h:form styleClass="navigation">
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
