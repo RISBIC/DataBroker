@@ -5,14 +5,12 @@
 package com.arjuna.databroker.metadata;
 
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
-import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
 
 public interface MetadataStatement<T>
 {
-    String getName();
-    String getType();
-    T      getValue();
+    public String getName();
+    public String getType();
+    public T      getValue();
 
-    public MetadataStatementSelector  self();
-    public MetadataStatementsSelector metaFeatures();
+    public MetadataStatementSelector self();
 }

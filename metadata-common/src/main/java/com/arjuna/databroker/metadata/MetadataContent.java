@@ -5,14 +5,13 @@
 package com.arjuna.databroker.metadata;
 
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
-import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
 
-public interface MetadataContext
+public interface MetadataContent
 {
-    public MutableMetadataContext clone();
+    public <T> MetadataStatement<T> getStatement(String name, String type);
+    public MutableMetadataContent   clone();
 
-    public MetadataSelector           self();
-    public MetadataStatementsSelector metadataStatements();
+    public MetadataSelector self();
 
     public <V> V getView(Class<V> viewInterface)
         throws IllegalArgumentException;

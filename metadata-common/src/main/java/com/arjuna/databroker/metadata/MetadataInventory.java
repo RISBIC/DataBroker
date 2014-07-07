@@ -9,14 +9,14 @@ import java.util.Collection;
 /**
  * MetadataInventory is an interface through which a metadata inventory can be accessed.
  */
-public interface MetadataInventory
+public interface MetadataInventory<T extends Metadata>
 {
     /**
      * Returns the ids of the metadata within the metadata inventory.
      *
      * @return the ids of the metadata within the metadata inventory
      */
-    public Collection<Metadata> getMetadataIDs();
+    public Collection<String> getMetadataIDs();
 
     /**
      * Returns the metadata, if it is within the metadata inventory.
@@ -32,7 +32,7 @@ public interface MetadataInventory
      * @param the id of the metadata to be added to the inventory
      * @param metadata the metadata to be added to the inventory
      */
-    public void addMetadata(String id, Metadata dataFlow);
+    public void addMetadata(String id, T metadata);
 
     /**
      * Removes metadata with specified id from the metadata inventory.

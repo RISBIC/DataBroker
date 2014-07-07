@@ -8,8 +8,10 @@ import com.arjuna.databroker.metadata.MetadataStatement;
 
 public interface MetadataStatementSelector
 {
+    public <T> MetadataStatement<T> getValue();
+
     public <T extends MetadataStatementSelector> T selector(Class<T> c)
         throws IllegalArgumentException;
 
-    public MetadataStatement<?> getFeature();
+    public MetadataStatement<?> getStatement();
 }

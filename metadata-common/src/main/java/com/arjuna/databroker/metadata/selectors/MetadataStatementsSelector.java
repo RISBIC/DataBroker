@@ -12,7 +12,5 @@ public interface MetadataStatementsSelector
     public <T extends MetadataStatementsSelector> T selector(Class<T> c)
         throws IllegalArgumentException;
 
-    public <T> MetadataStatement<T> getFeature(String name, String type);
-
-    public Collection<MetadataStatement<?>> getFeatures();
+    public Collection<MetadataStatement<?>> getStatements();
 }

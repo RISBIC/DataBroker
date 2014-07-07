@@ -4,19 +4,12 @@
 
 package com.arjuna.databroker.metadata;
 
-import java.util.UUID;
-import com.arjuna.databroker.metadata.selectors.MetadataContextSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
-import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
 public interface Metadata
 {
-    public UUID getID();
-
-    public Metadata createChild();
+    public String   getId();
+    public Metadata createChild(Metadata parent, Metadata description);
 
     public MetadataSelector self();
-    public MetadataSelector  parent();
-    public MetadatasSelector children();
-    public MetadataContextSelector    state();
 }

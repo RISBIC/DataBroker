@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Target(value=ElementType.METHOD)
 public @interface MetadataStatementMapping 
 {
-    String name();
-    String type();
+    public String name();
+    public String type();
 }

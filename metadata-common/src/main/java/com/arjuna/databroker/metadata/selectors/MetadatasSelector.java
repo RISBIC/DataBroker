@@ -12,5 +12,5 @@ public interface MetadatasSelector
     public <T extends MetadatasSelector> T selector(Class<T> c)
         throws IllegalArgumentException;
 
-    public Collection<Metadata> getContexts();
+    public Collection<Metadata> getMetadatas();
 }
