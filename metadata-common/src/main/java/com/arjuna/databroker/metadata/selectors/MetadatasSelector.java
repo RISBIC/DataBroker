@@ -9,6 +9,8 @@ import com.arjuna.databroker.metadata.Metadata;
 
 public interface MetadatasSelector
 {
+    public MetadataSelector metadata(String id);
+
     public <T extends MetadatasSelector> T selector(Class<T> c)
         throws IllegalArgumentException;
 

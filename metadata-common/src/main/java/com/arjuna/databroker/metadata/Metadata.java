@@ -9,7 +9,7 @@ import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 public interface Metadata
 {
     public String   getId();
-    public Metadata createChild(Metadata parent, Metadata description);
+    public Metadata createBlankChild(String id, Metadata description);
 
     public MetadataSelector self();
 }

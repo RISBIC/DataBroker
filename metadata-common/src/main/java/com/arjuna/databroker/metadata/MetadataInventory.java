@@ -5,40 +5,18 @@
 package com.arjuna.databroker.metadata;
 
 import java.util.Collection;
+import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
 /**
  * MetadataInventory is an interface through which a metadata inventory can be accessed.
  */
 public interface MetadataInventory<T extends Metadata>
 {
-    /**
-     * Returns the ids of the metadata within the metadata inventory.
-     *
-     * @return the ids of the metadata within the metadata inventory
-     */
-    public Collection<String> getMetadataIDs();
+    public Collection<String> getMetadataIds();
 
-    /**
-     * Returns the metadata, if it is within the metadata inventory.
-     * 
-     * @param the id of the desired metadata 
-     * @return the metadata
-     */
-    public Metadata getMetadata(String id);
+    public T createBlankRootMetadata(String id);
 
-    /**
-     * Adds a metadata to the metadata inventory.
-     * 
-     * @param the id of the metadata to be added to the inventory
-     * @param metadata the metadata to be added to the inventory
-     */
-    public void addMetadata(String id, T metadata);
+    public boolean removeRootMetadata(String id);
 
-    /**
-     * Removes metadata with specified id from the metadata inventory.
-     * 
-     * @param the id of the metadata to be removed from the inventory
-     * @return indicates if the metadata was removed from the metadata inventory
-     */
-    public boolean removeMetadata(String id);
+    public MetadatasSelector self();
 }
