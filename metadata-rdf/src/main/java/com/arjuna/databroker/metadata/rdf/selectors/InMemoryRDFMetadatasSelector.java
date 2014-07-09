@@ -2,11 +2,12 @@
  * Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.metadata.rdf;
+package com.arjuna.databroker.metadata.rdf.selectors;
 
 import java.util.Collection;
 import java.util.Map;
 import com.arjuna.databroker.metadata.Metadata;
+import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
@@ -20,8 +21,7 @@ public class InMemoryRDFMetadatasSelector implements MetadatasSelector
     @Override
     public MetadataSelector metadata(String id)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return new InMemoryRDFMetadataSelector(_metadataMap.get(id));
     }
 
     @Override

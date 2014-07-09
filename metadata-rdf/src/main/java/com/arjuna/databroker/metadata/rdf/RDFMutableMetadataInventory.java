@@ -6,6 +6,7 @@ package com.arjuna.databroker.metadata.rdf;
 
 import com.arjuna.databroker.metadata.MetadataInventory;
 
-public interface RDFMetadataInventory extends MetadataInventory<RDFMetadata>
+public interface RDFMutableMetadataInventory extends MetadataInventory<RDFMetadata>
 {
+    public RDFMetadata createRDFRootMetadata(String id, String rawRDF);
 }

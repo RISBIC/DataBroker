@@ -14,9 +14,8 @@ public interface MetadataInventory<T extends Metadata>
 {
     public Collection<String> getMetadataIds();
 
-    public T createBlankRootMetadata(String id);
+    public MutableMetadataInventory<T> clone();
 
-    public boolean removeRootMetadata(String id);
-
-    public MetadatasSelector self();
+    public <S extends MetadatasSelector> S selector(Class<S> c)
+        throws IllegalArgumentException;
 }

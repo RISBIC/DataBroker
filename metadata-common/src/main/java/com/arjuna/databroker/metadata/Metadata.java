@@ -8,8 +8,10 @@ import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 
 public interface Metadata
 {
-    public String   getId();
-    public Metadata createBlankChild(String id, Metadata description);
+    public String getId();
 
-    public MetadataSelector self();
+    public MutableMetadata clone();
+
+    public <S extends MetadataSelector> S selector(Class<S> c)
+        throws IllegalArgumentException;
 }

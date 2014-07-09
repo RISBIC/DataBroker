@@ -12,5 +12,6 @@ public interface MetadataStatement<T>
     public String getType();
     public T      getValue();
 
-    public MetadataStatementSelector self();
+    public <S extends MetadataStatementSelector> S selector(Class<S> c)
+        throws IllegalArgumentException;
 }

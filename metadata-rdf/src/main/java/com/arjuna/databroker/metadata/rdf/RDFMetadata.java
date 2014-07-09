@@ -5,6 +5,7 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import com.arjuna.databroker.metadata.Metadata;
+import com.arjuna.databroker.metadata.MutableMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 
 public class RDFMetadata implements Metadata
@@ -21,6 +22,13 @@ public class RDFMetadata implements Metadata
         return _id;
     }
 
+    @Override
+    public MutableMetadata clone()
+    {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+
     public String getRawRDF()
     {
         return _rawRDF;
@@ -32,15 +40,11 @@ public class RDFMetadata implements Metadata
     }
 
     @Override
-    public Metadata createBlankChild(String id, Metadata description)
+    public <S extends MetadataSelector> S selector(Class<S> c)
+        throws IllegalArgumentException
     {
-        return new RDFMetadata(id, "");
-    }
-
-    @Override
-    public MetadataSelector self()
-    {
-        return new RDFMetadataSelector(this);
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     private String _id;

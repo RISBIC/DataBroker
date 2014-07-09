@@ -10,42 +10,37 @@ import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class RDFMetadataSelector implements MetadataSelector
+public class InMemoryRDFMetadataSelector implements MetadataSelector
 {
-    public RDFMetadataSelector(RDFMetadata metadata)
+    public InMemoryRDFMetadataSelector(RDFMetadata metadata)
     {
         _metadata = metadata;
     }
 
-    @Override
     public MetadataSelector parent()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public MetadataSelector description()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public MetadatasSelector children()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public MetadataContentsSelector contents()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public <T extends MetadataSelector> T selector(Class<T> c)
         throws IllegalArgumentException
     {
@@ -53,11 +48,9 @@ public class RDFMetadataSelector implements MetadataSelector
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public Metadata getMetadata()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata;
     }
 
     private RDFMetadata _metadata;

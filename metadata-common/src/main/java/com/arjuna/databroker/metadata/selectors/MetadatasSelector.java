@@ -11,8 +11,8 @@ public interface MetadatasSelector
 {
     public MetadataSelector metadata(String id);
 
+    public Collection<Metadata> getMetadatas();
+
     public <T extends MetadatasSelector> T selector(Class<T> c)
         throws IllegalArgumentException;
-
-    public Collection<Metadata> getMetadatas();
 }

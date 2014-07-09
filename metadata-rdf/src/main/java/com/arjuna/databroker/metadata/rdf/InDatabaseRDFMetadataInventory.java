@@ -6,6 +6,7 @@ package com.arjuna.databroker.metadata.rdf;
 
 import java.util.Collection;
 import javax.ejb.EJB;
+import com.arjuna.databroker.metadata.MutableMetadataInventory;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 import com.arjuna.databroker.metadata.store.MetadataUtils;
 
@@ -20,32 +21,19 @@ public class InDatabaseRDFMetadataInventory implements RDFMetadataInventory
     {
         return _metadataUtils.getIds();
     }
-    
-    @Override
-    public RDFMetadata createBlankRootMetadata(String id)
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
-    
-    @Override
-    public RDFMetadata createRDFRootMetadata(String id, String rawRDF)
+
+    public MutableMetadataInventory<RDFMetadata> clone()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeRootMetadata(String id)
+    public <S extends MetadatasSelector> S selector(Class<S> c)
+        throws IllegalArgumentException
     {
         // TODO
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public MetadatasSelector self()
-    {
-        return new InDatabaseRDFMetadatasSelector(_metadataUtils);
     }
 
     @EJB

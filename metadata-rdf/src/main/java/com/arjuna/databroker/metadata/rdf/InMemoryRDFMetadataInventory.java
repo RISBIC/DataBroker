@@ -7,7 +7,9 @@ package com.arjuna.databroker.metadata.rdf;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
+import com.arjuna.databroker.metadata.MutableMetadataInventory;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.InMemoryRDFMetadatasSelector;
 
 public class InMemoryRDFMetadataInventory implements RDFMetadataInventory
 {
@@ -23,35 +25,18 @@ public class InMemoryRDFMetadataInventory implements RDFMetadataInventory
     }
 
     @Override
-    public RDFMetadata createBlankRootMetadata(String id)
+    public MutableMetadataInventory clone()
     {
-        RDFMetadata rdfMetadata = new RDFMetadata(id, "");
-
-        _metadataMap.put(id, rdfMetadata);
-
-        return rdfMetadata;
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public RDFMetadata createRDFRootMetadata(String id, String rawRDF)
+    public <S extends MetadatasSelector> S selector(Class<S> c)
+        throws IllegalArgumentException
     {
-        RDFMetadata rdfMetadata = new RDFMetadata(id, rawRDF);
-
-        _metadataMap.put(id, rdfMetadata);
-
-        return rdfMetadata;
-    }
-
-    @Override
-    public boolean removeRootMetadata(String id)
-    {
-        return _metadataMap.remove(id) != null;
-    }
-
-    @Override
-    public MetadatasSelector self()
-    {
-        return new InMemoryRDFMetadatasSelector(_metadataMap);
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     private Map<String, RDFMetadata> _metadataMap;
