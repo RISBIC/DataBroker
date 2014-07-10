@@ -9,9 +9,9 @@ import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class InMemoryRDFMetadatasSelector implements MetadatasSelector
+public class RDFMetadatasSelector implements MetadatasSelector
 {
-    public InMemoryRDFMetadatasSelector(Map<String, RDFMetadata> metadataMap)
+    public RDFMetadatasSelector(Map<String, RDFMetadata> metadataMap)
     {
         _metadataMap = metadataMap;
     }
@@ -19,14 +19,14 @@ public class InMemoryRDFMetadatasSelector implements MetadatasSelector
     @Override
     public MetadataSelector metadata(String id)
     {
-        return new InMemoryRDFMetadataSelector(_metadataMap.get(id));
+        return new RDFMetadataSelector(_metadataMap.get(id));
     }
 
     @Override
-    public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
+    public <T extends MetadatasSelector> T selector(Class<T> c) throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        // TODO Auto-generated method stub
+        return null;
     }
 
     private Map<String, RDFMetadata> _metadataMap;

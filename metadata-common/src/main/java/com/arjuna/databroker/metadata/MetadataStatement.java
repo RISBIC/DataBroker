@@ -12,6 +12,10 @@ public interface MetadataStatement<T>
     public String getType();
     public T      getValue();
 
+    public MetadataStatementSelector statement();
+
+    public <M extends MutableMetadataStatement<T>> M mutableClone(Class<M> c);
+
     public <S extends MetadataStatementSelector> S selector(Class<S> c)
         throws IllegalArgumentException;
 }

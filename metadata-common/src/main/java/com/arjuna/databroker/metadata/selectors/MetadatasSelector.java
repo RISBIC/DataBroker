@@ -4,15 +4,10 @@
 
 package com.arjuna.databroker.metadata.selectors;
 
-import java.util.Collection;
-import com.arjuna.databroker.metadata.Metadata;
-
 public interface MetadatasSelector
 {
     public MetadataSelector metadata(String id);
 
-    public Collection<Metadata> getMetadatas();
-
-    public <T extends MetadatasSelector> T selector(Class<T> c)
+    public <S extends MetadatasSelector> S selector(Class<S> c)
         throws IllegalArgumentException;
 }

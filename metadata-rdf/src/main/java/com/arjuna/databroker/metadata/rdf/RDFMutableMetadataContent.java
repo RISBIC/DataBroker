@@ -9,27 +9,14 @@ import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataContentView;
 import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvocationHandler;
-import com.arjuna.databroker.metadata.invocationhandlers.MutableMetadataContentViewInvocationHandler;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
-import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
 
 public class RDFMutableMetadataContent implements MutableMetadataContent
 {
     public RDFMutableMetadataContent()
     {
-    }
-
-    public MutableMetadataContent clone()
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> MetadataStatement<T> getStatement(String name, String type)
-    {
-        // TODO
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -46,14 +33,8 @@ public class RDFMutableMetadataContent implements MutableMetadataContent
         throw new UnsupportedOperationException();
     }
 
-    public <S extends MetadataContentSelector> S selector(Class<S> c)
-        throws IllegalArgumentException
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
-
     @Override
+    @SuppressWarnings("unchecked")
     public <V> V getView(Class<V> viewInterface)
         throws IllegalArgumentException
     {
@@ -63,5 +44,37 @@ public class RDFMutableMetadataContent implements MutableMetadataContent
             throw new IllegalArgumentException("View Interface is not annotated as a MetadataContentView");
         else
             return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MetadataContentViewInvocationHandler(this));
+    }
+
+    @Override
+    public MetadataStatementSelector statement(String name, String type)
+    {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public MetadataStatementsSelector statements()
+    {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <M extends MutableMetadataContent> M mutableClone(Class<M> c)
+    {
+        if (c.isAssignableFrom(RDFMetadataContent.class))
+            return (M) this;
+        else
+            return null;
+    }
+
+    @Override
+    public <S extends MetadataContentSelector> S selector(Class<S> c)
+        throws IllegalArgumentException
+    {
+        // TODO
+        throw new UnsupportedOperationException();
     }
 }

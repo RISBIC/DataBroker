@@ -7,8 +7,8 @@ package com.arjuna.databroker.metadata;
 /**
  * MutableMetadataInventory is an interface through which a changeable metadata inventory can be accessed.
  */
-public interface MutableMetadataInventory<T extends Metadata> extends MetadataInventory<T>
+public interface MutableMetadataInventory extends MetadataInventory
 {
-    public T       createBlankRootMetadata(String id, Metadata description);
-    public boolean removeRootMetadata(String id);
+    public Metadata createBlankRootMetadata(String id, Metadata description);
+    public boolean  removeRootMetadata(String id);
 }

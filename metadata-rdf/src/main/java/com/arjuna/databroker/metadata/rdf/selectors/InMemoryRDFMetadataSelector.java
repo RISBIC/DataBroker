@@ -17,13 +17,12 @@ public class InMemoryRDFMetadataSelector implements MetadataSelector
         _metadata = metadata;
     }
 
-    public MetadataSelector parent()
+    public Metadata getMetadata()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata;
     }
 
-    public MetadataSelector description()
+    public MetadataSelector parent()
     {
         // TODO
         throw new UnsupportedOperationException();
@@ -35,22 +34,23 @@ public class InMemoryRDFMetadataSelector implements MetadataSelector
         throw new UnsupportedOperationException();
     }
 
+    public MetadataSelector description()
+    {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+
     public MetadataContentsSelector contents()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    public <T extends MetadataSelector> T selector(Class<T> c)
+    public <S extends MetadataSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
         // TODO
         throw new UnsupportedOperationException();
-    }
-
-    public Metadata getMetadata()
-    {
-        return _metadata;
     }
 
     private RDFMetadata _metadata;

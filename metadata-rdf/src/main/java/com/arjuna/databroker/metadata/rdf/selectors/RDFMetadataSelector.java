@@ -18,6 +18,12 @@ public class RDFMetadataSelector implements MetadataSelector
     }
 
     @Override
+    public Metadata getMetadata()
+    {
+        return _metadata;
+    }
+
+    @Override
     public MetadataSelector parent()
     {
         // TODO
@@ -25,14 +31,14 @@ public class RDFMetadataSelector implements MetadataSelector
     }
 
     @Override
-    public MetadataSelector description()
+    public MetadatasSelector children()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public MetadatasSelector children()
+    public MetadataSelector description()
     {
         // TODO
         throw new UnsupportedOperationException();
@@ -48,13 +54,6 @@ public class RDFMetadataSelector implements MetadataSelector
     @Override
     public <T extends MetadataSelector> T selector(Class<T> c)
         throws IllegalArgumentException
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Metadata getMetadata()
     {
         // TODO
         throw new UnsupportedOperationException();

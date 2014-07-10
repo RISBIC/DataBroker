@@ -4,8 +4,12 @@
 
 package com.arjuna.databroker.metadata.selectors;
 
+import com.arjuna.databroker.metadata.MetadataContent;
+
 public interface MetadataContentSelector
 {
-    public <T extends MetadataContentSelector> T selector(Class<T> c)
+    public MetadataContent getMetadataContent();
+
+    public <S extends MetadataContentSelector> S selector(Class<S> c)
         throws IllegalArgumentException;
 }

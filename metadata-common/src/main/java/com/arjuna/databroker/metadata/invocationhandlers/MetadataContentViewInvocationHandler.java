@@ -27,7 +27,7 @@ public class MetadataContentViewInvocationHandler implements InvocationHandler
         else if (args != null)
             throw new UnsupportedOperationException("No arguments expected");
         else
-            return _metadataContent.getStatement(metadataStatementMapping.name(), metadataStatementMapping.type());
+            return _metadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getStatement().getValue();
     }
 
     private MetadataContent _metadataContent;

@@ -4,6 +4,7 @@
 
 package com.arjuna.databroker.metadata.rdf.selectors;
 
+import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 
@@ -14,14 +15,15 @@ public class RDFMetadataContentSelector implements MetadataContentSelector
         _metadata = metadata;
     }
 
-    public RDFMetadataContentSelector withPath(String path)
+    @Override
+    public MetadataContent getMetadataContent()
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <T extends MetadataContentSelector> T selector(Class<T> c)
+    public <S extends MetadataContentSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
         // TODO

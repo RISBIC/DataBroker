@@ -4,15 +4,14 @@
 
 package com.arjuna.databroker.metadata.rdf.selectors;
 
-import java.util.Collection;
-import com.arjuna.databroker.metadata.Metadata;
+import javax.ejb.EJB;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 import com.arjuna.databroker.metadata.store.MetadataUtils;
 
 public class InDatabaseRDFMetadatasSelector implements MetadatasSelector
 {
-    public InDatabaseRDFMetadatasSelector(MetadataUtils metadataUtils)
+    public InDatabaseRDFMetadatasSelector()
     {    
     }
 
@@ -24,16 +23,12 @@ public class InDatabaseRDFMetadatasSelector implements MetadatasSelector
     }
 
     @Override
-    public <T extends MetadatasSelector> T selector(Class<T> c) throws IllegalArgumentException
+    public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
     {
         // TODO
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Collection<Metadata> getMetadatas()
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
+    @EJB
+    private MetadataUtils _metadataUtils;
 }
