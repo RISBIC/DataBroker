@@ -4,22 +4,32 @@
 
 package com.arjuna.databroker.metadata.rdf;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MutableMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class RDFMetadata implements Metadata
 {
-    public RDFMetadata(String id, String rawRDF, RDFMetadata parent, RDFMetadata description)
+    private static final Logger logger = Logger.getLogger(RDFMetadata.class.getName());
+
+    public RDFMetadata(String id, RDFMetadata parent, RDFMetadata description, String rawRDF)
     {
         _id          = id;
-        _rawRDF      = rawRDF;
         _parent      = parent;
         _children    = new HashMap<String, RDFMetadata>();
         _description = description;
+
+        setRawRDF(rawRDF);
     }
 
     @Override
@@ -30,12 +40,27 @@ public class RDFMetadata implements Metadata
 
     public String getRawRDF()
     {
-        return _rawRDF;
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     public void setRawRDF(String rawRDF)
     {
-        _rawRDF = rawRDF;
+        try
+        {
+            if (logger.isLoggable(Level.WARNING))
+                logger.log(Level.WARNING, "RDF : [" + rawRDF + "]");
+
+            _model = ModelFactory.createDefaultModel();
+            Reader reader = new StringReader(rawRDF);
+            _model.read(reader, null);
+            reader.close();
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Unable to process RDF", throwable);
+            _model = null;
+        }
     }
 
     @Override
@@ -47,8 +72,7 @@ public class RDFMetadata implements Metadata
     @Override
     public MetadataContentsSelector contents()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return new RDFMetadataContentsSelector(_model);
     }
 
     @Override
@@ -60,8 +84,8 @@ public class RDFMetadata implements Metadata
     }
 
     private String                   _id;
-    private String                   _rawRDF;
     private RDFMetadata              _parent;
     private Map<String, RDFMetadata> _children;
     private RDFMetadata              _description;
+    private Model                    _model;
 }

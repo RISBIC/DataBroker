@@ -14,23 +14,23 @@ import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class NavigationTest
+public class NavigationToMetadataTest
 {
     @BeforeClass
     public static void setupInventory()
     {
-        _rdfMetadataInventory = new InMemoryBlobMetadataInventory();
+        _metadataInventory = new InMemoryBlobMetadataInventory();
 
-        InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = _rdfMetadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
+        InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = _metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
         inMemoryBlobMutableMetadataInventory.createRootMetadata("id", "RDF text", null);
     }
 
     @Test
     public void inventoryToMetadata()
     {
-        assertNotNull("Not expecting null RDF Metadata Inventory object", _rdfMetadataInventory);
+        assertNotNull("Not expecting null RDF Metadata Inventory object", _metadataInventory);
 
-        MetadataSelector metadataSelector = _rdfMetadataInventory.metadata("id");
+        MetadataSelector metadataSelector = _metadataInventory.metadata("id");
         assertNotNull("Not expecting null Metadata Selector object", metadataSelector);
 
         Metadata metadata = metadataSelector.getMetadata();
@@ -40,9 +40,9 @@ public class NavigationTest
     @Test
     public void inventoryToMetadataIndirect()
     {
-        assertNotNull("Not expecting null RDF Metadata Inventory object", _rdfMetadataInventory);
+        assertNotNull("Not expecting null RDF Metadata Inventory object", _metadataInventory);
 
-        MetadatasSelector metadatasSelector = _rdfMetadataInventory.metadatas();
+        MetadatasSelector metadatasSelector = _metadataInventory.metadatas();
         assertNotNull("Not expecting null Metadatas Selector object", metadatasSelector);
 
         MetadataSelector metadataSelector = metadatasSelector.metadata("id");
@@ -52,5 +52,5 @@ public class NavigationTest
         assertNotNull("Not expecting null Metadata object", metadata);
     }
 
-    private static MetadataInventory _rdfMetadataInventory;
+    private static MetadataInventory _metadataInventory;
 }

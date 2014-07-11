@@ -12,11 +12,13 @@ import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvo
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class RDFMetadataContent implements MetadataContent
 {
-    public RDFMetadataContent()
+    public RDFMetadataContent(Resource resource)
     {
+        _resource = resource;
     }
 
     @Override
@@ -50,12 +52,14 @@ public class RDFMetadataContent implements MetadataContent
     @SuppressWarnings("unchecked")
     public <M extends MutableMetadataContent> M mutableClone(Class<M> c)
     {
-        if (c.isAssignableFrom(RDFMetadataContent.class))
-            return (M) new RDFMutableMetadataContent();
+        if (c.isAssignableFrom(getClass()))
+            return (M) this;
+        else if (c.isAssignableFrom(RDFMutableMetadataContent.class))
+            return (M) new RDFMutableMetadataContent(_resource);
         else
             return null;
     }
-    
+
     @Override
     public <S extends MetadataContentSelector> S selector(Class<S> c)
         throws IllegalArgumentException
@@ -63,4 +67,6 @@ public class RDFMetadataContent implements MetadataContent
         // TODO
         throw new UnsupportedOperationException();
     }
+
+    private Resource _resource;
 }

@@ -52,11 +52,14 @@ public class RDFMetadataSelector implements MetadataSelector
     }
 
     @Override
-    public <T extends MetadataSelector> T selector(Class<T> c)
+    @SuppressWarnings("unchecked")
+    public <S extends MetadataSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadataSelector.class))
+            return (S) this;
+        else
+            return null;
     }
 
     private RDFMetadata _metadata;

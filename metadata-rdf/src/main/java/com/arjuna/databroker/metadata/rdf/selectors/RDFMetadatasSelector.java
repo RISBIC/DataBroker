@@ -23,10 +23,13 @@ public class RDFMetadatasSelector implements MetadatasSelector
     }
 
     @Override
-    public <T extends MetadatasSelector> T selector(Class<T> c) throws IllegalArgumentException
+    @SuppressWarnings("unchecked")
+    public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (c.isAssignableFrom(RDFMetadatasSelector.class))
+            return (S) this;
+        else
+            return null;
     }
 
     private Map<String, RDFMetadata> _metadataMap;

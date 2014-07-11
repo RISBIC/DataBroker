@@ -6,6 +6,6 @@ package com.arjuna.databroker.metadata;
 
 public interface MutableMetadataContent extends MetadataContent
 {
-    public <T> void addMetadataStatement(String name, String type, T value);
-    public <T> void removeMetadataStatement(MetadataStatement<T> metadataStatement);
+    public <T> void addMetadataStatement(String name, T value);
+    public <T> void removeMetadataStatement(String name);
 }

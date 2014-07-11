@@ -4,55 +4,70 @@
 
 package com.arjuna.databroker.tests.metadata.rdf;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.arjuna.databroker.metadata.Metadata;
-import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
-import com.arjuna.databroker.metadata.selectors.MetadataSelector;
-import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 
 public class NavigationToMetadataContentTest
 {
     @BeforeClass
     public static void setupInventory()
     {
-        InMemoryBlobMetadataInventory rdfMetadataInventory = new InMemoryBlobMetadataInventory();
+        try
+        {
+            InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
+            InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
 
-        InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = rdfMetadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
-        inMemoryBlobMutableMetadataInventory.createRootMetadata("id", "RDF text", null);
-        
-        
+            String test0001 = loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
+            inMemoryBlobMutableMetadataInventory.createRootMetadata("id", test0001, null);
+
+            _metadata = metadataInventory.metadata("id").getMetadata();
+        }
+        catch (Throwable throwable)
+        {
+            fail("Failed to populate Metadata Inventory");
+        }
     }
 
     @Test
-    public void inventoryToMetadata()
+    public void metadataToMetadataContent()
     {
-        assertNotNull("Not expecting null RDF Metadata Inventory object", _rdfMetadataInventory);
+        assertNotNull("Not expecting null RDF Metadata object", _metadata);
 
-        MetadataSelector metadataSelector = _rdfMetadataInventory.metadata("id");
-        assertNotNull("Not expecting null Metadata Selector object", metadataSelector);
+        MetadataContentsSelector metadataContentsSelector = _metadata.contents();
+        assertNotNull("Not expecting null Metadata Contents Selector object", metadataContentsSelector);
 
-        Metadata metadata = metadataSelector.getMetadata();
-        assertNotNull("Not expecting null Metadata object", metadata);
+        MetadataContentSelector metadataContentSelector = metadataContentsSelector.selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01");
+        assertNotNull("Not expecting null RDF Path Metadata Content Selector object", metadataContentSelector);
     }
 
-    @Test
-    public void inventoryToMetadataIndirect()
+    private static String loadInputStream(InputStream inputStream)
+        throws IOException
     {
-        assertNotNull("Not expecting null RDF Metadata Inventory object", _rdfMetadataInventory);
+        StringBuffer   result = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        MetadatasSelector metadatasSelector = _rdfMetadataInventory.metadatas();
-        assertNotNull("Not expecting null Metadatas Selector object", metadatasSelector);
+        String line = reader.readLine();
+        while (line != null)
+        {
+            result.append(line).append('\n');
+            line = reader.readLine();
+        }
 
-        MetadataSelector metadataSelector = metadatasSelector.metadata("id");
-        assertNotNull("Not expecting null Metadata Selector object", metadataSelector);
+        inputStream.close();
 
-        Metadata metadata = metadataSelector.getMetadata();
-        assertNotNull("Not expecting null Metadata object", metadata);
+        return result.toString();
     }
 
-    private static Metadata _rdfMetadata;
+    private static Metadata _metadata;
 }

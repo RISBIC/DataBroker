@@ -5,32 +5,41 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import java.lang.reflect.Proxy;
-import com.arjuna.databroker.metadata.MetadataStatement;
+
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataContentView;
 import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvocationHandler;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class RDFMutableMetadataContent implements MutableMetadataContent
 {
-    public RDFMutableMetadataContent()
+    public RDFMutableMetadataContent(Resource resource)
     {
+        _resource = resource;
     }
 
     @Override
-    public <T> void addMetadataStatement(String name, String type, T value)
+    public <T> void addMetadataStatement(String name, T value)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        Model    model    = _resource.getModel();
+        Property property = model.getProperty(name);
+
+        _resource.removeAll(property);
+        _resource.addProperty(property, value.toString());
     }
 
     @Override
-    public <T> void removeMetadataStatement(MetadataStatement<T> metadataStatement)
+    public <T> void removeMetadataStatement(String name)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        Model    model    = _resource.getModel();
+        Property property = model.getProperty(name);
+
+        _resource.removeAll(property);
     }
 
     @Override
@@ -77,4 +86,6 @@ public class RDFMutableMetadataContent implements MutableMetadataContent
         // TODO
         throw new UnsupportedOperationException();
     }
+
+    private Resource _resource;
 }

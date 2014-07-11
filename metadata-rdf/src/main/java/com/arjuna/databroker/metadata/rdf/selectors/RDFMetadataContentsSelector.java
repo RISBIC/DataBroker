@@ -4,29 +4,31 @@
 
 package com.arjuna.databroker.metadata.rdf.selectors;
 
-import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
+import com.hp.hpl.jena.rdf.model.Model;
 
 public class RDFMetadataContentsSelector implements MetadataContentsSelector
 {
-    public RDFMetadataContentsSelector(RDFMetadata metadata)
+    public RDFMetadataContentsSelector(Model model)
     {
-        _metadata = metadata;
+        _model = model;
     }
 
     public RDFMetadataContentSelector withPath(String path)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return new RDFMetadataContentSelector(_model.getResource(path));
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends MetadataContentsSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadataContentsSelector.class))
+            return (S) this;
+        else
+            return null;
     }
 
-    private RDFMetadata _metadata;
+    private Model _model;
 }
