@@ -48,8 +48,8 @@ public class RDFMetadata implements Metadata
     {
         try
         {
-            if (logger.isLoggable(Level.WARNING))
-                logger.log(Level.WARNING, "RDF : [" + rawRDF + "]");
+            if (logger.isLoggable(Level.FINE))
+                logger.log(Level.FINE, "RDF : [" + rawRDF + "]");
 
             _model = ModelFactory.createDefaultModel();
             Reader reader = new StringReader(rawRDF);

@@ -4,10 +4,6 @@
 
 package com.arjuna.databroker.tests.metadata.rdf;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,7 +24,7 @@ public class NavigationToMetadataContentTest
             InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
             InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
 
-            String test0001 = loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
+            String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
             inMemoryBlobMutableMetadataInventory.createRootMetadata("id", test0001, null);
 
             _metadata = metadataInventory.metadata("id").getMetadata();
@@ -49,24 +45,6 @@ public class NavigationToMetadataContentTest
 
         MetadataContentSelector metadataContentSelector = metadataContentsSelector.selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01");
         assertNotNull("Not expecting null RDF Path Metadata Content Selector object", metadataContentSelector);
-    }
-
-    private static String loadInputStream(InputStream inputStream)
-        throws IOException
-    {
-        StringBuffer   result = new StringBuffer();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line = reader.readLine();
-        while (line != null)
-        {
-            result.append(line).append('\n');
-            line = reader.readLine();
-        }
-
-        inputStream.close();
-
-        return result.toString();
     }
 
     private static Metadata _metadata;

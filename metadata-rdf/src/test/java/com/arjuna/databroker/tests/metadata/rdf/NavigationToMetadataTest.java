@@ -6,7 +6,9 @@ package com.arjuna.databroker.tests.metadata.rdf;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
@@ -19,10 +21,18 @@ public class NavigationToMetadataTest
     @BeforeClass
     public static void setupInventory()
     {
-        _metadataInventory = new InMemoryBlobMetadataInventory();
+        try
+        {
+            _metadataInventory = new InMemoryBlobMetadataInventory();
+            InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = _metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
 
-        InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = _metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
-        inMemoryBlobMutableMetadataInventory.createRootMetadata("id", "RDF text", null);
+            String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
+            inMemoryBlobMutableMetadataInventory.createRootMetadata("id", test0001, null);
+        }
+        catch (Throwable throwable)
+        {
+            fail("Failed to populate Metadata Inventory");
+        }
     }
 
     @Test
