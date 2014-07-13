@@ -17,7 +17,7 @@ import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 
-public class NavigationToMetadataContentTest
+public class MetaContentToViewTest
 {
     @BeforeClass
     public static void setupInventory()
@@ -27,10 +27,12 @@ public class NavigationToMetadataContentTest
             InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
             InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
 
-            String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
+            String test0001 = Utils.loadInputStream(MetaContentToViewTest.class.getResourceAsStream("Test0001.rdf"));
             inMemoryBlobMutableMetadataInventory.createRootMetadata("id", test0001, null);
 
-            _metadata = metadataInventory.metadata("id").getMetadata();
+            Metadata metadata = metadataInventory.metadata("id").getMetadata();
+
+            _metadataContent = metadata.contents().selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01").getMetadataContent();
         }
         catch (Throwable throwable)
         {
@@ -39,19 +41,16 @@ public class NavigationToMetadataContentTest
     }
 
     @Test
-    public void metadataToMetadataContent()
+    public void metadataContentToView()
     {
-        assertNotNull("Not expecting null RDF Metadata object", _metadata);
+        assertNotNull("Not expecting null Metadata Content object", _metadataContent);
 
-        MetadataContentsSelector metadataContentsSelector = _metadata.contents();
-        assertNotNull("Not expecting null Metadata Contents Selector object", metadataContentsSelector);
+        TestView testView = _metadataContent.getView(TestView.class);
+        assertNotNull("Not expecting null Test View object", testView);
 
-        MetadataContentSelector metadataContentSelector = metadataContentsSelector.selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01");
-        assertNotNull("Not expecting null RDF Metadata Content Selector object", metadataContentSelector);
-        
-        MetadataContent metadataContent = metadataContentSelector.getMetadataContent();
-        assertNotNull("Not expecting null Metadata Content object", metadataContent);
+        String prop01 = testView.getProp01();
+        assertEquals("Unexpecting prop01 value", "Value 01", prop01);
     }
 
-    private static Metadata _metadata;
+    private static MetadataContent _metadataContent;
 }

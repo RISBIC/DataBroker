@@ -6,6 +6,7 @@ package com.arjuna.databroker.metadata.invocationhandlers;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationHandler;
+
 import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataStatementMapping;
 
@@ -27,7 +28,7 @@ public class MetadataContentViewInvocationHandler implements InvocationHandler
         else if (args != null)
             throw new UnsupportedOperationException("No arguments expected");
         else
-            return _metadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getStatement().getValue();
+            return _metadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getMetadataStatement().getValue(String.class);
     }
 
     private MetadataContent _metadataContent;

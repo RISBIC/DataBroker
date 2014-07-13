@@ -23,7 +23,7 @@ public class InMemoryBlobMutableMetadataInventory extends InMemoryBlobMetadataIn
 
     public Metadata createRootMetadata(String id, String metadataBlob, RDFMetadata description)
     {
-        RDFMetadata newRDFMetadata = new RDFMetadata(id, null, description, metadataBlob);
+        RDFMetadata newRDFMetadata = new RDFMutableMetadata(id, null, description, metadataBlob);
         
         _metadataMap.put(id, newRDFMetadata);
 

@@ -9,9 +9,11 @@ import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataContentView;
 import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvocationHandler;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
+import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 
 public class RDFMetadataContent implements MetadataContent
@@ -37,8 +39,9 @@ public class RDFMetadataContent implements MetadataContent
     @Override
     public MetadataStatementSelector statement(String name, String type)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        Property property = null;
+        
+        return new RDFMetadataStatementSelector(_resource.getProperty(property));
     }
 
     @Override
@@ -68,5 +71,5 @@ public class RDFMetadataContent implements MetadataContent
         throw new UnsupportedOperationException();
     }
 
-    private Resource _resource;
+    protected Resource _resource;
 }

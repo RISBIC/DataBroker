@@ -4,9 +4,9 @@
 
 package com.arjuna.databroker.metadata;
 
-public interface MutableMetadataStatement<T> extends MetadataStatement<T>
+public interface MutableMetadataStatement extends MetadataStatement
 {
     public void rename(String name);
-    public void update(T value);
-    public void update(String type, T value);
+    public <T> void update(T value);
+    public <T> void update(String type, T value);
 }
