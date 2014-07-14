@@ -12,4 +12,13 @@ public interface TestView
 {
     @MetadataStatementMapping(name="http://rdfs.arjuna.com/test0001#prop01", type="")
     public String getProp01();
+
+    @MetadataStatementMapping(name="http://rdfs.arjuna.com/test0001#prop02", type="")
+    public String getProp02();
+
+    @MetadataStatementMapping(name="http://rdfs.arjuna.com/test0001#prop03", type="")
+    public String getProp03();
+
+    @MetadataStatementMapping(name="http://rdfs.arjuna.com/test0001#prop04", type="")
+    public String getProp04();
 }

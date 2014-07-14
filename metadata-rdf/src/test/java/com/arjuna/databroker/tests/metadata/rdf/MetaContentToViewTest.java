@@ -48,8 +48,17 @@ public class MetaContentToViewTest
         TestView testView = _metadataContent.getView(TestView.class);
         assertNotNull("Not expecting null Test View object", testView);
 
-        String prop01 = testView.getProp01();
-        assertEquals("Unexpecting prop01 value", "Value 01", prop01);
+        String prop01Value = testView.getProp01();
+        assertEquals("Unexpecting prop01 value", "Value 01", prop01Value);
+
+        String prop02Value = testView.getProp02();
+        assertEquals("Unexpecting prop02 value", "Value 02", prop02Value);
+
+        String prop03Value = testView.getProp03();
+        assertEquals("Unexpecting prop03 value", "Value 03", prop03Value);
+
+        String prop04Value = testView.getProp04();
+        assertEquals("Unexpecting prop04 value", "Value 04", prop04Value);
     }
 
     private static MetadataContent _metadataContent;

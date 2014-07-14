@@ -19,22 +19,23 @@ public class RDFMetadataStatement implements MetadataStatement
     @Override
     public String getName()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _statement.getSubject().getURI();
     }
 
     @Override
     public String getType()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _statement.getPredicate().getURI();
     }
 
     @Override
-    public <T> T  getValue(Class<T> valueClass)
+    @SuppressWarnings("unchecked")
+    public <T> T getValue(Class<T> valueClass)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (valueClass.isAssignableFrom(String.class))
+            return (T) _statement.getString();
+        else
+            return null;
     }
 
     @Override

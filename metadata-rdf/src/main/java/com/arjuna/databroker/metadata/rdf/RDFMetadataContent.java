@@ -5,6 +5,7 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import java.lang.reflect.Proxy;
+
 import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataContentView;
@@ -13,6 +14,7 @@ import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 
@@ -39,8 +41,9 @@ public class RDFMetadataContent implements MetadataContent
     @Override
     public MetadataStatementSelector statement(String name, String type)
     {
-        Property property = null;
-        
+        Model    model    = _resource.getModel();
+        Property property = model.getProperty(name);
+
         return new RDFMetadataStatementSelector(_resource.getProperty(property));
     }
 
