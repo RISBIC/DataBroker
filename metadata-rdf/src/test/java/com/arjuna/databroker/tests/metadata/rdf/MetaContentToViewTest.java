@@ -14,8 +14,6 @@ import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
-import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
-import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 
 public class MetaContentToViewTest
 {
