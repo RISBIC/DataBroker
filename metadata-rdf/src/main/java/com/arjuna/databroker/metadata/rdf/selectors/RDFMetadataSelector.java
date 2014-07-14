@@ -5,10 +5,10 @@
 package com.arjuna.databroker.metadata.rdf.selectors;
 
 import com.arjuna.databroker.metadata.Metadata;
-import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
+import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 
 public class RDFMetadataSelector implements MetadataSelector
 {
@@ -26,29 +26,25 @@ public class RDFMetadataSelector implements MetadataSelector
     @Override
     public MetadataSelector parent()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata.parent();
     }
 
     @Override
     public MetadatasSelector children()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata.children();
     }
 
     @Override
     public MetadataSelector description()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata.description();
     }
 
     @Override
     public MetadataContentsSelector contents()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return _metadata.contents();
     }
 
     @Override
@@ -62,5 +58,5 @@ public class RDFMetadataSelector implements MetadataSelector
             return null;
     }
 
-    private RDFMetadata _metadata;
+    protected RDFMetadata _metadata;
 }

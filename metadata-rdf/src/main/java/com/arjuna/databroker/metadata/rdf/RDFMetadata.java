@@ -10,8 +10,10 @@ import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MutableMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
+import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadatasSelector;
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class RDFMetadata implements Metadata
@@ -36,6 +38,30 @@ public class RDFMetadata implements Metadata
         return _id;
     }
 
+    @Override
+    public MetadataSelector parent()
+    {
+        return new RDFMetadataSelector(_parent);
+    }
+
+    @Override
+    public MetadatasSelector children()
+    {
+        return new RDFMetadatasSelector(_children);
+    }
+
+    @Override
+    public MetadataSelector description()
+    {
+        return new RDFMetadataSelector(_description);
+    }
+
+    @Override
+    public MetadataContentsSelector contents()
+    {
+        return new RDFMetadataContentsSelector(_model);
+    }
+
     public String getRawRDF()
     {
         // TODO
@@ -52,12 +78,6 @@ public class RDFMetadata implements Metadata
             return (M) new RDFMutableMetadata(_id, _parent, _description, _children, _model);
         else
             return null;
-    }
-
-    @Override
-    public MetadataContentsSelector contents()
-    {
-        return new RDFMetadataContentsSelector(_model);
     }
 
     @Override

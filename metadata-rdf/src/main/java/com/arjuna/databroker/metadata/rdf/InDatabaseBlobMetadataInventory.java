@@ -34,7 +34,8 @@ public class InDatabaseBlobMetadataInventory implements MetadataInventory
     @Override
     public <M extends MutableMetadataInventory> M mutableClone(Class<M> c)
     {
-        return null;
+        // TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override
