@@ -4,27 +4,30 @@
 
 package com.arjuna.databroker.metadata.rdf;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+import java.util.HashMap;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MutableMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataSelector;
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class RDFMetadata implements Metadata
 {
-    private static final Logger logger = Logger.getLogger(RDFMetadata.class.getName());
-
     public RDFMetadata(String id, RDFMetadata parent, RDFMetadata description)
+    {
+        this(id, parent, description, new HashMap<String, RDFMetadata>(), null);
+    }
+
+    public RDFMetadata(String id, RDFMetadata parent, RDFMetadata description, Map<String, RDFMetadata> children, Model model)
     {
         _id          = id;
         _parent      = parent;
-        _children    = new HashMap<String, RDFMetadata>();
+        _children    = children;
         _description = description;
-        _model       = null;
+        _model       = model;
     }
 
     @Override
@@ -40,10 +43,15 @@ public class RDFMetadata implements Metadata
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <M extends MutableMetadata> M mutableClone(Class<M> c)
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(getClass()))
+            return (M) this;
+        else if (c.isAssignableFrom(RDFMutableMetadata.class))
+            return (M) new RDFMutableMetadata(_id, _parent, _description, _children, _model);
+        else
+            return null;
     }
 
     @Override
@@ -53,11 +61,14 @@ public class RDFMetadata implements Metadata
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends MetadataSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadataSelector.class))
+            return (S) new RDFMetadataSelector(this);
+        else
+            return null;
     }
 
     protected String                   _id;

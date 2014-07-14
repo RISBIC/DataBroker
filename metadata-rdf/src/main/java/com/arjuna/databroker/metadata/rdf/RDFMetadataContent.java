@@ -5,12 +5,13 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import java.lang.reflect.Proxy;
-
 import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.MetadataContentView;
 import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvocationHandler;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
@@ -50,8 +51,7 @@ public class RDFMetadataContent implements MetadataContent
     @Override
     public MetadataStatementsSelector statements()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return new RDFMetadataStatementsSelector(_resource);
     }
 
     @Override
@@ -67,11 +67,14 @@ public class RDFMetadataContent implements MetadataContent
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends MetadataContentSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadataContentSelector.class))
+            return (S) new RDFMetadataContentSelector(_resource);
+        else
+            return null;
     }
 
     protected Resource _resource;

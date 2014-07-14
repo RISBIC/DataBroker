@@ -50,11 +50,14 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends MetadatasSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadatasSelector.class))
+            return (S) new RDFMetadatasSelector(_metadataMap);
+        else
+            return null;
     }
 
     protected Map<String, RDFMetadata> _metadataMap;

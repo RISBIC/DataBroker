@@ -6,6 +6,7 @@ package com.arjuna.databroker.metadata.rdf;
 
 import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
+import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 
@@ -41,8 +42,7 @@ public class RDFMetadataStatement implements MetadataStatement
     @Override
     public MetadataStatementSelector statement()
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        return new RDFMetadataStatementSelector(_statement);
     }
 
     @Override
@@ -58,11 +58,14 @@ public class RDFMetadataStatement implements MetadataStatement
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends MetadataStatementSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        // TODO
-        throw new UnsupportedOperationException();
+        if (c.isAssignableFrom(RDFMetadataStatementSelector.class))
+            return (S) new RDFMetadataStatementSelector(_statement);
+        else
+            return null;
     }
 
     protected Statement _statement;

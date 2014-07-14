@@ -26,7 +26,7 @@ public class MetaContentToViewTest
             InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
 
             String test0001 = Utils.loadInputStream(MetaContentToViewTest.class.getResourceAsStream("Test0001.rdf"));
-            inMemoryBlobMutableMetadataInventory.createRootMetadata("id", test0001, null);
+            inMemoryBlobMutableMetadataInventory.createRootMetadata("id", null, test0001);
 
             Metadata metadata = metadataInventory.metadata("id").getMetadata();
 

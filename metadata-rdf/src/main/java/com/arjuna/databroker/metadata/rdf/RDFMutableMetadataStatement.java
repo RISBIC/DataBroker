@@ -35,12 +35,4 @@ public class RDFMutableMetadataStatement extends RDFMetadataStatement implements
         // TODO
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public <S extends MetadataStatementSelector> S selector(Class<S> c)
-        throws IllegalArgumentException
-    {
-        // TODO
-        throw new UnsupportedOperationException();
-    }
 }

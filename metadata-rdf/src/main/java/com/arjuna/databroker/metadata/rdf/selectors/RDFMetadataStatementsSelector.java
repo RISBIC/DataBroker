@@ -4,27 +4,31 @@
 
 package com.arjuna.databroker.metadata.rdf.selectors;
 
-import java.util.Map;
-import com.arjuna.databroker.metadata.rdf.RDFMetadata;
-import com.arjuna.databroker.metadata.selectors.MetadataSelector;
-import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
+import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 
-public class RDFMetadataStatementsSelector implements MetadatasSelector
+public class RDFMetadataStatementsSelector implements MetadataStatementsSelector
 {
-    public RDFMetadataStatementsSelector(Map<String, RDFMetadata> metadataMap)
+    public RDFMetadataStatementsSelector(Resource resource)
     {
-        _metadataMap = metadataMap;
+        _resource = resource;
     }
 
     @Override
-    public MetadataSelector metadata(String id)
+    public MetadataStatementSelector statement(String name, String type)
     {
-        return new RDFMetadataSelector(_metadataMap.get(id));
+        Model    model    = _resource.getModel();
+        Property property = model.getProperty(name);
+
+        return new RDFMetadataStatementSelector(_resource.getProperty(property));
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
+    public <S extends MetadataStatementsSelector> S selector(Class<S> c) throws IllegalArgumentException
     {
         if (c.isAssignableFrom(RDFMetadataStatementsSelector.class))
             return (S) this;
@@ -32,5 +36,5 @@ public class RDFMetadataStatementsSelector implements MetadatasSelector
             return null;
     }
 
-    private Map<String, RDFMetadata> _metadataMap;
+    private Resource _resource;
 }
