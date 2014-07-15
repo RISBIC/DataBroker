@@ -114,7 +114,7 @@ public class MetadataMO implements Serializable
 
         load();
 
-        return "metadata?faces-redirect=true";
+        return "/dataviews/metadata?faces-redirect=true";
     }
 
     public String doReload()
@@ -123,7 +123,7 @@ public class MetadataMO implements Serializable
 
         load();
 
-        return "metadata?faces-redirect=true";
+        return "/dataviews/metadata?faces-redirect=true";
     }
 
     private void load()

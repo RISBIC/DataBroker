@@ -5,22 +5,22 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
-        <ui:define name="title">DataBroker Connection</ui:define>
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">Data View</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="databrokerconnection_style.css"/>
+            <link rel="stylesheet" type="text/css" href="dataview_style.css"/>
         </ui:define>
 
         <ui:define name="body">
-            <h:form styleClass="header">
+            <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="Connected DataBrokers"/>
+                    <h:outputText styleClass="title" value="Data View"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
-                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <input class="uservalue" type="text" name="j_username"/>
                         <h:outputText styleClass="userlabel" value="Password:"/>
-                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <input class="uservalue" type="password" name="j_password"/>
                         <h:outputText styleClass="userlabel" value=" "/>
                         <h:panelGroup>
                             <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
@@ -35,37 +35,38 @@
                         <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
                     </h:panelGrid>
                 </h:panelGrid>
-            </h:form>
+            </form>
             <h:form styleClass="navigation">
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
                 </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{dataviews.doLoad}" value="Reload"/>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="databroker">
-                <h:panelGroup styleClass="databroker" layout="block">
-                    <h:panelGroup styleClass="databroker-title" layout="block">
-                        <h:outputText styleClass="databroker-title" value="Change DataBroker Connection"/>
+            <h:form styleClass="dataview">
+                <h:panelGroup styleClass="dataview" layout="block">
+                    <h:panelGroup styleClass="dataview-title" layout="block">
+                        <h:outputText styleClass="dataview-title" value="Data View"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databrokerconnection.errorMessage}">
-                        <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="databroker-error-message" value="#{databrokerconnection.errorMessage}"/>
+                    <h:panelGroup styleClass="dataview-error" layout="block" rendered="#{not empty dataview.errorMessage}">
+                        <h:outputText styleClass="dataview-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataview-error-message" value="#{dataview.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGrid styleClass="databroker" columnClasses="databroker-column-one,databroker-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
-                        <h:outputText styleClass="databroker-header" value="Name"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.name}"/>
-                        <h:outputText styleClass="databroker-header" value="Summary"/>
-                        <h:inputTextarea styleClass="databroker-value" rows="4" value="#{databrokerconnection.summary}"/>
-                        <h:outputText styleClass="databroker-header" value="Service Root URL"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.serviceRootURL}"/>
-                        <h:outputText styleClass="databroker-header" value="Requester Id"/>
-                        <h:inputText styleClass="databroker-value" value="#{databrokerconnection.requesterId}"/>
-                        <h:outputText styleClass="databroker-empty" value=""/>
-                        <h:panelGroup>
-                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnection.doChangeSubmit}" value="Change"/>
-                            <h:commandLink styleClass="databroker-button" action="#{databrokerconnections.doLoad}" value="Cancel"/>
-                        </h:panelGroup>
-                    </h:panelGrid>
+                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="metadataId" rendered="#{empty dataview.errorMessage}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataview-header" value="Metadata Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataview-value" value="#{metadataId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataview-header" value="Actions"/>
+                            </f:facet>
+                            <h:commandLink styleClass="dataview-button" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Report"/>
+                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Edit"/>
+                        </h:column>
+                    </h:dataTable>
                 </h:panelGroup>
             </h:form>
         </ui:define>

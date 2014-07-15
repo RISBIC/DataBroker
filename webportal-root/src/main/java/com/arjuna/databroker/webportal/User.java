@@ -5,8 +5,10 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
+import java.security.Principal;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @SessionScoped
 @ManagedBean(name="user")
@@ -16,52 +18,45 @@ public class User implements Serializable
 
     public User()
     {
-        _username = "";
-        _password = "";
     }
 
     public String getUsername()
     {
-        return _username;
-    }
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
+        final Principal    principal    = facesContext.getExternalContext().getUserPrincipal();
 
-    public void setUsername(String username)
-    {
-        _username = username;
+        if (principal != null)
+            return principal.getName();
+        else
+            return "";
     }
 
     public String getPassword()
     {
-        return "********";
+        return "";
     }
 
-    public void setPassword(String password)
+    public boolean isInRole(String rolename)
     {
-        _password = password;
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        return facesContext.getExternalContext().isUserInRole(rolename);
     }
 
     public boolean isLoggedIn()
     {
-        return _loggedIn;
-    }
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
 
-    public String doSignin()
-    {
-        _loggedIn = (! "".equals(_username)) && (! "".equals(_password)) && _username.equals(_password);
-        
-        if (_loggedIn)
-            return "#";
-        else
-            return "#";
+        return facesContext.getExternalContext().getUserPrincipal() != null;
     }
 
     public String doSignout()
     {
-        _username = "";
-        _password = "";
-        _loggedIn = false;
-        
-        return "#";
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        facesContext.getExternalContext().invalidateSession();
+
+        return "/index?faces-redirect=true";
     }
 
     public String doSignup()
@@ -69,7 +64,8 @@ public class User implements Serializable
         return "#";
     }
 
-    private String  _username;
-    private String  _password;
-    private boolean _loggedIn;
+    public String doSigndown()
+    {
+        return "#";
+    }
 }

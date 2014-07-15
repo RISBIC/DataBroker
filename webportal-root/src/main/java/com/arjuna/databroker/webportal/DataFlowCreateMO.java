@@ -115,7 +115,7 @@ public class DataFlowCreateMO implements Serializable
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "dataflow_create?faces-redirect=true";
+        return "/dataflows/dataflow_create?faces-redirect=true";
     }
 
     public String doSubmit()
@@ -128,7 +128,7 @@ public class DataFlowCreateMO implements Serializable
         for (String propertyName: propertyNames)
             _properties.add(new PropertyVO(propertyName, ""));
 
-        return "dataflow_create?faces-redirect=true";
+        return "/dataflows/dataflow_create?faces-redirect=true";
     }
 
     public String doReset()
@@ -164,14 +164,14 @@ public class DataFlowCreateMO implements Serializable
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "dataflow_create?faces-redirect=true";
+        return "/dataflows/dataflow_create?faces-redirect=true";
     }
 
     public String doCancel()
     {
         logger.log(Level.FINE, "DataFlowCreateMO.doCancel");
 
-        return "databroker?faces-redirect=true";
+        return "/dataflows/databroker?faces-redirect=true";
     }
 
     public String doCreate()
@@ -183,14 +183,14 @@ public class DataFlowCreateMO implements Serializable
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "dataflow_create_done?faces-redirect=true";
+        return "/dataflows/dataflow_create_done?faces-redirect=true";
     }
 
     public String doDone()
     {
         logger.log(Level.FINE, "DataFlowCreateMO.doDone");
 
-        return "databroker?faces-redirect=true";
+        return "/dataflows/databroker?faces-redirect=true";
     }
 
     private String           _serviceRootURL;

@@ -38,7 +38,7 @@ public class DataBrokerConnectionsMO implements Serializable
     {
         load();
 
-        return "databrokerconnections?faces-redirect=true";
+        return "/databrokers/databrokerconnections?faces-redirect=true";
     }
 
     public String doRemove(String id)
@@ -47,7 +47,7 @@ public class DataBrokerConnectionsMO implements Serializable
 
         load();
 
-        return "databrokerconnections?faces-redirect=true";
+        return "/databrokers/databrokerconnections?faces-redirect=true";
     }
 
     public boolean load()

@@ -18,7 +18,7 @@ body
 	border:			0;
 	padding:		1em 8em 1em 8em;
 	height:			100%;
-	background-image:	url('background.png');
+	background-image:	url('background.png.html'); /* Needing 'html' postfix looks like a bug in JSF */
 	background-position:	left top;
 	background-repeat:	no-repeat;
 	background-color:	#EEEEEE;
@@ -101,13 +101,22 @@ span.userlabel
 	font-size:		0.75em;
 }
 
-input.uservalue
+input[type="text"].uservalue
 {
 	margin:			0;
-	border:			0;
+	border:			thin solid #CCCCCC;
 	padding:		0 0.5em 0 0.5em;
 	font-size:		0.75em;
-	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+	color:			#111111;
+}
+
+input[type="password"].uservalue
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0 0.5em 0 0.5em;
+	font-size:		0.75em;
+	color:			#111111;
 }
 
 form.navigation

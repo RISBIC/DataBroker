@@ -92,7 +92,7 @@ public class DataViewMO implements Serializable
 
         load();
 
-        return "dataview?faces-redirect=true";
+        return "/dataviews/dataview?faces-redirect=true";
     }
 
     public String doReload()
@@ -101,7 +101,7 @@ public class DataViewMO implements Serializable
 
         load();
 
-        return "dataview?faces-redirect=true";
+        return "/dataviews/dataview?faces-redirect=true";
     }
 
     public void load()

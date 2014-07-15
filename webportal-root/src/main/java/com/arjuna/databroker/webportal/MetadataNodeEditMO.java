@@ -135,7 +135,7 @@ public class MetadataNodeEditMO implements Serializable
         _summary = summary;
         _details = details;
 
-        return "metadatanode_edit?faces-redirect=true";
+        return "/dataviews/metadatanode_edit?faces-redirect=true";
     }
 
     public String doChangeSubmit()
@@ -186,7 +186,7 @@ public class MetadataNodeEditMO implements Serializable
             _errorMessage = "Problem occured while generating presentation of metadata";
         }
         
-        return "metadatanode_edit_done?faces-redirect=true";
+        return "/dataviews/metadatanode_edit_done?faces-redirect=true";
     }
 
     private String _title;

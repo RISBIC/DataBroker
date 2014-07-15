@@ -145,7 +145,7 @@ public class DataFlowMO implements Serializable
 
         load();
 
-        return "dataflow?faces-redirect=true";
+        return "/dataflows/dataflow?faces-redirect=true";
     }
 
     public String doReload()
@@ -154,7 +154,7 @@ public class DataFlowMO implements Serializable
 
         load();
 
-        return "dataflow?faces-redirect=true";
+        return "/dataflows/dataflow?faces-redirect=true";
     }
 
     public String doCreateLink()
@@ -165,7 +165,7 @@ public class DataFlowMO implements Serializable
         
         load();
         
-        return "dataflow?faces-redirect=true";
+        return "/dataflows/dataflow?faces-redirect=true";
     }
 
     public void load()
