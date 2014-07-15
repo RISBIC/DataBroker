@@ -38,7 +38,7 @@ public class DataViewsMO implements Serializable
     {
         load();
 
-        return "dataviews?faces-redirect=true";
+        return "/dataviews/dataviews?faces-redirect=true";
     }
 
     public boolean load()

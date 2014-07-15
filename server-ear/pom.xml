@@ -71,6 +71,7 @@
     </dependencies>
 
     <build>
+        <finalName>databroker</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -80,6 +81,7 @@
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-common</artifactId>
+                            <bundleFileName>data-common.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <jarModule>
@@ -99,6 +101,7 @@
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>control-core</artifactId>
+                            <bundleFileName>control-core.jar</bundleFileName>
                         </ejbModule>
                         <webModule>
                             <groupId>com.arjuna.databroker</groupId>
@@ -130,6 +133,27 @@
                     <plugin>
                         <groupId>org.jboss.as.plugins</groupId>
                         <artifactId>jboss-as-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                       </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>wildfly</id>
+    
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-maven-plugin</artifactId>
                         <executions>
                             <execution>
                                 <phase>install</phase>

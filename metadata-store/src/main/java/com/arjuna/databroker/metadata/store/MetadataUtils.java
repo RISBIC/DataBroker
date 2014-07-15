@@ -4,9 +4,10 @@
 
 package com.arjuna.databroker.metadata.store;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -14,6 +15,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -21,6 +23,27 @@ import javax.persistence.PersistenceContext;
 public class MetadataUtils
 {
     private static final Logger logger = Logger.getLogger(MetadataUtils.class.getName());
+
+    public List<String> getIds()
+    {
+        logger.log(Level.FINE, "MetadataUtils.getIds");
+
+        try
+        {
+            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT ac FROM AccessControlEntity AS ac", MetadataEntity.class);
+
+            List<String> ids = new LinkedList<String>();
+            for (MetadataEntity metadata: query.getResultList())
+                ids.add(metadata.getId());
+
+            return ids;
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+            return null;
+        }
+    }
 
     public String getContent(String id)
     {

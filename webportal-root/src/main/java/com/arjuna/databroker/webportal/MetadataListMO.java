@@ -104,7 +104,7 @@ public class MetadataListMO implements Serializable
 
         load();
 
-        return "metadatalist?faces-redirect=true";
+        return "/dataviews/metadatalist?faces-redirect=true";
     }
 
     public String doReload()
@@ -113,7 +113,7 @@ public class MetadataListMO implements Serializable
 
         load();
 
-        return "metadatalist?faces-redirect=true";
+        return "/dataviews/metadatalist?faces-redirect=true";
     }
 
     private void load()

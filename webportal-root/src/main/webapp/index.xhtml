@@ -9,18 +9,18 @@
         <ui:define name="title">DataBroker Portal</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="home_style.css"/>
+            <link rel="stylesheet" type="text/css" href="index_style.css"/>
         </ui:define>
 
         <ui:define name="body">
-            <h:form styleClass="header">
+            <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
                     <h:outputText styleClass="title" value="DataBroker Portal"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
-                        <h:inputText styleClass="uservalue" value="#{user.username}"/>
+                        <input class="uservalue" type="text" name="j_username"/>
                         <h:outputText styleClass="userlabel" value="Password:"/>
-                        <h:inputSecret styleClass="uservalue" value="#{user.password}"/>
+                        <input class="uservalue" type="password" name="j_password"/>
                         <h:outputText styleClass="userlabel" value=" "/>
                         <h:panelGroup>
                             <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
@@ -35,7 +35,7 @@
                         <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
                     </h:panelGrid>
                 </h:panelGrid>
-            </h:form>
+            </form>
             <h:form styleClass="navigation">
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
@@ -48,13 +48,16 @@
                         <h:outputText styleClass="home-title" value="Introduction"/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="home-text" layout="block">
-                        <h:outputText styleClass="home-text" value="The DataBroker Portal is used to interact with DataBrokers for data source examination and configuration."/>
-                    </h:panelGroup>
-                    <h:panelGroup styleClass="home-link" layout="block">
-                        <h:commandLink styleClass="home-link" action="#{databrokerconnections.doLoad}" value="DataBroker Configurations"/>
+                        <h:outputText styleClass="home-text" value="The Data Broker Portal is used to interact with Data Brokers for data source examination and configuration."/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="home-link" layout="block">
                         <h:commandLink styleClass="home-link" action="#{dataviews.doLoad}" value="Data View Descriptions"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="home-link" layout="block">
+                        <h:commandLink styleClass="home-link" action="#{dataflows.doLoad}" value="Data Flow Descriptions"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="home-link" layout="block">
+                        <h:commandLink styleClass="home-link" action="#{databrokerconnections.doLoad}" value="Data Broker Configurations"/>
                     </h:panelGroup>
                 </h:panelGroup>
             </h:form>

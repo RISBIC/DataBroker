@@ -21,6 +21,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_${servlet-api.version}_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_${jsf-api.version}_spec</artifactId>
             <scope>provided</scope>
@@ -44,6 +49,11 @@
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
             <version>${version.org.richfaces}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>10.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>

@@ -26,9 +26,17 @@
     </welcome-file-list>
 
     <login-config>
-        <auth-method>BASIC</auth-method>
-        <realm-name>ApplicationRealm</realm-name>
+        <auth-method>FORM</auth-method>
+        <realm-name>DataBrokerWebPortalRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/signin.html</form-login-page>
+            <form-error-page>/signin_error.html</form-error-page>
+        </form-login-config>
     </login-config>
+
+    <security-role>
+        <role-name>guest</role-name>
+    </security-role>
 
     <security-role>
         <role-name>user</role-name>
@@ -40,16 +48,57 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Index</web-resource-name>
+            <web-resource-name>Unsecure pages</web-resource-name>
             <url-pattern>/index.html</url-pattern>
+            <url-pattern>/signin.html</url-pattern>
+            <url-pattern>/signin_error.html</url-pattern>
+            <url-pattern>/site_style.css</url-pattern>
+            <url-pattern>/home_style.css</url-pattern>
+            <url-pattern>/signin_style.css</url-pattern>
         </web-resource-collection>
-        <!-- auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>The dataview pages</web-resource-name>
+            <url-pattern>/dataviews/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>guest</role-name>
             <role-name>user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>The dataflow pages</web-resource-name>
+            <url-pattern>/dataflows/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>The databrokers admin pages</web-resource-name>
+            <url-pattern>/databrokers/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
             <role-name>admin</role-name>
-        </auth-constraint -->
-        <!-- user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint -->
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
     <error-page>

@@ -7,7 +7,6 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,8 +23,6 @@ import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 public class DataBrokerMO implements Serializable
 {
     private static final long serialVersionUID = -2660820092730037733L;
-
-    private static final Logger logger = Logger.getLogger(DataBrokerMO.class.getName());
 
     public DataBrokerMO()
     {
@@ -94,21 +91,21 @@ public class DataBrokerMO implements Serializable
             _errorMessage   = "Problem Loading Information";
         }
 
-        return "databroker?faces-redirect=true";
+        return "/dataflows/databroker?faces-redirect=true";
     }
 
     public String doReload()
     {
         reload();
 
-        return "databroker?faces-redirect=true";
+        return "/dataflows/databroker?faces-redirect=true";
     }
 
     public String doRemoveDataFlow(String dataFlowId)
     {
         removeDataFlow(dataFlowId);
 
-        return "databroker?faces-redirect=true";
+        return "/dataflows/databroker?faces-redirect=true";
     }
 
     private void removeDataFlow(String dataFlowName)
