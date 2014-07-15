@@ -6,6 +6,8 @@ package com.arjuna.databroker.metadata.rdf.selectors;
 
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 
 public class RDFMetadataContentsSelector implements MetadataContentsSelector
 {
@@ -17,6 +19,14 @@ public class RDFMetadataContentsSelector implements MetadataContentsSelector
     public RDFMetadataContentSelector withPath(String path)
     {
         return new RDFMetadataContentSelector(_model.getResource(path));
+    }
+
+    public RDFMetadataContentSelector withPropertyValue(String propertyName, String propertyValue)
+    {
+        Property    property         = _model.getProperty(propertyName);
+        ResIterator resourceIterator = _model.listResourcesWithProperty(property, propertyValue);
+
+        return new RDFMetadataContentSelector(resourceIterator.nextResource());
     }
 
     @Override

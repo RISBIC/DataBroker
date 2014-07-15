@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/test0003#">
+    <t:Test rdf:about="http://rdf.arjuna.com/test0003#Test01">
+        <t:prop01>Value 01</t:prop01>
+        <t:prop02>Value 02</t:prop02>
+        <t:prop03>Value 03</t:prop03>
+        <t:prop04>Value 04</t:prop04>
+    </t:Test>
+</rdf:RDF>
