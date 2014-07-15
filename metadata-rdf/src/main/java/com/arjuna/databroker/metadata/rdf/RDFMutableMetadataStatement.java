@@ -5,7 +5,6 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
-import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 public class RDFMutableMetadataStatement extends RDFMetadataStatement implements MutableMetadataStatement

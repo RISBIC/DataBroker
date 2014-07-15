@@ -5,8 +5,8 @@
 <!--                                                                                                          -->
 
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:s="http://rdfs.arjuna.com/test0002#">
-    <s:Info rdf:about="http://rdf.arjuna.com/test0002#Test01">
-        <s:subject>http://rdf.arjuna.com/test0003#Test01</s:subject>
+    <s:Info rdf:about="http://rdf.arjuna.com/test0002#Info01">
+        <s:subject>http://rdf.arjuna.com/test0001#Test01</s:subject>
         <s:keyword>Keyword01</s:keyword>
     </s:Info>
 </rdf:RDF>

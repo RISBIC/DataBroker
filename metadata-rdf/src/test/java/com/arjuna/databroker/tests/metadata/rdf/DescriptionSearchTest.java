@@ -30,10 +30,10 @@ public class DescriptionSearchTest
 
             String   test0002         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0002.rdf"));
             Metadata metadataTest0002 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id2", null, test0002);
-            String   test0003         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0003.rdf"));
-            Metadata metadataTest0003 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id3", (RDFMetadata) metadataTest0002, test0003);
+            String   test0001         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
+            Metadata metadataTest0001 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id1", (RDFMetadata) metadataTest0002, test0001);
 
-            _metadata = metadataTest0003;
+            _metadata = metadataTest0001;
         }
         catch (Throwable throwable)
         {
@@ -64,10 +64,10 @@ public class DescriptionSearchTest
         MetadataContentsSelector descriptionMetadataContentsSelector = descriptionMetadataSelector.contents();
         assertNotNull("Not expecting null Description Metadata Contents Selector object", descriptionMetadataContentsSelector);
 
-        RDFMetadataContentsSelector rfdMetadataContentsSelector = descriptionMetadataContentsSelector.selector(RDFMetadataContentsSelector.class);
-        assertNotNull("Not expecting null RDF Metadata Contents Selector object", rfdMetadataContentsSelector);
+        RDFMetadataContentsSelector rdfDescriptionMetadataContentsSelector = descriptionMetadataContentsSelector.selector(RDFMetadataContentsSelector.class);
+        assertNotNull("Not expecting null RDF Metadata Contents Selector object", rdfDescriptionMetadataContentsSelector);
 
-        MetadataContentSelector keywordMetadataContentSelector = rfdMetadataContentsSelector.withPropertyValue("http://rdfs.arjuna.com/test0002#keyword", "Keyword01");
+        MetadataContentSelector keywordMetadataContentSelector = rdfDescriptionMetadataContentsSelector.withPropertyValue("http://rdfs.arjuna.com/test0002#keyword", "Keyword01");
         assertNotNull("Not expecting null Keyword Metadata Contents Selector object", keywordMetadataContentSelector);
 
         MetadataContent keywordMetadataContent = keywordMetadataContentSelector.getMetadataContent();
@@ -76,8 +76,38 @@ public class DescriptionSearchTest
         InfoView infoView = keywordMetadataContent.getView(InfoView.class);
         assertNotNull("Not expecting null info view object", infoView);
 
+        String keyword = infoView.getKeyword();
+        assertEquals("Unexpected subject value", "Keyword01", keyword);
+
         String subject = infoView.getSubject();
-        assertEquals("Unexpected subject value", "http://rdf.arjuna.com/test0003#Test01", subject);
+        assertEquals("Unexpected subject value", "http://rdf.arjuna.com/test0001#Test01", subject);
+
+        MetadataContentsSelector metadataContentsSelector = _metadata.contents();
+        assertNotNull("Not expecting null Metadata Contents Selector object", metadataContentsSelector);
+
+        RDFMetadataContentsSelector rdfMetadataContentsSelector = metadataContentsSelector.selector(RDFMetadataContentsSelector.class);
+        assertNotNull("Not expecting null Metadata Contents Selector object", rdfMetadataContentsSelector);
+
+        RDFMetadataContentSelector rdfMetadataContentSelector = rdfMetadataContentsSelector.withPath(subject);
+        assertNotNull("Not expecting null Metadata Content Selector object", rdfMetadataContentsSelector);
+
+        MetadataContent metadataContent = rdfMetadataContentSelector.getMetadataContent();
+        assertNotNull("Not expecting null Metadata Content object", metadataContent);
+
+        TestView testView = metadataContent.getView(TestView.class);
+        assertNotNull("Not expecting null Test View object", testView);
+
+        String prop01Value = testView.getProp01();
+        assertEquals("Unexpecting prop01 value", "Value 01", prop01Value);
+
+        String prop02Value = testView.getProp02();
+        assertEquals("Unexpecting prop02 value", "Value 02", prop02Value);
+
+        String prop03Value = testView.getProp03();
+        assertEquals("Unexpecting prop03 value", "Value 03", prop03Value);
+
+        String prop04Value = testView.getProp04();
+        assertEquals("Unexpecting prop04 value", "Value 04", prop04Value);
     }
 
     private static Metadata _metadata;
