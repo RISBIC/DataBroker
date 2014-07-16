@@ -16,50 +16,50 @@ import static org.junit.Assert.*;
 public class ExamplesTest
 {
     @Test
-    public void example01()
+    public void example01Validate()
         throws IOException
     {
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example01.xml");
-        assertTrue("Problem in Example01", xmlConfig.load(inputStream, problems, null));
+        assertTrue("Problem loading Example01", xmlConfig.load(inputStream, problems, null));
         inputStream.close();
+        assertEquals("Unexpected problems reported with Example01" , 0, problems.size());
     }
 
     @Test
-    public void example02()
+    public void example02Validate()
         throws IOException
     {
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example02.xml");
-        assertTrue("Problem in Example02", xmlConfig.load(inputStream, problems, null));
+        assertTrue("Problem loading Example02", xmlConfig.load(inputStream, problems, null));
         inputStream.close();
+        assertEquals("Unexpected problems reported with Example02" , 0, problems.size());
     }
 
     @Test
-    public void example03()
+    public void example03Validate()
         throws IOException, InterruptedException
     {
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example03.xml");
-        assertTrue("Problem in Example03", xmlConfig.load(inputStream, problems, null));
+        assertTrue("Problem loading Example03", xmlConfig.load(inputStream, problems, null));
         inputStream.close();
-        
-        Thread.sleep(10000);
+        assertEquals("Unexpected problems reported with Example03" , 0, problems.size());
     }
 
     @Test
-    public void example04()
+    public void example04Validate()
         throws IOException, InterruptedException
     {
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example04.xml");
-        assertTrue("Problem in Example04", xmlConfig.load(inputStream, problems, null));
+        assertTrue("Problem loading Example04", xmlConfig.load(inputStream, problems, null));
         inputStream.close();
-        
-        Thread.sleep(10000);
+        assertEquals("Unexpected problems reported with Example04" , 0, problems.size());
     }
 }

@@ -48,6 +48,7 @@ public class XMLConfig
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Unexpected problem while parsing OSM XML", throwable);
+            problems.add(new Problem("Unexpected problem while parsing OSM XML : " + throwable));
 
             return false;
         }
@@ -73,7 +74,10 @@ public class XMLConfig
             if (attribute.getNodeName().equals("name"))
                 name = attribute.getNodeValue();
             else
+            {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
+            }
         }
 
         Map<String, String> metaProperties = new HashMap<String, String>();
@@ -93,12 +97,12 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, properties);
+                valid &= parseProperties((Element) childNode, problems, properties);
             else
             {
-                dataFlow   = createDataFlow(name, metaProperties, properties, dataFlowFactory);
+                dataFlow   = createDataFlow(name, metaProperties, properties, problems, dataFlowFactory);
                 donePhase1 = true;
                 childNodePhaseStart = childNodePhase1Index;
             }
@@ -113,14 +117,14 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNodeFactory"))
-                valid &= parseDataFlowNodeFactory((Element) childNode, dataFlow);
+                valid &= parseDataFlowNodeFactory((Element) childNode, problems, dataFlow);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNode"))
-                valid &= parseDataFlowNode((Element) childNode, dataFlow);
+                valid &= parseDataFlowNode((Element) childNode, problems, dataFlow);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowLink"))
-                valid &= parseDataFlowLink((Element) childNode, dataFlow);
+                valid &= parseDataFlowLink((Element) childNode, problems, dataFlow);
             else
             {
-                processUnexpectedNode(childNode);
+                processUnexpectedNode(childNode, problems);
                 valid = false;
             }
         }
@@ -129,7 +133,7 @@ public class XMLConfig
     }
 
     @SuppressWarnings("unchecked")
-    private boolean parseDataFlowNodeFactory(Element element, DataFlow dataFlow)
+    private boolean parseDataFlowNodeFactory(Element element, List<Problem> problems, DataFlow dataFlow)
     {
         boolean valid = true;
 
@@ -147,6 +151,7 @@ public class XMLConfig
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
                 valid = false;
             }
         }
@@ -164,12 +169,12 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, properties);
+                valid &= parseProperties((Element) childNode, problems, properties);
             else
             {
-                processUnexpectedNode(childNode);
+                processUnexpectedNode(childNode, problems);
                 valid = false;
             }
         }
@@ -178,11 +183,12 @@ public class XMLConfig
         {
             try
             {
-                return deployDataFlowNodeFactory(dataFlow, (Class<? extends DataFlowNodeFactory>) Class.forName(className), name, properties);
+                return deployDataFlowNodeFactory(dataFlow, problems, (Class<? extends DataFlowNodeFactory>) Class.forName(className), name, properties);
             }
             catch (Throwable throwable)
             {
                 logger.log(Level.WARNING, "Unable to create data flow", throwable);
+                problems.add(new Problem("Unable to create data flow: " + throwable));
 
                 return false;
             }
@@ -191,7 +197,7 @@ public class XMLConfig
             return false;
     }
 
-    private boolean parseDataFlowNode(Element element, DataFlow dataFlow)
+    private boolean parseDataFlowNode(Element element, List<Problem> problems, DataFlow dataFlow)
     {
         boolean valid = true;
 
@@ -212,6 +218,7 @@ public class XMLConfig
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
                 valid = false;
             }
         }
@@ -229,12 +236,12 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, properties);
+                valid &= parseProperties((Element) childNode, problems, properties);
             else
             {
-                processUnexpectedNode(childNode);
+                processUnexpectedNode(childNode, problems);
                 valid = false;
             }
         }
@@ -242,18 +249,19 @@ public class XMLConfig
         if (valid)
         {
             if ("datasource".equals(type))
-                return deployDataFlowNode(dataFlow, factoryName, DataSource.class, name, metaProperties, properties);
+                return deployDataFlowNode(dataFlow, problems, factoryName, DataSource.class, name, metaProperties, properties);
             else if ("dataprocessor".equals(type))
-                return deployDataFlowNode(dataFlow, factoryName, DataProcessor.class, name, metaProperties, properties);
+                return deployDataFlowNode(dataFlow, problems, factoryName, DataProcessor.class, name, metaProperties, properties);
             else if ("dataservice".equals(type))
-                return deployDataFlowNode(dataFlow, factoryName, DataService.class, name, metaProperties, properties);
+                return deployDataFlowNode(dataFlow, problems, factoryName, DataService.class, name, metaProperties, properties);
             else if ("datastore".equals(type))
-                return deployDataFlowNode(dataFlow, factoryName, DataStore.class, name, metaProperties, properties);
+                return deployDataFlowNode(dataFlow, problems, factoryName, DataStore.class, name, metaProperties, properties);
             else if ("datasink".equals(type))
-                return deployDataFlowNode(dataFlow, factoryName, DataSink.class, name, metaProperties, properties);
+                return deployDataFlowNode(dataFlow, problems, factoryName, DataSink.class, name, metaProperties, properties);
             else
             {
                 logger.log(Level.WARNING, "Unknown data flow node type \"" + type + "\"");
+                problems.add(new Problem("Unknown data flow node type \"" + type + "\""));
                 return false;
             }
         }
@@ -261,7 +269,7 @@ public class XMLConfig
             return false;
     }
 
-    private boolean parseDataFlowLink(Element element, DataFlow dataFlow)
+    private boolean parseDataFlowLink(Element element, List<Problem> problems, DataFlow dataFlow)
     {
         boolean valid = true;
 
@@ -279,6 +287,7 @@ public class XMLConfig
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
                 valid = false;
             }
         }
@@ -288,17 +297,18 @@ public class XMLConfig
         {
             Node childNode = childNodes.item(childNodeIndex);
 
-            processUnexpectedNode(childNode);
+            processUnexpectedNode(childNode, problems);
             valid = false;
         }
 
         if (valid)
         {
             if ((sourceDataFlowNodeName != null) && (sinkDataFlowNodeName != null))
-                return deployDataFlowLink(dataFlow, sourceDataFlowNodeName, sinkDataFlowNodeName);
+                return deployDataFlowLink(dataFlow, problems, sourceDataFlowNodeName, sinkDataFlowNodeName);
             else
             {
                 logger.log(Level.WARNING, "Unknown source/sink of data flow link \"" + sourceDataFlowNodeName + "\" -> \"" + sourceDataFlowNodeName + "\"");
+                problems.add(new Problem("Unknown source/sink of data flow link \"" + sourceDataFlowNodeName + "\" -> \"" + sourceDataFlowNodeName + "\""));
                 return false;
             }
         }
@@ -306,7 +316,7 @@ public class XMLConfig
             return false;
     }
 
-    private boolean parseMetaProperties(Element element, Map<String, String> metaProperties)
+    private boolean parseMetaProperties(Element element, List<Problem> problems, Map<String, String> metaProperties)
     {
         boolean valid = true;
 
@@ -316,6 +326,7 @@ public class XMLConfig
             Node attribute = attributes.item(attributeIndex);
 
             logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+            problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
             valid = false;
         }
 
@@ -329,10 +340,10 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperty"))
-                valid &= parseProperty((Element) childNode, metaProperties);
+                valid &= parseProperty((Element) childNode, problems, metaProperties);
             else 
             {
-                processUnexpectedNode(childNode);
+                processUnexpectedNode(childNode, problems);
                 valid = false;
             }
         }
@@ -340,7 +351,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseProperties(Element element, Map<String, String> properties)
+    private boolean parseProperties(Element element, List<Problem> problems, Map<String, String> properties)
     {
         boolean valid = true;
 
@@ -350,6 +361,7 @@ public class XMLConfig
             Node attribute = attributes.item(attributeIndex);
 
             logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+            problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
             valid = false;
         }
 
@@ -363,10 +375,10 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("property"))
-                valid &= parseProperty((Element) childNode, properties);
+                valid &= parseProperty((Element) childNode, problems, properties);
             else 
             {
-                processUnexpectedNode(childNode);
+                processUnexpectedNode(childNode, problems);
                 valid = false;
             }
         }
@@ -374,7 +386,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseProperty(Element element, Map<String, String> properties)
+    private boolean parseProperty(Element element, List<Problem> problems, Map<String, String> properties)
     {
         boolean valid = true;
 
@@ -392,6 +404,7 @@ public class XMLConfig
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
                 valid = false;
             }
         }
@@ -401,7 +414,7 @@ public class XMLConfig
         {
             Node childNode = childNodes.item(childNodeIndex);
 
-            processUnexpectedNode(childNode);
+            processUnexpectedNode(childNode, problems);
             valid = false;
         }
 
@@ -410,24 +423,34 @@ public class XMLConfig
         else
         {
             logger.log(Level.WARNING, "Expected both 'name' and 'value'");
+            problems.add(new Problem("Expected both 'name' and 'value'"));
             valid = false;
         }
 
         return valid;
     }
 
-    private void processUnexpectedNode(Node node)
+    private void processUnexpectedNode(Node node, List<Problem> problems)
     {
         if (node.getNodeType() == Node.TEXT_NODE)
         {
             String unexpectedText = node.getNodeValue().trim();
             if (unexpectedText.length() > 16)
+            {
                 logger.log(Level.WARNING, "Unexpected text \"" + unexpectedText.substring(0, 16) + "...\"");
+                problems.add(new Problem("Unexpected text \"" + unexpectedText.substring(0, 16) + "...\""));
+            }
             else
+            {
                 logger.log(Level.WARNING, "Unexpected text \"" + unexpectedText + "\"");
+                problems.add(new Problem("Unexpected text \"" + unexpectedText + "\""));
+            }
         }
         else
+        {
             logger.log(Level.WARNING, "Unexpected node \"" + node.getNodeName() + "\" with value \"" + node.getNodeValue() + "\"" + "\" of type \"" + node.getNodeType() + "\"");
+            problems.add(new Problem("Unexpected node \"" + node.getNodeName() + "\" with value \"" + node.getNodeValue() + "\"" + "\" of type \"" + node.getNodeType() + "\""));
+        }
     }
 
     public boolean isWhiteSpace(String text)
@@ -439,7 +462,7 @@ public class XMLConfig
         return true;
     }
 
-    private DataFlow createDataFlow(String name, Map<String, String> metaProperties, Map<String, String> properties, DataFlowFactory dataFlowFactory)
+    private DataFlow createDataFlow(String name, Map<String, String> metaProperties, Map<String, String> properties, List<Problem> problems, DataFlowFactory dataFlowFactory)
     {
         try
         {
@@ -451,12 +474,13 @@ public class XMLConfig
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Unable to create data flow", throwable);
+            problems.add(new Problem("Unable to create data flow: " + throwable));
 
             return null;
         }
     }
 
-    private <T extends DataFlowNodeFactory> boolean deployDataFlowNodeFactory(DataFlow dataFlow, Class<T> dataFlowNodeFactoryClass, String name, Map<String, String> properties)
+    private <T extends DataFlowNodeFactory> boolean deployDataFlowNodeFactory(DataFlow dataFlow, List<Problem> problems, Class<T> dataFlowNodeFactoryClass, String name, Map<String, String> properties)
     {
         try
         {
@@ -471,12 +495,13 @@ public class XMLConfig
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Unable to create data flow factory", throwable);
+            problems.add(new Problem("Unable to create data flow factory: " + throwable));
 
             return false;
         }
     }
 
-    private <T extends DataFlowNode> boolean deployDataFlowNode(DataFlow dataFlow, String dataFlowNodeFactoryName, Class<T> dataFlowNodeClass, String dataFlowNodeName, Map<String, String> dataFlowNodeMetaProperties, Map<String, String> dataFlowNodeProperties)
+    private <T extends DataFlowNode> boolean deployDataFlowNode(DataFlow dataFlow, List<Problem> problems, String dataFlowNodeFactoryName, Class<T> dataFlowNodeClass, String dataFlowNodeName, Map<String, String> dataFlowNodeMetaProperties, Map<String, String> dataFlowNodeProperties)
     {
         try
         {
@@ -493,6 +518,7 @@ public class XMLConfig
                 else
                 {
                     logger.log(Level.WARNING, "Unable to create data flow node");
+                    problems.add(new Problem("Unable to create data flow node"));
 
                     return false;
                 }
@@ -503,12 +529,13 @@ public class XMLConfig
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Unable to create data flow node", throwable);
+            problems.add(new Problem("Unable to create data flow node:" + throwable));
 
             return false;
         }
     }
 
-    private <T> boolean deployDataFlowLink(DataFlow dataFlow, String sourceDataFlowNodeName, String sinkDataFlowNodeName)
+    private <T> boolean deployDataFlowLink(DataFlow dataFlow, List<Problem> problems, String sourceDataFlowNodeName, String sinkDataFlowNodeName)
     {
         try
         {
@@ -533,12 +560,14 @@ public class XMLConfig
                     else
                     {
                         logger.log(Level.WARNING, "Unable to find links provider or consumer");
+                        problems.add(new Problem("Unable to find links provider or consumer"));
                         return false;
                     }
                 }
                 else
                 {
                     logger.log(Level.WARNING, "Unable to find source or sink node");
+                    problems.add(new Problem("Unable to find source or sink node"));
                     return false;
                 }
             }
@@ -548,6 +577,7 @@ public class XMLConfig
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem while creating data flow link", throwable);
+            problems.add(new Problem("Problem while creating data flow link: " + throwable));
 
             return false;
         }
