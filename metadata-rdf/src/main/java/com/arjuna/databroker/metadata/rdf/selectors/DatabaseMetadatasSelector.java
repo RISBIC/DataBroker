@@ -4,21 +4,24 @@
 
 package com.arjuna.databroker.metadata.rdf.selectors;
 
+import java.util.List;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
 public class DatabaseMetadatasSelector implements MetadatasSelector
 {
-    public DatabaseMetadatasSelector()
+    public DatabaseMetadatasSelector(List<String> ids)
     {
+        _ids = ids;
     }
 
     @Override
     public MetadataSelector metadata(String id)
     {
-        // TODO
-        throw new UnsupportedOperationException();
-//        return new RDFMetadataSelector(_metadataMap.get(id));
+        if ((_ids != null) && _ids.contains(id))
+            return new DatabaseMetadataSelector(id);
+        else
+            return new DatabaseMetadataSelector(null);
     }
 
     @Override
@@ -30,4 +33,6 @@ public class DatabaseMetadatasSelector implements MetadatasSelector
         else
             return null;
     }
+    
+    private List<String> _ids;
 }
