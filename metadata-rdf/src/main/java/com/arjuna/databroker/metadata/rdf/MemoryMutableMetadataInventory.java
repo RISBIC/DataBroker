@@ -9,9 +9,9 @@ import java.util.Map;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MutableMetadataInventory;
 
-public class InMemoryBlobMutableMetadataInventory extends InMemoryBlobMetadataInventory implements MutableMetadataInventory
+public class MemoryMutableMetadataInventory extends MemoryMetadataInventory implements MutableMetadataInventory
 {
-    public InMemoryBlobMutableMetadataInventory(Map<String, RDFMetadata> metadataMap)
+    public MemoryMutableMetadataInventory(Map<String, RDFMetadata> metadataMap)
     {
         super(metadataMap);
     }

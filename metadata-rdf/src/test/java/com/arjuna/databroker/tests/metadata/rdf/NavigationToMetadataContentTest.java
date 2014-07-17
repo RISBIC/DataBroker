@@ -6,13 +6,11 @@ package com.arjuna.databroker.tests.metadata.rdf;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
-
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MetadataContent;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.MemoryMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.MemoryMutableMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentsSelector;
@@ -24,11 +22,11 @@ public class NavigationToMetadataContentTest
     {
         try
         {
-            InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
-            InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
+            MemoryMetadataInventory        metadataInventory              = new MemoryMetadataInventory();
+            MemoryMutableMetadataInventory memoryMutableMetadataInventory = metadataInventory.mutableClone(MemoryMutableMetadataInventory.class);
 
             String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
-            inMemoryBlobMutableMetadataInventory.createRootMetadata("id", null, test0001);
+            memoryMutableMetadataInventory.createRootMetadata("id", null, test0001);
 
             _metadata = metadataInventory.metadata("id").getMetadata();
         }

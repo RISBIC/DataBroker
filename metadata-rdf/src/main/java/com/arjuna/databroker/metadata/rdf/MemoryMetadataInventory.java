@@ -8,19 +8,19 @@ import java.util.Map;
 import java.util.HashMap;
 import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.MutableMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.selectors.MemoryMetadatasSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataSelector;
-import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadatasSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class InMemoryBlobMetadataInventory implements MetadataInventory
+public class MemoryMetadataInventory implements MetadataInventory
 {
-    public InMemoryBlobMetadataInventory()
+    public MemoryMetadataInventory()
     {
         _metadataMap = new HashMap<String, RDFMetadata>();
     }
 
-    public InMemoryBlobMetadataInventory(Map<String, RDFMetadata> metadataMap)
+    public MemoryMetadataInventory(Map<String, RDFMetadata> metadataMap)
     {
         _metadataMap = metadataMap;
     }
@@ -28,7 +28,7 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     @Override
     public MetadatasSelector metadatas()
     {
-        return new RDFMetadatasSelector(_metadataMap);
+        return new MemoryMetadatasSelector(_metadataMap);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     {
         if (c.isAssignableFrom(getClass()))
             return (M) this;
-        else if (c.isAssignableFrom(InMemoryBlobMutableMetadataInventory.class))
-            return (M) new InMemoryBlobMutableMetadataInventory(_metadataMap);
+        else if (c.isAssignableFrom(MemoryMutableMetadataInventory.class))
+            return (M) new MemoryMutableMetadataInventory(_metadataMap);
         else
             return null;
     }
@@ -54,8 +54,8 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     public <S extends MetadatasSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        if (c.isAssignableFrom(RDFMetadatasSelector.class))
-            return (S) new RDFMetadatasSelector(_metadataMap);
+        if (c.isAssignableFrom(MemoryMetadatasSelector.class))
+            return (S) new MemoryMetadatasSelector(_metadataMap);
         else
             return null;
     }

@@ -9,9 +9,9 @@ import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class RDFMetadatasSelector implements MetadatasSelector
+public class MemoryMetadatasSelector implements MetadatasSelector
 {
-    public RDFMetadatasSelector(Map<String, RDFMetadata> metadataMap)
+    public MemoryMetadatasSelector(Map<String, RDFMetadata> metadataMap)
     {
         _metadataMap = metadataMap;
     }
@@ -26,7 +26,7 @@ public class RDFMetadatasSelector implements MetadatasSelector
     @SuppressWarnings("unchecked")
     public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
     {
-        if (c.isAssignableFrom(RDFMetadatasSelector.class))
+        if (c.isAssignableFrom(MemoryMetadatasSelector.class))
             return (S) this;
         else
             return null;

@@ -9,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MetadataContent;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.MemoryMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.MemoryMutableMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.RDFMetadata;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
@@ -25,13 +25,13 @@ public class DescriptionSearchTest
     {
         try
         {
-            InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
-            InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
+            MemoryMetadataInventory        metadataInventory              = new MemoryMetadataInventory();
+            MemoryMutableMetadataInventory memoryMutableMetadataInventory = metadataInventory.mutableClone(MemoryMutableMetadataInventory.class);
 
             String   test0002         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0002.rdf"));
-            Metadata metadataTest0002 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id2", null, test0002);
+            Metadata metadataTest0002 = memoryMutableMetadataInventory.createRootMetadata("id2", null, test0002);
             String   test0001         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
-            Metadata metadataTest0001 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id1", (RDFMetadata) metadataTest0002, test0001);
+            Metadata metadataTest0001 = memoryMutableMetadataInventory.createRootMetadata("id1", (RDFMetadata) metadataTest0002, test0001);
 
             _metadata = metadataTest0001;
         }
