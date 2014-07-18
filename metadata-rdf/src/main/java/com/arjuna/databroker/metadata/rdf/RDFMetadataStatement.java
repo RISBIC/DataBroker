@@ -33,7 +33,7 @@ public class RDFMetadataStatement implements MetadataStatement
     @SuppressWarnings("unchecked")
     public <T> T getValue(Class<T> valueClass)
     {
-        if (valueClass.isAssignableFrom(String.class))
+        if ((_statement != null) && valueClass.isAssignableFrom(String.class))
             return (T) _statement.getString();
         else
             return null;

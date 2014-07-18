@@ -41,7 +41,7 @@ public class DescriptionSearchTest
             ids.add("id2");
             contentMap.put("id1", test0001);
             contentMap.put("id2", test0002);
-            descriptionIdMap.put("id2", "id1");
+            descriptionIdMap.put("id1", "id2");
 
             DummyMetadataContentStore dummyMetadataContentStore = new DummyMetadataContentStore(ids, contentMap, descriptionIdMap, parentIdMap, childrenIdsMap);
             MetadataInventory         metadataInventory         = new StoreMetadataInventory(dummyMetadataContentStore);

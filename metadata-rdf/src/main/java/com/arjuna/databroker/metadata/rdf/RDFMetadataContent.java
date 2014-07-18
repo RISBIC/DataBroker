@@ -42,10 +42,15 @@ public class RDFMetadataContent implements MetadataContent
     @Override
     public MetadataStatementSelector statement(String name, String type)
     {
-        Model    model    = _resource.getModel();
-        Property property = model.getProperty(name);
+        if (_resource != null)
+        {
+            Model    model    = _resource.getModel();
+            Property property = model.getProperty(name);
 
-        return new RDFMetadataStatementSelector(_resource.getProperty(property));
+            return new RDFMetadataStatementSelector(_resource.getProperty(property));
+        }
+        else
+            return new RDFMetadataStatementSelector(null);
     }
 
     @Override

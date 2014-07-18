@@ -58,7 +58,7 @@ public class StoreMetadataSelector implements MetadataSelector
         {
             String content = _metadataContentStore.getContent(_id);
 
-            Model model = ModelFactory.createDefaultModel();
+            Model  model  = ModelFactory.createDefaultModel();
             Reader reader = new StringReader(content);
             model.read(reader, null);
             reader.close();
