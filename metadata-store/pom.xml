@@ -35,5 +35,11 @@
             <artifactId>hibernate-core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-common</artifactId>
+            <version>1.0.0p1m1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
