@@ -23,11 +23,12 @@ public class MetadataEntity implements Serializable
     {
     }
 
-    public MetadataEntity(String id, MetadataEntity parent, String content)
+    public MetadataEntity(String id, MetadataEntity parent, MetadataEntity description, String content)
     {
-        _id      = id;
-        _parent  = parent;
-        _content = content;
+        _id           = id;
+        _parent       = parent;
+        _description  = description;
+        _content      = content;
     }
 
     public String getId()
@@ -50,6 +51,16 @@ public class MetadataEntity implements Serializable
         return _parent;
     }
 
+    public void setDescription(MetadataEntity description)
+    {
+        _description = description;
+    }
+
+    public MetadataEntity getDescription()
+    {
+        return _description;
+    }
+
     public void setContent(String content)
     {
         _content = content;
@@ -62,13 +73,15 @@ public class MetadataEntity implements Serializable
 
     @Id
     @Column(name = "id")
-//    @GeneratedValue(generator = "system-uuid")
-//    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     protected String _id;
 
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "parent")
     protected MetadataEntity _parent;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "description")
+    protected MetadataEntity _description;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)

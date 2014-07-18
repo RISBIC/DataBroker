@@ -4,14 +4,17 @@
 
 package com.arjuna.databroker.tests.metadata.rdf;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MetadataContent;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.InMemoryBlobMutableMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.RDFMetadata;
+import com.arjuna.databroker.metadata.MetadataInventory;
+import com.arjuna.databroker.metadata.rdf.StoreMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataContentSelector;
@@ -25,15 +28,25 @@ public class DescriptionSearchTest
     {
         try
         {
-            InMemoryBlobMetadataInventory        metadataInventory                    = new InMemoryBlobMetadataInventory();
-            InMemoryBlobMutableMetadataInventory inMemoryBlobMutableMetadataInventory = metadataInventory.mutableClone(InMemoryBlobMutableMetadataInventory.class);
+            List<String>              ids              = new LinkedList<String>();
+            Map<String, String>       contentMap       = new HashMap<String, String>();
+            Map<String, String>       descriptionIdMap = new HashMap<String, String>();
+            Map<String, String>       parentIdMap      = new HashMap<String, String>();
+            Map<String, List<String>> childrenIdsMap   = new HashMap<String, List<String>>();
 
-            String   test0002         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0002.rdf"));
-            Metadata metadataTest0002 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id2", null, test0002);
-            String   test0001         = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
-            Metadata metadataTest0001 = inMemoryBlobMutableMetadataInventory.createRootMetadata("id1", (RDFMetadata) metadataTest0002, test0001);
+            String test0001 = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
+            String test0002 = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0002.rdf"));
 
-            _metadata = metadataTest0001;
+            ids.add("id1");
+            ids.add("id2");
+            contentMap.put("id1", test0001);
+            contentMap.put("id2", test0002);
+            descriptionIdMap.put("id1", "id2");
+
+            DummyMetadataContentStore dummyMetadataContentStore = new DummyMetadataContentStore(ids, contentMap, descriptionIdMap, parentIdMap, childrenIdsMap);
+            MetadataInventory         metadataInventory         = new StoreMetadataInventory(dummyMetadataContentStore);
+
+            _metadata = metadataInventory.metadata("id1").getMetadata();
         }
         catch (Throwable throwable)
         {

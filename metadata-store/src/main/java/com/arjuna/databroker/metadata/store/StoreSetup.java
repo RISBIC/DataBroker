@@ -32,11 +32,11 @@ public class StoreSetup implements Serializable
     @PostConstruct
     public void setup()
     {
-        MetadataEntity      descriptionSchemaMetadata                 = new MetadataEntity("DescriptionSchema", null, loadRDFResource("com/arjuna/databroker/metadata/store/DescriptionSchema.rdf"));
-        MetadataEntity      dataSourceSchemaMetadata                  = new MetadataEntity("DataSourceSchema", null, loadRDFResource("com/arjuna/databroker/metadata/store/DataSourceSchema.rdf"));
-        MetadataEntity      accessSchemaMetadata                      = new MetadataEntity("AccessSchema", null, loadRDFResource("com/arjuna/databroker/metadata/store/AccessSchema.rdf"));
-        MetadataEntity      speedManagementNetworkBeforeMetadata      = new MetadataEntity("SpeedManagementNetwork_before", null, loadRDFResource("com/arjuna/databroker/metadata/store/SpeedManagementNetwork_before.rdf"));
-        MetadataEntity      speedManagementNetworkAfterMetadata       = new MetadataEntity("SpeedManagementNetwork_after", null, loadRDFResource("com/arjuna/databroker/metadata/store/SpeedManagementNetwork_after.rdf"));
+        MetadataEntity      descriptionSchemaMetadata                 = new MetadataEntity("DescriptionSchema", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/DescriptionSchema.rdf"));
+        MetadataEntity      dataSourceSchemaMetadata                  = new MetadataEntity("DataSourceSchema", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/DataSourceSchema.rdf"));
+        MetadataEntity      accessSchemaMetadata                      = new MetadataEntity("AccessSchema", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/AccessSchema.rdf"));
+        MetadataEntity      speedManagementNetworkBeforeMetadata      = new MetadataEntity("SpeedManagementNetwork_before", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/SpeedManagementNetwork_before.rdf"));
+        MetadataEntity      speedManagementNetworkAfterMetadata       = new MetadataEntity("SpeedManagementNetwork_after", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/SpeedManagementNetwork_after.rdf"));
         AccessControlEntity descriptionSchemaAccessControl            = new AccessControlEntity(descriptionSchemaMetadata, null, null, false, true, false, false, false, false);
         AccessControlEntity dataSourceSchemaAccessControl             = new AccessControlEntity(dataSourceSchemaMetadata, null, null, false, true, false, false, false, false);
         AccessControlEntity accessSchemaAccessControl                 = new AccessControlEntity(accessSchemaMetadata, null, null, false, true, false, false, false, false);

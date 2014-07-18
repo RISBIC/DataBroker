@@ -107,7 +107,7 @@ public class MetadataWS
         try
         {
             if (_accessControlUtils.canCreateChild(null, requesterId, userId))
-                return _metadataUtils.createChild(null, content);
+                return _metadataUtils.createChild(null, null, content);
             else
             {
                 logger.log(Level.WARNING, "postMetadata: Can't be access");
@@ -137,7 +137,7 @@ public class MetadataWS
             }
 
             if (_accessControlUtils.canCreateChild(parentId, requesterId, userId))
-                return _metadataUtils.createChild(parentId, content);
+                return _metadataUtils.createChild(parentId, null, content);
             else
             {
                 logger.log(Level.WARNING, "postMetadata: Can't be access");

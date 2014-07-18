@@ -23,10 +23,15 @@ public class RDFMetadataContentsSelector implements MetadataContentsSelector
 
     public RDFMetadataContentSelector withPropertyValue(String propertyName, String propertyValue)
     {
-        Property    property         = _model.getProperty(propertyName);
-        ResIterator resourceIterator = _model.listResourcesWithProperty(property, propertyValue);
+        if (_model != null)
+        {
+            Property    property         = _model.getProperty(propertyName);
+            ResIterator resourceIterator = _model.listResourcesWithProperty(property, propertyValue);
 
-        return new RDFMetadataContentSelector(resourceIterator.nextResource());
+            return new RDFMetadataContentSelector(resourceIterator.nextResource());
+        }
+        else
+            return new RDFMetadataContentSelector(null);
     }
 
     @Override

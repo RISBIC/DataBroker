@@ -4,37 +4,31 @@
 
 package com.arjuna.databroker.metadata.rdf;
 
-import java.util.Map;
-import java.util.HashMap;
+import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.MutableMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataSelector;
-import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadatasSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.StoreMetadataSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.StoreMetadatasSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class InMemoryBlobMetadataInventory implements MetadataInventory
+public class StoreMetadataInventory implements MetadataInventory
 {
-    public InMemoryBlobMetadataInventory()
+    public StoreMetadataInventory(MetadataContentStore metadataContentStore)
     {
-        _metadataMap = new HashMap<String, RDFMetadata>();
-    }
-
-    public InMemoryBlobMetadataInventory(Map<String, RDFMetadata> metadataMap)
-    {
-        _metadataMap = metadataMap;
+        _metadataContentStore = metadataContentStore;
     }
 
     @Override
     public MetadatasSelector metadatas()
     {
-        return new RDFMetadatasSelector(_metadataMap);
+        return new StoreMetadatasSelector(_metadataContentStore, _metadataContentStore.getIds());
     }
 
     @Override
     public MetadataSelector metadata(String id)
     {
-        return new RDFMetadataSelector(_metadataMap.get(id));
+        return new StoreMetadataSelector(_metadataContentStore, id);
     }
 
     @Override
@@ -43,8 +37,8 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     {
         if (c.isAssignableFrom(getClass()))
             return (M) this;
-        else if (c.isAssignableFrom(InMemoryBlobMutableMetadataInventory.class))
-            return (M) new InMemoryBlobMutableMetadataInventory(_metadataMap);
+        else if (c.isAssignableFrom(StoreMutableMetadataInventory.class))
+            return (M) new StoreMutableMetadataInventory(_metadataContentStore);
         else
             return null;
     }
@@ -54,11 +48,11 @@ public class InMemoryBlobMetadataInventory implements MetadataInventory
     public <S extends MetadatasSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        if (c.isAssignableFrom(RDFMetadatasSelector.class))
-            return (S) new RDFMetadatasSelector(_metadataMap);
+        if (c.isAssignableFrom(StoreMetadatasSelector.class))
+            return (S) new StoreMetadatasSelector(_metadataContentStore, _metadataContentStore.getIds());
         else
             return null;
     }
 
-    protected Map<String, RDFMetadata> _metadataMap;
+    protected MetadataContentStore _metadataContentStore;
 }
