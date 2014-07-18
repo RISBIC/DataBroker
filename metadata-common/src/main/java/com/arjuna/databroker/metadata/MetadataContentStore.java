@@ -18,5 +18,9 @@ public interface MetadataContentStore
 
     public boolean setDescriptionId(String id, String descriptionId);
 
+    public String getParentId(String id);
+
+    public List<String> getChildrenIds(String id);
+
     public String createChild(String parentId, String descriptionId, String content);
 }

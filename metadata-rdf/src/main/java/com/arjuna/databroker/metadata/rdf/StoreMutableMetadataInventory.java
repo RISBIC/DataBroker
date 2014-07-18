@@ -5,12 +5,14 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import com.arjuna.databroker.metadata.Metadata;
+import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.MutableMetadataInventory;
 
-public class DatabaseMutableMetadataInventory extends MemoryMetadataInventory implements MutableMetadataInventory
+public class StoreMutableMetadataInventory extends StoreMetadataInventory implements MutableMetadataInventory
 {
-    public DatabaseMutableMetadataInventory()
+    public StoreMutableMetadataInventory(MetadataContentStore metadataContentStore)
     {
+        super(metadataContentStore);
     }
 
     @Override
@@ -20,7 +22,7 @@ public class DatabaseMutableMetadataInventory extends MemoryMetadataInventory im
         throw new UnsupportedOperationException();
     }
 
-    public Metadata createRootMetadata(String id, RDFMetadata description, String metadataBlob)
+    public Metadata createRootMetadata(String id, StoreMetadata description, String metadataBlob)
     {
         // TODO
         throw new UnsupportedOperationException();

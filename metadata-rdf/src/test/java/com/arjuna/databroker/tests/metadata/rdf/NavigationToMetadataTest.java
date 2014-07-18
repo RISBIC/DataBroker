@@ -4,13 +4,16 @@
 
 package com.arjuna.databroker.tests.metadata.rdf;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.arjuna.databroker.metadata.Metadata;
 import com.arjuna.databroker.metadata.MetadataInventory;
-import com.arjuna.databroker.metadata.rdf.MemoryMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.MemoryMutableMetadataInventory;
+import com.arjuna.databroker.metadata.rdf.StoreMetadataInventory;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
@@ -21,11 +24,19 @@ public class NavigationToMetadataTest
     {
         try
         {
-            _metadataInventory = new MemoryMetadataInventory();
-            MemoryMutableMetadataInventory memoryMutableMetadataInventory = _metadataInventory.mutableClone(MemoryMutableMetadataInventory.class);
+            List<String>              ids              = new LinkedList<String>();
+            Map<String, String>       contentMap       = new HashMap<String, String>();
+            Map<String, String>       descriptionIdMap = new HashMap<String, String>();
+            Map<String, String>       parentIdMap      = new HashMap<String, String>();
+            Map<String, List<String>> childrenIdsMap   = new HashMap<String, List<String>>();
 
-            String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
-            memoryMutableMetadataInventory.createRootMetadata("id", null, test0001);
+            String test0001 = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
+
+            ids.add("id1");
+            contentMap.put("id1", test0001);
+
+            DummyMetadataContentStore dummyMetadataContentStore = new DummyMetadataContentStore(ids, contentMap, descriptionIdMap, parentIdMap, childrenIdsMap);
+            _metadataInventory = new StoreMetadataInventory(dummyMetadataContentStore);
         }
         catch (Throwable throwable)
         {

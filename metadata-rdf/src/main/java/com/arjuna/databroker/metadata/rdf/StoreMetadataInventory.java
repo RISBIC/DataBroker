@@ -4,31 +4,31 @@
 
 package com.arjuna.databroker.metadata.rdf;
 
-import javax.ejb.EJB;
+import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.MutableMetadataInventory;
-import com.arjuna.databroker.metadata.rdf.selectors.DatabaseMetadataSelector;
-import com.arjuna.databroker.metadata.rdf.selectors.DatabaseMetadatasSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.StoreMetadataSelector;
+import com.arjuna.databroker.metadata.rdf.selectors.StoreMetadatasSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
-import com.arjuna.databroker.metadata.store.MetadataUtils;
 
-public class DatabaseMetadataInventory implements MetadataInventory
+public class StoreMetadataInventory implements MetadataInventory
 {
-    public DatabaseMetadataInventory()
+    public StoreMetadataInventory(MetadataContentStore metadataContentStore)
     {
+        _metadataContentStore = metadataContentStore;
     }
 
     @Override
     public MetadatasSelector metadatas()
     {
-    	return new DatabaseMetadatasSelector(_metadataUtils.getIds());
+        return new StoreMetadatasSelector(_metadataContentStore, _metadataContentStore.getIds());
     }
 
     @Override
     public MetadataSelector metadata(String id)
     {
-        return new DatabaseMetadataSelector(id);
+        return new StoreMetadataSelector(_metadataContentStore, id);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class DatabaseMetadataInventory implements MetadataInventory
     {
         if (c.isAssignableFrom(getClass()))
             return (M) this;
-        else if (c.isAssignableFrom(DatabaseMutableMetadataInventory.class))
-            return (M) new DatabaseMutableMetadataInventory();
+        else if (c.isAssignableFrom(StoreMutableMetadataInventory.class))
+            return (M) new StoreMutableMetadataInventory(_metadataContentStore);
         else
             return null;
     }
@@ -48,12 +48,11 @@ public class DatabaseMetadataInventory implements MetadataInventory
     public <S extends MetadatasSelector> S selector(Class<S> c)
         throws IllegalArgumentException
     {
-        if (c.isAssignableFrom(DatabaseMetadatasSelector.class))
-            return (S) new DatabaseMetadatasSelector(_metadataUtils.getIds());
+        if (c.isAssignableFrom(StoreMetadatasSelector.class))
+            return (S) new StoreMetadatasSelector(_metadataContentStore, _metadataContentStore.getIds());
         else
             return null;
     }
 
-    @EJB
-    protected MetadataUtils _metadataUtils;
+    protected MetadataContentStore _metadataContentStore;
 }

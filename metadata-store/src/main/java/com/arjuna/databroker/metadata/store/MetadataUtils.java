@@ -139,9 +139,59 @@ public class MetadataUtils implements MetadataContentStore
         }
     }
 
+    @Override
+    public String getParentId(String id)
+    {
+        logger.log(Level.FINE, "MetadataUtils.getParentId: \"" + id + "\"");
+
+        try
+        {
+            MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
+            
+            if ((metadataEntity != null) && (metadataEntity.getParent() != null))
+                return metadataEntity.getParent().getId();
+            else
+                return null;
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> getChildrenIds(String parentId)
+    {
+        logger.log(Level.FINE, "MetadataUtils.getChildrenIds");
+
+        try
+        {
+            MetadataEntity parent = _entityManager.find(MetadataEntity.class, parentId);
+
+            if (parent == null)
+                return null;
+
+            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT ac FROM AccessControlEntity AS ac WHERE (ac._parent = :parent)", MetadataEntity.class);
+            query.setParameter("parent", parent);
+
+            List<String> childrenIds = new LinkedList<String>();
+            for (MetadataEntity metadata: query.getResultList())
+                childrenIds.add(metadata.getId());
+
+            return childrenIds;
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public String createChild(String parentId, String descriptionId, String content)
     {
-        logger.log(Level.FINE, "MetadataUtils.setContent: \"" + parentId + "\"");
+        logger.log(Level.FINE, "MetadataUtils.createChild: \"" + parentId + "\"");
 
         try
         {

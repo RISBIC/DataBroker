@@ -5,34 +5,37 @@
 package com.arjuna.databroker.metadata.rdf.selectors;
 
 import java.util.List;
+import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.selectors.MetadataSelector;
 import com.arjuna.databroker.metadata.selectors.MetadatasSelector;
 
-public class DatabaseMetadatasSelector implements MetadatasSelector
+public class StoreMetadatasSelector implements MetadatasSelector
 {
-    public DatabaseMetadatasSelector(List<String> ids)
+    public StoreMetadatasSelector(MetadataContentStore metadataContentStore, List<String> ids)
     {
-        _ids = ids;
+        _metadataContentStore = metadataContentStore; 
+        _ids                  = ids;
     }
 
     @Override
     public MetadataSelector metadata(String id)
     {
         if ((_ids != null) && _ids.contains(id))
-            return new DatabaseMetadataSelector(id);
+            return new StoreMetadataSelector(_metadataContentStore, id);
         else
-            return new DatabaseMetadataSelector(null);
+            return new StoreMetadataSelector(_metadataContentStore, null);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <S extends MetadatasSelector> S selector(Class<S> c) throws IllegalArgumentException
     {
-        if (c.isAssignableFrom(DatabaseMetadatasSelector.class))
+        if (c.isAssignableFrom(StoreMetadatasSelector.class))
             return (S) this;
         else
             return null;
     }
-    
-    private List<String> _ids;
+
+    private MetadataContentStore _metadataContentStore;
+    private List<String>         _ids;
 }

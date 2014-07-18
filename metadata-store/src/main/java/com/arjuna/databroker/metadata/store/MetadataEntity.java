@@ -53,7 +53,7 @@ public class MetadataEntity implements Serializable
 
     public void setDescription(MetadataEntity description)
     {
-    	_description = description;
+        _description = description;
     }
 
     public MetadataEntity getDescription()
