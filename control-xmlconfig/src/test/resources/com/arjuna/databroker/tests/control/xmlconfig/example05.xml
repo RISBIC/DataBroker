@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataflow name="Example 05">
+    <variables>
+        <variable name="name" lable="name" defaultValue="value"/>
+    </variables>
+</dataflow>
