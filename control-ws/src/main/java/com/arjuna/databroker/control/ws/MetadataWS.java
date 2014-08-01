@@ -20,8 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
-import com.arjuna.databroker.metadata.store.MetadataUtils;
 
 @Path("/metadata")
 @Stateless
@@ -68,7 +68,7 @@ public class MetadataWS
             logger.log(Level.FINE, "MetadataWS.getMetadata [" + id + "][" + requesterId + "][" + userId + "]");
             if (_accessControlUtils.canRead(id, requesterId, userId))
             {
-                String content = _metadataUtils.getContent(id);
+                String content = _metadataContentStore.getContent(id);
             
                 if (content != null)
                     return content;
@@ -107,7 +107,7 @@ public class MetadataWS
         try
         {
             if (_accessControlUtils.canCreateChild(null, requesterId, userId))
-                return _metadataUtils.createChild(null, null, content);
+                return _metadataContentStore.createChild(null, null, content);
             else
             {
                 logger.log(Level.WARNING, "postMetadata: Can't be access");
@@ -137,7 +137,7 @@ public class MetadataWS
             }
 
             if (_accessControlUtils.canCreateChild(parentId, requesterId, userId))
-                return _metadataUtils.createChild(parentId, null, content);
+                return _metadataContentStore.createChild(parentId, null, content);
             else
             {
                 logger.log(Level.WARNING, "postMetadata: Can't be access");
@@ -169,7 +169,7 @@ public class MetadataWS
 
             if (_accessControlUtils.canUpdate(id, requesterId, userId))
             {
-                if (! _metadataUtils.setContent(id, content))
+                if (! _metadataContentStore.setContent(id, content))
                     logger.log(Level.WARNING, "putMetadata: Can't be replaced");
                 else
                     return true;
@@ -186,7 +186,7 @@ public class MetadataWS
     }
 
     @EJB
-    private MetadataUtils _metadataUtils;
+    private MetadataContentStore _metadataContentStore;
 
     @EJB
     private AccessControlUtils _accessControlUtils;
