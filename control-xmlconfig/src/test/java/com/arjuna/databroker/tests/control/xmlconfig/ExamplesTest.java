@@ -22,7 +22,7 @@ public class ExamplesTest
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example01.xml");
-        assertTrue("Problem loading Example01", xmlConfig.load(inputStream, problems, null));
+        assertNotNull("Problem loading Example01", xmlConfig.loadDataFlow(inputStream, problems, null, null));
         inputStream.close();
         assertEquals("Unexpected problems reported with Example01" , 0, problems.size());
     }
@@ -34,7 +34,7 @@ public class ExamplesTest
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example02.xml");
-        assertTrue("Problem loading Example02", xmlConfig.load(inputStream, problems, null));
+        assertNotNull("Problem loading Example02", xmlConfig.loadDataFlow(inputStream, problems, null, null));
         inputStream.close();
         assertEquals("Unexpected problems reported with Example02" , 0, problems.size());
     }
@@ -46,7 +46,7 @@ public class ExamplesTest
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example03.xml");
-        assertTrue("Problem loading Example03", xmlConfig.load(inputStream, problems, null));
+        assertNotNull("Problem loading Example03", xmlConfig.loadDataFlow(inputStream, problems, null, null));
         inputStream.close();
         assertEquals("Unexpected problems reported with Example03" , 0, problems.size());
     }
@@ -58,7 +58,7 @@ public class ExamplesTest
         XMLConfig     xmlConfig   = new XMLConfig();
         List<Problem> problems    = new LinkedList<Problem>();
         InputStream   inputStream = ExamplesTest.class.getResourceAsStream("example04.xml");
-        assertTrue("Problem loading Example04", xmlConfig.load(inputStream, problems, null));
+        assertNotNull("Problem loading Example04", xmlConfig.loadDataFlow(inputStream, problems, null, null));
         inputStream.close();
         assertEquals("Unexpected problems reported with Example04" , 0, problems.size());
     }

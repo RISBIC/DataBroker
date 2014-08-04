@@ -35,7 +35,7 @@ public class XMLConfig
 {
     private static final Logger logger = Logger.getLogger(XMLConfig.class.getName());
 
-    public boolean load(InputStream inputStream, List<Problem> problems, DataFlowFactory dataFlowFactory)
+    public List<String> loadVariables(InputStream inputStream, List<Problem> problems)
     {
         try
         {
@@ -43,14 +43,35 @@ public class XMLConfig
             DocumentBuilder        documentBuilder        = documentBuilderFactory.newDocumentBuilder();
             Document               document               = documentBuilder.parse(inputStream);
 
-            return parseDocument(document, problems, dataFlowFactory);
+            // TODO
+            return null; // return parseDocument(document, problems, null);
         }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Unexpected problem while parsing OSM XML", throwable);
             problems.add(new Problem("Unexpected problem while parsing OSM XML : " + throwable));
 
-            return false;
+            return Collections.emptyList();
+        }
+    }
+
+    public DataFlow loadDataFlow(InputStream inputStream, List<Problem> problems, Map<String, String> variableMapping, DataFlowFactory dataFlowFactory)
+    {
+        try
+        {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder        documentBuilder        = documentBuilderFactory.newDocumentBuilder();
+            Document               document               = documentBuilder.parse(inputStream);
+
+            // TODO
+            return null; // parseDocument(document, problems, dataFlowFactory);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Unexpected problem while parsing OSM XML", throwable);
+            problems.add(new Problem("Unexpected problem while parsing OSM XML : " + throwable));
+
+            return null;
         }
     }
 
@@ -128,7 +149,7 @@ public class XMLConfig
                 valid = false;
             }
         }
-        
+
         return valid;
     }
 
@@ -158,7 +179,7 @@ public class XMLConfig
 
         Map<String, String> metaProperties = new HashMap<String, String>();
         Map<String, String> properties     = new HashMap<String, String>();
-        
+
         NodeList childNodes = element.getChildNodes();
         for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
         {
@@ -225,7 +246,7 @@ public class XMLConfig
 
         Map<String, String> metaProperties = new HashMap<String, String>();
         Map<String, String> properties     = new HashMap<String, String>();
-        
+
         NodeList childNodes = element.getChildNodes();
         for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
         {
@@ -291,7 +312,7 @@ public class XMLConfig
                 valid = false;
             }
         }
-        
+
         NodeList childNodes = element.getChildNodes();
         for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
         {
@@ -582,12 +603,12 @@ public class XMLConfig
             return false;
         }
     }
-    
+
     private Class<?> getLinkClass(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode)
     {
         Collection<Class<?>> sourceDataClasses = getSourceProviderClasses(sourceDataFlowNode);
         Collection<Class<?>> sinkDataClasses   = getSinkConsumerClasses(sinkDataFlowNode);
-        
+
         if ((sourceDataClasses != null) && (sinkDataClasses != null))
         {
             for (Class<?> sourceDataClass: sourceDataClasses)
