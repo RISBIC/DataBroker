@@ -137,11 +137,11 @@ public class ExamplesTest
 
         assertTrue("Problem loading Example07", valid);
         assertEquals("Unexpected variables with Example07" , 1, variableMapping.size());
-        Variable name1Variable = variableMapping.get("name");
-        assertNotNull("Expected variable of 'name1", name1Variable);
-        assertEquals("Unexpected name for variable 'name", "name", name1Variable.getName());
-        assertEquals("Unexpected label for variable 'name", "label", name1Variable.getLabel());
-        assertEquals("Unexpected value for variable 'name", "defaultvalue", name1Variable.getValue());
+        Variable nameVariable = variableMapping.get("name");
+        assertNotNull("Expected variable of 'name1", nameVariable);
+        assertEquals("Unexpected name for variable 'name", "name", nameVariable.getName());
+        assertEquals("Unexpected label for variable 'name", "label", nameVariable.getLabel());
+        assertEquals("Unexpected value for variable 'name", "defaultvalue", nameVariable.getValue());
         assertEquals("Unexpected problems reported with Example07" , 0, problems.size());
     }
 }
