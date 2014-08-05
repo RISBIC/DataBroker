@@ -442,7 +442,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseVariable(Element element, List<Problem> problems, Map<String, Variable> properties, boolean update)
+    private boolean parseVariable(Element element, List<Problem> problems, Map<String, Variable> variableMapping, boolean update)
     {
         boolean valid = true;
 
@@ -478,7 +478,7 @@ public class XMLConfig
         }
 
         if ((name != null) && (label != null) && (defaultValue != null))
-            properties.put(name, new Variable(name, label, defaultValue));
+            variableMapping.put(name, new Variable(name, label, defaultValue));
         else
         {
             logger.log(Level.WARNING, "Expected both 'name', 'label' and 'defaultValue'");
@@ -758,5 +758,32 @@ public class XMLConfig
             return ((DataSink) sinkDataFlowNode).getDataConsumer(dataClass);
         else
             return null;
+    }
+
+    public String variableSubstitute(String text, Map<String, Variable> variableMapping)
+    {
+    	StringBuffer result = new StringBuffer();
+
+    	int substituteStart = text.indexOf("${");
+        int substituteEnd   = 0;
+        while (substituteStart != -1)
+        {
+        	substituteEnd = text.indexOf("}", substituteStart);
+        	if (substituteEnd != -1)
+        	{
+        	    String   variableName = text.substring(substituteStart + 2 , substituteEnd);
+        	    Variable variable     = variableMapping.get(variableName);
+        	    if (variable != null)
+        	    {
+        	    	result.append(text.substring(0, substituteStart));
+        	    	result.append(variable.getValue());
+        	    }
+
+        	    substituteStart = result.indexOf("${");
+        	}
+        }
+        result.append(text.substring(substituteEnd, text.length()));
+
+        return result.toString();
     }
 }
