@@ -35,7 +35,7 @@ public class XMLConfig
 {
     private static final Logger logger = Logger.getLogger(XMLConfig.class.getName());
 
-    public List<String> loadVariables(InputStream inputStream, List<Problem> problems)
+    public boolean loadVariables(InputStream inputStream, List<Problem> problems, Map<String, Variable> variableMapping)
     {
         try
         {
@@ -43,19 +43,18 @@ public class XMLConfig
             DocumentBuilder        documentBuilder        = documentBuilderFactory.newDocumentBuilder();
             Document               document               = documentBuilder.parse(inputStream);
 
-            // TODO
-            return null; // return parseDocument(document, problems, null);
+            return parseDocument(document, problems, variableMapping, null);
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Unexpected problem while parsing OSM XML", throwable);
-            problems.add(new Problem("Unexpected problem while parsing OSM XML : " + throwable));
+            logger.log(Level.WARNING, "Unexpected problem while parsing DataFlow XML", throwable);
+            problems.add(new Problem("Unexpected problem while parsing DataFlow XML : " + throwable));
 
-            return Collections.emptyList();
+            return false;
         }
     }
 
-    public DataFlow loadDataFlow(InputStream inputStream, List<Problem> problems, Map<String, String> variableMapping, DataFlowFactory dataFlowFactory)
+    public boolean loadDataFlow(InputStream inputStream, List<Problem> problems, Map<String, Variable> variableMapping, DataFlowFactory dataFlowFactory)
     {
         try
         {
@@ -63,26 +62,25 @@ public class XMLConfig
             DocumentBuilder        documentBuilder        = documentBuilderFactory.newDocumentBuilder();
             Document               document               = documentBuilder.parse(inputStream);
 
-            // TODO
-            return null; // parseDocument(document, problems, dataFlowFactory);
+            return parseDocument(document, problems, variableMapping, dataFlowFactory);
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Unexpected problem while parsing OSM XML", throwable);
-            problems.add(new Problem("Unexpected problem while parsing OSM XML : " + throwable));
+            logger.log(Level.WARNING, "Unexpected problem while parsing DataFlow XML", throwable);
+            problems.add(new Problem("Unexpected problem while parsing DataFlow XML : " + throwable));
 
-            return null;
+            return false;
         }
     }
 
-    private boolean parseDocument(Document document, List<Problem> problems, DataFlowFactory dataFlowFactory)
+    private boolean parseDocument(Document document, List<Problem> problems, Map<String, Variable> variableMapping, DataFlowFactory dataFlowFactory)
     {
         Element element = document.getDocumentElement();
 
-        return parseDataFlow(element, problems, dataFlowFactory);
+        return parseDataFlow(element, problems, variableMapping, dataFlowFactory);
     }
 
-    private boolean parseDataFlow(Element element, List<Problem> problems, DataFlowFactory dataFlowFactory)
+    private boolean parseDataFlow(Element element, List<Problem> problems, Map<String, Variable> variableMapping, DataFlowFactory dataFlowFactory)
     {
         boolean valid = true;
 
@@ -117,6 +115,8 @@ public class XMLConfig
                 continue;
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("variables"))
+                valid &= parseVariables((Element) childNode, problems, variableMapping, dataFlowFactory == null);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
                 valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
@@ -337,6 +337,41 @@ public class XMLConfig
             return false;
     }
 
+    private boolean parseVariables(Element element, List<Problem> problems, Map<String, Variable> variableMapping, boolean update)
+    {
+        boolean valid = true;
+
+        NamedNodeMap attributes = element.getAttributes();
+        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
+        {
+            Node attribute = attributes.item(attributeIndex);
+
+            logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+            problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
+            valid = false;
+        }
+
+        NodeList childNodes = element.getChildNodes();
+        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
+        {
+            Node childNode = childNodes.item(childNodeIndex);
+
+            if ((childNode.getNodeType() == Node.COMMENT_NODE))
+                continue;
+            else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
+                continue;
+            else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("variable"))
+                valid &= parseVariable((Element) childNode, problems, variableMapping, update);
+            else 
+            {
+                processUnexpectedNode(childNode, problems);
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
     private boolean parseMetaProperties(Element element, List<Problem> problems, Map<String, String> metaProperties)
     {
         boolean valid = true;
@@ -402,6 +437,53 @@ public class XMLConfig
                 processUnexpectedNode(childNode, problems);
                 valid = false;
             }
+        }
+
+        return valid;
+    }
+
+    private boolean parseVariable(Element element, List<Problem> problems, Map<String, Variable> properties, boolean update)
+    {
+        boolean valid = true;
+
+        String name         = null;
+        String label        = null;
+        String defaultValue = null;
+        NamedNodeMap attributes = element.getAttributes();
+        for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++)
+        {
+            Node attribute = attributes.item(attributeIndex);
+
+            if (attribute.getNodeName().equals("name"))
+                name = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("label"))
+            	label = attribute.getNodeValue();
+            else if (attribute.getNodeName().equals("defaultValue"))
+            	defaultValue = attribute.getNodeValue();
+            else
+            {
+                logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
+                problems.add(new Problem("Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\""));
+                valid = false;
+            }
+        }
+
+        NodeList childNodes = element.getChildNodes();
+        for (int childNodeIndex = 0; childNodeIndex < childNodes.getLength(); childNodeIndex++)
+        {
+            Node childNode = childNodes.item(childNodeIndex);
+
+            processUnexpectedNode(childNode, problems);
+            valid = false;
+        }
+
+        if ((name != null) && (label != null) && (defaultValue != null))
+            properties.put(name, new Variable(name, label, defaultValue));
+        else
+        {
+            logger.log(Level.WARNING, "Expected both 'name', 'label' and 'defaultValue'");
+            problems.add(new Problem("Expected both 'name', 'label' and 'defaultValue'"));
+            valid = false;
         }
 
         return valid;

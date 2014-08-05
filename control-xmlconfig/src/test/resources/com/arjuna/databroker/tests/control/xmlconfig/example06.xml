@@ -2,7 +2,7 @@
 
 <dataflow name="Example 06">
     <variables>
-        <variable name="name1" lable="name1" defaultValue="value1"/>
-        <variable name="name2" lable="name2" defaultValue="value2"/>
+        <variable name="name1" label="label1" defaultValue="defaultvalue1"/>
+        <variable name="name2" label="label2" defaultValue="defaultvalue2"/>
     </variables>
 </dataflow>
