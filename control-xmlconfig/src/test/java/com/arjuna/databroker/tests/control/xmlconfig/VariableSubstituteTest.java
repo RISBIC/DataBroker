@@ -131,6 +131,18 @@ public class VariableSubstituteTest
         assertEquals(precessedText, variableSubstitute(xmlConfig, rawText, variableMapping));
     }
 
+    @Test
+    public void variableSubstitute10()
+    {
+        XMLConfig             xmlConfig       = new XMLConfig();
+        String                rawText         = "X${test1";
+        String                precessedText   = "X${test1";
+        Map<String, Variable> variableMapping = new HashMap<String, Variable>();
+        variableMapping.put("test1", new Variable("test1", "test1 label", "abc"));
+
+        assertEquals(precessedText, variableSubstitute(xmlConfig, rawText, variableMapping));
+    }
+
     private String variableSubstitute(XMLConfig xmlConfig, String text, Map<String, Variable> variableMapping)
     {
         try
