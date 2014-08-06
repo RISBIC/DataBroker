@@ -34,7 +34,7 @@ public class Variable
 
     public void setLabel(String label)
     {
-    	_label = label;
+        _label = label;
     }
 
     public String getValue()
@@ -44,7 +44,7 @@ public class Variable
 
     public void setValue(String value)
     {
-    	_value = value;
+        _value = value;
     }
 
     private String _name;

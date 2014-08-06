@@ -118,11 +118,13 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("variables"))
                 valid &= parseVariables((Element) childNode, problems, variableMapping, dataFlowFactory == null);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, variableMapping, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, problems, properties);
+                valid &= parseProperties((Element) childNode, problems, variableMapping, properties);
             else
             {
+                name = variableSubstitute(name, variableMapping);
+
                 dataFlow   = createDataFlow(name, metaProperties, properties, problems, dataFlowFactory);
                 donePhase1 = true;
                 childNodePhaseStart = childNodePhase1Index;
@@ -138,9 +140,9 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNodeFactory"))
-                valid &= parseDataFlowNodeFactory((Element) childNode, problems, dataFlow);
+                valid &= parseDataFlowNodeFactory((Element) childNode, problems, variableMapping, dataFlow);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowNode"))
-                valid &= parseDataFlowNode((Element) childNode, problems, dataFlow);
+                valid &= parseDataFlowNode((Element) childNode, problems, variableMapping, dataFlow);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("dataFlowLink"))
                 valid &= parseDataFlowLink((Element) childNode, problems, dataFlow);
             else
@@ -154,7 +156,7 @@ public class XMLConfig
     }
 
     @SuppressWarnings("unchecked")
-    private boolean parseDataFlowNodeFactory(Element element, List<Problem> problems, DataFlow dataFlow)
+    private boolean parseDataFlowNodeFactory(Element element, List<Problem> problems, Map<String, Variable> variableMapping, DataFlow dataFlow)
     {
         boolean valid = true;
 
@@ -190,9 +192,9 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, variableMapping, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, problems, properties);
+                valid &= parseProperties((Element) childNode, problems, variableMapping, properties);
             else
             {
                 processUnexpectedNode(childNode, problems);
@@ -218,7 +220,7 @@ public class XMLConfig
             return false;
     }
 
-    private boolean parseDataFlowNode(Element element, List<Problem> problems, DataFlow dataFlow)
+    private boolean parseDataFlowNode(Element element, List<Problem> problems, Map<String, Variable> variableMapping, DataFlow dataFlow)
     {
         boolean valid = true;
 
@@ -257,9 +259,9 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperties"))
-                valid &= parseMetaProperties((Element) childNode, problems, metaProperties);
+                valid &= parseMetaProperties((Element) childNode, problems, variableMapping, metaProperties);
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("properties"))
-                valid &= parseProperties((Element) childNode, problems, properties);
+                valid &= parseProperties((Element) childNode, problems, variableMapping, properties);
             else
             {
                 processUnexpectedNode(childNode, problems);
@@ -372,7 +374,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseMetaProperties(Element element, List<Problem> problems, Map<String, String> metaProperties)
+    private boolean parseMetaProperties(Element element, List<Problem> problems, Map<String, Variable> variableMapping, Map<String, String> metaProperties)
     {
         boolean valid = true;
 
@@ -396,7 +398,7 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperty"))
-                valid &= parseProperty((Element) childNode, problems, metaProperties);
+                valid &= parseProperty((Element) childNode, problems, variableMapping, metaProperties);
             else 
             {
                 processUnexpectedNode(childNode, problems);
@@ -407,7 +409,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseProperties(Element element, List<Problem> problems, Map<String, String> properties)
+    private boolean parseProperties(Element element, List<Problem> problems, Map<String, Variable> variableMapping, Map<String, String> properties)
     {
         boolean valid = true;
 
@@ -431,7 +433,7 @@ public class XMLConfig
             else if ((childNode.getNodeType() == Node.TEXT_NODE) && isWhiteSpace(childNode.getNodeValue()))
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("property"))
-                valid &= parseProperty((Element) childNode, problems, properties);
+                valid &= parseProperty((Element) childNode, problems, variableMapping, properties);
             else 
             {
                 processUnexpectedNode(childNode, problems);
@@ -457,9 +459,9 @@ public class XMLConfig
             if (attribute.getNodeName().equals("name"))
                 name = attribute.getNodeValue();
             else if (attribute.getNodeName().equals("label"))
-            	label = attribute.getNodeValue();
+                label = attribute.getNodeValue();
             else if (attribute.getNodeName().equals("defaultValue"))
-            	defaultValue = attribute.getNodeValue();
+                defaultValue = attribute.getNodeValue();
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
@@ -489,7 +491,7 @@ public class XMLConfig
         return valid;
     }
 
-    private boolean parseProperty(Element element, List<Problem> problems, Map<String, String> properties)
+    private boolean parseProperty(Element element, List<Problem> problems, Map<String, Variable> variableMapping, Map<String, String> properties)
     {
         boolean valid = true;
 
@@ -503,7 +505,7 @@ public class XMLConfig
             if (attribute.getNodeName().equals("name"))
                 name = attribute.getNodeValue();
             else if (attribute.getNodeName().equals("value"))
-                value = attribute.getNodeValue();
+                value = variableSubstitute(attribute.getNodeValue(), variableMapping);
             else
             {
                 logger.log(Level.WARNING, "Unexpected attribute \"" + attribute.getNodeName() + "\" with value \"" + attribute.getNodeValue() + "\"");
@@ -760,29 +762,36 @@ public class XMLConfig
             return null;
     }
 
-    public String variableSubstitute(String text, Map<String, Variable> variableMapping)
+    private String variableSubstitute(String text, Map<String, Variable> variableMapping)
     {
-    	StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer();
 
-    	int substituteStart = text.indexOf("${");
+        int substituteStart = text.indexOf("${");
         int substituteEnd   = 0;
-        while (substituteStart != -1)
+        while ((substituteStart != -1) && (substituteEnd != -1))
         {
-        	substituteEnd = text.indexOf("}", substituteStart);
-        	if (substituteEnd != -1)
-        	{
-        	    String   variableName = text.substring(substituteStart + 2 , substituteEnd);
-        	    Variable variable     = variableMapping.get(variableName);
-        	    if (variable != null)
-        	    {
-        	    	result.append(text.substring(0, substituteStart));
-        	    	result.append(variable.getValue());
-        	    }
+            result.append(text.substring(substituteEnd, substituteStart));
 
-        	    substituteStart = result.indexOf("${");
-        	}
+            substituteEnd = text.indexOf("}", substituteStart);
+            if (substituteEnd != -1)
+            {
+                String   variableName = text.substring(substituteStart + 2 , substituteEnd);
+                Variable variable     = variableMapping.get(variableName);
+                if (variable != null)
+                {
+                    result.append(variable.getValue());
+                    substituteEnd++;
+                }
+                else
+                    result.append(text.substring(substituteStart, substituteEnd));
+
+                substituteStart = text.indexOf("${", substituteEnd);
+            }
         }
-        result.append(text.substring(substituteEnd, text.length()));
+        if (substituteEnd != -1)
+            result.append(text.substring(substituteEnd, text.length()));
+        else
+            result.append(text.substring(substituteStart, text.length()));
 
         return result.toString();
     }
