@@ -29,6 +29,8 @@ import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
+import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 
 @Path("/dataflownodelink")
 @Stateless
@@ -63,7 +65,17 @@ public class DataFlowNodeLinkWS
                         DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
 
                         if ((dataProvider != null) && (dataConsumer != null))
-                            dataProvider.addDataConsumer(dataConsumer);
+                        {
+                            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                            {
+                                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+                                
+                                observableDataProvider.addDataConsumer(observerDataConsumer);
+                            }
+                            else
+                                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+                        }
                         else
                             throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
                     }
@@ -109,7 +121,17 @@ public class DataFlowNodeLinkWS
                         DataConsumer<T> dataConsumer = getSinkConsumer(sourceDataFlowNode, linkClass);
 
                         if ((dataProvider != null) && (dataConsumer != null))
-                            dataProvider.removeDataConsumer(dataConsumer);
+                        {
+                            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                            {
+                                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+                                
+                                observableDataProvider.removeDataConsumer(observerDataConsumer);
+                            }
+                            else
+                                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+                        }
                         else
                             throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
                     }

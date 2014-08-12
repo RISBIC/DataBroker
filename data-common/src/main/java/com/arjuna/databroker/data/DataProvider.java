@@ -4,8 +4,6 @@
 
 package com.arjuna.databroker.data;
 
-import java.util.Collection;
-
 /**
  * DataProvider is an interface to data provider.
  */
@@ -17,27 +15,6 @@ public interface DataProvider<T>
      * @return the data flow node associated with the data consumer
      */
     public DataFlowNode getDataFlowNode();
-
-    /**
-     * Returns the data consumers associated with the data provider.
-     * 
-     * @return the data consumers associated with the data provider
-     */
-    public Collection<DataConsumer<T>> getDataConsumers();
-
-    /**
-     * Adds a data consumer to the list of data consumer which will be notified when data is produced.
-     * 
-     * @param dataConsumer the data consumer which is to be added
-     */
-    public void addDataConsumer(DataConsumer<T> dataConsumer);
-
-    /**
-     * Removes a data consumer from the list of data consumer which will be notified when data is produced.
-     * 
-     * @param dataConsumer the data consumer which is to be removed
-     */
-    public void removeDataConsumer(DataConsumer<T> dataConsumer);
 
     /**
      * Initiate the production of a data item by the associated data flow node.

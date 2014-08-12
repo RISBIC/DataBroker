@@ -4,11 +4,11 @@
 
 package com.arjuna.databroker.tests.control.xmlconfig;
 
-import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataProvider;
+import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 
-public class DummyDataConsumer<T> implements DataConsumer<T>
+public class DummyDataConsumer<T> implements ObserverDataConsumer<T>
 {
     public DummyDataConsumer(DataDispatcher<T> dataDispatcher)
     {

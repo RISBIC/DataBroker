@@ -30,6 +30,8 @@ import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
+import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 
 public class XMLConfig
 {
@@ -659,8 +661,16 @@ public class XMLConfig
 
                     if ((dataProvider != null) && (dataConsumer != null))
                     {
-                        dataProvider.addDataConsumer(dataConsumer);
-                        return true;
+                        if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                        {
+                            ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                            ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+                            
+                            observableDataProvider.addDataConsumer(observerDataConsumer);
+                            return true;
+                        }
+                        else
+                            return true;
                     }
                     else
                     {

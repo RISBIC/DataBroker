@@ -29,7 +29,6 @@ import com.arjuna.databroker.control.comms.DataFlowNodeFactoryDTO;
 import com.arjuna.databroker.control.comms.FactoryNamesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
-import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -43,6 +42,8 @@ import com.arjuna.databroker.data.DataStore;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
+import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 
 @Path("/dataflow")
 @Stateless
@@ -359,8 +360,12 @@ public class DataFlowWS
     {
         List<DataFlowNodeLinkDTO> dataFlowLinks = new LinkedList<DataFlowNodeLinkDTO>();
 
-        for (DataConsumer<?> dataConsumer: dataProducer.getDataConsumers())
-            dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
+        if (dataProducer instanceof ObservableDataProvider<?>)
+        {
+            ObservableDataProvider<?> observableDataProvider = (ObservableDataProvider<?>) dataProducer;
+            for (ObserverDataConsumer<?> dataConsumer: observableDataProvider.getDataConsumers())
+                dataFlowLinks.add(new DataFlowNodeLinkDTO(dataProducer.getDataFlowNode().getName(), dataConsumer.getDataFlowNode().getName()));
+        }
 
         return dataFlowLinks;
     }
