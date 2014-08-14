@@ -22,11 +22,20 @@ div.home
 
 a.home-link
 {
-	margin:			1em 0 1em 0;
-	border:			0;
-	padding:		2em 2em 2em 2em;
-	display:		block;
-	text-decoration:	none;
+	margin:				1em 0 1em 0;
+	border:				0;
+	padding:			1em 8em 1em 8em;
+	display:			block;
+	text-decoration:		none;
+	border-top-left-radius:		2em;
+	-moz-border-radius-topleft:	2em;
+	border-top-right-radius:	2em;
+	-moz-border-radius-topright:	2em;
+	border-bottom-right-radius:	2em;
+	-moz-border-radius-bottomright:	2em;
+	border-bottom-left-radius:	2em;
+	-moz-border-radius-bottomleft:	2em;
+	background-image:		url('pattern.png');
 }
 
 a.home-link:link
@@ -55,6 +64,13 @@ a.home-link:active
 
 div.home-link
 {
+}
+
+table.home-link-grip
+{
+	margin:			0;
+	border:			0;
+	width:			100%;
 }
 
 span.home-link-title

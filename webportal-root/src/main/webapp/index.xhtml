@@ -45,14 +45,32 @@
             <h:form styleClass="home">
                 <h:panelGroup styleClass="home" layout="block">
                     <h:commandLink styleClass="home-link" action="#{dataviews.doLoad}">
-                        <h:panelGrid styleClass="home-link" layout="block">
-                            <h:outputText styleClass="home-link-title" value="Data Search"/>
-                            <h:outputText styleClass="home-link-text" value="Search of data - access and descriptions"/>
+                        <h:panelGrid styleClass="home-link-grip" columns="2">
+                            <h:panelGrid styleClass="home-link-grip" columns="1">
+                                <h:outputText styleClass="home-link-title" value="Data Search"/>
+                                <h:outputText styleClass="home-link-text" value="Search of data - access and descriptions"/>
+                            </h:panelGrid>
                             <h:graphicImage styleClass="home-link-icon" value="search.png" alt="Search"/>
                         </h:panelGrid>
                     </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="#{dataflows.doLoad}" value="Data Flow Descriptions"/>
-                    <h:commandLink styleClass="home-link" action="#{databrokerconnections.doLoad}" value="Data Broker Configurations"/>
+                    <h:commandLink styleClass="home-link" action="#{dataflows.doLoad}">
+                        <h:panelGrid styleClass="home-link-grip" columns="2">
+                            <h:panelGrid styleClass="home-link-grip" columns="1">
+                                <h:outputText styleClass="home-link-title" value="Data Creation"/>
+                                <h:outputText styleClass="home-link-text" value="Creation of data - acquisition and processing"/>
+                            </h:panelGrid>
+                            <h:graphicImage styleClass="home-link-icon" value="create.png" alt="Create"/>
+                        </h:panelGrid>
+                    </h:commandLink>
+                    <h:commandLink styleClass="home-link" action="#{databrokerconnections.doLoad}">
+                        <h:panelGrid styleClass="home-link-grip" columns="2">
+                            <h:panelGrid styleClass="home-link-grip" columns="1">
+                                <h:outputText styleClass="home-link-title" value="System Configurations"/>
+                                <h:outputText styleClass="home-link-text" value="User and servers"/>
+                            </h:panelGrid>
+                            <h:graphicImage styleClass="home-link-icon" value="config.png" alt="Config"/>
+                        </h:panelGrid>
+                    </h:commandLink>
                 </h:panelGroup>
             </h:form>
         </ui:define>
