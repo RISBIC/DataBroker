@@ -36,7 +36,6 @@
                     </h:panelGrid>
                 </h:panelGrid>
             </form>
-            </h:form>
             <h:form styleClass="navigation">
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
