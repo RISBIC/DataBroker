@@ -37,7 +37,7 @@ public class DataBrokerUtils
         }
         catch (Throwable throwable)
         {
-            throwable.printStackTrace();
+            logger.log(Level.WARNING, "Failed to obtain DataBrokers list", throwable);
             return Collections.emptyList();
         }
     }
