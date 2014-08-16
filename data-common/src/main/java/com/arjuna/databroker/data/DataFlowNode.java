@@ -12,6 +12,13 @@ import java.util.Map;
 public interface DataFlowNode
 {
     /**
+     * Returns the data flow associated with the data flow node.
+     * 
+     * @return the data flow associated with the data flow node
+     */
+    public DataFlow getDataFlow();
+
+    /**
      * Returns the name of the data flow node.
      *
      * @return the name of the data flow node
