@@ -27,7 +27,7 @@ public class StoreSetup implements Serializable
     {
         if (_dataBrokerUtils.listDataBrokers().size() == 0)
         {
-            _dataBrokerUtils.createDataBroker("SMN", "Newcastle City Council Speed Management Network (Dummy)", "http://127.0.0.1/", "arjuna");
+            _dataBrokerUtils.createDataBroker("SMN", "Newcastle City Council Speed Management Network (Dummy)", "http://127.0.0.1:8080/", "arjuna");
         }
 
         if (_usersUtils.listUsers().size() == 0)
