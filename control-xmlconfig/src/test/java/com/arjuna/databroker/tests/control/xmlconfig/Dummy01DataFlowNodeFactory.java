@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.InvalidClassException;
@@ -66,7 +65,7 @@ public class Dummy01DataFlowNodeFactory implements DataFlowNodeFactory
         if (dataFlowNodeClass.isAssignableFrom(Dummy01DataSource.class))
         {
             Timer             timer             = new Timer(true);
-            Dummy01DataSource dummy01DataSource = new Dummy01DataSource(name, properties);
+            Dummy01DataSource dummy01DataSource = new Dummy01DataSource(null, name, properties);
             timer.scheduleAtFixedRate(dummy01DataSource, 0, 1000);
 
             return (T) dummy01DataSource;

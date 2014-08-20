@@ -9,14 +9,14 @@
 
     <groupId>com.arjuna.databroker</groupId>
     <artifactId>system</artifactId>
-    <version>1.0.0p1m1</version>
+    <version>1.0.0p1m2l</version>
 
     <packaging>pom</packaging>
 
     <name>DataBroker System</name>
 
     <properties>
-        <version.com.arjuna.databroker>1.0.0p1m1</version.com.arjuna.databroker>
+        <version.com.arjuna.databroker>1.0.0p1m2l</version.com.arjuna.databroker>
 
         <jboss-as.username>username</jboss-as.username>
         <jboss-as.password>password</jboss-as.password>

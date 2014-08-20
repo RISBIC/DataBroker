@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.arjuna.databroker</groupId>
         <artifactId>system</artifactId>
-        <version>1.0.0p1m1</version>
+        <version>1.0.0p1m2l</version>
     </parent>
 
     <artifactId>webportal-ear</artifactId>
@@ -40,25 +40,25 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-store</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-comms</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-root</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>war</type>
         </dependency>
     </dependencies>

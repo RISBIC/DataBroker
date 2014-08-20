@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.arjuna.databroker</groupId>
         <artifactId>system</artifactId>
-        <version>1.0.0p1m1</version>
+        <version>1.0.0p1m2l</version>
     </parent>
 
     <artifactId>server-ear</artifactId>
@@ -23,43 +23,43 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-common</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-store</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-core</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-ws</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-ws</artifactId>
-            <version>1.0.0p1m1</version>
+            <version>1.0.0p1m2l</version>
             <type>war</type>
         </dependency>
     </dependencies>

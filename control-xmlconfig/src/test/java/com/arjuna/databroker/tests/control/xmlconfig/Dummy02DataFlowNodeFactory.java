@@ -63,7 +63,7 @@ public class Dummy02DataFlowNodeFactory implements DataFlowNodeFactory
     {
         if (dataFlowNodeClass.isAssignableFrom(Dummy01DataSink.class))
         {
-            return (T) new Dummy01DataSink(name, properties);
+            return (T) new Dummy01DataSink(null, name, properties);
         }
         else
             return null;
