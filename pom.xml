@@ -60,6 +60,7 @@
         <module>control-xmlconfig</module>
         <module>control-ws</module>
         <module>data-common</module>
+        <module>data-common-jee</module>
         <module>metadata-common</module>
         <module>metadata-rdf</module>
         <module>metadata-ws</module>
