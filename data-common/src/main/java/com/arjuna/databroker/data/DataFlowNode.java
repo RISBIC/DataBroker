@@ -24,7 +24,7 @@ public interface DataFlowNode
      * @param dataFlow the data flow to be associated with the data flow node
      */
     public void setDataFlow(DataFlow dataFlow)
-        throws InvalidDataFlowException;
+        throws IllegalStateException, InvalidDataFlowException;
 
     /**
      * Returns the name of the data flow node.
@@ -39,7 +39,7 @@ public interface DataFlowNode
      * @param name the name of the data flow node
      */
     public void setName(String name)
-        throws InvalidNameException;
+        throws IllegalStateException, InvalidNameException;
 
     /**
      * Returns the properties of the data flow node.
@@ -54,5 +54,5 @@ public interface DataFlowNode
      * @param properties the properties of the data flow node
      */
     public void setProperties(Map<String, String> properties)
-        throws InvalidPropertyException, MissingPropertyException;
+        throws IllegalStateException, InvalidPropertyException, MissingPropertyException;
 }
