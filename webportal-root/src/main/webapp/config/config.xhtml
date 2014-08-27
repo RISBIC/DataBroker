@@ -5,17 +5,17 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
-        <ui:define name="title">DataBroker Portal</ui:define>
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">DataBroker Portal Config</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="index_style.css"/>
+            <link rel="stylesheet" type="text/css" href="config_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="DataBroker Portal"/>
+                    <h:outputText styleClass="title" value="DataBroker Portal Config"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <input class="uservalue" type="text" name="j_username"/>
@@ -42,33 +42,25 @@
                 </ui:repeat>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="home">
-                <h:panelGroup styleClass="home" layout="block">
-                    <h:commandLink styleClass="home-link" action="#{dataviews.doLoad}">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Search"/>
-                                <h:outputText styleClass="home-link-text" value="Search of data - access and descriptions"/>
+            <h:form styleClass="config">
+                <h:panelGroup styleClass="config" layout="block">
+                    <h:commandLink styleClass="config-link" action="#">
+                    <!-- h:commandLink styleClass="config-link" action="#{users.doLoad}" -->
+                        <h:panelGrid styleClass="config-link-grip" columns="2">
+                            <h:panelGrid styleClass="config-link-grip" columns="1">
+                                <h:outputText styleClass="config-link-title" value="Users"/>
+                                <h:outputText styleClass="config-link-text" value="Creation, Examine, Update and Delete"/>
                             </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="search.png" alt="Search"/>
+                            <h:graphicImage styleClass="config-link-icon" value="users.png" alt="Users"/>
                         </h:panelGrid>
                     </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="#{dataflows.doLoad}">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Creation"/>
-                                <h:outputText styleClass="home-link-text" value="Creation of data - acquisition and processing"/>
+                    <h:commandLink styleClass="config-link" action="#{databrokerconnections.doLoad}">
+                        <h:panelGrid styleClass="config-link-grip" columns="2">
+                            <h:panelGrid styleClass="config-link-grip" columns="1">
+                                <h:outputText styleClass="config-link-title" value="Databroker Connections"/>
+                                <h:outputText styleClass="config-link-text" value="Creation, Examine, Update and Delete"/>
                             </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="create.png" alt="Create"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="/config/config?faces-redirect=true">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="System Configurations"/>
-                                <h:outputText styleClass="home-link-text" value="User and servers"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="config.png" alt="Config"/>
+                            <h:graphicImage styleClass="config-link-icon" value="connections.png" alt="Connections"/>
                         </h:panelGrid>
                     </h:commandLink>
                 </h:panelGroup>

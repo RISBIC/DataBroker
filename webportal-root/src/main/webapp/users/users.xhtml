@@ -5,17 +5,17 @@
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-    <ui:composition template="template.xhtml">
-        <ui:define name="title">DataBroker Portal</ui:define>
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">Users</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="index_style.css"/>
+            <link rel="stylesheet" type="text/css" href="users_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="DataBroker Portal"/>
+                    <h:outputText styleClass="title" value="Users"/>
                     <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <input class="uservalue" type="text" name="j_username"/>
@@ -40,37 +40,48 @@
                 <ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
                 </ui:repeat>
+                <h:commandLink styleClass="location-right" action="#{users.doLoad}" value="Reload"/>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="home">
-                <h:panelGroup styleClass="home" layout="block">
-                    <h:commandLink styleClass="home-link" action="#{dataviews.doLoad}">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Search"/>
-                                <h:outputText styleClass="home-link-text" value="Search of data - access and descriptions"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="search.png" alt="Search"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="#{dataflows.doLoad}">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Creation"/>
-                                <h:outputText styleClass="home-link-text" value="Creation of data - acquisition and processing"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="create.png" alt="Create"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="/config/config?faces-redirect=true">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="System Configurations"/>
-                                <h:outputText styleClass="home-link-text" value="User and servers"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="config.png" alt="Config"/>
-                        </h:panelGrid>
-                    </h:commandLink>
+            <h:form styleClass="users">
+                <h:panelGroup styleClass="users" layout="block">
+                    <h:panelGroup styleClass="users-title" layout="block">
+                        <h:outputText styleClass="users-title" value="Users"/>
+                    </h:panelGroup>
+                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three,users-column-four,users-column-five" value="#{users.userProfiles}" var="userProfile">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Name"/>
+                            </f:facet>
+                            <h:outputText styleClass="users-value" value="#{userProfile.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Summary"/>
+                            </f:facet>
+                            <h:outputText styleClass="users-value" value="#{userProfile.summary}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Service Root URL"/>
+                            </f:facet>
+                            <h:outputText styleClass="users-value" value="#{userProfile.serviceRootURL}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Requester Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="users-value" value="#{userProfile.requesterId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Actions"/>
+                                <h:commandLink styleClass="users-button" action="#{users.doAdd}" value="Add"/>
+                            </f:facet>
+                            <h:commandLink styleClass="users-button" action="#{users.doChange(userProfile.id)}" value="Change"/>
+                            <h:commandLink styleClass="users-button" action="#{users.doRemove(userProfile.id)}" value="Remove"/>
+                        </h:column>
+                    </h:dataTable>
                 </h:panelGroup>
             </h:form>
         </ui:define>
