@@ -60,8 +60,8 @@
                                 <h:outputText styleClass="users-header" value="Actions"/>
                                 <h:commandLink styleClass="users-button" action="#{user.doAdd}" value="Add"/>
                             </f:facet>
-                            <h:commandLink styleClass="users-button" action="#{users.doChange(_user.id)}" value="Change"/>
-                            <h:commandLink styleClass="users-button" action="#{users.doRemove(_user.id)}" value="Remove"/>
+                            <h:commandLink styleClass="users-button" action="#{user.doChange(_user.name)}" value="Change"/>
+                            <h:commandLink styleClass="users-button" action="#{users.doRemove(_user.name)}" value="Remove"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

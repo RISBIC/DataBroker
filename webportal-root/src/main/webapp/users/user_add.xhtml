@@ -47,22 +47,18 @@
                     <h:panelGroup styleClass="user-title" layout="block">
                         <h:outputText styleClass="user-title" value="Add User"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty userprofile.errorMessage}">
+                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty user.errorMessage}">
                         <h:outputText styleClass="user-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="user-error-message" value="#{userprofile.errorMessage}"/>
+                        <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
                     </h:panelGroup>
                     <h:panelGrid styleClass="user" columnClasses="user-column-one,user-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
-                        <h:outputText styleClass="user-header" value="Name"/>
-                        <h:inputText styleClass="user-value" value="#{userprofile.name}"/>
-                        <h:outputText styleClass="user-header" value="Summary"/>
-                        <h:inputTextarea styleClass="user-value" rows="4" value="#{userprofile.summary}"/>
-                        <h:outputText styleClass="user-header" value="Service Root URL"/>
-                        <h:inputText styleClass="user-value" value="#{userprofile.serviceRootURL}"/>
-                        <h:outputText styleClass="user-header" value="Requester Id"/>
-                        <h:inputText styleClass="user-value" value="#{userprofile.requesterId}"/>
+                        <h:outputText styleClass="user-header" value="User Name"/>
+                        <h:inputText styleClass="user-value" value="#{user.userName}"/>
+                        <h:outputText styleClass="user-header" value="Password"/>
+                        <h:inputText styleClass="user-value" value="#{user.password}"/>
                         <h:outputText styleClass="user-empty" value=""/>
                         <h:panelGroup>
-                            <h:commandLink styleClass="user-button" action="#{userprofile.doAddSubmit}" value="Add"/>
+                            <h:commandLink styleClass="user-button" action="#{user.doAddSubmit}" value="Add"/>
                             <h:commandLink styleClass="user-button" action="#{users.doLoad}" value="Cancel"/>
                         </h:panelGroup>
                     </h:panelGrid>
