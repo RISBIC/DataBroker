@@ -58,12 +58,12 @@
                         <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block" rendered="#{not empty dataflowcreate.properties}">
                             <h:outputText styleClass="dataflowcreate-subtitle" value="Properties"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.properties}" var="properties">
+                        <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.properties}" var="_properties">
                             <h:column>
-                                <h:outputText styleClass="dataflowcreate-property-name" value="#{properties.name}"/>
+                                <h:outputText styleClass="dataflowcreate-property-name" value="#{_properties.name}"/>
                             </h:column>
                             <h:column>
-                                <h:inputText styleClass="dataflowcreate-property-value" value="#{properties.value}" disabled="true"/>
+                                <h:inputText styleClass="dataflowcreate-property-value" value="#{_properties.value}" disabled="true"/>
                             </h:column>
                         </h:dataTable>
                         <h:panelGroup styleClass="dataflowcreate-actions" layout="block">

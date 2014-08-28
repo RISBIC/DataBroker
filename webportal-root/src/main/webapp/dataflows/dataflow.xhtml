@@ -53,12 +53,12 @@
                         <h:panelGroup styleClass="dataflow-title" layout="block">
                             <h:outputText styleClass="dataflow-title" value="Data Flow Attributes"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflow-attributes" headerClass="dataflow-attributes-header" columnClasses="dataflow-attributes-column-one,dataflow-attributes-column-two" value="#{dataflow.attributes}" var="attribute">
+                        <h:dataTable styleClass="dataflow-attributes" headerClass="dataflow-attributes-header" columnClasses="dataflow-attributes-column-one,dataflow-attributes-column-two" value="#{dataflow.attributes}" var="_attribute">
                             <h:column>
-                               <h:outputText styleClass="dataflow-attribute-name" value="#{attribute.name}"/>
+                               <h:outputText styleClass="dataflow-attribute-name" value="#{_attribute.name}"/>
                             </h:column>
                             <h:column>
-                                <h:inputText styleClass="dataflow-attribute-value" value="#{attribute.value}" disabled="true"/>
+                                <h:inputText styleClass="dataflow-attribute-value" value="#{_attribute.value}" disabled="true"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>
@@ -66,12 +66,12 @@
                         <h:panelGroup styleClass="dataflow-title" layout="block">
                             <h:outputText styleClass="dataflow-title" value="Data Flow Properties"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.properties}" var="property">
+                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.properties}" var="_property">
                             <h:column>
-                                <h:outputText styleClass="dataflow-property-name" value="#{property.name}"/>
+                                <h:outputText styleClass="dataflow-property-name" value="#{_property.name}"/>
                             </h:column>
                             <h:column>
-                                <h:inputText styleClass="dataflow-property-value" value="#{property.value}" disabled="true"/>
+                                <h:inputText styleClass="dataflow-property-value" value="#{_property.value}" disabled="true"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>
@@ -114,42 +114,42 @@
                         <h:panelGroup styleClass="dataflow-title" layout="block">
                             <h:outputText styleClass="dataflow-title" value="Data Flow Node Factories"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflow-factories" headerClass="dataflow-factories-header" columnClasses="dataflow-factories-column-name,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-actions" value="#{dataflow.dataFlowNodeFactories}" var="dataFlowNodeFactory">
+                        <h:dataTable styleClass="dataflow-factories" headerClass="dataflow-factories-header" columnClasses="dataflow-factories-column-name,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-actions" value="#{dataflow.dataFlowNodeFactories}" var="_dataFlowNodeFactory">
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Name"/>
                                 </f:facet>
-                                <h:outputText value="#{dataFlowNodeFactory.name}"/>
+                                <h:outputText value="#{_dataFlowNodeFactory.name}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Create Data Source"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataSourceFactory}" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactory.dataSourceFactory}" disabled="true"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Create Data Sink"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataSinkFactory}" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactory.dataSinkFactory}" disabled="true"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Create Data Processor"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataProcessorFactory}" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactory.dataProcessorFactory}" disabled="true"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Create Data Service"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataServiceFactory}" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactory.dataServiceFactory}" disabled="true"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Create Data Store"/>
                                 </f:facet>
-                                <h:selectBooleanCheckbox value="#{dataFlowNodeFactory.dataStoreFactory}" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactory.dataStoreFactory}" disabled="true"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">

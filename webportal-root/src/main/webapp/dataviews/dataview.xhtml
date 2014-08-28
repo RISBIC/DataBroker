@@ -52,19 +52,19 @@
                         <h:outputText styleClass="dataview-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataview-error-message" value="#{dataview.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="metadataId" rendered="#{empty dataview.errorMessage}">
+                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="_metadataId" rendered="#{empty dataview.errorMessage}">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataview-header" value="Metadata Id"/>
                             </f:facet>
-                            <h:outputText styleClass="dataview-value" value="#{metadataId}"/>
+                            <h:outputText styleClass="dataview-value" value="#{_metadataId}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataview-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="dataview-button" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Report"/>
-                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, metadataId)}" value="Edit"/>
+                            <h:commandLink styleClass="dataview-button" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Report"/>
+                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Edit"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

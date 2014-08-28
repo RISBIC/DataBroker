@@ -77,12 +77,12 @@
                     </a4j:jsFunction>
                     <h:panelGroup styleClass="dataflow-properties" layout="block">
                         <h:outputText id="dataflownodeid" value="#{dataflow.dataFlowNodeId}"/>
-                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.properties}" var="property">
+                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.properties}" var="_property">
                             <h:column>
-                                <h:outputText styleClass="dataflow-property-name" value="#{property.name}"/>
+                                <h:outputText styleClass="dataflow-property-name" value="#{_property.name}"/>
                             </h:column>
                             <h:column>
-                                <h:outputText styleClass="dataflow-property-value" value="#{property.value}"/>
+                                <h:outputText styleClass="dataflow-property-value" value="#{_property.value}"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>

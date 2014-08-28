@@ -60,12 +60,12 @@
                         <h:panelGroup styleClass="dataflownodecreate-subtitle" layout="block" rendered="#{not empty dataflownodecreate.properties}">
                             <h:outputText styleClass="dataflownodecreate-subtitle" value="Properties"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflownodecreate-properties" headerClass="dataflownodecreate-properties-header" columnClasses="dataflownodecreate-properties-column-one,dataflownodecreate-properties-column-two" value="#{dataflownodecreate.properties}" var="properties">
+                        <h:dataTable styleClass="dataflownodecreate-properties" headerClass="dataflownodecreate-properties-header" columnClasses="dataflownodecreate-properties-column-one,dataflownodecreate-properties-column-two" value="#{dataflownodecreate.properties}" var="_properties">
                             <h:column>
-                                <h:outputText styleClass="dataflownodecreate-property-name" value="#{properties.name}"/>
+                                <h:outputText styleClass="dataflownodecreate-property-name" value="#{_properties.name}"/>
                             </h:column>
                             <h:column>
-                                <h:inputText styleClass="dataflownodecreate-property-value" value="#{properties.value}" disabled="true"/>
+                                <h:inputText styleClass="dataflownodecreate-property-value" value="#{_properties.value}" disabled="true"/>
                             </h:column>
                         </h:dataTable>
                         <h:panelGroup styleClass="dataflownodecreate-actions" layout="block">

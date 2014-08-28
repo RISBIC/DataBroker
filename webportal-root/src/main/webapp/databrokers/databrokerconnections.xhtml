@@ -48,38 +48,38 @@
                     <h:panelGroup styleClass="databrokers-title" layout="block">
                         <h:outputText styleClass="databrokers-title" value="DataBrokers"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="databrokers" headerClass="databrokers-header" columnClasses="databrokers-column-one,databrokers-column-two,databrokers-column-three,databrokers-column-four,databrokers-column-five" value="#{databrokerconnections.dataBrokerConnections}" var="dataBrokerConnection">
+                    <h:dataTable styleClass="databrokers" headerClass="databrokers-header" columnClasses="databrokers-column-one,databrokers-column-two,databrokers-column-three,databrokers-column-four,databrokers-column-five" value="#{databrokerconnections.dataBrokerConnections}" var="_dataBrokerConnection">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="databrokers-header" value="Name"/>
                             </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.name}"/>
+                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="databrokers-header" value="Summary"/>
                             </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.summary}"/>
+                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.summary}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="databrokers-header" value="Service Root URL"/>
                             </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.serviceRootURL}"/>
+                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.serviceRootURL}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="databrokers-header" value="Requester Id"/>
                             </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{dataBrokerConnection.requesterId}"/>
+                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.requesterId}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="databrokers-header" value="Actions"/>
                                 <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doAdd}" value="Add"/>
                             </f:facet>
-                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doChange(dataBrokerConnection.id)}" value="Change"/>
-                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnections.doRemove(dataBrokerConnection.id)}" value="Remove"/>
+                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doChange(_dataBrokerConnection.id)}" value="Change"/>
+                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnections.doRemove(_dataBrokerConnection.id)}" value="Remove"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

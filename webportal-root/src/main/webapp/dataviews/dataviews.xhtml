@@ -48,24 +48,24 @@
                     <h:panelGroup styleClass="dataviews-title" layout="block">
                         <h:outputText styleClass="dataviews-title" value="Data Views"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataviews" headerClass="dataviews-header" columnClasses="dataviews-column-one,dataviews-column-two,dataviews-column-three" value="#{dataviews.dataViews}" var="dataView">
+                    <h:dataTable styleClass="dataviews" headerClass="dataviews-header" columnClasses="dataviews-column-one,dataviews-column-two,dataviews-column-three" value="#{dataviews.dataViews}" var="_dataView">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Name"/>
                             </f:facet>
-                            <h:outputText styleClass="dataviews-value" value="#{dataView.name}"/>
+                            <h:outputText styleClass="dataviews-value" value="#{_dataView.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Summary"/>
                             </f:facet>
-                            <h:outputText styleClass="dataviews-value" value="#{dataView.summary}"/>
+                            <h:outputText styleClass="dataviews-value" value="#{_dataView.summary}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="dataviews-button" action="#{dataview.doLoad(dataView.serviceRootURL, dataView.requesterId, user.username)}" value="Examine"/>
+                            <h:commandLink styleClass="dataviews-button" action="#{dataview.doLoad(_dataView.serviceRootURL, _dataView.requesterId, user.username)}" value="Examine"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

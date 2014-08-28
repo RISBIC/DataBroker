@@ -48,24 +48,24 @@
                     <h:panelGroup styleClass="dataflows-title" layout="block">
                         <h:outputText styleClass="dataflows-title" value="Data Flows"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataflows" headerClass="dataflows-header" columnClasses="dataflows-column-one,dataflows-column-two,dataflows-column-three" value="#{dataflows.dataFlows}" var="dataFlow">
+                    <h:dataTable styleClass="dataflows" headerClass="dataflows-header" columnClasses="dataflows-column-one,dataflows-column-two,dataflows-column-three" value="#{dataflows.dataFlows}" var="_dataFlow">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataflows-header" value="Name"/>
                             </f:facet>
-                            <h:outputText styleClass="dataflows-value" value="#{dataFlow.name}"/>
+                            <h:outputText styleClass="dataflows-value" value="#{_dataFlow.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataflows-header" value="Summary"/>
                             </f:facet>
-                            <h:outputText styleClass="dataflows-value" value="#{dataFlow.summary}"/>
+                            <h:outputText styleClass="dataflows-value" value="#{_dataFlow.summary}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataflows-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="dataflows-button" action="#{databroker.doLoad(dataFlow.id)}" value="Examine"/>
+                            <h:commandLink styleClass="dataflows-button" action="#{_databroker.doLoad(_dataFlow.id)}" value="Examine"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
