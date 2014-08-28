@@ -16,23 +16,23 @@
             <form class="header" action="j_security_check" method="POST">
                 <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
                     <h:outputText styleClass="title" value="Users"/>
-                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! user.loggedIn}">
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! auth.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
                         <input class="uservalue" type="text" name="j_username"/>
                         <h:outputText styleClass="userlabel" value="Password:"/>
                         <input class="uservalue" type="password" name="j_password"/>
                         <h:outputText styleClass="userlabel" value=" "/>
                         <h:panelGroup>
-                            <h:commandButton styleClass="uservalue" action="#{user.doSignin}" value="sign in"/>
+                            <h:commandButton styleClass="uservalue" action="#{auth.doSignin}" value="sign in"/>
                             <h:outputText styleClass="userlabel" value=" "/>
-                            <h:commandButton styleClass="uservalue" action="#{user.doSignup}" value="sign up"/>
+                            <h:commandButton styleClass="uservalue" action="#{auth.doSignup}" value="sign up"/>
                         </h:panelGroup>
                     </h:panelGrid>
-                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{user.loggedIn}">
+                    <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{auth.loggedIn}">
                         <h:outputText styleClass="userlabel" value="User name:"/>
-                        <h:inputText styleClass="uservalue" value="#{user.username}" disabled="true"/>
+                        <h:inputText styleClass="uservalue" value="#{auth.username}" disabled="true"/>
                         <h:outputText styleClass="userlabel" value=" "/>
-                        <h:commandButton styleClass="uservalue" action="#{user.doSignout}" value="sign out"/>
+                        <h:commandButton styleClass="uservalue" action="#{auth.doSignout}" value="sign out"/>
                     </h:panelGrid>
                 </h:panelGrid>
             </form>

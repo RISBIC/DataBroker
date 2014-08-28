@@ -11,12 +11,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 @SessionScoped
-@ManagedBean(name="user")
-public class User implements Serializable
+@ManagedBean(name="auth")
+public class AuthMO implements Serializable
 {
     private static final long serialVersionUID = -8233388832031549211L;
 
-    public User()
+    public AuthMO()
     {
     }
 
