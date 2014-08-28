@@ -48,38 +48,20 @@
                     <h:panelGroup styleClass="users-title" layout="block">
                         <h:outputText styleClass="users-title" value="Users"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three,users-column-four,users-column-five" value="#{users.userProfiles}" var="userProfile">
+                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three,users-column-four,users-column-five" value="#{users.users}" var="_user">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="users-header" value="Name"/>
                             </f:facet>
-                            <h:outputText styleClass="users-value" value="#{userProfile.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Summary"/>
-                            </f:facet>
-                            <h:outputText styleClass="users-value" value="#{userProfile.summary}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Service Root URL"/>
-                            </f:facet>
-                            <h:outputText styleClass="users-value" value="#{userProfile.serviceRootURL}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Requester Id"/>
-                            </f:facet>
-                            <h:outputText styleClass="users-value" value="#{userProfile.requesterId}"/>
+                            <h:outputText styleClass="users-value" value="#{_user.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="users-header" value="Actions"/>
-                                <h:commandLink styleClass="users-button" action="#{users.doAdd}" value="Add"/>
+                                <h:commandLink styleClass="users-button" action="#{user.doAdd}" value="Add"/>
                             </f:facet>
-                            <h:commandLink styleClass="users-button" action="#{users.doChange(userProfile.id)}" value="Change"/>
-                            <h:commandLink styleClass="users-button" action="#{users.doRemove(userProfile.id)}" value="Remove"/>
+                            <h:commandLink styleClass="users-button" action="#{users.doChange(_user.id)}" value="Change"/>
+                            <h:commandLink styleClass="users-button" action="#{users.doRemove(_user.id)}" value="Remove"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

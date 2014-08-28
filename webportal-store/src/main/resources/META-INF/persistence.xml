@@ -8,6 +8,8 @@
     <persistence-unit name="WebPortal">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
+        <class>com.arjuna.databroker.webportal.store.UserEntity</class>
+        <class>com.arjuna.databroker.webportal.store.RoleEntity</class>
         <class>com.arjuna.databroker.webportal.store.DataBrokerEntity</class>
         <properties>
             <property name="hibernate.dialect"      value="org.hibernate.dialect.PostgreSQLDialect"/>
