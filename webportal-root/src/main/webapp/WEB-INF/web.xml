@@ -45,19 +45,18 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
-<!--
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Public confidential pages</web-resource-name>
             <url-pattern>/signin.html</url-pattern>
-            <url-pattern>/signin_error.html</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
-            <!- transport-guarantee>CONFIDENTIAL</transport-guarantee ->
+            <!-- transport-guarantee>CONFIDENTIAL</transport-guarantee -->
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
+<!--
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>The dataview pages</web-resource-name>
@@ -71,7 +70,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
+-->
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>The dataflow pages</web-resource-name>
@@ -84,7 +83,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
+<!--
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>The admin pages</web-resource-name>

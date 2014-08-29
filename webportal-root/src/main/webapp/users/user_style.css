@@ -115,7 +115,7 @@ input[type="text"][disabled].user-value
 	color:			#111111;
 }
 
-textarea.user-value
+input[type="password"].user-value
 {
 	margin:			0;
 	border:			thin solid #CCCCCC;
@@ -126,7 +126,7 @@ textarea.user-value
 	color:			#111111;
 }
 
-textarea[disabled].user-value
+input[type="password"][disabled].user-value
 {
 	margin:			0;
 	border:			thin solid #CCCCCC;
@@ -135,6 +135,18 @@ textarea[disabled].user-value
 	box-sizing:		border-box;
 	font-size:		1em;
 	color:			#111111;
+}
+
+input[type="checkbox"].user-value
+{
+	width:			3em;
+	height:			3em;
+}
+
+input[type="checkbox"][disabled].user-value
+{
+	width:			3em;
+	height:			3em;
 }
 
 a.user-button

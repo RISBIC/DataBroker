@@ -56,7 +56,7 @@ public class UsersMO implements Serializable
 
                 _users.clear();
                 for (UserEntity user: users)
-                    _users.add(new UserVO(user.getUserName(), Collections.<String>emptyList()));
+                    _users.add(new UserVO(user.getUserName(), user.getPassword() != null, Collections.<String>emptyList()));
             }
 
             return true;

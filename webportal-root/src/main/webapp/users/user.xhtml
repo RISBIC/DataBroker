@@ -47,15 +47,15 @@
                     <h:panelGroup styleClass="user-title" layout="block">
                         <h:outputText styleClass="user-title" value="User"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty userprofile.errorMessage}">
+                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty user.errorMessage}">
                         <h:outputText styleClass="user-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="user-error-message" value="#{userprofile.errorMessage}"/>
+                        <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
                     </h:panelGroup>
                     <h:panelGrid styleClass="user" columnClasses="user-column-one,user-column-two" columns="2">
                         <h:outputText styleClass="user-header" value="User Name"/>
                         <h:inputText styleClass="user-value" value="#{user.userName}" disabled="true"/>
-                        <h:outputText styleClass="user-header" value="Password"/>
-                        <h:inputText styleClass="user-value" value="#{user.password}" disabled="true"/>
+                        <h:outputText styleClass="user-header" value="Active Account"/>
+                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.activeAccount}" disabled="true"/>
                         <h:outputText styleClass="user-empty" value=""/>
                         <h:panelGroup>
                             <h:commandLink styleClass="user-button" action="#{users.doLoad}" value="Done"/>

@@ -48,12 +48,18 @@
                     <h:panelGroup styleClass="users-title" layout="block">
                         <h:outputText styleClass="users-title" value="Users"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three,users-column-four,users-column-five" value="#{users.users}" var="_user">
+                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="users-header" value="Name"/>
                             </f:facet>
                             <h:outputText styleClass="users-value" value="#{_user.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="users-header" value="Active"/>
+                            </f:facet>
+                            <h:selectBooleanCheckbox styleClass="users-value" value="#{_user.active}" disabled="true"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

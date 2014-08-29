@@ -15,10 +15,11 @@ public class UserVO implements Serializable
     {
     }
 
-    public UserVO(String name, List<String> roles)
+    public UserVO(String name, Boolean active, List<String> roles)
     {
-        _name  = name;
-        _roles = roles;
+        _name   = name;
+        _active = active;
+        _roles  = roles;
     }
 
     public String getName()
@@ -29,6 +30,16 @@ public class UserVO implements Serializable
     public void setName(String name)
     {
         _name = name;
+    }
+
+    public Boolean getActive()
+    {
+        return _active;
+    }
+
+    public void setActive(Boolean active)
+    {
+        _active = active;
     }
 
     public List<String> getRoles()
@@ -42,5 +53,6 @@ public class UserVO implements Serializable
     }
 
     private String       _name;
+    private Boolean      _active;
     private List<String> _roles;
 }

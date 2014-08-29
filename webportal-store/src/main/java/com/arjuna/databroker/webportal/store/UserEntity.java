@@ -50,6 +50,6 @@ public class UserEntity implements Serializable
     @Column(name = "userName", length = 64)
     private String _userName;
 
-    @Column(name = "password", length = 64)
+    @Column(name = "password", length = 128)
     private String _password;
 }

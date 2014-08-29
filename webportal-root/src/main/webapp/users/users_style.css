@@ -68,27 +68,10 @@ td.users-column-two
 	padding:		1em 1em 1em 1em;
 	background-color:	#DDDDDD;
 	color:			#111111;
+	text-align:		center;
 }
 
 td.users-column-three
-{
-	margin:			0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
-	background-color:	#DDDDDD;
-	color:			#111111;
-}
-
-td.users-column-four
-{
-	margin:			0;
-	border:			0;
-	padding:		1em 1em 1em 1em;
-	background-color:	#DDDDDD;
-	color:			#111111;
-}
-
-td.users-column-five
 {
 	margin:			0;
 	border:			0;
@@ -110,6 +93,18 @@ span.users-value
 	margin:			0;
 	border:			0;
 	padding:		1em 0 1em 0;
+}
+
+input[type="checkbox"].users-value
+{
+	width:			2em;
+	height:			2em;
+}
+
+input[type="checkbox"][disabled].users-value
+{
+	width:			2em;
+	height:			2em;
 }
 
 a.users-button

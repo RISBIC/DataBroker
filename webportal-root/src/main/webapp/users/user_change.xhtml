@@ -55,7 +55,13 @@
                         <h:outputText styleClass="user-header" value="User Name"/>
                         <h:inputText styleClass="user-value" value="#{user.userName}"/>
                         <h:outputText styleClass="user-header" value="Password"/>
-                        <h:inputText styleClass="user-value" value="#{user.password}"/>
+                        <h:inputSecret styleClass="user-value" value="#{user.password}"/>
+                        <h:outputText styleClass="user-header" value="Admin Role"/>
+                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.adminRole}"/>
+                        <h:outputText styleClass="user-header" value="User Role"/>
+                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.userRole}"/>
+                        <h:outputText styleClass="user-header" value="Guest Role"/>
+                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.guestRole}"/>
                         <h:outputText styleClass="user-empty" value=""/>
                         <h:panelGroup>
                             <h:commandLink styleClass="user-button" action="#{user.doChangeSubmit}" value="Change"/>

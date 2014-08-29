@@ -4,11 +4,12 @@
 
 package com.arjuna.databroker.webportal.store;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,6 +17,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Stateless
@@ -24,6 +26,11 @@ import javax.persistence.TypedQuery;
 public class UsersUtils
 {
     private static final Logger logger = Logger.getLogger(UsersUtils.class.getName());
+
+    private static final String ADMIN_ROLENAME   = "admin";
+    private static final String USER_ROLENAME    = "user";
+    private static final String GUEST_ROLENAME   = "guest";
+    private static final String ROLES_ROLEGROUPS = "Roles";
 
     public List<UserEntity> listUsers()
     {
@@ -42,15 +49,49 @@ public class UsersUtils
         }
     }
 
-    public void createUser(String username, String password)
+    public void createUser(String userName, String password, Boolean adminRole, Boolean userRole, Boolean guestRole)
+        throws IllegalArgumentException
     {
-        logger.log(Level.FINE, "UsersUtils.createUser: " + username + ", " + password);
+        logger.log(Level.FINE, "UsersUtils.createUser: " + userName);
 
-        UserEntity user = new UserEntity(username, password);
+        if (_entityManager.find(UserEntity.class, userName) != null)
+            throw new IllegalArgumentException("User aleady exists");
 
-        logger.log(Level.FINE, "UsersUtils.createUser: " + user.getUserName() + ", " + user.getPassword());
+        if (password != null)
+        {
+            try
+            {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+                messageDigest.update(password.getBytes("UTF-8"));
+                password = String.format("%040x", new BigInteger(1, messageDigest.digest()));
+            }
+            catch (Throwable throwable)
+            {
+                logger.log(Level.WARNING, "Problem encoding password", throwable);
+                throw new IllegalArgumentException("Problem encoding password");
+            }
+        }
+                
+        UserEntity userEntity = new UserEntity(userName, password);
+        _entityManager.persist(userEntity);
 
-        _entityManager.persist(user);
+        if (adminRole)
+        {
+            RoleEntity adminRoleEntity = new RoleEntity(userName, ADMIN_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(adminRoleEntity);
+        }
+
+        if (userRole)
+        {
+            RoleEntity userRoleEntity = new RoleEntity(userName, USER_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(userRoleEntity);
+        }
+
+        if (guestRole)
+        {
+            RoleEntity guestRoleEntity = new RoleEntity(userName, GUEST_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(guestRoleEntity);
+        }
     }
 
     public UserEntity retrieveUser(String userName)
@@ -60,24 +101,67 @@ public class UsersUtils
         return _entityManager.find(UserEntity.class, userName);
     }
 
-    public void replaceUser(String userName, String password)
+    public void changeUser(String userName, String password, Boolean adminRole, Boolean userRole, Boolean guestRole)
+        throws IllegalArgumentException
     {
-        logger.log(Level.FINE, "UsersUtils.replaceUser: " + userName + ", " + password);
+        logger.log(Level.FINE, "UsersUtils.replaceUser: " + userName);
 
-        UserEntity user = _entityManager.find(UserEntity.class, userName);
-        user.setUserName(userName);
-        user.setPassword(password);
+        if (_entityManager.find(UserEntity.class, userName) == null)
+            throw new IllegalArgumentException("User does not exist");
 
-        _entityManager.merge(user);
+        if (password != null)
+        {
+            try
+            {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+                messageDigest.update(password.getBytes("UTF-8"));
+                password = String.format("%040x", new BigInteger(1, messageDigest.digest()));
+            }
+            catch (Throwable throwable)
+            {
+                logger.log(Level.WARNING, "Problem encoding password", throwable);
+                throw new IllegalArgumentException("Problem encoding password");
+            }
+        }
+
+        UserEntity userEntity = _entityManager.find(UserEntity.class, userName);
+        userEntity.setPassword(password);
+        _entityManager.merge(userEntity);
+        
+        Query rolesDelete = _entityManager.createQuery("DELETE FROM RoleEntity WHERE _userName = :userName");
+        rolesDelete.setParameter("userName", userName);
+        rolesDelete.executeUpdate();
+
+        if (adminRole)
+        {
+            RoleEntity adminRoleEntity = new RoleEntity(userName, ADMIN_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(adminRoleEntity);
+        }
+
+        if (userRole)
+        {
+            RoleEntity userRoleEntity = new RoleEntity(userName, USER_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(userRoleEntity);
+        }
+
+        if (guestRole)
+        {
+            RoleEntity guestRoleEntity = new RoleEntity(userName, GUEST_ROLENAME, ROLES_ROLEGROUPS);
+            _entityManager.persist(guestRoleEntity);
+        }
     }
 
     public void removeUser(String userName)
     {
         logger.log(Level.FINE, "UsersUtils.removeUser: " + userName);
 
-        UserEntity user = _entityManager.find(UserEntity.class, userName);
+        UserEntity userEntity = _entityManager.find(UserEntity.class, userName);
 
-        _entityManager.remove(user);
+        Query rolesDelete = _entityManager.createQuery("DELETE FROM RoleEntity WHERE _userName = :userName");
+        rolesDelete.setParameter("userName", userName);
+        rolesDelete.executeUpdate();
+
+        _entityManager.remove(userEntity);
     }
 
     @PersistenceContext(unitName="WebPortal")

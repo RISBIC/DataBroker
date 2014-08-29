@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.store.UserEntity;
@@ -17,15 +18,19 @@ import com.arjuna.databroker.webportal.store.UsersUtils;
 @ManagedBean(name="user")
 public class UserMO implements Serializable
 {
-	private static final long serialVersionUID = 1291911620957873665L;
+    private static final long serialVersionUID = 1291911620957873665L;
 
-	private static final Logger logger = Logger.getLogger(UserMO.class.getName());
+    private static final Logger logger = Logger.getLogger(UserMO.class.getName());
 
     public UserMO()
     {
-        _userName     = "";
-        _password     = "";
-        _errorMessage = null;
+        _userName      = "";
+        _password      = "";
+        _activeAccount = Boolean.FALSE;
+        _adminRole     = Boolean.FALSE;
+        _userRole      = Boolean.TRUE;
+        _guestRole     = Boolean.TRUE;
+        _errorMessage  = null;
     }
 
     public String getUserName()
@@ -40,12 +45,52 @@ public class UserMO implements Serializable
 
     public String getPassword()
     {
-        return _password;
+        return "";
     }
 
     public void setPassword(String password)
     {
-    	_password = password;
+        _password = password;
+    }
+
+    public Boolean getActiveAccount()
+    {
+        return _activeAccount;
+    }
+
+    public void setActiveAccount(Boolean activeAccount)
+    {
+        _activeAccount = activeAccount;
+    }
+
+    public Boolean getAdminRole()
+    {
+        return _adminRole;
+    }
+
+    public void setAdminRole(Boolean adminRole)
+    {
+        _adminRole = adminRole;
+    }
+
+    public Boolean getUserRole()
+    {
+        return _userRole;
+    }
+
+    public void setUserRole(Boolean userRole)
+    {
+        _userRole = userRole;
+    }
+
+    public Boolean getGuestRole()
+    {
+        return _guestRole;
+    }
+
+    public void setGuestRole(Boolean guestRole)
+    {
+        _guestRole = guestRole;
     }
 
     public String getErrorMessage()
@@ -68,9 +113,28 @@ public class UserMO implements Serializable
 
     public String doAddSubmit()
     {
-    	_usersUtils.createUser(_userName, _password);
-        _errorMessage = null;
-
+        try
+        {
+            if ((_password != null) && _password.trim().equals(""))
+                _password = null;
+            _usersUtils.createUser(_userName, _password, _adminRole, _userRole, _guestRole);
+            _activeAccount = (_password != null);
+            _errorMessage  = null;
+        }
+        catch (EJBException ejbException)
+        {
+            if (ejbException.getCausedByException() instanceof IllegalArgumentException)
+                _errorMessage = ejbException.getCausedByException().getMessage();
+            else
+                _errorMessage = ejbException.getCausedByException().toString();
+            _activeAccount = Boolean.FALSE;
+        }
+        catch (Throwable throwable)
+        {
+            _errorMessage  = "Problem: " + throwable.toString();
+            _activeAccount = Boolean.FALSE;
+        }
+ 
         return "/users/user?faces-redirect=true";
     }
 
@@ -84,7 +148,29 @@ public class UserMO implements Serializable
     public String doChangeSubmit()
     {
         if ((_userName != null) && (! _userName.equals("")))
-        	_usersUtils.replaceUser(_userName, _password);
+        {
+            try
+            {
+                if ((_password != null) && _password.trim().equals(""))
+                    _password = null;
+                _usersUtils.changeUser(_userName, _password, _adminRole, _userRole, _guestRole);
+                _activeAccount = (_password != null);
+                _errorMessage  = null;
+            }
+            catch (EJBException ejbException)
+            {
+                if (ejbException.getCausedByException() instanceof IllegalArgumentException)
+                    _errorMessage = ejbException.getCausedByException().getMessage();
+                else
+                    _errorMessage = ejbException.getCausedByException().toString();
+                _activeAccount = Boolean.FALSE;
+            }
+            catch (Throwable throwable)
+            {
+                _errorMessage = "Problem: " + throwable.toString();
+                _activeAccount = Boolean.FALSE;
+            }
+        }
         else
             _errorMessage = "Unable to update information.";
 
@@ -93,8 +179,12 @@ public class UserMO implements Serializable
 
     private void clear()
     {
-        _userName = "";
-        _password = "";
+        _userName      = "";
+        _password      = "";
+        _activeAccount = Boolean.FALSE;
+        _adminRole     = Boolean.FALSE;
+        _userRole      = Boolean.TRUE;
+        _guestRole     = Boolean.TRUE;
     }
 
     private void load(String id)
@@ -109,8 +199,8 @@ public class UserMO implements Serializable
             clear();
             if (user != null)
             {
-            	_userName = user.getUserName();
-                _password = user.getPassword();
+                _userName      = user.getUserName();
+                _activeAccount = (user.getPassword() != null);
             }
             else if (_errorMessage == null)
                 _errorMessage = "Unable to load information.";
@@ -123,9 +213,13 @@ public class UserMO implements Serializable
         }
     }
 
-    private String _userName;
-    private String _password;
-    private String _errorMessage;
+    private String  _userName;
+    private String  _password;
+    private Boolean _activeAccount;
+    private Boolean _adminRole;
+    private Boolean _userRole;
+    private Boolean _guestRole;
+    private String  _errorMessage;
 
     @EJB
     private UsersUtils _usersUtils;
