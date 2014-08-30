@@ -56,21 +56,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-<!--
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>The dataview pages</web-resource-name>
-            <url-pattern>/dataviews/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>guest</role-name>
-            <role-name>user</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
--->
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>The dataflow pages</web-resource-name>
@@ -83,10 +69,36 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-<!--
+
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>The admin pages</web-resource-name>
+            <web-resource-name>The config pages</web-resource-name>
+            <url-pattern>/config/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>The user management pages</web-resource-name>
+            <url-pattern>/users/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>The databrokers connection management pages</web-resource-name>
             <url-pattern>/databrokers/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -96,7 +108,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
--->
+
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/errors/session_expired.html</location>
