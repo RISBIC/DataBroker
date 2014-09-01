@@ -31,7 +31,7 @@ public class MetadataUtils implements MetadataContentStore
 
         try
         {
-            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT ac FROM AccessControlEntity AS ac", MetadataEntity.class);
+            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT m FROM MetadataEntity AS m", MetadataEntity.class);
 
             List<String> ids = new LinkedList<String>();
             for (MetadataEntity metadata: query.getResultList())
@@ -172,7 +172,7 @@ public class MetadataUtils implements MetadataContentStore
             if (parent == null)
                 return null;
 
-            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT ac FROM AccessControlEntity AS ac WHERE (ac._parent = :parent)", MetadataEntity.class);
+            TypedQuery<MetadataEntity> query = _entityManager.createQuery("SELECT m FROM MetadataEntity AS m WHERE (m._parent = :parent)", MetadataEntity.class);
             query.setParameter("parent", parent);
 
             List<String> childrenIds = new LinkedList<String>();

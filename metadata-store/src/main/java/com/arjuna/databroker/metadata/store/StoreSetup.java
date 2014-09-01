@@ -7,6 +7,7 @@ package com.arjuna.databroker.metadata.store;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -17,6 +18,8 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.arjuna.databroker.metadata.MetadataContentStore;
 
 @Startup
 @Singleton
@@ -33,7 +36,7 @@ public class StoreSetup implements Serializable
     @PostConstruct
     public void setup()
     {
-        if (_metadataUtils.getIds().size() == 0)
+        if (_metadataContentStore.getIds().size() == 0)
         {
             MetadataEntity      descriptionSchemaMetadata                 = new MetadataEntity("DescriptionSchema", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/DescriptionSchema.rdf"));
             MetadataEntity      dataSourceSchemaMetadata                  = new MetadataEntity("DataSourceSchema", null, null, loadRDFResource("com/arjuna/databroker/metadata/store/DataSourceSchema.rdf"));
@@ -88,5 +91,5 @@ public class StoreSetup implements Serializable
     private EntityManager _entityManager;
     
     @EJB
-    private MetadataUtils _metadataUtils;
+    private MetadataContentStore _metadataContentStore;
 }
