@@ -5,9 +5,9 @@
 package com.arjuna.databroker.control.core;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Singleton;
@@ -24,6 +24,10 @@ public class GlobalDataFlowFactory implements DataFlowFactory
 {
     private static final Logger logger = Logger.getLogger(GlobalDataFlowFactory.class.getName());
 
+    public static final String TYPE_METAPROPERYNAME           = "Type";
+    public static final String STANDARD_TYPE_METAPROPERYVALUE = "Standard";
+    public static final String DURABLE_TYPE_METAPROPERYVALUE  = "Durable";
+
     public GlobalDataFlowFactory()
     {
     }
@@ -37,6 +41,8 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     @Override
     public Map<String, String> getProperties()
     {
+        logger.log(Level.FINE, "GlobalDataFlowFactory.getProperties");
+
         return Collections.emptyMap();
     }
 
@@ -44,8 +50,12 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     public List<String> getMetaPropertyNames()
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.getMetaPropertyNames");
+        
+        List<String> metaPropertyNames = new LinkedList<String>();
 
-        return Collections.emptyList();
+        metaPropertyNames.add(TYPE_METAPROPERYNAME);
+
+        return metaPropertyNames;
     }
 
     @Override
@@ -55,13 +65,11 @@ public class GlobalDataFlowFactory implements DataFlowFactory
         logger.log(Level.FINE, "GlobalDataFlowFactory.getPropertyNames: " + metaProperties);
 
         if (metaProperties.isEmpty())
+            throw new MissingMetaPropertyException("Missing '" + TYPE_METAPROPERYNAME + "' meta property", TYPE_METAPROPERYNAME);
+        else if ((metaProperties.size() == 1) && (metaProperties.containsKey(TYPE_METAPROPERYNAME)))
             return Collections.emptyList();
         else
-        {
-            Entry<String, String> entry = metaProperties.entrySet().iterator().next();
-
-            throw new InvalidMetaPropertyException("Unexpected meta properties", entry.getKey(), entry.getValue());
-        }
+            throw new InvalidMetaPropertyException("Unexpected meta properties", null, null);
     }
 
     @Override
@@ -70,6 +78,11 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.createDataFlow: " + name + ", " + metaProperties + ", " + properties);
 
-        return new StandardDataFlow(name, properties);
+        if ((metaProperties.size() == 1) && STANDARD_TYPE_METAPROPERYVALUE.equals(metaProperties.get(TYPE_METAPROPERYNAME)))
+            return new StandardDataFlow(name, properties);
+        else if ((metaProperties.size() == 1) && DURABLE_TYPE_METAPROPERYVALUE.equals(metaProperties.get(TYPE_METAPROPERYNAME)))
+            return new DurableDataFlow(name, properties);
+        else
+            throw new InvalidMetaPropertyException("Expected value of 'Type' Standard' or 'Durable'", TYPE_METAPROPERYNAME, metaProperties.get(TYPE_METAPROPERYNAME));
     }
 }
