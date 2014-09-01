@@ -45,18 +45,15 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
-
+<!--
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Unsecure pages</web-resource-name>
-            <url-pattern>/index.html</url-pattern>
+            <web-resource-name>Public confidential pages</web-resource-name>
             <url-pattern>/signin.html</url-pattern>
             <url-pattern>/signin_error.html</url-pattern>
-            <url-pattern>/site_style.css</url-pattern>
-            <url-pattern>/home_style.css</url-pattern>
-            <url-pattern>/signin_style.css</url-pattern>
         </web-resource-collection>
         <user-data-constraint>
+            <!- transport-guarantee>CONFIDENTIAL</transport-guarantee ->
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
@@ -90,7 +87,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>The databrokers admin pages</web-resource-name>
+            <web-resource-name>The admin pages</web-resource-name>
             <url-pattern>/databrokers/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -100,7 +97,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
+-->
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/errors/session_expired.html</location>

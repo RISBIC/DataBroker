@@ -29,11 +29,6 @@ public class DataBrokerConnectionsMO implements Serializable
         return _dataBrokerConnections;
     }
 
-    public void setDataBrokerConnections(List<DataBrokerConnectionVO> dataBrokerConnections)
-    {
-        _dataBrokerConnections = dataBrokerConnections;
-    }
-
     public String doLoad()
     {
         load();
@@ -54,11 +49,14 @@ public class DataBrokerConnectionsMO implements Serializable
     {
         try
         {
-            List<DataBrokerEntity> dataBrokers = _dataBrokerUtils.listDataBrokers();
+            synchronized (_dataBrokerConnections)
+            {
+                List<DataBrokerEntity> dataBrokers = _dataBrokerUtils.listDataBrokers();
 
-            _dataBrokerConnections.clear();
-            for (DataBrokerEntity dataBroker: dataBrokers)
-                _dataBrokerConnections.add(new DataBrokerConnectionVO(dataBroker.getId(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
+                _dataBrokerConnections.clear();
+                for (DataBrokerEntity dataBroker: dataBrokers)
+                    _dataBrokerConnections.add(new DataBrokerConnectionVO(dataBroker.getId(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
+            }
 
             return true;
         }
