@@ -47,8 +47,9 @@ public interface DataFlowNodeInventory
      * Adds a data flow node to the data flow node inventory.
      * 
      * @param dataFlowNode the data flow node to be added to the node inventory
+     * @return indicates if a data flow node was added to the data flow node inventory
      */
-    public void addDataFlowNode(DataFlowNode dataFlowNode);
+    public boolean addDataFlowNode(DataFlowNode dataFlowNode);
 
     /**
      * Removes a named data flow node from the data flow node inventory.

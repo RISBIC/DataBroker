@@ -51,9 +51,15 @@ public abstract class AbstractDataFlowNodeInventory implements DataFlowNodeInven
             return null;
     }
 
-    public void addDataFlowNode(DataFlowNode dataFlowNode)
+    public boolean addDataFlowNode(DataFlowNode dataFlowNode)
     {
-        _inventory.put(dataFlowNode.getName(), dataFlowNode);
+    	if (! _inventory.containsKey(dataFlowNode.getName()))
+    	{
+            _inventory.put(dataFlowNode.getName(), dataFlowNode);
+            return true;
+    	}
+    	else
+    		return false;
     }
 
     public boolean removeDataFlowNode(String name)
