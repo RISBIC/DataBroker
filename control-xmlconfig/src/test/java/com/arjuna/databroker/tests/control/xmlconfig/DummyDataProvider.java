@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.LinkedList;
-import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
@@ -48,7 +47,7 @@ public class DummyDataProvider<T> implements ObservableDataProvider<T>
     @Override
     public void produce(T data)
     {
-        for (DataConsumer<T> dataConsumer: _dataConsumers)
+        for (ObserverDataConsumer<T> dataConsumer: _dataConsumers)
             dataConsumer.consume(this, data);
     }
 
