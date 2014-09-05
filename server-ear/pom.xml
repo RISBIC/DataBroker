@@ -52,12 +52,6 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
-            <artifactId>data-ws</artifactId>
-            <version>1.0.0p1m1</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-ws</artifactId>
             <version>1.0.0p1m1</version>
             <type>war</type>
