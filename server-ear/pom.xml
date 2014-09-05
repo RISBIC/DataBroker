@@ -99,11 +99,6 @@
                         </ejbModule>
                         <webModule>
                             <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>data-ws</artifactId>
-                            <contextRoot>data</contextRoot>
-                        </webModule>
-                        <webModule>
-                            <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-ws</artifactId>
                             <contextRoot>metadata</contextRoot>
                         </webModule>
