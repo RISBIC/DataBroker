@@ -5,7 +5,7 @@
 package com.arjuna.databroker.data.connector;
 
 import com.arjuna.databroker.data.DataConsumer;
-import com.arjuna.databroker.data.DataProvider;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
 
 /**
  * ObserverDataConsumer is an interface to an observer data consumer.
@@ -18,5 +18,5 @@ public interface ObserverDataConsumer<T> extends DataConsumer<T>
      * @param dataProvider the data provider which has produced the data
      * @param data the data to be consumed
      */
-    public void consume(DataProvider<T> dataProvider, T data);
+    public void consume(ObservableDataProvider<T> dataProvider, T data);
 }

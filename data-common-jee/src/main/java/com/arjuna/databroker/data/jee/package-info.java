@@ -3,7 +3,7 @@
  */
 
 /**
- * Provides the interfaces necessary to interact with the data level of the data broker.
+ * Provides the classes to support the data level, for JEE environments, within the data broker.
  */
 
 package com.arjuna.databroker.data.jee;

@@ -5,7 +5,7 @@
 package com.arjuna.databroker.tests.control.xmlconfig;
 
 import com.arjuna.databroker.data.DataFlowNode;
-import com.arjuna.databroker.data.DataProvider;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 
 public class DummyDataConsumer<T> implements ObserverDataConsumer<T>
@@ -22,7 +22,7 @@ public class DummyDataConsumer<T> implements ObserverDataConsumer<T>
     }
 
     @Override
-    public void consume(DataProvider<T> dataProvider, T data)
+    public void consume(ObservableDataProvider<T> dataProvider, T data)
     {
         _dataDispatcher.dispatch(data);
     }
