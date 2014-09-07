@@ -87,6 +87,7 @@
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-common-jee</artifactId>
+                            <bundleFileName>data-common-jee.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <jarModule>
