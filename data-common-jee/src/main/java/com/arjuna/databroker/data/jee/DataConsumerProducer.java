@@ -16,9 +16,9 @@ public class DataConsumerProducer
 
     @Produces
     public <T> DataConsumer<T> getInstance(InjectionPoint injectionPoint)
-	{
-    	logger.log(Level.WARNING, "getInstance: " + injectionPoint);
+    {
+        logger.log(Level.WARNING, "getInstance: " + injectionPoint);
 
-    	return new DefaultObserverDataConsumer<T>(null, null, null); //TODO
-	}
+        return new DefaultObserverDataConsumer<T>(null, null, null); //TODO
+    }
 }

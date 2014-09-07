@@ -15,10 +15,10 @@ public class DataProviderProducer
     private static final Logger logger = Logger.getLogger(DataProviderProducer.class.getName());
 
     @Produces
-    public <T> DataProvider<?> getInstance(InjectionPoint injectionPoint)
-	{
-    	logger.log(Level.WARNING, "getInstance: " + injectionPoint);
+    public <T> DataProvider<T> getInstance(InjectionPoint injectionPoint)
+    {
+        logger.log(Level.WARNING, "getInstance: " + injectionPoint);
 
-    	return new DefaultObservableDataProvider<T>(null); // TODO
-	}
+        return new DefaultObservableDataProvider<T>(null); // TODO
+    }
 }

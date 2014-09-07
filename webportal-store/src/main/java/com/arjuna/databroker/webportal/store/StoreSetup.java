@@ -34,7 +34,7 @@ public class StoreSetup implements Serializable
 
         if (_usersUtils.listUsers().size() == 0)
         {
-        	_usersUtils.createUser("Default Admin", "Default Password", Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
+            _usersUtils.createUser("Default Admin", "Default Password", Boolean.TRUE, Boolean.TRUE, Boolean.TRUE);
         }
     }
 
