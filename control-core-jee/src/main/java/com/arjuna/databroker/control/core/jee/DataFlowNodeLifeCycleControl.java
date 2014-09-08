@@ -6,9 +6,11 @@ package com.arjuna.databroker.control.core.jee;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
@@ -79,7 +81,7 @@ public class DataFlowNodeLifeCycleControl
             {
                 if (method.isAnnotationPresent(annotation))
                 {
-                    if (method.isAccessible() && (method.getGenericParameterTypes().length == 0) && method.getGenericReturnType().equals(Void.class))
+                    if (((method.getModifiers() & Modifier.PUBLIC) == Modifier.PUBLIC) && (method.getGenericParameterTypes().length == 0) && method.getReturnType().equals(Void.TYPE))
                     {
                         try
                         {
@@ -95,16 +97,14 @@ public class DataFlowNodeLifeCycleControl
                     }
                     else
                     {
-                        if (! method.isAccessible())
+                        if ((method.getModifiers() & Modifier.PUBLIC) == Modifier.PUBLIC)
                             logger.log(Level.WARNING, "Operation \"" + method.getName() + "\" isn't accessible");
                         if (method.getGenericParameterTypes().length != 0)
                             logger.log(Level.WARNING, "Operation \"" + method.getName() + "\" expects parameters");
-                        if (! method.getGenericReturnType().equals(Void.class))
+                        if (! method.getReturnType().equals(Void.TYPE))
                             logger.log(Level.WARNING, "Operation \"" + method.getName() + "\" non-void return");
                     }
                 }
-                else
-                    logger.log(Level.WARNING, "Not Operation \"" + method.getName() + "\"");
             }
 
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
