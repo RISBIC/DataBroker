@@ -29,6 +29,7 @@ import com.arjuna.databroker.control.comms.DataFlowNodeFactoryDTO;
 import com.arjuna.databroker.control.comms.FactoryNamesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
+import com.arjuna.databroker.control.core.jee.DataFlowNodeLifeCycleControl;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -234,8 +235,7 @@ public class DataFlowWS
                         {
                             try
                             {
-                                DataFlowNode dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());                        
-                                dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
+                                DataFlowNode dataFlowNode = DataFlowNodeLifeCycleControl.createDataFlowNode(dataFlow, dataFlowNodeFactory, name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());
 
                                 return dataFlowNode.getName();
                             }
