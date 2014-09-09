@@ -24,9 +24,11 @@ import javax.ws.rs.core.MediaType;
 import com.arjuna.databroker.control.comms.CreatePropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
+import com.arjuna.databroker.control.core.jee.DataFlowNodeLifeCycleControl;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowInventory;
+import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.InvalidNameException;
@@ -134,12 +136,19 @@ public class DataFlowFactoryWS
     @Produces(MediaType.APPLICATION_JSON)
     public Boolean removeDataFlowJSON(@PathParam("dataflowid") String dataFlowId)
     {
-        logger.log(Level.FINE, "DataFlowFactoryWS.deleteDataFlowJSON: " + dataFlowId);
+        logger.log(Level.FINE, "DataFlowFactoryWS.removeDataFlowJSON: " + dataFlowId);
 
         if (_dataFlowInventory != null)
         {
             if (dataFlowId != null)
+            {
+                DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
+                if (dataFlow != null)
+                    for (DataFlowNode dataFlowNode: dataFlow.getDataFlowNodeInventory().getDataFlowNodes())
+                        DataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataFlowNode.getName());
+
                 return _dataFlowInventory.removeDataFlow(dataFlowId);
+            }
             else
                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
         }

@@ -345,7 +345,7 @@ public class DataFlowWS
                 DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
 
                 if ((dataFlow != null) && (dataFlow.getDataFlowNodeInventory() != null))
-                    return dataFlow.getDataFlowNodeInventory().removeDataFlowNode(dataflowNodeId);
+                    return DataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataflowNodeId);
                 else
                     throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
             }

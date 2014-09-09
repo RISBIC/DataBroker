@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
@@ -22,7 +21,10 @@ import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
+import com.arjuna.databroker.data.jee.annotation.PostDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreActivated;
+import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
+import com.arjuna.databroker.data.jee.annotation.PreDelete;
 
 public class DataFlowNodeLifeCycleControl
 {
@@ -36,7 +38,6 @@ public class DataFlowNodeLifeCycleControl
             T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
 
             invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
-
             invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
 
             dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
@@ -69,6 +70,20 @@ public class DataFlowNodeLifeCycleControl
         {
             throw missingPropertyException;
         }
+    }
+
+    public static Boolean removeDataFlowNode(DataFlow dataFlow, String name)
+    {
+        DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(name);
+
+        invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+
+        Boolean result = dataFlow.getDataFlowNodeInventory().removeDataFlowNode(dataFlowNode);
+
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PreDelete.class);
+
+        return result;
     }
 
     private static <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
