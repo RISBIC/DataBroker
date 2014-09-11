@@ -5,6 +5,7 @@
 package com.arjuna.databroker.control.core.jee;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -19,6 +20,8 @@ import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
+import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
 import com.arjuna.databroker.data.jee.annotation.PostDeactivated;
@@ -36,6 +39,8 @@ public class DataFlowNodeLifeCycleControl
         try
         {
             T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
+
+            injectDataConnectors(dataFlowNode);
 
             invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
             invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
@@ -120,6 +125,27 @@ public class DataFlowNodeLifeCycleControl
                             logger.log(Level.WARNING, "Operation \"" + method.getName() + "\" non-void return");
                     }
                 }
+            }
+
+            dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
+        }
+    }
+
+    private static void injectDataConnectors(DataFlowNode dataFlowNode)
+    {
+        Class<?> dataFlowNodeClass = dataFlowNode.getClass();
+
+        while (dataFlowNodeClass != null)
+        {
+           	logger.log(Level.WARNING, "DataConsumerInjection class = \"" + dataFlowNodeClass + "\"");
+            for (Field field: dataFlowNodeClass.getDeclaredFields())
+            {
+            	logger.log(Level.WARNING, "DataConsumerInjection name = \"" + field.getName() + "\"");
+                if (field.isAnnotationPresent(DataConsumerInjection.class))
+                	logger.log(Level.WARNING, "DataConsumerInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+
+                if (field.isAnnotationPresent(DataProviderInjection.class))
+                	logger.log(Level.WARNING, "DataProviderInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
             }
 
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();

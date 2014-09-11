@@ -30,7 +30,7 @@
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common-jee</artifactId>
             <version>1.0.0p1m2l</version>
-            <type>jar</type>
+            <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
@@ -92,12 +92,6 @@
                         </jarModule>
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>data-common-jee</artifactId>
-                            <bundleFileName>data-common-jee.jar</bundleFileName>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-common</artifactId>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
@@ -106,6 +100,11 @@
                             <artifactId>control-common</artifactId>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-common-jee</artifactId>
+                            <bundleFileName>data-common-jee.jar</bundleFileName>
+                        </ejbModule>
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-store</artifactId>
