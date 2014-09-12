@@ -58,12 +58,6 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
-            <artifactId>control-core-jee</artifactId>
-            <version>1.0.0p1m2l</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-ws</artifactId>
             <version>1.0.0p1m2l</version>
             <type>war</type>
@@ -113,11 +107,6 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>control-core</artifactId>
                             <bundleFileName>control-core.jar</bundleFileName>
-                        </ejbModule>
-                        <ejbModule>
-                            <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>control-core-jee</artifactId>
-                            <bundleFileName>control-core-jee.jar</bundleFileName>
                         </ejbModule>
                         <webModule>
                             <groupId>com.arjuna.databroker</groupId>

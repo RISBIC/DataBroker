@@ -55,13 +55,12 @@
     </properties>
 
     <modules>
-        <module>control-common</module>
-        <module>control-core</module>
-        <module>control-core-jee</module>
-        <module>control-xmlconfig</module>
-        <module>control-ws</module>
         <module>data-common</module>
         <module>data-common-jee</module>
+        <module>control-common</module>
+        <module>control-core</module>
+        <module>control-xmlconfig</module>
+        <module>control-ws</module>
         <module>metadata-common</module>
         <module>metadata-rdf</module>
         <module>metadata-ws</module>

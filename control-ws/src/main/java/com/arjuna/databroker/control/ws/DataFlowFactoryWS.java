@@ -24,7 +24,6 @@ import javax.ws.rs.core.MediaType;
 import com.arjuna.databroker.control.comms.CreatePropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
-import com.arjuna.databroker.control.core.jee.DataFlowNodeLifeCycleControl;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowInventory;
@@ -34,6 +33,7 @@ import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.databroker.data.jee.DataFlowNodeLifeCycleControl;
 
 @Path("/dataflowfactory")
 @Stateless

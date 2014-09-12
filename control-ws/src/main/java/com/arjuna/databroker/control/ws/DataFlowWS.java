@@ -29,7 +29,6 @@ import com.arjuna.databroker.control.comms.DataFlowNodeFactoryDTO;
 import com.arjuna.databroker.control.comms.FactoryNamesDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
-import com.arjuna.databroker.control.core.jee.DataFlowNodeLifeCycleControl;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -45,6 +44,7 @@ import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
+import com.arjuna.databroker.data.jee.DataFlowNodeLifeCycleControl;
 
 @Path("/dataflow")
 @Stateless
