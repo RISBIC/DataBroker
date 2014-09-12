@@ -4,7 +4,6 @@
 
 package com.arjuna.databroker.data.jee;
 
-import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -13,7 +12,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.inject.New;
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
