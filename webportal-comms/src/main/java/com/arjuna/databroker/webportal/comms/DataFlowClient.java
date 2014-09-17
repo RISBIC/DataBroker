@@ -188,6 +188,36 @@ public class DataFlowClient
         }
     }
 
+    public Boolean removeDataFlowNode(String serviceRootURL, String dataFlowId, String dataFlowNodeid)
+    {
+        logger.log(Level.FINE, "DataFlowClient.removeDataFlowNode: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeid);
+
+        try
+        {
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/{dataflowiodeid}");
+            request.pathParameter("dataflowid", dataFlowId);
+            request.pathParameter("dataflowiodeid", dataFlowNodeid);
+            request.accept(MediaType.APPLICATION_JSON);
+
+            ClientResponse<Boolean> response = request.delete(new GenericType<Boolean>() {});
+
+            if (response.getStatus() == HttpResponseCodes.SC_OK)
+                return response.getEntity();
+            else
+            {
+                logger.log(Level.WARNING, "DataFlowClient.removeDataFlowNode: status = " + response.getStatus());
+
+                return null;
+            }
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'DataFlowClient.removeDataFlowNode'", throwable);
+
+            return null;
+        }
+    }
+
     public String getDataFlow(String serviceRootURL, String dataFlowId, Map<String, String> attributes, Map<String, String> properties, Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeLinkSummary> dataFlowNodeLinks, List<DataFlowNodeFactorySummary> dataFlowNodeFactories)
     {
         logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);

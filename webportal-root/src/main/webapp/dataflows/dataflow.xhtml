@@ -96,27 +96,42 @@
                             </script>
                         </div>
                     </h:panelGroup>
-                    <a4j:jsFunction name="selectSourceDataFlowNode" render="operations_lower,operations_upper">
+                    <a4j:jsFunction name="selectSourceDataFlowNode" render="operations_upper,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.sourceDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectSinkDataFlowNode" render="operations_lower,operations_upper">
+                    <a4j:jsFunction name="selectProcessorDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.processorDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectSinkDataFlowNode" render="operations_upper,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.sinkDataFlowNode}"/>
                     </a4j:jsFunction>
+                    <a4j:jsFunction name="selectServiceDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.serviceDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectStoreDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.storeDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectLinkSourceDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.linkSourceDataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectLinkSinkDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.linkSinkDataFlowNode}"/>
+                    </a4j:jsFunction>
                     <h:panelGroup id="operations_upper" styleClass="dataflow-actions" layout="block">
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source" disabled="false"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor" disabled="false"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Add Data Sink" disabled="false"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataService')}" value="Add Data Service" disabled="false"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataStore')}" value="Add Data Store" disabled="false"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doCreateLink()}" value="Add Link" disabled="#{(empty dataflow.sourceDataFlowNode) or (empty dataflow.sinkDataFlowNode)}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Add Data Sink"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataService')}" value="Add Data Service"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataStore')}" value="Add Data Store"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doCreateLink()}" value="Add Link" disabled="#{(empty dataflow.linkSourceDataFlowNode) or (empty dataflow.linkSinkDataFlowNode) or dataflow.linkedDataFlowNode}"/>
                     </h:panelGroup>
                     <h:panelGroup id="operations_lower" styleClass="dataflow-actions" layout="block">
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveDataFlowNode(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Remove Data Source" disabled="true"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveDataFlowNode(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Remove Data Processor" disabled="true"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveDataFlowNode(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Remove Data Sink" disabled="true"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveDataFlowNode(dataflow.serviceRootURL, dataflow.id, 'DataService')}" value="Remove Data Service" disabled="true"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveDataFlowNode(dataflow.serviceRootURL, dataflow.id, 'DataStore')}" value="Remove Data Store" disabled="true"/>
-                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveLink()}" value="Remove Link" disabled="true"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveSourceDataFlowNode()}" value="Remove Data Source" disabled="#{empty dataflow.sourceDataFlowNode}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveProcessorDataFlowNode()}" value="Remove Data Processor" disabled="#{empty dataflow.processorDataFlowNode}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveSinkDataFlowNode()}" value="Remove Data Sink" disabled="#{empty dataflow.sinkDataFlowNode}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveServiceDataFlowNode()}" value="Remove Data Service" disabled="#{empty dataflow.serviceDataFlowNode}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveStoreDataFlowNode()}" value="Remove Data Store" disabled="#{empty dataflow.storeDataFlowNode}"/>
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doRemoveLink()}" value="Remove Link"/> <!-- disabled="#{not dataflow.linkedDataFlowNode}"/ -->
                     </h:panelGroup>
                     <h:panelGroup styleClass="dataflow-factories" layout="block" rendered="#{not empty dataflow.dataFlowNodeFactories}">
                         <h:panelGroup styleClass="dataflow-title" layout="block">

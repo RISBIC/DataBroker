@@ -43,8 +43,13 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeAttributes     = null;
         _dataFlowNodeProperties     = null;
         _dataFlowNodeFactories      = null;
-        _sourceDataFlowNode         = null;
-        _sinkDataFlowNode           = null;
+        _sourceDataFlowNode         = "";
+        _processorDataFlowNode      = "";
+        _sinkDataFlowNode           = "";
+        _serviceDataFlowNode        = "";
+        _storeDataFlowNode          = "";
+        _linkSourceDataFlowNode     = "";
+        _linkSinkDataFlowNode       = "";
 
         _errorMessage = null;
     }
@@ -113,22 +118,107 @@ public class DataFlowMO implements Serializable
 
     public String getSourceDataFlowNode()
     {
+        logger.log(Level.FINER, "DataFlowMO.getSourceDataFlowNode: " + _sourceDataFlowNode);
+
         return _sourceDataFlowNode;
     }
 
     public void setSourceDataFlowNode(String sourceDataFlowNode)
     {
+        logger.log(Level.FINER, "DataFlowMO.setSourceDataFlowNode: " + sourceDataFlowNode);
+
         _sourceDataFlowNode = sourceDataFlowNode;
+    }
+
+    public String getProcessorDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getProcessorDataFlowNode: " + _processorDataFlowNode);
+
+        return _processorDataFlowNode;
+    }
+
+    public void setProcessorDataFlowNode(String processorDataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setProcessorDataFlowNode: " + processorDataFlowNode);
+
+        _processorDataFlowNode = processorDataFlowNode;
     }
 
     public String getSinkDataFlowNode()
     {
+        logger.log(Level.FINER, "DataFlowMO.getSinkDataFlowNode: " + _sinkDataFlowNode);
+
         return _sinkDataFlowNode;
     }
 
     public void setSinkDataFlowNode(String sinkDataFlowNode)
     {
+        logger.log(Level.FINER, "DataFlowMO.setSinkDataFlowNode: " + sinkDataFlowNode);
+
         _sinkDataFlowNode = sinkDataFlowNode;
+    }
+
+    public String getServiceDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getServiceDataFlowNode: " + _serviceDataFlowNode);
+
+        return _serviceDataFlowNode;
+    }
+
+    public void setServiceDataFlowNode(String serviceDataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setServiceDataFlowNode: " + serviceDataFlowNode);
+
+        _serviceDataFlowNode = serviceDataFlowNode;
+    }
+
+    public String getStoreDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getStoreDataFlowNode: " + _storeDataFlowNode);
+
+        return _storeDataFlowNode;
+    }
+
+    public void setStoreDataFlowNode(String storeDataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setStoreDataFlowNode: " + storeDataFlowNode);
+
+        _storeDataFlowNode = storeDataFlowNode;
+    }
+
+    public String getLinkSourceDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getLinkSourceDataFlowNode: " + _linkSourceDataFlowNode);
+
+        return _linkSourceDataFlowNode;
+    }
+
+    public void setLinkSourceDataFlowNode(String sourceDataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setLinkSourceDataFlowNode: " + sourceDataFlowNode);
+
+        _linkSourceDataFlowNode = sourceDataFlowNode;
+    }
+
+    public String getLinkSinkDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getLinkSinkDataFlowNode: " + _linkSinkDataFlowNode);
+
+        return _linkSinkDataFlowNode;
+    }
+
+    public void setLinkSinkDataFlowNode(String sinkDataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setLinkSinkDataFlowNode: " + sinkDataFlowNode);
+
+        _linkSinkDataFlowNode = sinkDataFlowNode;
+    }
+
+    public boolean getLinkedDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getLinkedDataFlowNode");
+
+        return false; // TODO
     }
 
     public String getErrorMessage()
@@ -157,17 +247,89 @@ public class DataFlowMO implements Serializable
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
-    public String doCreateLink()
+    public String doRemoveSourceDataFlowNode()
     {
-        logger.log(Level.FINE, "DataFlowMO.doCreateLink: [" + _sourceDataFlowNode + "] [" + _sinkDataFlowNode + "]");
+        logger.log(Level.FINE, "DataFlowMO.doRemoveSourceDataFlowNode: [" + _sourceDataFlowNode + "]");
 
-        _dataFlowNodeLinkClient.createDataFlowNodeLink(_serviceRootURL, _id, _sourceDataFlowNode, _sinkDataFlowNode);
-        
+        if ((_sourceDataFlowNode != null) && (! "".equals(_sourceDataFlowNode)))
+            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sourceDataFlowNode);
+
         load();
         
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
+
+    public String doRemoveProcessorDataFlowNode()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doRemoveProcessorDataFlowNode: [" + _processorDataFlowNode + "]");
+
+        if ((_processorDataFlowNode != null) && (! "".equals(_processorDataFlowNode)))
+            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _processorDataFlowNode);
+
+        load();
+        
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+
+    public String doRemoveSinkDataFlowNode()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doRemoveSinkDataFlowNode: [" + _sinkDataFlowNode + "]");
+
+        if ((_sinkDataFlowNode != null) && (! "".equals(_sinkDataFlowNode)))
+            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sinkDataFlowNode);
+
+        load();
+        
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+
+    public String doRemoveServiceDataFlowNode()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doRemoveServiceDataFlowNode: [" + _serviceDataFlowNode + "]");
+
+        if ((_serviceDataFlowNode != null) && (! "".equals(_serviceDataFlowNode)))
+            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _serviceDataFlowNode);
+
+        load();
+
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+
+    public String doRemoveStoreDataFlowNode()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doRemoveStoreDataFlowNode: [" + _storeDataFlowNode + "]");
+
+        if ((_storeDataFlowNode != null) && (! "".equals(_storeDataFlowNode)))
+            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _storeDataFlowNode);
+
+        load();
+
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+
+    public String doCreateLink()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doCreateLink: [" + _linkSourceDataFlowNode + "] [" + _linkSinkDataFlowNode + "]");
+
+        if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
+            _dataFlowNodeLinkClient.createDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode);
+
+        load();
+
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+
+    public String doRemoveLink()
+    {
+        if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
+            _dataFlowNodeLinkClient.removeDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode);
+
+        load();
+
+        return "/dataflows/dataflow?faces-redirect=true";
+    }
+    
     public void load()
     {
         logger.log(Level.FINE, "DataFlowMO.load");
@@ -211,6 +373,14 @@ public class DataFlowMO implements Serializable
 
                 _errorMessage = "Unsuccessful query of DataBroker!";
             }
+
+            _sourceDataFlowNode     = "";
+            _processorDataFlowNode  = "";
+            _sinkDataFlowNode       = "";
+            _serviceDataFlowNode    = "";
+            _storeDataFlowNode      = "";
+            _linkSourceDataFlowNode = "";
+            _linkSinkDataFlowNode   = "";
         }
         else
             _errorMessage = "Unable to query DataBroker";
@@ -299,7 +469,12 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
     private String                             _sourceDataFlowNode;
+    private String                             _processorDataFlowNode;
     private String                             _sinkDataFlowNode;
+    private String                             _serviceDataFlowNode;
+    private String                             _storeDataFlowNode;
+    private String                             _linkSourceDataFlowNode;
+    private String                             _linkSinkDataFlowNode;
 
     private String _errorMessage;
 

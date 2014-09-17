@@ -64,6 +64,8 @@ DataFlowEdit.prototype.doUnselect = function(item)
 
 DataFlowEdit.prototype.doSelect = function(item)
 {
+	alert("doSelect:" + item);
+
     this.item = item;
     
     var linkStart = this.linkStart;

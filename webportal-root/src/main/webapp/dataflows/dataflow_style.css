@@ -271,7 +271,9 @@ span.dataflow-button
 	margin:				0 1em 0 0;
 	border:				0;
 	padding:			0.25em 0.5em 0.25em 0.5em;
-	background-color:		#777777;
+	background-color:		#AAAAAA;
+	color:				#EEEEEE;
+	text-decoration:		none;
 	font-size:			1em;
 	font-weight:			normal;
 	font-family:			"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;

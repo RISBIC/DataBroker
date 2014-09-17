@@ -9,18 +9,96 @@ function DataFlowLinkEdit(dataFlowControl)
     this.consumer        = null;
 }
 
-DataFlowLinkEdit.SELECTED_PRODUCER_BODYSTYLE   = ProducerGlyph.DEFAULT_BODYSTYLE;
-DataFlowLinkEdit.SELECTED_PRODUCER_BORDERSTYLE = "#EE7711";
-DataFlowLinkEdit.SELECTED_CONSUMER_BODYSTYLE   = ConsumerGlyph.DEFAULT_BODYSTYLE;
-DataFlowLinkEdit.SELECTED_CONSUMER_BORDERSTYLE = "#EE7711";
+DataFlowLinkEdit.SELECTED_PROCESSOR_BODYSTYLE   = ProcessorGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_PROCESSOR_BORDERSTYLE = "#EE7711";
+DataFlowLinkEdit.SELECTED_SOURCE_BODYSTYLE      = SourceGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_SOURCE_BORDERSTYLE    = "#EE7711";
+DataFlowLinkEdit.SELECTED_SINK_BODYSTYLE        = SinkGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_SINK_BORDERSTYLE      = "#EE7711";
+DataFlowLinkEdit.SELECTED_SERVICE_BODYSTYLE     = ServiceGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_SERVICE_BORDERSTYLE   = "#EE7711";
+DataFlowLinkEdit.SELECTED_STORE_BODYSTYLE       = StoreGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_STORE_BORDERSTYLE     = "#EE7711";
+DataFlowLinkEdit.SELECTED_PRODUCER_BODYSTYLE    = ProducerGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_PRODUCER_BORDERSTYLE  = "#EE7711";
+DataFlowLinkEdit.SELECTED_CONSUMER_BODYSTYLE    = ConsumerGlyph.DEFAULT_BODYSTYLE;
+DataFlowLinkEdit.SELECTED_CONSUMER_BORDERSTYLE  = "#EE7711";
+DataFlowLinkEdit.SELECTED_LINK_LINESTYLE        = "#EE7711";
 
 DataFlowLinkEdit.prototype.doUnselect = function(item)
 {
+    if (item instanceof ProcessorGlyph)
+    {
+        item.bodyStyle   = ProcessorGlyph.DEFAULT_BODYSTYLE;
+        item.borderStyle = ProcessorGlyph.DEFAULT_BORDERSTYLE;
+        selectProcessorDataFlowNode("");
+    }
+    else if (item instanceof SourceGlyph)
+    {
+        item.bodyStyle   = SourceGlyph.DEFAULT_BODYSTYLE;
+        item.borderStyle = SourceGlyph.DEFAULT_BORDERSTYLE;
+        selectSourceDataFlowNode("");
+    }
+    else if (item instanceof SinkGlyph)
+    {
+        item.bodyStyle   = SinkGlyph.DEFAULT_BODYSTYLE;
+        item.borderStyle = SinkGlyph.DEFAULT_BORDERSTYLE;
+        selectSinkDataFlowNode("");
+    }
+    else if (item instanceof ServiceGlyph)
+    {
+        item.bodyStyle   = ServiceGlyph.DEFAULT_BODYSTYLE;
+        item.borderStyle = ServiceGlyph.DEFAULT_BORDERSTYLE;
+        selectServiceDataFlowNode("");
+    }
+    else if (item instanceof StoreGlyph)
+    {
+        item.bodyStyle   = StoreGlyph.DEFAULT_BODYSTYLE;
+        item.borderStyle = StoreGlyph.DEFAULT_BORDERSTYLE;
+        selectStoreDataFlowNode("");
+    }
+    else if (item instanceof LinkGlyph)
+    {
+        item.lineStyle = LinkGlyph.DEFAULT_LINESTYLE;
+        selectLinkSourceDataFlowNode("");
+        selectLinkSinkDataFlowNode("");
+    }
+    this.dataFlowControl.redraw();
 }
 
 DataFlowLinkEdit.prototype.doSelect = function(item)
 {
-    if (item instanceof ProducerGlyph)
+    if (item instanceof ProcessorGlyph)
+    {
+        item.bodyStyle   = DataFlowLinkEdit.SELECTED_PROCESSOR_BODYSTYLE;
+        item.borderStyle = DataFlowLinkEdit.SELECTED_PROCESSOR_BORDERSTYLE;
+        selectProcessorDataFlowNode(item.name);
+    }
+    else if (item instanceof SourceGlyph)
+    {
+        item.bodyStyle   = DataFlowLinkEdit.SELECTED_SOURCE_BODYSTYLE
+        item.borderStyle = DataFlowLinkEdit.SELECTED_SOURCE_BORDERSTYLE;
+        selectSourceDataFlowNode(item.name);
+    }
+    else if (item instanceof SinkGlyph)
+    {
+        item.bodyStyle   = DataFlowLinkEdit.SELECTED_SINK_BODYSTYLE;
+        item.borderStyle = DataFlowLinkEdit.SELECTED_SINK_BORDERSTYLE;
+        selectSinkDataFlowNode(item.name);
+    }
+    else if (item instanceof ServiceGlyph)
+    {
+        item.bodyStyle   = DataFlowLinkEdit.SELECTED_SERVICE_BODYSTYLE;
+        item.borderStyle = DataFlowLinkEdit.SELECTED_SERVICE_BORDERSTYLE;
+        selectServiceDataFlowNode(item.name);
+    }
+    else if (item instanceof StoreGlyph)
+    {
+        item.bodyStyle   = DataFlowLinkEdit.SELECTED_STORE_BODYSTYLE;
+        item.borderStyle = DataFlowLinkEdit.SELECTED_STORE_BORDERSTYLE;
+        selectStoreDataFlowNode(item.name);
+    }
+    else if (item instanceof ProducerGlyph)
     {
         if (item != this.producer)
         {
@@ -32,14 +110,14 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             this.producer    = item;
             item.bodyStyle   = DataFlowLinkEdit.SELECTED_PRODUCER_BODYSTYLE;
             item.borderStyle = DataFlowLinkEdit.SELECTED_PRODUCER_BORDERSTYLE;
-            selectSourceDataFlowNode(item.parent.name);
+            selectLinkSourceDataFlowNode(item.parent.name);
         }
         else
         {
             this.producer    = null;
             item.bodyStyle   = ProducerGlyph.DEFAULT_BODYSTYLE;
             item.borderStyle = ProducerGlyph.DEFAULT_BORDERSTYLE;
-            selectSourceDataFlowNode(null);
+            selectLinkSourceDataFlowNode("");
         }
     }
     else if (item instanceof ConsumerGlyph)
@@ -54,15 +132,21 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             this.consumer    = item;
             item.bodyStyle   = DataFlowLinkEdit.SELECTED_CONSUMER_BODYSTYLE;
             item.borderStyle = DataFlowLinkEdit.SELECTED_CONSUMER_BORDERSTYLE;
-            selectSinkDataFlowNode(item.parent.name);
+            selectLinkSinkDataFlowNode(item.parent.name);
         }
         else
         {
             this.consumer    = null;
             item.bodyStyle   = ConsumerGlyph.DEFAULT_BODYSTYLE;
             item.borderStyle = ConsumerGlyph.DEFAULT_BORDERSTYLE;
-            selectSinkDataFlowNode(null);
+            selectLinkSinkDataFlowNode("");
         }
+    }
+    else if (item instanceof LinkGlyph)
+    {
+        item.lineStyle = DataFlowLinkEdit.SELECTED_LINK_LINESTYLE;
+        selectLinkSourceDataFlowNode(item.producer.parent.name);
+        selectLinkSinkDataFlowNode(item.consumer.parent.name);
     }
     this.dataFlowControl.redraw();
 }
