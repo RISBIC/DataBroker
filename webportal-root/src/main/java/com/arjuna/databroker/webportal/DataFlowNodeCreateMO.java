@@ -177,9 +177,34 @@ public class DataFlowNodeCreateMO implements Serializable
         return "/dataflows/dataflownode_create?faces-redirect=true";
     }
 
-    public String doSubmit()
+    public String doFactoryNameSubmit()
     {
-        logger.log(Level.FINE, "DataFlowNodeCreateMO.doSubmit");
+        logger.log(Level.FINE, "DataFlowNodeCreateMO.doFactoryNameSubmit");
+
+        List<String> metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
+        
+        if (! metaPropertyNames.isEmpty())
+        {
+            _metaProperties = new LinkedList<PropertyVO>();
+            for (String metaPropertyName: metaPropertyNames)
+                _metaProperties.add(new PropertyVO(metaPropertyName, ""));
+        }
+        else
+        {
+            _metaProperties = new LinkedList<PropertyVO>();
+            List<String> propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, Collections.<String, String>emptyMap());
+
+            _properties = new LinkedList<PropertyVO>();
+            for (String propertyName: propertyNames)
+                _properties.add(new PropertyVO(propertyName, ""));
+        }
+
+        return "/dataflows/dataflownode_create?faces-redirect=true";
+    }
+
+    public String doMetaPropertiesSubmit()
+    {
+        logger.log(Level.FINE, "DataFlowNodeCreateMO.doMetaPropertiesSubmit");
 
         List<String> propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, listToMap(_metaProperties));
 
@@ -190,9 +215,16 @@ public class DataFlowNodeCreateMO implements Serializable
         return "/dataflows/dataflownode_create?faces-redirect=true";
     }
 
-    public String doReset()
+    public String doFactoryNameReset()
     {
-        logger.log(Level.FINE, "DataFlowNodeCreateMO.doReset");
+        logger.log(Level.FINE, "DataFlowNodeCreateMO.doFactoryNameReset");
+
+        return doLoad(_serviceRootURL, _dataFlowId, _type);
+    }
+
+    public String doMetaPropertiesReset()
+    {
+        logger.log(Level.FINE, "DataFlowNodeCreateMO.doMetaPropertiesReset");
 
         return doLoad(_serviceRootURL, _dataFlowId, _type);
     }
