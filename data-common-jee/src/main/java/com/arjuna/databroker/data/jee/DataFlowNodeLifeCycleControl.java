@@ -113,6 +113,20 @@ public class DataFlowNodeLifeCycleControl
         return result;
     }
 
+    public static Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+
+        Boolean result = Boolean.TRUE;
+        if (dataFlowNode.getDataFlow() != null)
+            result = dataFlowNode.getDataFlow().getDataFlowNodeInventory().removeDataFlowNode(dataFlowNode);
+
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PreDelete.class);
+
+        return result;
+    }
+
     private static <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
