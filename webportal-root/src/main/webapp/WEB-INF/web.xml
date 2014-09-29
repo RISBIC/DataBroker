@@ -98,7 +98,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>The dataflow pages</web-resource-name>
+            <web-resource-name>The dataflows pages</web-resource-name>
             <url-pattern>/dataflows/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
