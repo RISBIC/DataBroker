@@ -2,7 +2,7 @@
 /* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
 /*                                                                                                          */
 
-form.config
+form.searchhome
 {
 	margin:			0;
 	border:			0;
@@ -11,7 +11,7 @@ form.config
 	background-color:	#FFFFFF;
 }
 
-div.config
+div.searchhome
 {
 	margin:			0;
 	border:			0;
@@ -20,7 +20,7 @@ div.config
 	background-color:	#FFFFFF;
 }
 
-a.config-link
+a.searchhome-link
 {
 	margin:				1em 0 1em 0;
 	border:				0;
@@ -38,54 +38,54 @@ a.config-link
 	background-image:		url('pattern.png');
 }
 
-a.config-link:link
+a.searchhome-link:link
 {
 	background-color:	#EEA05D;
 	color:			#EEEEEE;
 }
 
-a.config-link:visited
+a.searchhome-link:visited
 {
 	background-color:	#EEA05D;
 	color:			#EEEEEE;
 }
 
-a.config-link:hover
+a.searchhome-link:hover
 {
 	background-color:	#EE7711;
 	color:			#EEEEEE;
 }
 
-a.config-link:active
+a.searchhome-link:active
 {
 	background-color:	#777777;
 	color:			#EEEEEE;
 }
 
-div.config-link
+div.searchhome-link
 {
 }
 
-table.config-link-grip
+table.searchhome-link-grip
 {
 	margin:			0;
 	border:			0;
 	width:			100%;
 }
 
-span.config-link-title
+span.searchhome-link-title
 {
 	font-size:		3em;
 	text-decoration:	none;
 }
 
-span.config-link-text
+span.searchhome-link-text
 {
 	font-size:		2em;
 	text-decoration:	none;
 }
 
-img.config-link-icon
+img.searchhome-link-icon
 {
 	float:			right;
 }

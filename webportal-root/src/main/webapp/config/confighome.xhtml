@@ -9,7 +9,7 @@
         <ui:define name="title">DataBroker Portal Config</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="config_style.css"/>
+            <link rel="stylesheet" type="text/css" href="confighome_style.css"/>
         </ui:define>
 
         <ui:define name="body">
@@ -42,24 +42,24 @@
                 </ui:repeat>
                 <h:panelGroup styleClass="navigation-end" layout="block"/>
             </h:form>
-            <h:form styleClass="config">
-                <h:panelGroup styleClass="config" layout="block">
-                    <h:commandLink styleClass="config-link" action="#{users.doLoad}">
-                        <h:panelGrid styleClass="config-link-grip" columns="2">
-                            <h:panelGrid styleClass="config-link-grip" columns="1">
-                                <h:outputText styleClass="config-link-title" value="Users"/>
-                                <h:outputText styleClass="config-link-text" value="Creation, Examine, Update and Delete"/>
+            <h:form styleClass="confighome">
+                <h:panelGroup styleClass="confighome" layout="block">
+                    <h:commandLink styleClass="confighome-link" action="#{users.doLoad}">
+                        <h:panelGrid styleClass="confighome-link-grip" columns="2">
+                            <h:panelGrid styleClass="confighome-link-grip" columns="1">
+                                <h:outputText styleClass="confighome-link-title" value="Users"/>
+                                <h:outputText styleClass="confighome-link-text" value="Creation, Examine, Update and Delete"/>
                             </h:panelGrid>
-                            <h:graphicImage styleClass="config-link-icon" value="users.png" alt="Users"/>
+                            <h:graphicImage styleClass="confighome-link-icon" value="users.png" alt="Users"/>
                         </h:panelGrid>
                     </h:commandLink>
-                    <h:commandLink styleClass="config-link" action="#{databrokerconnections.doLoad}">
-                        <h:panelGrid styleClass="config-link-grip" columns="2">
-                            <h:panelGrid styleClass="config-link-grip" columns="1">
-                                <h:outputText styleClass="config-link-title" value="Databroker Connections"/>
-                                <h:outputText styleClass="config-link-text" value="Creation, Examine, Update and Delete"/>
+                    <h:commandLink styleClass="confighome-link" action="#{databrokerconnections.doLoad}">
+                        <h:panelGrid styleClass="confighome-link-grip" columns="2">
+                            <h:panelGrid styleClass="confighome-link-grip" columns="1">
+                                <h:outputText styleClass="confighome-link-title" value="Databroker Connections"/>
+                                <h:outputText styleClass="confighome-link-text" value="Creation, Examine, Update and Delete"/>
                             </h:panelGrid>
-                            <h:graphicImage styleClass="config-link-icon" value="connections.png" alt="Connections"/>
+                            <h:graphicImage styleClass="confighome-link-icon" value="connections.png" alt="Connections"/>
                         </h:panelGrid>
                     </h:commandLink>
                 </h:panelGroup>

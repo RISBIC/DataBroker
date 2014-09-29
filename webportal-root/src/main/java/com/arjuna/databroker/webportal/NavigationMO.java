@@ -20,8 +20,11 @@ public class NavigationMO implements Serializable
     public NavigationMO()
     {
         _locations = new LinkedList<LocationVO>();
-        
+
         _locations.add(new LocationVO("Home", "/index?faces-redirect=true"));
+        _locations.add(new LocationVO("Search", "/search/searchhome?faces-redirect=true"));
+        _locations.add(new LocationVO("Create", "/create/createhome?faces-redirect=true"));
+        _locations.add(new LocationVO("Config", "/config/confighome?faces-redirect=true"));
     }
 
     public List<LocationVO> getLocations()
@@ -39,10 +42,13 @@ public class NavigationMO implements Serializable
         {
             LocationVO currentLocation = locationIterator.next();
 
-            if (page != null)
-                locationIterator.remove();
-            else if (name.equals(currentLocation.getName()))
+            if ((page == null) && name.equals(currentLocation.getName()))
                 page = currentLocation.getPage();
+
+//            if (page != null)
+//                locationIterator.remove();
+//            else if (name.equals(currentLocation.getName()))
+//                page = currentLocation.getPage();
         }
         
         if (page != null)
