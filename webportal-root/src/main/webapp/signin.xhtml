@@ -13,17 +13,10 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form styleClass="header">
-                <h:panelGrid styleClass="header" columnClasses="headertitle,headeruser" columns="2" border="0" cellpadding="0" cellspacing="0">
-                    <h:outputText styleClass="title" value="Sign In"/>
-                </h:panelGrid>
-            </h:form>
-            <h:form styleClass="navigation">
-                <ui:repeat value="#{navigation.locations}" var="location">
-                    <h:commandLink styleClass="location-left" action="#{navigation.doGoTo(location.name)}" value="#{location.name}"/>
-                </ui:repeat>
-                <h:panelGroup styleClass="navigation-end" layout="block"/>
-            </h:form>
+            <ui:include src="/fragments/header_plain.xhtml">
+                <ui:param name="titletext" value="Sign In"/>
+            </ui:include>
+            <ui:include src="/fragments/navigation.xhtml"/>
             <form action="j_security_check" method="POST">
                 <h:panelGroup styleClass="signin" layout="block">
                     <h:panelGroup styleClass="signin-title" layout="block">
