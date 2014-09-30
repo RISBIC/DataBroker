@@ -30,7 +30,7 @@
         <realm-name>DataBrokerWebPortalRealm</realm-name>
         <form-login-config>
             <form-login-page>/signin.html</form-login-page>
-            <form-error-page>/signin_error.html</form-error-page>
+            <form-error-page>/errors/signin_error.html</form-error-page>
         </form-login-config>
     </login-config>
 
