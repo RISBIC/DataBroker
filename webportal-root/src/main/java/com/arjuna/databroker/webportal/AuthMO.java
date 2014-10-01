@@ -38,9 +38,21 @@ public class AuthMO implements Serializable
             return "";
     }
 
+    public void setUsername(String username)
+    {
+        logger.log(Level.FINE, "setUsername: [" + username + "]");
+    }
+
     public String getPassword()
     {
+        logger.log(Level.FINE, "getPassword");
+
         return "";
+    }
+
+    public void setPassword(String password)
+    {
+        logger.log(Level.FINE, "setPassword: [" + password + "]");
     }
 
     public boolean isInRole(String rolename)
@@ -57,9 +69,19 @@ public class AuthMO implements Serializable
         return facesContext.getExternalContext().getUserPrincipal() != null;
     }
 
+    public String doSignin()
+        throws IOException
+    {
+        logger.log(Level.FINE, "Auth.doSignin");
+
+        return "#";
+    }
+
     public String doSignout()
         throws IOException
     {
+        logger.log(Level.FINE, "Auth.doSignout");
+
         final FacesContext facesContext = FacesContext.getCurrentInstance();
 
         facesContext.getExternalContext().invalidateSession();
@@ -71,11 +93,15 @@ public class AuthMO implements Serializable
 
     public String doSignup()
     {
+        logger.log(Level.FINE, "Auth.doSignup");
+
         return "#";
     }
 
     public String doSigndown()
     {
+        logger.log(Level.FINE, "Auth.doSigndown");
+
         return "#";
     }
 }
