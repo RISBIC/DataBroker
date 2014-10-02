@@ -25,6 +25,16 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- Work around for Wildfly session tracking bug -->
+    <session-config>
+        <cookie-config>
+            <path>/</path>
+            <http-only>true</http-only>
+            <!-- secure>true</secure --><!-- Workaround the workaround fix! -->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>DataBrokerWebPortalRealm</realm-name>
