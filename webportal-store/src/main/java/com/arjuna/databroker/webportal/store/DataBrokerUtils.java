@@ -33,7 +33,13 @@ public class DataBrokerUtils
         {
             TypedQuery<DataBrokerEntity> query = _entityManager.createQuery("SELECT db FROM DataBrokerEntity AS db ORDER BY db._name ASC", DataBrokerEntity.class);
 
-            return query.getResultList();
+            List<DataBrokerEntity> dataBrokerEntities = query.getResultList();
+            
+            if (logger.isLoggable(Level.FINE))
+                for (DataBrokerEntity dataBrokerEntity: dataBrokerEntities)
+                    logger.log(Level.FINE, "DataBrokerUtils.listDataBrokers: \"" + dataBrokerEntity.getName() + "\"");
+
+            return dataBrokerEntities;
         }
         catch (Throwable throwable)
         {

@@ -33,7 +33,7 @@ public class AuthMO implements Serializable
         final FacesContext facesContext = FacesContext.getCurrentInstance();
         final Principal    principal    = facesContext.getExternalContext().getUserPrincipal();
 
-        logger.log(Level.FINE, "getUsername: " + principal);
+        logger.log(Level.FINER, "getUsername: " + principal);
 
         if (principal != null)
             return principal.getName();
@@ -43,21 +43,21 @@ public class AuthMO implements Serializable
 
     public void setUsername(String username)
     {
-        logger.log(Level.FINE, "setUsername: [" + username + "]");
+        logger.log(Level.FINER, "setUsername: [" + username + "]");
 
         _username = username;
     }
 
     public String getPassword()
     {
-        logger.log(Level.FINE, "getPassword");
+        logger.log(Level.FINER, "getPassword");
 
         return "";
     }
 
     public void setPassword(String password)
     {
-        logger.log(Level.FINE, "setPassword: [" + password + "]");
+        logger.log(Level.FINER, "setPassword: [" + password + "]");
 
         _password = password;
     }
@@ -79,7 +79,7 @@ public class AuthMO implements Serializable
     public String doSignin()
         throws IOException
     {
-        logger.log(Level.FINE, "Auth.doSignin");
+        logger.log(Level.FINER, "Auth.doSignin");
 
         final FacesContext       facesContext = FacesContext.getCurrentInstance();
         final HttpServletRequest request      = (HttpServletRequest) facesContext.getExternalContext().getRequest();
@@ -90,7 +90,8 @@ public class AuthMO implements Serializable
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.FINE, "Auth.doSignin: failed");
+            logger.log(Level.WARNING, "Auth.doSignin: failed: " + throwable);
+            logger.log(Level.FINEST, "Throwable: ", throwable);
         }
 
         return "#";
@@ -99,7 +100,7 @@ public class AuthMO implements Serializable
     public String doSignout()
         throws IOException
     {
-        logger.log(Level.FINE, "Auth.doSignout");
+        logger.log(Level.FINER, "Auth.doSignout");
 
         final FacesContext       facesContext = FacesContext.getCurrentInstance();
         final HttpServletRequest request      = (HttpServletRequest) facesContext.getExternalContext().getRequest();
@@ -110,7 +111,8 @@ public class AuthMO implements Serializable
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.FINE, "Auth.doSignout: failed");
+            logger.log(Level.WARNING, "Auth.doSignout: failed: " + throwable);
+            logger.log(Level.FINEST, "Throwable: ", throwable);
         }
 
 //        facesContext.getExternalContext().redirect("/index.html");
@@ -120,14 +122,14 @@ public class AuthMO implements Serializable
 
     public String doSignup()
     {
-        logger.log(Level.FINE, "Auth.doSignup");
+        logger.log(Level.FINER, "Auth.doSignup");
 
         return "#";
     }
 
     public String doSigndown()
     {
-        logger.log(Level.FINE, "Auth.doSigndown");
+        logger.log(Level.FINER, "Auth.doSigndown");
 
         return "#";
     }
