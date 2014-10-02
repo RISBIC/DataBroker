@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,6 +91,8 @@ public class AuthMO implements Serializable
             logger.log(Level.WARNING, "Auth.doSignin: failed: " + throwable);
             logger.log(Level.FINEST, "Throwable: ", throwable);
         }
+        _username = null;
+        _password = null;
 
         return "#";
     }
