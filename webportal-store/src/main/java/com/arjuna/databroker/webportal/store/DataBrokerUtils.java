@@ -35,9 +35,9 @@ public class DataBrokerUtils
 
             List<DataBrokerEntity> dataBrokerEntities = query.getResultList();
             
-            if (logger.isLoggable(Level.FINE))
+            if (logger.isLoggable(Level.FINER))
                 for (DataBrokerEntity dataBrokerEntity: dataBrokerEntities)
-                    logger.log(Level.FINE, "DataBrokerUtils.listDataBrokers: \"" + dataBrokerEntity.getName() + "\"");
+                    logger.log(Level.FINER, "DataBrokerUtils.listDataBrokers: \"" + dataBrokerEntity.getName() + "\"");
 
             return dataBrokerEntities;
         }
