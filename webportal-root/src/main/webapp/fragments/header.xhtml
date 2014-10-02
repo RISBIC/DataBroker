@@ -11,9 +11,9 @@
                 <h:outputText styleClass="title" value="#{titletext}"/>
                 <h:panelGrid styleClass="user" columnClasses="userlabels,uservalues" columns="2" border="0" cellpadding="0" cellspacing="0" rendered="#{! auth.loggedIn}">
                     <h:outputText styleClass="userlabel" value="User name:"/>
-                    <h:inputText styleClass="uservalue" name="#{auth.username}"/>
+                    <h:inputText styleClass="uservalue" value="#{auth.username}"/>
                     <h:outputText styleClass="userlabel" value="Password:"/>
-                    <h:inputSecret styleClass="uservalue" name="#{auth.password}"/>
+                    <h:inputSecret styleClass="uservalue" value="#{auth.password}"/>
                     <h:outputText styleClass="userlabel" value=" "/>
                     <h:panelGroup>
                         <h:commandButton styleClass="uservalue" action="#{auth.doSignin}" value="sign in"/>

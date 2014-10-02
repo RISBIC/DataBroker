@@ -9,11 +9,14 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
-@SessionScoped
+@RequestScoped
 @ManagedBean(name="auth")
 public class AuthMO implements Serializable
 {
@@ -41,6 +44,8 @@ public class AuthMO implements Serializable
     public void setUsername(String username)
     {
         logger.log(Level.FINE, "setUsername: [" + username + "]");
+
+        _username = username;
     }
 
     public String getPassword()
@@ -53,6 +58,8 @@ public class AuthMO implements Serializable
     public void setPassword(String password)
     {
         logger.log(Level.FINE, "setPassword: [" + password + "]");
+
+        _password = password;
     }
 
     public boolean isInRole(String rolename)
@@ -74,6 +81,18 @@ public class AuthMO implements Serializable
     {
         logger.log(Level.FINE, "Auth.doSignin");
 
+        final FacesContext       facesContext = FacesContext.getCurrentInstance();
+        final HttpServletRequest request      = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+
+        try
+        {
+            request.login(_username, _password);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.FINE, "Auth.doSignin: failed");
+        }
+
         return "#";
     }
 
@@ -82,11 +101,19 @@ public class AuthMO implements Serializable
     {
         logger.log(Level.FINE, "Auth.doSignout");
 
-        final FacesContext facesContext = FacesContext.getCurrentInstance();
+        final FacesContext       facesContext = FacesContext.getCurrentInstance();
+        final HttpServletRequest request      = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
-        facesContext.getExternalContext().invalidateSession();
+        try
+        {
+            request.logout();
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.FINE, "Auth.doSignout: failed");
+        }
 
-        facesContext.getExternalContext().redirect("/index.html");
+//        facesContext.getExternalContext().redirect("/index.html");
 
         return "/index?faces-redirect=true";
     }
@@ -104,4 +131,7 @@ public class AuthMO implements Serializable
 
         return "#";
     }
+
+    private String _username;
+    private String _password;
 }
