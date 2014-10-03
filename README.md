@@ -8,7 +8,7 @@ A built version of the DataBroker is available as a Docker images from  "https:/
 License
 =======
 
-Copyright (c) 2013-2014,
+Copyright (c) 2013-2015,
 
    Arjuna Technologies Limited, Newcastle-upon-Tyne, England.
 
