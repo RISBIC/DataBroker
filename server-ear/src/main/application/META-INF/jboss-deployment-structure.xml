@@ -6,4 +6,9 @@
 
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
     <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+    <sub-deployment name="data-common-jee.jar">
+       <dependencies>
+          <module name="deployment.dataflow-utils.ear.intraconnect-jms.jar"/>
+       </dependencies>
+    </sub-deployment>
 </jboss-deployment-structure>
