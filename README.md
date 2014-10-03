@@ -3,7 +3,7 @@ DataBroker
 
 DataBroker allows organizations to place data into the cloud, for storage, processing, analysis or presentation. The DataBroker also permits the sharing of data between organization in a structure and controlled manner.
 
-A built version of the DataBroker is available as a Docker images from  "https://registry.hub.docker.com/u/risbic/databroker_webportal/" or "docker pull risbic/databroker_webportal"
+A built version of the DataBroker is available as a Docker images from "https://registry.hub.docker.com/u/risbic/databroker_webportal/" or "docker pull risbic/databroker_webportal"
 
 License
 =======
