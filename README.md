@@ -8,7 +8,11 @@ A built version of the DataBroker is available as a Docker images from  "https:/
 License
 =======
 
-Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England.
+Copyright (c) 2013-2014,
+
+   Arjuna Technologies Limited, Newcastle-upon-Tyne, England.
+   Newcastle University, Newcastle-upon-Tyne, England.
+   Red Hat Middleware LLC, Newcastle-upon-Tyne, England.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
