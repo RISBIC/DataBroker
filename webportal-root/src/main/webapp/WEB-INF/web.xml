@@ -45,10 +45,6 @@
     </login-config>
 
     <security-role>
-        <role-name>guest</role-name>
-    </security-role>
-
-    <security-role>
         <role-name>user</role-name>
     </security-role>
 
@@ -72,9 +68,6 @@
             <web-resource-name>The search pages</web-resource-name>
             <url-pattern>/search/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            <role-name>guest</role-name>
-        </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
@@ -85,9 +78,6 @@
             <web-resource-name>The dataviews pages</web-resource-name>
             <url-pattern>/dataviews/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            <role-name>guest</role-name>
-        </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
