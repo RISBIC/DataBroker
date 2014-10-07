@@ -38,20 +38,20 @@
         <version.org.apache.jena>2.11.1</version.org.apache.jena>
         <version.org.richfaces>4.3.7.Final</version.org.richfaces>
 
-        <!-- JBossAS-7.1.1.Final
+        <!-- JBossAS-7.1.1.Final -->
         <servlet-api.version>3.0</servlet-api.version>
         <jsf-api.version>2.1</jsf-api.version>
         <ejb-api.version>3.1</ejb-api.version>
         <jpa-api.version>2.0</jpa-api.version>
         <jee.version>6</jee.version>
-        -->
-        <!-- WildFly-8.1.0.Final -->
+        <!-- -->
+        <!-- WildFly-8.1.0.Final
         <servlet-api.version>3.1</servlet-api.version>
         <jsf-api.version>2.2</jsf-api.version>
         <ejb-api.version>3.2</ejb-api.version>
         <jpa-api.version>2.1</jpa-api.version>
         <jee.version>7</jee.version>
-        <!--  -->
+        -->
     </properties>
 
     <modules>
@@ -81,7 +81,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- JBossAS-7.1.1.Final
+            <!-- JBossAS-7.1.1.Final -->
             <dependency>
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-dist</artifactId>
@@ -89,8 +89,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            -->
-            <!-- WildFly-8.1.0.Final -->
+            <!-- -->
+            <!-- WildFly-8.1.0.Final
             <dependency>
                 <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-dist</artifactId>
@@ -98,7 +98,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- -->
+            -->
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
