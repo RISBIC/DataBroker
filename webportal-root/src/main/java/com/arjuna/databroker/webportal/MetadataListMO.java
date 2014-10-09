@@ -121,34 +121,37 @@ public class MetadataListMO implements Serializable
         logger.log(Level.FINE, "MetadataListMO.load");
         try
         {
-            String content = _metadataClient.getContent(_serviceRootURL, _requesterId, _userId, _metadataId);
-
-            if (content != null)
+            synchronized (_items)
             {
-                Model model = ModelFactory.createDefaultModel();
-                Reader reader = new StringReader(content);
-                model.read(reader, null);
-                reader.close();
+                String content = _metadataClient.getContent(_serviceRootURL, _requesterId, _userId, _metadataId);
 
-                Property rdfTypeProperty    = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
-                Property dataSourceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
-
-                StmtIterator statements = model.listStatements(null, rdfTypeProperty, dataSourceProperty);
-
-                _items.clear();
-                while (statements.hasNext())
+                if (content != null)
                 {
-                    MetadataItemVO item = buildItem(model, statements.nextStatement().getSubject(), "Data Source");
+                    Model model = ModelFactory.createDefaultModel();
+                    Reader reader = new StringReader(content);
+                    model.read(reader, null);
+                    reader.close();
 
-                    if (item != null)
-                        _items.add(item);
+                    Property rdfTypeProperty    = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
+                    Property dataSourceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
+
+                    StmtIterator statements = model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+
+                    _items.clear();
+                    while (statements.hasNext())
+                    {
+                        MetadataItemVO item = buildItem(model, statements.nextStatement().getSubject(), "Data Source");
+
+                        if (item != null)
+                            _items.add(item);
+                    }
+                    _errorMessage = null;
                 }
-                _errorMessage = null;
-            }
-            else
-            {
-                _items.clear();
-                _errorMessage = "Unable to load data view form DataBroker";
+                else
+                {
+                    _items.clear();
+                    _errorMessage = "Unable to load data view form DataBroker";
+                }
             }
         }
         catch (Throwable throwable)
