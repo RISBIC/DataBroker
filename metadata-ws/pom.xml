@@ -21,14 +21,14 @@
 
     <dependencies>
         <dependency>
-            <!-- JBossAS-7.1.1.Final
+            <!-- JBossAS-7.1.1.Final -->
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
             <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-            -->
-            <!-- WildFly-8.1.0.Final -->
+            <!-- -->
+            <!-- WildFly-8.1.0.Final
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>jaxrs-api</artifactId>
-            <!-- -->
+            -->
             <scope>provided</scope>
         </dependency>
         <!-- dependency>
