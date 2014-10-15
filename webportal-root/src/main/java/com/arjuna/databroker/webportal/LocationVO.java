@@ -14,10 +14,11 @@ public class LocationVO implements Serializable
     {
     }
 
-    public LocationVO(String name, String page)
+    public LocationVO(String name, String page, String iconClass)
     {
         _name = name;
         _page = page;
+        _iconClass = iconClass;
     }
 
     public String getName()
@@ -40,6 +41,17 @@ public class LocationVO implements Serializable
         _page = page;
     }
 
+    public String getIconClass()
+    {
+        return _iconClass;
+    }
+
+    public void setIconClass(String iconClass)
+    {
+        _iconClass = iconClass;
+    }
+
     private String _name;
     private String _page;
+    private String _iconClass;
 }

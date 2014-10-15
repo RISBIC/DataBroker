@@ -14,18 +14,55 @@
             <meta charset="utf-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <h:outputStylesheet name="lib/bootstrap/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="sass/main.scss"/>
-            <h:outputStylesheet name="lib/font-awesome/css/font-awesome.min.css"/>
-            <h:outputStylesheet name="site_style.css"/>
+            <h:outputStylesheet library="lib" name="bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet library="lib" name="font-awesome/css/font-awesome.min.css"/>
+            <link href='http://fonts.googleapis.com/css?family=Raleway:600,400,300' rel='stylesheet' type='text/css' />
+            <h:outputStylesheet name="css/bootstrap-overrides.css"/>
+            <h:outputStylesheet name="css/main.css"/>
+            <!--<h:outputStylesheet name="site_style.css"/>-->
             <link rel="icon" type="image/png" sizes="32x32" href="#{resource['favicon.png']}"/>
             <ui:insert name="head"/>
         </h:head>
 
-        <h:body id="body">
+        <h:body>
+
+            <div id="wrapper">
+                <div id="header">
+                    <div class="container">
+                        <ui:insert name="header">
+                            <ui:include src="/template/header.xhtml">
+                                <ui:param name="titletext" value="DataBroker Portal"/>
+                            </ui:include>
+                        </ui:insert>
+                    </div>
+                </div>
+                <div id="content">
+                    <div class="container">
+                        <ui:insert name="body">
+                            <ui:include src="/template/content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </div>
+                <div id="push"></div>
+            </div>
+
+            <div id="footer">
+                <div class="container">
+                    <ui:insert name="footer">
+                        <ui:include src="/template/footer.xhtml" />
+                    </ui:insert>
+                </div>
+            </div>
+
+            <!--<h:panelGroup styleClass="content" layout="block">
+                <ui:insert name="body"/>
+            </h:panelGroup>
             <h:panelGroup styleClass="content" layout="block">
                 <ui:insert name="body"/>
             </h:panelGroup>
+            <h:panelGroup styleClass="content" layout="block">
+                <ui:insert name="body"/>
+            </h:panelGroup>-->
         </h:body>
     </f:view>
 </html>
