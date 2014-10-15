@@ -9,42 +9,60 @@
         <ui:define name="title">User</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="user_style.css"/>
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="User"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
-            <h:form styleClass="user">
-                <h:panelGroup styleClass="user" layout="block">
-                    <h:panelGroup styleClass="user-title" layout="block">
-                        <h:outputText styleClass="user-title" value="Add User"/>
-                    </h:panelGroup>
-                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty user.errorMessage}">
-                        <h:outputText styleClass="user-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
-                    </h:panelGroup>
-                    <h:panelGrid styleClass="user" columnClasses="user-column-one,user-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
-                        <h:outputText styleClass="user-header" value="User Name"/>
-                        <h:inputText styleClass="user-value" value="#{user.userName}"/>
-                        <h:outputText styleClass="user-header" value="Password"/>
-                        <h:inputSecret styleClass="user-value" value="#{user.password}"/>
-                        <h:outputText styleClass="user-header" value="Admin Role"/>
-                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.adminRole}"/>
-                        <h:outputText styleClass="user-header" value="User Role"/>
-                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.userRole}"/>
-                        <h:outputText styleClass="user-header" value="Guest Role"/>
-                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.guestRole}"/>
-                        <h:outputText styleClass="user-empty" value=""/>
-                        <h:panelGroup>
-                            <h:commandLink styleClass="user-button" action="#{user.doAddSubmit}" value="Add"/>
-                            <h:commandLink styleClass="user-button" action="#{users.doLoad}" value="Cancel"/>
-                        </h:panelGroup>
-                    </h:panelGrid>
+            </ui:include>-->
+            <div class="user">
+                <h2 class="user-title">
+                    Change User
+                </h2>
+                <h:panelGroup styleClass="user-error alert alert-warning" layout="block" rendered="#{not empty user.errorMessage}">
+                    <h:outputText styleClass="user-error-title" value="Error Message: "/>
+                    <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
                 </h:panelGroup>
-            </h:form>
+                <div class="row">
+                    <h:form styleClass="user col-md-6" role="form">
+                        <f:attribute name="autocomplete" value="off" />
+                        <div class="form-group">
+                            <h:outputLabel styleClass="user-header" value="User Name"/>
+                            <h:inputText autocomplete="off" styleClass="user-value form-control" value="#{user.userName}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel styleClass="user-header" value="Password"/>
+                            <h:inputSecret styleClass="user-value form-control" value="#{user.password}"/>
+                        </div>
+
+                        <div class="checkbox">
+                            <label class="user-header">
+                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.adminRole}"/> Admin Role
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label class="user-header">
+                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.userRole}"/> User Role
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label class="user-header">
+                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.guestRole}"/> Guest Role
+                            </label>
+                        </div>
+
+                        <!--<h:outputLabel styleClass="user-empty" value=""/>-->
+                        <div class="">
+                            <h:commandLink styleClass="btn btn-primary user-button" action="#{user.doChangeSubmit}" value="Change"/><h:outputText value="&#160;" />
+                            <h:commandLink styleClass="btn btn-default user-button" action="#{users.doLoad}" value="Cancel"/>
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
         </ui:define>
     </ui:composition>
 </html>
