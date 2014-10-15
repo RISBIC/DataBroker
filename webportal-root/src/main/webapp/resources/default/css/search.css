@@ -1,0 +1,26 @@
+.home {
+    padding-top: 50px;
+}
+
+.home .typeahead {
+    line-height: 70px;
+    height: 70px;
+    font-size: 32px;
+}
+
+.twitter-typeahead {
+    display: block !important;
+}
+
+.tt-dropdown-menu {
+    width: 100%;
+    background-color: #FFFFFF;
+    -webkit-box-shadow: 0px 2px 5px 0px #d0d0d0;
+    -moz-box-shadow:    0px 2px 5px 0px #d0d0d0;
+    box-shadow:         0px 2px 5px 0px #d0d0d0;
+}
+
+.tt-suggestions {
+    line-height: 1.2em;
+    padding: 0 10px;
+}
