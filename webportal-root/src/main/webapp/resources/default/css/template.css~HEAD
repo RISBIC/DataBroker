@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    color: #464646;
 }
 
 #wrapper {
@@ -31,14 +32,12 @@ body {
     -webkit-box-shadow: 0px 1px 5px 0px #d0d0d0;
     -moz-box-shadow: 0px 1px 5px 0px #d0d0d0;
     box-shadow: 0px 1px 5px 0px #d0d0d0;
-    margin-bottom: 20px;
 }
 
 #header .title {
     float: left;
     line-height: 40px;
-    margin: 5px 25px 5px 0;
-    width: 200px;
+    margin: 5px 0;
   }
 
 #header .navigation {
@@ -52,7 +51,6 @@ body {
     padding: 5px 10px;
     margin: 0 10px;
     /*border-bottom: 5px solid #a80000;*/
-    opacity: 0.8;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
@@ -62,7 +60,7 @@ body {
 
 #header .navigation .navigation-item:hover {
     opacity: 1;
-    color: inherit;
+    color: #a80000;
     text-decoration: none;
 }
 
@@ -77,19 +75,82 @@ body {
     line-height: 20px;
 }
 
-h2.has-add-new {
-    position: relative;
+#header .header-login {
+    margin: 10px 0;
 }
 
-h2.has-add-new a{
-    position: absolute;
-    top: 0;
-    margin-left: 10px;
+#header .header-login .input-group {
+    margin: 0 0 5px 0;
+}
+
+#header .header-login .input-group i {
+    width: 12px;
+    text-align: center;
 }
 
 #footer {
-    border-top: 1px solid #d0d0d0;
     -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
     -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;
     box-shadow:         0px -1px 5px 0px #d0d0d0;
+}
+
+#footer .arjuna-logo {
+    height: 75px;
+    margin: 10px 0;
+ }
+
+#footer .di-logo {
+    height: 75px;
+    margin: 10px 0;
+}
+
+#content {
+    padding: 20px 0;
+}
+
+.sidebar-menu {
+    border-right: 1px solid #EEEEEE;
+}
+
+.sidebar-menu ul.list-unstyled {
+    margin-left: 20px;
+}
+
+.sidebar-menu a{
+    color:inherit;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.sidebar-menu .active a, .sidebar-menu a:hover{
+    color:#a80000;
+    text-decoration: none;
+}
+
+.databroker-list .empty-list {
+    text-align: center;
+    width: 70%;
+    margin: 25px auto;
+    color: #999999;
+}
+
+.databroker-list .databroker-count {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -14px;
+}
+
+.databroker-list .databroker-connection .databroker-actions {
+    margin-bottom: 0;
+}
+
+.databroker-list .databroker-connection .databroker-actions li{
+    padding-right: 10px;
+}
+
+.databroker-list .databroker-connection .databroker-actions li i {
+    padding-right: 5px;
 }

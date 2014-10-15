@@ -1,0 +1,25 @@
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+    font-family: 'Raleway', sans-serif;
+}
+
+h2.has-add-new {
+    position: relative;
+}
+
+h2.has-add-new a{
+    position: absolute;
+    top: 0;
+    margin-left: 10px;
+}
+
+a {
+    -webkit-transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    -o-transition: color .25s ease-in-out;
+    transition: color .25s ease-in-out;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #660000;
+}
