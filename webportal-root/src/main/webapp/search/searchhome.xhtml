@@ -9,26 +9,17 @@
         <ui:define name="title">DataBroker Portal Search</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="searchhome_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="DataBroker Portal Search"/>
             </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
-            <h:form styleClass="searchhome">
-                <h:panelGroup styleClass="searchhome" layout="block">
-                    <h:commandLink styleClass="searchhome-link" action="#{dataviews.doLoad}">
-                        <h:panelGrid styleClass="searchhome-link-grip" columns="2">
-                            <h:panelGrid styleClass="searchhome-link-grip" columns="1">
-                                <h:outputText styleClass="searchhome-link-title" value="Data Source Adverts"/>
-                                <h:outputText styleClass="searchhome-link-text" value="Search of data sources - access and descriptions"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="searchhome-link-icon" value="search.png" alt="Create"/>
-                        </h:panelGrid>
+            <h:form>
+                    <h:commandLink action="#{dataviews.doLoad}">
+                        <h:outputText value="Data Source Adverts"/>
+                        <f:attribute name="title" value="Search of data sources - access and descriptions"/>
                     </h:commandLink>
-                </h:panelGroup>
             </h:form>
         </ui:define>
     </ui:composition>

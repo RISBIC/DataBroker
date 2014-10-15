@@ -9,26 +9,17 @@
         <ui:define name="title">DataBroker Portal Create</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="createhome_style.css"/>
         </ui:define>
 
         <ui:define name="body">
             <ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="DataBroker Portal Config"/>
             </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
-            <h:form styleClass="createhome">
-                <h:panelGroup styleClass="createhome" layout="block">
-                    <h:commandLink styleClass="createhome-link" action="#{dataflows.doLoad}">
-                        <h:panelGrid styleClass="createhome-link-grip" columns="2">
-                            <h:panelGrid styleClass="createhome-link-grip" columns="1">
+            <h:form>
+                    <h:commandLink action="#{dataflows.doLoad}">
                                 <h:outputText styleClass="createhome-link-title" value="Data Flow Creation"/>
-                                <h:outputText styleClass="createhome-link-text" value="Creation of data flows - acquisition and processing"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="createhome-link-icon" value="create.png" alt="Create"/>
-                        </h:panelGrid>
+                                <f:attribute name="title" value="Creation of data flows - acquisition and processing"/>
                     </h:commandLink>
-                </h:panelGroup>
             </h:form>
         </ui:define>
     </ui:composition>
