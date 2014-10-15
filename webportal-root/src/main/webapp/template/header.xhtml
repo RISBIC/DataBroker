@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+<ui:composition>
+
+    <h:outputText styleClass="title h1" value="#{titletext}"/>
+
+    <h:form styleClass="navigation">
+        <ui:repeat value="#{navigation.locations}" var="location">
+            <h:commandLink styleClass="navigation-item h4" action="#{navigation.doGoTo(location.name)}">
+                <i class="#{location.iconClass}"></i>
+                <span>#{location.name}</span>
+            </h:commandLink>
+        </ui:repeat>
+        <h:panelGroup styleClass="navigation-end" layout="block"/>
+    </h:form>
+
+    <h:form styleClass="header-login form-inline pull-right">
+
+
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail2">
+                <h:outputText styleClass="userlabel" value="Username"/>
+            </label>
+            <h:inputText styleClass="form-control" value="#{auth.username}"/>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword2">
+                <h:outputText styleClass="userlabel" value="Password"/>
+            </label>
+            <h:inputSecret styleClass="form-control" value="#{auth.password}"/>
+        </div>
+
+        <h:commandButton styleClass="btn btn-default" action="#{auth.doSignin}" value="sign in"/>
+
+    </h:form>
+
+</ui:composition>
+</body>
+</html>
