@@ -14,7 +14,7 @@ html, body {
 }
 
 #footer {
-    height: 200px;
+    height: 280px;
     padding: 40px 0;
     background-color: #f5f5f5;
 }
@@ -28,9 +28,10 @@ body {
 }
 
 #header {
-    -webkit-box-shadow: 0px 1px 5px 0px #F7F7F7;
-    -moz-box-shadow: 0px 1px 5px 0px #F7F7F7;
-    box-shadow: 0px 5px 1px 0px #F7F7F7;
+    -webkit-box-shadow: 0px 1px 5px 0px #d0d0d0;
+    -moz-box-shadow: 0px 1px 5px 0px #d0d0d0;
+    box-shadow: 0px 1px 5px 0px #d0d0d0;
+    margin-bottom: 20px;
 }
 
 #header .title {
@@ -78,7 +79,7 @@ body {
 
 #footer {
     border-top: 1px solid #d0d0d0;
-    -webkit-box-shadow: 0px -1px 5px 0px #F7F7F7;
-    -moz-box-shadow:    0px -1px 5px 0px #F7F7F7;
-    box-shadow:         0px -1px 5px 0px #F7F7F7;
+    -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
+    -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;
+    box-shadow:         0px -1px 5px 0px #d0d0d0;
 }
