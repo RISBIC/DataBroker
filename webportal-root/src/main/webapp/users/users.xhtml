@@ -12,18 +12,19 @@
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Users"/>
-            </ui:include>
+            </ui:include>-->
             <h:form styleClass="users">
                 <h:panelGroup styleClass="users" layout="block">
-                    <h:panelGroup styleClass="users-title" layout="block">
-                        <h:outputText styleClass="users-title" value="Users"/>
-                    </h:panelGroup>
+                    <h2 class="users-title has-add-new">
+                        Users
+                        <h:commandLink styleClass="users-button btn btn-default" action="#{user.doAdd}" value="Add"/>
+                    </h2>
                     <div>
-                        <h:commandLink styleClass="users-button" action="#{user.doAdd}" value="Add"/>
+
                     </div>
-                    <h:dataTable styleClass="users" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
+                    <h:dataTable styleClass="users table" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="users-header" value="Name"/>
@@ -40,8 +41,10 @@
                             <f:facet name="header">
                                 <h:outputText styleClass="users-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="users-button" action="#{user.doChange(_user.name)}" value="Change"/>
-                            <h:commandLink styleClass="users-button" action="#{users.doRemove(_user.name)}" value="Remove"/>
+                            <div class="btn-group">
+                                <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{user.doChange(_user.name)}" value="Change"/>
+                                <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{users.doRemove(_user.name)}" value="Remove"/>
+                            </div>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
