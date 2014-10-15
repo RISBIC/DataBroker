@@ -16,38 +16,27 @@
             <ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="DataBroker Portal"/>
             </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
-            <h:form styleClass="home">
-                <h:panelGroup styleClass="home" layout="block">
-                    <h:commandLink styleClass="home-link" action="/search/searchhome?faces-redirect=true">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Search"/>
-                                <h:outputText styleClass="home-link-text" value="Search of data - access and descriptions"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="search.png" alt="Search"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="/create/createhome?faces-redirect=true">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="Data Creation"/>
-                                <h:outputText styleClass="home-link-text" value="Creation of data - acquisition and processing"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="create.png" alt="Create"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                    <h:commandLink styleClass="home-link" action="/config/confighome?faces-redirect=true">
-                        <h:panelGrid styleClass="home-link-grip" columns="2">
-                            <h:panelGrid styleClass="home-link-grip" columns="1">
-                                <h:outputText styleClass="home-link-title" value="System Configurations"/>
-                                <h:outputText styleClass="home-link-text" value="User and servers"/>
-                            </h:panelGrid>
-                            <h:graphicImage styleClass="home-link-icon" value="config.png" alt="Config"/>
-                        </h:panelGrid>
-                    </h:commandLink>
-                </h:panelGroup>
-            </h:form>
+                <div class="home">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input class="searchbar" type="text"/>
+                        </div>
+                    </div>
+                    <h:form>
+                        <h:commandLink styleClass="home-link" action="/search/searchhome?faces-redirect=true">
+                            <h:outputText styleClass="home-link-title" value="Data Search"/>
+                            <f:attribute name="title" value="Search of data - access and descriptions"/>
+                        </h:commandLink>
+                        <h:commandLink styleClass="home-link" action="/create/createhome?faces-redirect=true">
+                            <h:outputText styleClass="home-link-title" value="Data Creation"/>
+                            <f:attribute name="title" value="Creation of data - acquisition and processing"/>
+                        </h:commandLink>
+                        <h:commandLink styleClass="home-link" action="/config/confighome?faces-redirect=true">
+                            <h:outputText styleClass="home-link-title" value="System Configurations"/>
+                            <f:attribute name="title" value="User and servers"/>
+                        </h:commandLink>
+                    </h:form>
+                </div>
         </ui:define>
     </ui:composition>
 </html>

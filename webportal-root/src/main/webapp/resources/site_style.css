@@ -118,11 +118,17 @@ input[type="password"].uservalue
 	color:			#111111;
 }
 
+form {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
 form.navigation
 {
 	margin:			0;
 	border:			0;
-	padding:		0.5em 2em 0.5em 2em;
+	padding:		0;
 	background-color:	#EEA05D;
 }
 
@@ -136,15 +142,11 @@ div.navigation-end
 
 a.location-left
 {
-	margin:				0 1em 0 0;
+	margin:				0;
 	border:				0;
-	padding:			0.125em 0.5em 0.125em 0.5em;
+	padding:			10px 5px;
 	float:				left;
 	font-size:			1em;
-	border-top-left-radius:		0.5em;
-	-moz-border-radius-topleft:	0.5em;
-	border-bottom-right-radius:	0.5em;
-	-moz-border-radius-bottomright:	0.5em;
 }
 
 a.location-left:link
