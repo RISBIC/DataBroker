@@ -9,35 +9,39 @@
         <ui:define name="title">User</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="user_style.css"/>
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="User"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
-            <h:form styleClass="user">
-                <h:panelGroup styleClass="user" layout="block">
-                    <h:panelGroup styleClass="user-title" layout="block">
-                        <h:outputText styleClass="user-title" value="User"/>
-                    </h:panelGroup>
-                    <h:panelGroup styleClass="user-error" layout="block" rendered="#{not empty user.errorMessage}">
-                        <h:outputText styleClass="user-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
-                    </h:panelGroup>
-                    <h:panelGrid styleClass="user" columnClasses="user-column-one,user-column-two" columns="2">
-                        <h:outputText styleClass="user-header" value="User Name"/>
-                        <h:inputText styleClass="user-value" value="#{user.userName}" disabled="true"/>
-                        <h:outputText styleClass="user-header" value="Active Account"/>
-                        <h:selectBooleanCheckbox styleClass="user-value" value="#{user.activeAccount}" disabled="true"/>
-                        <h:outputText styleClass="user-empty" value=""/>
-                        <h:panelGroup>
-                            <h:commandLink styleClass="user-button" action="#{users.doLoad}" value="Done"/>
-                        </h:panelGroup>
-                    </h:panelGrid>
+            </ui:include>-->
+
+            <div class="user">
+                <h2 class="user-title">
+                    User
+                </h2>
+                <h:panelGroup styleClass="user-error alert alert-warning" layout="block" rendered="#{not empty user.errorMessage}">
+                    <h:outputText styleClass="user-error-title" value="Error Message: "/>
+                    <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
                 </h:panelGroup>
-            </h:form>
+                <h:form styleClass="user col-md-6" role="form">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="user-header" value="User Name"/>
+                        <h:inputText styleClass="user-value form-control" value="#{user.userName}" disabled="true"/>
+                    </div>
+                    <div class="checkbox">
+                        <label class="user-header">
+                            <h:selectBooleanCheckbox styleClass="user-value" value="#{user.activeAccount}" disabled="true"/> Active Account
+                        </label>
+                    </div>
+                    <!--<h:outputText styleClass="user-empty" value=""/>-->
+
+                    <div class="form-group">
+                        <h:commandLink styleClass="user-button btn btn-primary" action="#{users.doLoad}" value="Done"/>
+                    </div>
+                </h:form>
+            </div>
+
         </ui:define>
     </ui:composition>
 </html>
