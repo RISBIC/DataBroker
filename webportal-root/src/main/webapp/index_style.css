@@ -15,27 +15,17 @@ div.home
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 2em 1em 2em;
+	padding:		0;
 	color:			#111111;
 	background-color:	#FFFFFF;
 }
 
 a.home-link
 {
-	margin:				1em 0 1em 0;
+	margin:				0;
 	border:				0;
-	padding:			1em 8em 1em 8em;
-	display:			block;
+	padding:			0;
 	text-decoration:		none;
-	border-top-left-radius:		2em;
-	-moz-border-radius-topleft:	2em;
-	border-top-right-radius:	2em;
-	-moz-border-radius-topright:	2em;
-	border-bottom-right-radius:	2em;
-	-moz-border-radius-bottomright:	2em;
-	border-bottom-left-radius:	2em;
-	-moz-border-radius-bottomleft:	2em;
-	background-image:		url('pattern.png');
 }
 
 a.home-link:link
@@ -75,17 +65,26 @@ table.home-link-grip
 
 span.home-link-title
 {
-	font-size:		3em;
+	font-size:		1em;
 	text-decoration:	none;
 }
 
 span.home-link-text
 {
-	font-size:		2em;
+	font-size:		1em;
 	text-decoration:	none;
 }
 
 img.home-link-icon
 {
 	float:			right;
+}
+
+.searchbar {
+    border: 1px solid #333;
+    padding: 5px 10px;
+    width: 75%;
+    margin: 10px auto;
+    font-size: 1.5em;
+    line-height: 1.5em;
 }
