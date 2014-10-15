@@ -19,8 +19,13 @@
             <link href='http://fonts.googleapis.com/css?family=Raleway:600,400,300' rel='stylesheet' type='text/css' />
             <h:outputStylesheet library="default" name="css/bootstrap-overrides.css"/>
             <h:outputStylesheet library="default" name="css/template.css"/>
+            <h:outputStylesheet library="default" name="css/search.css"/>
             <!--<h:outputStylesheet name="site_style.css"/>-->
             <link rel="icon" type="image/png" sizes="32x32" href="#{resource['favicon.png']}"/>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+            <script type="text/javascript">jQuery.noConflict();</script>
+            <script type="application/javascript" src="resources/common/lib/typeahead/typeahead.jquery.min.js"></script>
+            <script type="application/javascript" src="resources/common/lib/typeahead/bloodhound.min.js"></script>
             <ui:insert name="head"/>
         </h:head>
 
