@@ -12,9 +12,9 @@
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="User"/>
-            </ui:include>
+            </ui:include>-->
 
                 <div class="user">
                     <h2 class="user-title">
@@ -24,41 +24,44 @@
                         <h:outputText styleClass="user-error-title" value="Error Message: "/>
                         <h:outputText styleClass="user-error-message" value="#{user.errorMessage}"/>
                     </h:panelGroup>
-                    <h:form styleClass="user" role="form">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="user-header" value="User Name"/>
-                            <h:inputText styleClass="user-value form-control" value="#{user.userName}"/>
-                        </div>
+                    <div class="row">
+                        <h:form styleClass="user col-md-6" role="form">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="user-header" value="User Name"/>
+                                <h:inputText styleClass="user-value form-control" value="#{user.userName}"/>
+                            </div>
 
-                        <div class="form-group">
-                            <h:outputLabel styleClass="user-header" value="Password"/>
-                            <h:inputSecret styleClass="user-value form-control" value="#{user.password}"/>
-                        </div>
+                            <div class="form-group">
+                                <h:outputLabel styleClass="user-header" value="Password"/>
+                                <h:inputSecret styleClass="user-value form-control" value="#{user.password}"/>
+                            </div>
 
-                        <div class="checkbox">
-                            <label class="user-header">
-                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.adminRole}"/> Admin Role
-                            </label>
-                        </div>
+                            <div class="checkbox">
+                                <label class="user-header">
+                                    <h:selectBooleanCheckbox styleClass="user-value" value="#{user.adminRole}"/> Admin Role
+                                </label>
+                            </div>
 
-                        <div class="checkbox">
-                            <label class="user-header">
-                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.userRole}"/> User Role
-                            </label>
-                        </div>
+                            <div class="checkbox">
+                                <label class="user-header">
+                                    <h:selectBooleanCheckbox styleClass="user-value" value="#{user.userRole}"/> User Role
+                                </label>
+                            </div>
 
-                        <div class="checkbox">
-                            <label class="user-header">
-                                <h:selectBooleanCheckbox styleClass="user-value" value="#{user.guestRole}"/> Guest Role
-                            </label>
-                        </div>
+                            <div class="checkbox">
+                                <label class="user-header">
+                                    <h:selectBooleanCheckbox styleClass="user-value" value="#{user.guestRole}"/> Guest Role
+                                </label>
+                            </div>
 
-                        <!--<h:outputLabel styleClass="user-empty" value=""/>-->
-                        <div>
-                            <h:commandLink styleClass="btn btn-default user-button" action="#{user.doChangeSubmit}" value="Change"/>
-                            <h:commandLink styleClass="btn btn-default user-button" action="#{users.doLoad}" value="Cancel"/>
-                        </div>
-                    </h:form>
+                            <!--<h:outputLabel styleClass="user-empty" value=""/>-->
+                            <div class="">
+                                <h:commandLink styleClass="btn btn-primary user-button" action="#{user.doChangeSubmit}" value="Change"/><h:outputText value="&#160;" />
+                                <h:commandLink styleClass="btn btn-default user-button" action="#{users.doLoad}" value="Cancel"/>
+                            </div>
+                        </h:form>
+                    </div>
+
                 </div>
         </ui:define>
     </ui:composition>

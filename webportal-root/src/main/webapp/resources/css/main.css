@@ -77,6 +77,16 @@ body {
     line-height: 20px;
 }
 
+h2.has-add-new {
+    position: relative;
+}
+
+h2.has-add-new a{
+    position: absolute;
+    top: 0;
+    margin-left: 10px;
+}
+
 #footer {
     border-top: 1px solid #d0d0d0;
     -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
