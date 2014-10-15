@@ -6,7 +6,7 @@
 <!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <f:view>
         <h:head>
             <title><ui:insert name="title"/></title>
@@ -14,11 +14,11 @@
             <meta charset="utf-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <h:outputStylesheet library="lib" name="bootstrap/css/bootstrap.min.css"/>
-            <h:outputStylesheet library="lib" name="font-awesome/css/font-awesome.min.css"/>
+            <h:outputStylesheet library="common" name="lib/bootstrap/css/bootstrap.min.css"/>
+            <h:outputStylesheet library="common" name="lib/font-awesome/css/font-awesome.min.css"/>
             <link href='http://fonts.googleapis.com/css?family=Raleway:600,400,300' rel='stylesheet' type='text/css' />
-            <h:outputStylesheet name="css/bootstrap-overrides.css"/>
-            <h:outputStylesheet name="css/main.css"/>
+            <h:outputStylesheet library="default" name="css/bootstrap-overrides.css"/>
+            <h:outputStylesheet library="default" name="css/template.css"/>
             <!--<h:outputStylesheet name="site_style.css"/>-->
             <link rel="icon" type="image/png" sizes="32x32" href="#{resource['favicon.png']}"/>
             <ui:insert name="head"/>

@@ -37,8 +37,7 @@ body {
 #header .title {
     float: left;
     line-height: 40px;
-    margin: 5px 25px 5px 0;
-    width: 200px;
+    margin: 5px 0;
   }
 
 #header .navigation {
@@ -52,7 +51,7 @@ body {
     padding: 5px 10px;
     margin: 0 10px;
     /*border-bottom: 5px solid #a80000;*/
-    opacity: 0.8;
+    opacity: 0.75;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
@@ -77,6 +76,19 @@ body {
     line-height: 20px;
 }
 
+#header .header-login {
+    margin: 10px 0;
+}
+
+#header .header-login .input-group {
+    margin: 0 0 5px 0;
+}
+
+#header .header-login .input-group i {
+    width: 12px;
+    text-align: center;
+}
+
 h2.has-add-new {
     position: relative;
 }
@@ -88,8 +100,8 @@ h2.has-add-new a{
 }
 
 #footer {
-    border-top: 1px solid #d0d0d0;
     -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
     -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;
     box-shadow:         0px -1px 5px 0px #d0d0d0;
 }
+
