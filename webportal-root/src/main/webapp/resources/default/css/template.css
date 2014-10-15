@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    color: #464646;
 }
 
 #wrapper {
@@ -51,7 +52,6 @@ body {
     padding: 5px 10px;
     margin: 0 10px;
     /*border-bottom: 5px solid #a80000;*/
-    opacity: 0.75;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     -ms-transition: all 0.3s;
@@ -61,7 +61,7 @@ body {
 
 #header .navigation .navigation-item:hover {
     opacity: 1;
-    color: inherit;
+    color: #a80000;
     text-decoration: none;
 }
 
@@ -89,19 +89,18 @@ body {
     text-align: center;
 }
 
-h2.has-add-new {
-    position: relative;
-}
-
-h2.has-add-new a{
-    position: absolute;
-    top: 0;
-    margin-left: 10px;
-}
-
 #footer {
     -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
     -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;
     box-shadow:         0px -1px 5px 0px #d0d0d0;
 }
 
+#footer .arjuna-logo {
+    height: 60px;
+    margin: 10px 0;
+ }
+
+#footer .di-logo {
+    height: 100px;
+    margin: 10px 0;
+}
