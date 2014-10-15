@@ -20,7 +20,7 @@ html, body {
 }
 
 body {
-    background-color: #DEDEDE;
+    background-color: #F7F7F7;
 }
 
 #header, #footer {
@@ -28,10 +28,9 @@ body {
 }
 
 #header {
-    border-bottom: 1px solid #d0d0d0;
-    -webkit-box-shadow: 0px 5px 5px 0px #d0d0d0;
-    -moz-box-shadow: 0px 5px 5px 0px #d0d0d0;
-    box-shadow: 0px 5px 5px 0px #d0d0d0;
+    -webkit-box-shadow: 0px 1px 5px 0px #F7F7F7;
+    -moz-box-shadow: 0px 1px 5px 0px #F7F7F7;
+    box-shadow: 0px 5px 1px 0px #F7F7F7;
 }
 
 #header .title {
@@ -79,7 +78,7 @@ body {
 
 #footer {
     border-top: 1px solid #d0d0d0;
-    -webkit-box-shadow: 0px -5px 5px 0px #d0d0d0;
-    -moz-box-shadow:    0px -5px 5px 0px #d0d0d0;
-    box-shadow:         0px -5px 5px 0px #d0d0d0;
+    -webkit-box-shadow: 0px -1px 5px 0px #F7F7F7;
+    -moz-box-shadow:    0px -1px 5px 0px #F7F7F7;
+    box-shadow:         0px -1px 5px 0px #F7F7F7;
 }
