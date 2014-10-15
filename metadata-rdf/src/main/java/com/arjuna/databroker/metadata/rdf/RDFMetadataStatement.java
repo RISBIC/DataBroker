@@ -4,6 +4,10 @@
 
 package com.arjuna.databroker.metadata.rdf;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
 import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
@@ -33,8 +37,44 @@ public class RDFMetadataStatement implements MetadataStatement
     @SuppressWarnings("unchecked")
     public <T> T getValue(Class<T> valueClass)
     {
-        if ((_statement != null) && valueClass.isAssignableFrom(String.class))
-            return (T) _statement.getString();
+        if (_statement != null)
+        {
+            if (valueClass.isAssignableFrom(String.class))
+                return (T) _statement.getString();
+            else if (valueClass.isAssignableFrom(Integer.class))
+                return (T) Integer.valueOf(_statement.getString());
+            else
+                return null;
+        }
+        else
+            return null;
+    }
+
+    public <T> T getValue(Type valueType)
+    {
+        if (_statement != null)
+        {
+            if (valueType instanceof Class<?>)
+                return getValue(valueType);
+            else if (valueType instanceof ParameterizedType)
+            {
+                ParameterizedType parameterizedType = (ParameterizedType) valueType;
+                if ((parameterizedType.getRawType() instanceof List) && (parameterizedType.getActualTypeArguments().length == 1))
+                {
+                    Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
+
+                    List<?> list = new LinkedList<Object>();
+                    
+                    // Process 'seq'
+                    
+                    return (T) list;
+                }
+
+                return null;
+            }
+            else
+                return null;
+        }
         else
             return null;
     }

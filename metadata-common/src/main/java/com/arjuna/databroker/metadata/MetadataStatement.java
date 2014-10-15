@@ -4,6 +4,7 @@
 
 package com.arjuna.databroker.metadata;
 
+import java.lang.reflect.Type;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 
 public interface MetadataStatement
@@ -11,6 +12,7 @@ public interface MetadataStatement
     public String getName();
     public String getType();
     public <T> T  getValue(Class<T> valueClass);
+    public <T> T  getValue(Type valueType);
 
     public MetadataStatementSelector statement();
 
