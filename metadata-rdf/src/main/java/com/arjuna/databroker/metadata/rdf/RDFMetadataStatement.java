@@ -8,10 +8,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+
 import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
+import com.hp.hpl.jena.rdf.model.Bag;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 public class RDFMetadataStatement implements MetadataStatement
@@ -64,9 +66,11 @@ public class RDFMetadataStatement implements MetadataStatement
                 {
                     Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
 
-                    List<?> list = new LinkedList<Object>();
+                    Bag valuesBag = _statement.getBag();
 
-                    // Process 'seq'
+                    List<?> list = new LinkedList<Object>();
+                    for (int index = 0; index < valuesBag.size(); index++)
+                    	
 
                     return (T) list;
                 }
