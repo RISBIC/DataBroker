@@ -7,6 +7,8 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,6 +24,8 @@ import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 @ManagedBean(name="databroker")
 public class DataBrokerMO implements Serializable
 {
+    private static final Logger logger = Logger.getLogger(DataBrokerMO.class.getName());
+
     private static final long serialVersionUID = -2660820092730037733L;
 
     public DataBrokerMO()
@@ -74,6 +78,8 @@ public class DataBrokerMO implements Serializable
 
     public String doLoad(String id)
     {
+        logger.log(Level.FINE, "DataBrokerMO.doLoad: " + id);
+
         DataBrokerEntity dataBrokerEntity = _dataBrokerUtils.retrieveDataBroker(id);
 
         _dataFlowSummaries.clear();
@@ -96,6 +102,8 @@ public class DataBrokerMO implements Serializable
 
     public String doReload()
     {
+        logger.log(Level.FINE, "DataBrokerMO.doReload");
+
         reload();
 
         return "/dataflows/databroker?faces-redirect=true";
