@@ -55,18 +55,19 @@ public class RDFMetadataStatement implements MetadataStatement
         if (_statement != null)
         {
             if (valueType instanceof Class<?>)
-                return getValue(valueType);
+                return getValue((Class<T>) valueType);
             else if (valueType instanceof ParameterizedType)
             {
                 ParameterizedType parameterizedType = (ParameterizedType) valueType;
-                if ((parameterizedType.getRawType() instanceof List) && (parameterizedType.getActualTypeArguments().length == 1))
+
+                if (parameterizedType.getRawType().equals(List.class) && (parameterizedType.getActualTypeArguments().length == 1))
                 {
                     Type actualTypeArgument = parameterizedType.getActualTypeArguments()[0];
 
                     List<?> list = new LinkedList<Object>();
-                    
+
                     // Process 'seq'
-                    
+
                     return (T) list;
                 }
 
