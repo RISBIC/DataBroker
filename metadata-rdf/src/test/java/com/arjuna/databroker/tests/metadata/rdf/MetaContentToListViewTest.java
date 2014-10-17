@@ -48,20 +48,23 @@ public class MetaContentToListViewTest
     }
 
     @Test
-    public void metadataContentToView()
+    public void metadataContentToListView()
     {
         assertNotNull("Not expecting null Metadata Content object", _metadataContent);
 
         TestListView testListView = _metadataContent.getView(TestListView.class);
-        assertNotNull("Not expecting null Test View object", testListView);
+        assertNotNull("Not expecting null Test List View object", testListView);
 
         List<String> propList01Value = testListView.getPropList01();
         assertNotNull("Not expecting null value for propList01", propList01Value);
         assertEquals("Unexpecting propList01 length", 1, propList01Value.size());
+        assertEquals("Unexpect value for propList01[0]", "Value 01", propList01Value.get(0));
 
         List<String> propList02Value = testListView.getPropList02();
         assertNotNull("Not expecting null value for propList02", propList02Value);
         assertEquals("Unexpecting propList02 value", 2, propList02Value.size());
+        assertEquals("Unexpect value for propList02[0]", "Value 01", propList01Value.get(0));
+        assertEquals("Unexpect value for propList02[1]", "Value 02", propList01Value.get(1));
     }
 
     private static MetadataContent _metadataContent;
