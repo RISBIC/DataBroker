@@ -10,6 +10,7 @@ import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.connector.NamedDataProvider;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
+import org.risbic.transport.jms.JMSDataProviderImpl;
 
 public class DataProviderFactory
 {
@@ -31,8 +32,8 @@ public class DataProviderFactory
 
     public static <T> NamedDataProvider<T> createNamedDataProvider(DataFlowNode dataFlowNode)
     {
-        logger.log(Level.FINE, "createNamedDataProvider");
+       logger.log(Level.FINE, "createNamedDataProvider");
 
-        return null;
+       return new JMSDataProviderImpl();
     }
 }
