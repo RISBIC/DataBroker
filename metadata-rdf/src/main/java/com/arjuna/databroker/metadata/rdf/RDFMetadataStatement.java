@@ -5,11 +5,15 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+
 import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
+import com.arjuna.databroker.metadata.annotations.MetadataContentView;
+import com.arjuna.databroker.metadata.invocationhandlers.MutableMetadataContentViewInvocationHandler;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
@@ -123,6 +127,12 @@ public class RDFMetadataStatement implements MetadataStatement
                 return (T) Float.valueOf(valueNode.asLiteral().getFloat());
             else if (valueClass.isAssignableFrom(Double.class) && valueNode.isLiteral())
                 return (T) Double.valueOf(valueNode.asLiteral().getDouble());
+            else if (valueClass.getAnnotation(MetadataContentView.class) != null)
+            {
+            	RDFMutableMetadataContent rdfMutableMetadataContent = new RDFMutableMetadataContent(valueNode.asResource());
+
+            	return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { valueClass }, new MutableMetadataContentViewInvocationHandler(rdfMutableMetadataContent));
+            }
             else
                 return null;
         }
