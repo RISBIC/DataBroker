@@ -58,13 +58,25 @@ public class MetaContentToViewListViewTest
         List<TestView> propList01Value = testViewListView.getPropList01();
         assertNotNull("Not expecting null value for propList01", propList01Value);
         assertEquals("Unexpecting propList01 length", 1, propList01Value.size());
-        assertEquals("Unexpect value for propList01[0]", "Value 01", propList01Value.get(0));
+        assertNotNull("Not expecting null value for propList01[0]", propList01Value.get(0));
+        assertEquals("Unexpect value for propList01[0]prop01", "Value 01-01", propList01Value.get(0).getProp01());
+        assertEquals("Unexpect value for propList01[0]prop02", "Value 02-01", propList01Value.get(0).getProp02());
+        assertEquals("Unexpect value for propList01[0]prop03", "Value 03-01", propList01Value.get(0).getProp03());
+        assertEquals("Unexpect value for propList01[0]prop04", "Value 04-01", propList01Value.get(0).getProp04());
 
         List<TestView> propList02Value = testViewListView.getPropList02();
         assertNotNull("Not expecting null value for propList02", propList02Value);
         assertEquals("Unexpecting propList02 value", 2, propList02Value.size());
-        assertEquals("Unexpect value for propList02[0]", "Value 01", propList02Value.get(0));
-        assertEquals("Unexpect value for propList02[1]", "Value 02", propList02Value.get(1));
+        assertNotNull("Not expecting null value for propList02[0]", propList02Value.get(0));
+        assertNotNull("Not expecting null value for propList02[1]", propList02Value.get(1));
+        assertEquals("Unexpect value for propList02[0]prop01", "Value 01-02", propList02Value.get(0).getProp01());
+        assertEquals("Unexpect value for propList02[0]prop02", "Value 02-02", propList02Value.get(0).getProp02());
+        assertEquals("Unexpect value for propList02[0]prop03", "Value 03-02", propList02Value.get(0).getProp03());
+        assertEquals("Unexpect value for propList02[0]prop04", "Value 04-02", propList02Value.get(0).getProp04());
+        assertEquals("Unexpect value for propList02[1]prop01", "Value 01-03", propList02Value.get(1).getProp01());
+        assertEquals("Unexpect value for propList02[1]prop02", "Value 02-03", propList02Value.get(1).getProp02());
+        assertEquals("Unexpect value for propList02[1]prop03", "Value 03-03", propList02Value.get(1).getProp03());
+        assertEquals("Unexpect value for propList02[1]prop04", "Value 04-03", propList02Value.get(1).getProp04());
     }
 
     private static MetadataContent _metadataContent;
