@@ -28,7 +28,7 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
             throw new UnsupportedOperationException("No arguments expected");
         else
             return _mutableMetadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getMetadataStatement().getValue(String.class);
-     }
+    }
     
     private MutableMetadataContent _mutableMetadataContent;
 }
