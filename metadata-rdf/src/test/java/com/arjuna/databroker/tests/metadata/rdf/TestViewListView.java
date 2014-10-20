@@ -11,9 +11,9 @@ import com.arjuna.databroker.metadata.annotations.MetadataStatementMapping;
 @MetadataContentView
 public interface TestViewListView
 {
-    @MetadataStatementMapping(name="http://rdfs.arjuna.com/testlist0001#propviewlist01", type="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq")
+    @MetadataStatementMapping(name="http://rdfs.arjuna.com/metadata/test#propviewlist01", type="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq")
     public List<TestView> getPropList01();
 
-    @MetadataStatementMapping(name="http://rdfs.arjuna.com/testlist0001#propviewlist02", type="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq")
+    @MetadataStatementMapping(name="http://rdfs.arjuna.com/metadata/test#propviewlist02", type="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq")
     public List<TestView> getPropList02();
 }

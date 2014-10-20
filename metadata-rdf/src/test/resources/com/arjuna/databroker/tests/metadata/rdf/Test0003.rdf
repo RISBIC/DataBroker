@@ -4,7 +4,7 @@
 <!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/test0003#">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/metadata/test#">
     <t:Test rdf:about="http://rdf.arjuna.com/test0003#Test01">
         <t:prop01>Value 01</t:prop01>
         <t:prop02>Value 02</t:prop02>

@@ -4,39 +4,39 @@
 <!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/testlist0001#">
-    <t:Test rdf:about="http://rdf.arjuna.com/testlist0002#TestList01">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/metadata/test#">
+    <t:TestViewList rdf:about="http://rdf.arjuna.com/testlist0002#TestList01">
         <t:propviewlist01>
             <rdf:Seq>
                 <rdf:li>
-                    <t:proplist01>
+                    <t:Test>
                         <t:prop01>Value 01-01</t:prop01>
                         <t:prop02>Value 02-01</t:prop02>
                         <t:prop03>Value 03-01</t:prop03>
                         <t:prop04>Value 04-01</t:prop04>
-                    </t:proplist01>
+                    </t:Test>
                 </rdf:li>
             </rdf:Seq>
         </t:propviewlist01>
         <t:propviewlist02>
             <rdf:Seq>
                 <rdf:li>
-                    <t:proplist01>
+                    <t:Test>
                         <t:prop01>Value 01-02</t:prop01>
                         <t:prop02>Value 02-02</t:prop02>
                         <t:prop03>Value 03-02</t:prop03>
                         <t:prop04>Value 04-02</t:prop04>
-                    </t:proplist01>
+                    </t:Test>
                 </rdf:li>
                 <rdf:li>
-                    <t:proplist02>
+                    <t:Test>
                         <t:prop01>Value 01-03</t:prop01>
                         <t:prop02>Value 02-03</t:prop02>
                         <t:prop03>Value 03-03</t:prop03>
                         <t:prop04>Value 04-03</t:prop04>
-                    </t:proplist02>
+                    </t:Test>
                 </rdf:li>
             </rdf:Seq>
         </t:propviewlist02>
-    </t:Test>
+    </t:TestViewList>
 </rdf:RDF>
