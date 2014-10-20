@@ -8,18 +8,21 @@
     <ui:composition template="../template.xhtml">
         <ui:define name="title">Data Views</ui:define>
 
-        <ui:define name="head">
+        <!--<ui:define name="head">
             <link rel="stylesheet" type="text/css" href="dataviews_style.css"/>
-        </ui:define>
+        </ui:define>-->
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Data Views"/>
             </ui:include>
             <ui:include src="/fragments/navigation_reload.xhtml">
                 <ui:param name="doreloadobject" value="#{dataviews}"/>
                 <ui:param name="doreloadaction" value="doLoad"/>
-            </ui:include>
+            </ui:include>-->
+
+            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+
             <h:form styleClass="dataviews">
                 <h:panelGroup styleClass="dataviews" layout="block">
                     <h:panelGroup styleClass="dataviews-title" layout="block">

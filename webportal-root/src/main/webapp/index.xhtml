@@ -10,6 +10,8 @@
 
         <ui:define name="body">
 
+            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+
             <div class="home">
                 <div class="row">
                     <div class="col-md-12">
@@ -22,40 +24,20 @@
 
                 jQuery(document).ready(function(){
 
-                    var substringMatcher = function(strs) {
-                        return function findMatches(q, cb) {
-                            var matches, substrRegex;
+                    var dataviews = [];
 
-                            // an array that will be populated with substring matches
-                            matches = [];
+                    <ui:repeat value="#{dataviews.dataViews}" var="_dataview">
+                    dataviews.push('#{_dataview.name}');
+                    </ui:repeat>
 
-                            // regex used to determine if a string contains the substring `q`
-                            substrRegex = new RegExp(q, 'i');
+                    var adverts = new Bloodhound({
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                        local: jQuery.map(dataviews, function(dataview) { return { value: dataview }; })
+                    });
 
-                            // iterate through the pool of strings and for any string that
-                            // contains the substring `q`, add it to the `matches` array
-                            jQuery.each(strs, function(i, str) {
-                                if (substrRegex.test(str)) {
-                                    // the typeahead jQuery plugin expects suggestions to a
-                                    // JavaScript object, refer to typeahead docs for more info
-                                    matches.push({ value: str });
-                                }
-                            });
-
-                            cb(matches);
-                        };
-                    };
-
-                    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-                        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-                        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-                        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-                        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-                        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-                        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-                        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-                        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-                    ];
+                    // kicks off the loading/processing of `local` and `prefetch`
+                    adverts.initialize();
 
                     jQuery('.home .typeahead').typeahead({
                             hint: true,
@@ -64,9 +46,9 @@
                             limit: 10
                         },
                         {
-                            name: 'states',
+                            name: 'adverts',
                             displayKey: 'value',
-                            source: substringMatcher(states)
+                            source: adverts.ttAdapter()
                         });
 
 
