@@ -235,7 +235,7 @@ public class DataFlowWS
                         {
                             try
                             {
-                                DataFlowNode dataFlowNode = DataFlowNodeLifeCycleControl.createDataFlowNode(dataFlow, dataFlowNodeFactory, name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());
+                                DataFlowNode dataFlowNode = _dataFlowNodeLifeCycleControl.createDataFlowNode(dataFlow, dataFlowNodeFactory, name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());
 
                                 return dataFlowNode.getName();
                             }
@@ -345,7 +345,7 @@ public class DataFlowWS
                 DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
 
                 if ((dataFlow != null) && (dataFlow.getDataFlowNodeInventory() != null))
-                    return DataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataflowNodeId);
+                    return _dataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataflowNodeId);
                 else
                     throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
             }
@@ -372,4 +372,6 @@ public class DataFlowWS
 
     @EJB(name="DataFlowInventory")
     private DataFlowInventory _dataFlowInventory;
+    @EJB(name="DataFlowNodeLifeCycleControl")
+    private DataFlowNodeLifeCycleControl _dataFlowNodeLifeCycleControl;
 }

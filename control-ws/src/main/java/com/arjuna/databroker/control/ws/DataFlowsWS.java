@@ -140,7 +140,7 @@ public class DataFlowsWS
                 DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
                 if (dataFlow != null)
                     for (DataFlowNode dataFlowNode: dataFlow.getDataFlowNodeInventory().getDataFlowNodes())
-                        DataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataFlowNode.getName());
+                        _dataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataFlowNode.getName());
 
                 return _dataFlowInventory.removeDataFlow(dataFlowId);
             }
@@ -155,4 +155,6 @@ public class DataFlowsWS
     private DataFlowFactory _dataFlowFactory;
     @EJB(name="DataFlowInventory")
     private DataFlowInventory _dataFlowInventory;
+    @EJB(name="DataFlowNodeLifeCycleControl")
+    private DataFlowNodeLifeCycleControl _dataFlowNodeLifeCycleControl;
 }
