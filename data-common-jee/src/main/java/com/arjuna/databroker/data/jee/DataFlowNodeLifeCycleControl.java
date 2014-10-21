@@ -9,9 +9,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -23,10 +27,6 @@ import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
-import com.arjuna.databroker.data.connector.NamedDataProvider;
-import com.arjuna.databroker.data.connector.ObservableDataProvider;
-import com.arjuna.databroker.data.connector.ObserverDataConsumer;
-import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
@@ -36,11 +36,12 @@ import com.arjuna.databroker.data.jee.annotation.PreActivated;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
 
+@Singleton(name="DataFlowNodeLifeCycleControl")
 public class DataFlowNodeLifeCycleControl
 {
     private static final Logger logger = Logger.getLogger(DataFlowNodeLifeCycleControl.class.getName());
 
-    public static <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
+    public <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
         try
@@ -84,7 +85,7 @@ public class DataFlowNodeLifeCycleControl
         }
     }
 
-    public static Boolean processCreatedDataFlowNode(DataFlowNode dataFlowNode, DataFlow dataFlow)
+    public Boolean processCreatedDataFlowNode(DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
         injectDataConnectors(dataFlowNode);
 
@@ -99,7 +100,7 @@ public class DataFlowNodeLifeCycleControl
         return Boolean.TRUE;
     }
 
-    public static Boolean removeDataFlowNode(DataFlow dataFlow, String name)
+    public Boolean removeDataFlowNode(DataFlow dataFlow, String name)
     {
         DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(name);
 
@@ -113,7 +114,7 @@ public class DataFlowNodeLifeCycleControl
         return result;
     }
 
-    public static Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
+    public Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
     {
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
 
@@ -127,7 +128,7 @@ public class DataFlowNodeLifeCycleControl
         return result;
     }
 
-    private static <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
+    private <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
@@ -167,7 +168,8 @@ public class DataFlowNodeLifeCycleControl
         }
     }
 
-    private static void injectDataConnectors(DataFlowNode dataFlowNode)
+    @SuppressWarnings("unchecked")
+    private void injectDataConnectors(DataFlowNode dataFlowNode)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
@@ -185,14 +187,17 @@ public class DataFlowNodeLifeCycleControl
                         DataConsumerInjection dataConsumerInjection = field.getAnnotation(DataConsumerInjection.class);
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
-                        if (field.getType().isAssignableFrom(DataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
-                        else if (field.getType().isAssignableFrom(ReferrerDataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createReferrerDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
-                        else if (field.getType().isAssignableFrom(ObserverDataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createObserverDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
+
+                        DataConsumer<?>                 dataConsumer                = null;
+                        Collection<DataConsumerFactory> dataConsumerFactories       = (Collection<DataConsumerFactory>) _dataConsumerFactoryInventory.getDataConsumerFactories((Class<DataConsumerFactory>) field.getType());
+                        Iterator<DataConsumerFactory>   dataConsumerFactoryIterator = dataConsumerFactories.iterator();
+                        while ((dataConsumer == null) && dataConsumerFactoryIterator.hasNext())
+                            dataConsumer = dataConsumerFactoryIterator.next().createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]);
+
+                        if (dataConsumer != null)
+                            field.set(dataFlowNode, dataConsumer);
                         else
-                            logger.log(Level.WARNING, "DataConsumer injection failed, unsupported type: " + field.getType());
+                             logger.log(Level.WARNING, "DataConsumer injection failed, unsupported type: " + field.getType());
                         field.setAccessible(accessable);
                     }
                     catch (IllegalAccessException illegalAccessException)
@@ -212,12 +217,15 @@ public class DataFlowNodeLifeCycleControl
                         logger.log(Level.FINE, "DataProviderInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
-                        if (field.getType().isAssignableFrom(DataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createDataProvider(dataFlowNode));
-                        else if (field.getType().isAssignableFrom(NamedDataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createNamedDataProvider(dataFlowNode));
-                        else if (field.getType().isAssignableFrom(ObservableDataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createObservableDataProvider(dataFlowNode));
+
+                        DataProvider<?>                 dataProvider                = null;
+                        Collection<DataProviderFactory> dataProviderFactories       = (Collection<DataProviderFactory>) _dataProviderFactoryInventory.getDataProviderFactories((Class<DataProviderFactory>) field.getType());
+                        Iterator<DataProviderFactory>   dataProviderFactoryIterator = dataProviderFactories.iterator();
+                        while ((dataProvider == null) && dataProviderFactoryIterator.hasNext())
+                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode);
+
+                        if (dataProvider != null)
+                            field.set(dataFlowNode, dataProvider);
                         else
                             logger.log(Level.WARNING, "DataProvider injection failed, unsupported type: " + field.getType());
                         field.setAccessible(accessable);
@@ -236,4 +244,10 @@ public class DataFlowNodeLifeCycleControl
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
         }
     }
+
+    @EJB(name="DataConsumerFactoryInventory")
+    private static DataConsumerFactoryInventory _dataConsumerFactoryInventory;
+
+    @EJB(name="DataProviderFactoryInventory")
+    private static DataProviderFactoryInventory _dataProviderFactoryInventory;
 }
