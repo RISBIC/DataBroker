@@ -40,6 +40,12 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
+            <artifactId>metadata-rdf</artifactId>
+            <version>1.0.0p1m2l</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
             <version>1.0.0p1m2l</version>
             <type>jar</type>
@@ -87,11 +93,19 @@
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-common</artifactId>
+                            <bundleFileName>metadata-common.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>control-common</artifactId>
+                            <bundleFileName>control-common.jar</bundleFileName>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>metadata-rdf</artifactId>
+                            <bundleFileName>metadata-rdf.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <ejbModule>
