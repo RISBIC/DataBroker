@@ -9,6 +9,6 @@ import com.arjuna.databroker.data.DataProvider;
 
 public interface DataProviderFactory
 {
-    public <T> DataProvider<T> createDataProvider(DataFlowNode dataFlowNode)
+    public <T> DataProvider<T> createDataProvider(DataFlowNode dataFlowNode, Class<T> dataClass)
         throws Exception;
 }

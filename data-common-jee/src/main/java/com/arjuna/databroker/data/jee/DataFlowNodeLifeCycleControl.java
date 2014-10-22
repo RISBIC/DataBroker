@@ -222,7 +222,7 @@ public class DataFlowNodeLifeCycleControl
                         Collection<DataProviderFactory> dataProviderFactories       = (Collection<DataProviderFactory>) _dataProviderFactoryInventory.getDataProviderFactories((Class<DataProviderFactory>) field.getType());
                         Iterator<DataProviderFactory>   dataProviderFactoryIterator = dataProviderFactories.iterator();
                         while ((dataProvider == null) && dataProviderFactoryIterator.hasNext())
-                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode);
+                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode, (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]);
 
                         if (dataProvider != null)
                             field.set(dataFlowNode, dataProvider);
