@@ -5,8 +5,9 @@
 package com.arjuna.databroker.metadata.rdf;
 
 import java.lang.reflect.Proxy;
+
 import com.arjuna.databroker.metadata.MutableMetadataContent;
-import com.arjuna.databroker.metadata.annotations.MetadataView;
+import com.arjuna.databroker.metadata.annotations.MutableMetadataView;
 import com.arjuna.databroker.metadata.invocationhandlers.MutableMetadataContentViewInvocationHandler;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -45,7 +46,7 @@ public class RDFMutableMetadataContent extends RDFMetadataContent implements Mut
     {
         if (! viewInterface.isInterface())
             throw new IllegalArgumentException("View Interface is not an interface");
-        else if (! viewInterface.isAnnotationPresent(MetadataView.class))
+        else if (! viewInterface.isAnnotationPresent(MutableMetadataView.class))
             throw new IllegalArgumentException("View Interface is not annotated as a MetadataContentView");
         else
             return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MutableMetadataContentViewInvocationHandler(this));
