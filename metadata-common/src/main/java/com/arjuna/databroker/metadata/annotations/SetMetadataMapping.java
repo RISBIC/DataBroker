@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value=ElementType.METHOD)
-public @interface MetadataStatementMapping 
+public @interface SetMetadataMapping 
 {
     public String name();
     public String type();

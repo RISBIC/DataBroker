@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.arjuna.databroker.metadata.MetadataStatement;
 import com.arjuna.databroker.metadata.MutableMetadataStatement;
-import com.arjuna.databroker.metadata.annotations.MetadataContentView;
+import com.arjuna.databroker.metadata.annotations.MetadataView;
 import com.arjuna.databroker.metadata.invocationhandlers.MutableMetadataContentViewInvocationHandler;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
 import com.arjuna.databroker.metadata.selectors.MetadataStatementSelector;
@@ -127,7 +127,7 @@ public class RDFMetadataStatement implements MetadataStatement
                 return (T) Float.valueOf(valueNode.asLiteral().getFloat());
             else if (valueClass.isAssignableFrom(Double.class) && valueNode.isLiteral())
                 return (T) Double.valueOf(valueNode.asLiteral().getDouble());
-            else if (valueClass.getAnnotation(MetadataContentView.class) != null)
+            else if (valueClass.getAnnotation(MetadataView.class) != null)
             {
             	RDFMutableMetadataContent rdfMutableMetadataContent = new RDFMutableMetadataContent(valueNode.asResource());
 

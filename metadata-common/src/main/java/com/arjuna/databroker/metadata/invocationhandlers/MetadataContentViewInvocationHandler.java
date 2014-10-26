@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.InvocationHandler;
 
 import com.arjuna.databroker.metadata.MetadataContent;
-import com.arjuna.databroker.metadata.annotations.MetadataStatementMapping;
+import com.arjuna.databroker.metadata.annotations.GetMetadataMapping;
 
 public class MetadataContentViewInvocationHandler implements InvocationHandler
 {
@@ -21,7 +21,7 @@ public class MetadataContentViewInvocationHandler implements InvocationHandler
     public Object invoke(Object proxy, Method method, Object[] args)
         throws Throwable
     {
-        MetadataStatementMapping metadataStatementMapping = method.getAnnotation(MetadataStatementMapping.class);
+        GetMetadataMapping metadataStatementMapping = method.getAnnotation(GetMetadataMapping.class);
 
         if (metadataStatementMapping == null)
             throw new UnsupportedOperationException("No annotation defined");
