@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.InvocationHandler;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
 import com.arjuna.databroker.metadata.annotations.GetMetadataMapping;
+import com.arjuna.databroker.metadata.annotations.SetMetadataMapping;
 
 public class MutableMetadataContentViewInvocationHandler implements InvocationHandler
 {
@@ -20,15 +21,26 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
     public Object invoke(Object proxy, Method method, Object[] args)
         throws Throwable
     {
-        GetMetadataMapping metadataStatementMapping = method.getAnnotation(GetMetadataMapping.class);
+        GetMetadataMapping getMetadataMapping = method.getAnnotation(GetMetadataMapping.class);
+        SetMetadataMapping setMetadataMapping = method.getAnnotation(SetMetadataMapping.class);
 
-        if (metadataStatementMapping == null)
+        if ((getMetadataMapping == null) && (setMetadataMapping == null))
             throw new UnsupportedOperationException("No annotation defined");
-        else if (args != null)
-            throw new UnsupportedOperationException("No arguments expected");
+        else if (getMetadataMapping == null)
+        {
+        	if (args != null)
+                throw new UnsupportedOperationException("No arguments expected");
+            else
+                return _mutableMetadataContent.statement(getMetadataMapping.name(), getMetadataMapping.type()).getMetadataStatement().getValue(String.class);
+        }
         else
-            return _mutableMetadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getMetadataStatement().getValue(String.class);
+        {
+        	if ((args == null) || (args.length == 1))
+                throw new UnsupportedOperationException("Arguments expected");
+            else
+                return _mutableMetadataContent.statement(getMetadataMapping.name(), getMetadataMapping.type()).getMetadataStatement().setValue(String.class);
+        }
     }
-    
+
     private MutableMetadataContent _mutableMetadataContent;
 }

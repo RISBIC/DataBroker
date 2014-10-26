@@ -21,14 +21,14 @@ public class MetadataContentViewInvocationHandler implements InvocationHandler
     public Object invoke(Object proxy, Method method, Object[] args)
         throws Throwable
     {
-        GetMetadataMapping metadataStatementMapping = method.getAnnotation(GetMetadataMapping.class);
+        GetMetadataMapping getMetadataMapping = method.getAnnotation(GetMetadataMapping.class);
 
-        if (metadataStatementMapping == null)
+        if (getMetadataMapping == null)
             throw new UnsupportedOperationException("No annotation defined");
         else if (args != null)
             throw new UnsupportedOperationException("No arguments expected");
         else
-            return _metadataContent.statement(metadataStatementMapping.name(), metadataStatementMapping.type()).getMetadataStatement().getValue(method.getGenericReturnType());
+            return _metadataContent.statement(getMetadataMapping.name(), getMetadataMapping.type()).getMetadataStatement().getValue(method.getGenericReturnType());
     }
 
     private MetadataContent _metadataContent;

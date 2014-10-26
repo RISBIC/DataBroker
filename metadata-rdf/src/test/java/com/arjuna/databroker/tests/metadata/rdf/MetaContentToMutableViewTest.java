@@ -53,20 +53,37 @@ public class MetaContentToMutableViewTest
     {
         assertNotNull("Not expecting null Metadata Content object", _mutableMetadataContent);
 
-        MutableTestView testView = _mutableMetadataContent.getView(MutableTestView.class);
-        assertNotNull("Not expecting null Test View object", testView);
+        MutableTestView mutableTestView = _mutableMetadataContent.getView(MutableTestView.class);
+        assertNotNull("Not expecting null Test View object", mutableTestView);
 
-        String prop01Value = testView.getProp01();
+        String prop01Value = mutableTestView.getProp01();
         assertEquals("Unexpecting prop01 value", "Value 01", prop01Value);
 
-        String prop02Value = testView.getProp02();
+        String prop02Value = mutableTestView.getProp02();
         assertEquals("Unexpecting prop02 value", "Value 02", prop02Value);
 
-        String prop03Value = testView.getProp03();
+        String prop03Value = mutableTestView.getProp03();
         assertEquals("Unexpecting prop03 value", "Value 03", prop03Value);
 
-        String prop04Value = testView.getProp04();
+        String prop04Value = mutableTestView.getProp04();
         assertEquals("Unexpecting prop04 value", "Value 04", prop04Value);
+
+        mutableTestView.setProp01("New Value 01");
+        mutableTestView.setProp02("New Value 02");
+        mutableTestView.setProp03("New Value 03");
+        mutableTestView.setProp04("New Value 04");
+
+        String newProp01Value = mutableTestView.getProp01();
+        assertEquals("Unexpecting new prop01 value", "New Value 01", newProp01Value);
+
+        String newProp02Value = mutableTestView.getProp02();
+        assertEquals("Unexpecting new prop02 value", "New Value 02", newProp02Value);
+
+        String newProp03Value = mutableTestView.getProp03();
+        assertEquals("Unexpecting new prop03 value", "New Value 03", newProp03Value);
+
+        String newProp04Value = mutableTestView.getProp04();
+        assertEquals("Unexpecting new prop04 value", "New Value 04", newProp04Value);
     }
 
     private static MutableMetadataContent _mutableMetadataContent;
