@@ -26,19 +26,22 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
 
         if ((getMetadataMapping == null) && (setMetadataMapping == null))
             throw new UnsupportedOperationException("No annotation defined");
-        else if (getMetadataMapping == null)
+        else if (getMetadataMapping != null)
         {
-        	if (args != null)
+            if (args != null)
                 throw new UnsupportedOperationException("No arguments expected");
             else
-                return _mutableMetadataContent.statement(getMetadataMapping.name(), getMetadataMapping.type()).getMetadataStatement().getValue(String.class);
+                return _mutableMetadataContent.mutableStatement(getMetadataMapping.name(), getMetadataMapping.type()).getMutableMetadataStatement().getValue(method.getGenericReturnType());
         }
         else
         {
-        	if ((args == null) || (args.length == 1))
+            if ((args == null) || (args.length == 1))
                 throw new UnsupportedOperationException("Arguments expected");
             else
-                return _mutableMetadataContent.statement(getMetadataMapping.name(), getMetadataMapping.type()).getMetadataStatement().setValue(String.class);
+            {
+                _mutableMetadataContent.mutableStatement(setMetadataMapping.name(), setMetadataMapping.type()).getMutableMetadataStatement().setValue(args[0]);
+                return null;
+            }
         }
     }
 
