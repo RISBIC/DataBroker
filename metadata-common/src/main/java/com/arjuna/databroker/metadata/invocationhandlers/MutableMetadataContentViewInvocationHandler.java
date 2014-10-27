@@ -35,7 +35,7 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
         }
         else
         {
-            if ((args == null) || (args.length == 1))
+            if ((args == null) || (args.length != 1))
                 throw new UnsupportedOperationException("Arguments expected");
             else
             {

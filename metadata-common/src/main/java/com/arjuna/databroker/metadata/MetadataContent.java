@@ -10,9 +10,6 @@ import com.arjuna.databroker.metadata.selectors.MetadataStatementsSelector;
 
 public interface MetadataContent
 {
-    public <V> V getView(Class<V> viewInterface)
-            throws IllegalArgumentException;
-
     public MetadataStatementSelector  statement(String name, String type);
     public MetadataStatementsSelector statements();
 
@@ -20,4 +17,7 @@ public interface MetadataContent
 
     public <S extends MetadataContentSelector> S selector(Class<S> c)
         throws IllegalArgumentException;
+
+    public <V> V getView(Class<V> viewInterface)
+            throws IllegalArgumentException;
 }
