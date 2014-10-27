@@ -39,7 +39,8 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
                 throw new UnsupportedOperationException("Arguments expected");
             else
             {
-                _mutableMetadataContent.mutableStatement(setMetadataMapping.name(), setMetadataMapping.type()).getMutableMetadataStatement().setValue(args[0]);
+                _mutableMetadataContent.mutableStatement(setMetadataMapping.name(), setMetadataMapping.type()).getMutableMetadataStatement().setValue(args[0], method.getGenericParameterTypes()[0]);
+
                 return null;
             }
         }
