@@ -27,19 +27,6 @@ public class RDFMetadataContent implements MetadataContent
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <V> V getView(Class<V> viewInterface)
-        throws IllegalArgumentException
-    {
-        if (! viewInterface.isInterface())
-            throw new IllegalArgumentException("View Interface is not an interface");
-        else if (! viewInterface.isAnnotationPresent(MetadataView.class))
-            throw new IllegalArgumentException("View Interface is not annotated as a MetadataContentView");
-        else
-            return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MetadataContentViewInvocationHandler(this));
-    }
-
-    @Override
     public MetadataStatementSelector statement(String name, String type)
     {
         if (_resource != null)
@@ -80,6 +67,19 @@ public class RDFMetadataContent implements MetadataContent
             return (S) new RDFMetadataContentSelector(_resource);
         else
             return null;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <V> V getView(Class<V> viewInterface)
+        throws IllegalArgumentException
+    {
+        if (! viewInterface.isInterface())
+            throw new IllegalArgumentException("View Interface is not an interface");
+        else if (! viewInterface.isAnnotationPresent(MetadataView.class))
+            throw new IllegalArgumentException("View Interface is not annotated as a MetadataView");
+        else
+            return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MetadataContentViewInvocationHandler(this));
     }
 
     protected Resource _resource;

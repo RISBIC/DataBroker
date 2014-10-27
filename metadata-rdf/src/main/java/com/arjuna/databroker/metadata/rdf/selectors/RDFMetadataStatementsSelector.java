@@ -36,5 +36,5 @@ public class RDFMetadataStatementsSelector implements MetadataStatementsSelector
             return null;
     }
 
-    private Resource _resource;
+    protected Resource _resource;
 }
