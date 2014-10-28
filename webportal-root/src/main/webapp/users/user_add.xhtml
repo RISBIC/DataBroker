@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="../template.xhtml">
-        <ui:define name="title">User</ui:define>
+        <ui:define name="title">Add User</ui:define>
 
         <ui:define name="head">
         </ui:define>
@@ -17,7 +17,7 @@
             </ui:include>-->
             <div class="user">
                 <h2 class="user-title">
-                    Change User
+                    Add User
                 </h2>
                 <h:panelGroup styleClass="user-error alert alert-warning" layout="block" rendered="#{not empty user.errorMessage}">
                     <h:outputText styleClass="user-error-title" value="Error Message: "/>

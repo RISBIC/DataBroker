@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
 <body>
 <ui:composition>
@@ -27,13 +25,15 @@
                     <span class="input-group-addon">
                         <i class="fa fa-user"></i>
                     </span>
-                    <h:inputText styleClass="form-control input-sm" value="#{auth.username}" p:placeholder="Username" />
+                    <!--<h:inputText styleClass="form-control input-sm" value="#{auth.username}" p:placeholder="Username" />-->
+                    <h:inputText styleClass="form-control input-sm" value="#{auth.username}" placeholder="Username" />
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-lock"></i>
                     </span>
-                    <h:inputSecret styleClass="form-control input-sm" value="#{auth.password}" p:placeholder="Password" />
+                    <!--<h:inputSecret styleClass="form-control input-sm" value="#{auth.password}" p:placeholder="Password" />-->
+                    <h:inputSecret styleClass="form-control input-sm" value="#{auth.password}" placeholder="Password" />
                     <span class="input-group-btn">
                         <h:commandLink styleClass="btn btn-default btn-sm" action="#{auth.doSignin}">
                             <i class="fa fa-arrow-right"></i>
