@@ -25,10 +25,8 @@
 
             <h:form styleClass="dataviews">
                 <h:panelGroup styleClass="dataviews" layout="block">
-                    <h:panelGroup styleClass="dataviews-title" layout="block">
-                        <h:outputText styleClass="dataviews-title" value="Data Views"/>
-                    </h:panelGroup>
-                    <h:dataTable styleClass="dataviews" headerClass="dataviews-header" columnClasses="dataviews-column-one,dataviews-column-two,dataviews-column-three" value="#{dataviews.dataViews}" var="_dataView">
+                    <h2>Data Views</h2>
+                    <h:dataTable styleClass="table dataviews" headerClass="dataviews-header" columnClasses="dataviews-column-one,dataviews-column-two,dataviews-column-three" value="#{dataviews.dataViews}" var="_dataView">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Name"/>
@@ -45,8 +43,11 @@
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="dataviews-button" action="#{advert.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Advert"/>
-                            <h:commandLink styleClass="dataviews-button" action="#{dataview.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Examine"/>
+                            <div class="btn-group">
+                                <h:commandLink styleClass="dataviews-button btn btn-default btn-xs" action="#{advert.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Advert"/>
+                                <h:commandLink styleClass="dataviews-button btn btn-default btn-xs" action="#{dataview.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Examine"/>
+                            </div>
+
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>

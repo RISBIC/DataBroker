@@ -9,27 +9,22 @@
         <ui:define name="title">Data View</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="dataview_style.css"/>
+            <!--<link rel="stylesheet" type="text/css" href="dataview_style.css"/>-->
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Data View"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation_reload.xhtml">
-                <ui:param name="doreloadobject" value="#{dataview}"/>
-                <ui:param name="doreloadaction" value="doReload"/>
-            </ui:include>
+            </ui:include>-->
             <h:form styleClass="dataview">
                 <h:panelGroup styleClass="dataview" layout="block">
-                    <h:panelGroup styleClass="dataview-title" layout="block">
-                        <h:outputText styleClass="dataview-title" value="Data View"/>
-                    </h:panelGroup>
+                    <h2>Data View</h2>
                     <h:panelGroup styleClass="dataview-error" layout="block" rendered="#{not empty dataview.errorMessage}">
                         <h:outputText styleClass="dataview-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataview-error-message" value="#{dataview.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="_metadataId" rendered="#{empty dataview.errorMessage}">
+                    <h:dataTable styleClass="table dataview" headerClass="dataview-header" columnClasses="dataview-column-one,dataview-column-two" value="#{dataview.metadataIds}" var="_metadataId" rendered="#{empty dataview.errorMessage}">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataview-header" value="Metadata Id"/>
@@ -40,8 +35,11 @@
                             <f:facet name="header">
                                 <h:outputText styleClass="dataview-header" value="Actions"/>
                             </f:facet>
-                            <h:commandLink styleClass="dataview-button" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Report"/>
-                            <h:commandLink styleClass="dataview-button" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Edit"/>
+                            <div class="btn-group">
+                                <h:commandLink styleClass="dataview-button btn btn-default btn-xs" action="#{metadatalist.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Report"/>
+                                <h:commandLink styleClass="dataview-button btn btn-default btn-xs" action="#{metadata.doLoad(dataview.serviceRootURL, dataview.requesterId, dataview.userId, _metadataId)}" value="Edit"/>
+                            </div>
+
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
