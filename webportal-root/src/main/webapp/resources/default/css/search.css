@@ -3,10 +3,7 @@
 }
 
 .home .typeahead {
-<<<<<<< HEAD
-=======
     line-height: 70px;
->>>>>>> Added twitter typeahead
     height: 70px;
     font-size: 32px;
 }
@@ -18,16 +15,12 @@
 .tt-dropdown-menu {
     width: 100%;
     background-color: #FFFFFF;
-<<<<<<< HEAD
     padding: 15px;
-=======
->>>>>>> Added twitter typeahead
     -webkit-box-shadow: 0px 2px 5px 0px #d0d0d0;
     -moz-box-shadow:    0px 2px 5px 0px #d0d0d0;
     box-shadow:         0px 2px 5px 0px #d0d0d0;
 }
 
-<<<<<<< HEAD
 .tt-suggestion {
     margin-bottom: 15px;
 }
@@ -40,9 +33,4 @@
 .tt-suggestion p {
     font-size: 16px;
     line-height: 20px;
-=======
-.tt-suggestions {
-    line-height: 1.2em;
-    padding: 0 10px;
->>>>>>> Added twitter typeahead
 }
