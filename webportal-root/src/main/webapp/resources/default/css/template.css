@@ -104,3 +104,68 @@ body {
     height: 100px;
     margin: 10px 0;
 }
+
+.sidebar-menu {
+    border-right: 1px solid #EEEEEE;
+}
+
+.sidebar-menu ul.list-unstyled {
+    margin-left: 20px;
+}
+
+.sidebar-menu a{
+    color:inherit;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.sidebar-menu .active a, .sidebar-menu a:hover{
+    color:#a80000;
+    text-decoration: none;
+}
+
+.databroker-connection {
+    margin-bottom: 20px;
+}
+
+.databroker-connection .col-md-10 {
+     border-right: 1px solid #cccccc;
+ }
+
+.databroker-connection .col-md-10 h3 {
+    margin: 5px 0 10px 0;
+}
+
+.databroker-connection .col-md-10 p {
+    margin: 0;
+}
+
+.databroker-connection .col-md-1 {
+    opacity: 0;
+    text-align: center;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.databroker-connection:hover .col-md-1 {
+    opacity: 1;
+}
+
+.databroker-connection .col-md-1 a {
+    color: #AAAAAA;
+}
+
+.databroker-connection .col-md-1 a:hover {
+    color: #a80000;
+}
+
+.databroker-connection .col-md-1 a i {
+    line-height: 62px;
+    font-size: 30px;
+}

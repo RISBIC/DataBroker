@@ -11,44 +11,61 @@
         <ui:define name="head">
         </ui:define>
 
+        <f:event type="preRenderView" listener="#{users.doLoad}"/>
+
         <ui:define name="body">
             <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Users"/>
             </ui:include>-->
-            <h:form styleClass="users">
-                <h:panelGroup styleClass="users" layout="block">
-                    <h2 class="users-title has-add-new">
-                        Users
-                        <h:commandLink styleClass="users-button btn btn-default" action="#{user.doAdd}" value="Add"/>
-                    </h2>
-                    <div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h:form>
+                        <ul class="list-unstyled sidebar-menu">
+                            <li>
+                                <h4 class="active"><h:commandLink action="#{users.doLoad}">Users</h:commandLink></h4>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <h5><h:commandLink action="#{user.doAdd}">Add</h:commandLink></h5>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <h4><h:commandLink action="#{databrokerconnections.doLoad}">Data Brokers</h:commandLink></h4>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+                <div class="col-md-9">
+                    <h:form styleClass="users">
+                        <h:panelGroup styleClass="users" layout="block">
+                            <h:dataTable styleClass="users table" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="users-header" value="Name"/>
+                                    </f:facet>
+                                    <h:outputText styleClass="users-value" value="#{_user.name}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="users-header" value="Active"/>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox styleClass="users-value" value="#{_user.active}" disabled="true"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText styleClass="users-header" value="Actions"/>
+                                    </f:facet>
+                                    <div class="btn-group">
+                                        <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{user.doChange(_user.name)}" value="Change"/>
+                                        <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{users.doRemove(_user.name)}" value="Remove"/>
+                                    </div>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
 
-                    </div>
-                    <h:dataTable styleClass="users table" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Name"/>
-                            </f:facet>
-                            <h:outputText styleClass="users-value" value="#{_user.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Active"/>
-                            </f:facet>
-                            <h:selectBooleanCheckbox styleClass="users-value" value="#{_user.active}" disabled="true"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="users-header" value="Actions"/>
-                            </f:facet>
-                            <div class="btn-group">
-                                <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{user.doChange(_user.name)}" value="Change"/>
-                                <h:commandLink styleClass="users-button btn btn-default btn-xs" action="#{users.doRemove(_user.name)}" value="Remove"/>
-                            </div>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-            </h:form>
         </ui:define>
     </ui:composition>
 </html>
