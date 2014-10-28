@@ -8,59 +8,46 @@
     <ui:composition template="../template.xhtml">
         <ui:define name="title">DataBrokers</ui:define>
 
-        <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="databrokerconnections_style.css"/>
-        </ui:define>
+        <f:event type="preRenderView" listener="#{databrokerconnections.doLoad}"/>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
-                <ui:param name="titletext" value="DataBrokers"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation_reload.xhtml">
-                <ui:param name="doreloadobject" value="#{databrokerconnections}"/>
-                <ui:param name="doreloadaction" value="doLoad"/>
-            </ui:include>
-            <h:form styleClass="databrokers">
-                <h:panelGroup styleClass="databrokers" layout="block">
-                    <h:panelGroup styleClass="databrokers-title" layout="block">
-                        <h:outputText styleClass="databrokers-title" value="DataBrokers"/>
-                    </h:panelGroup>
-                    <h:dataTable styleClass="databrokers" headerClass="databrokers-header" columnClasses="databrokers-column-one,databrokers-column-two,databrokers-column-three,databrokers-column-four,databrokers-column-five" value="#{databrokerconnections.dataBrokerConnections}" var="_dataBrokerConnection">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databrokers-header" value="Name"/>
-                            </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.name}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databrokers-header" value="Summary"/>
-                            </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.summary}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databrokers-header" value="Service Root URL"/>
-                            </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.serviceRootURL}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databrokers-header" value="Requester Id"/>
-                            </f:facet>
-                            <h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.requesterId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="databrokers-header" value="Actions"/>
-                                <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doAdd}" value="Add"/>
-                            </f:facet>
-                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnection.doChange(_dataBrokerConnection.id)}" value="Change"/>
-                            <h:commandLink styleClass="databrokers-button" action="#{databrokerconnections.doRemove(_dataBrokerConnection.id)}" value="Remove"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-            </h:form>
+            <div class="row">
+                <div class="col-md-3">
+                    <h:form>
+                        <ul class="list-unstyled sidebar-menu">
+                            <li>
+                                <h4><h:commandLink action="#{users.doLoad}">Users</h:commandLink></h4>
+                            </li>
+                            <li>
+                                <h4 class="active"><h:commandLink action="#{databrokerconnections.doLoad}">Data Brokers</h:commandLink></h4>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <h5><h:commandLink action="#{databrokerconnections.doAdd}">Add</h:commandLink></h5>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+                <div class="col-md-9">
+                    <h:form>
+                        <ui:repeat value="#{databrokerconnections.dataBrokerConnections}" var="_dataBrokerConnection">
+                            <div class="row databroker-connection">
+                                <div class="col-md-10">
+                                    <h3><h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.name}"/></h3>
+                                    <p class="sub-title"><h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.summary}"/></p>
+                                </div>
+                                <div class="col-md-1">
+                                    <h:commandLink action="#{databrokerconnection.doChange(_dataBrokerConnection.id)}"><i class="fa fa-pencil"></i></h:commandLink>
+                                </div>
+                                <div class="col-md-1">
+                                    <h:commandLink action="#{databrokerconnections.doRemove(_dataBrokerConnection.id)}"><i class="fa fa-trash"></i></h:commandLink>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </h:form>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

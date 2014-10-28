@@ -13,10 +13,23 @@
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="DataBroker Portal Config"/>
             </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
+            <ui:include src="/fragments/navigation.xhtml"/>-->
+
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="unstyled">
+                        <li>Users</li>
+                        <li>Data Brokers</li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+
+                </div>
+            </div>
+
             <h:form styleClass="confighome">
                 <h:panelGroup styleClass="confighome" layout="block">
                     <h:commandLink styleClass="confighome-link" action="#{users.doLoad}">
