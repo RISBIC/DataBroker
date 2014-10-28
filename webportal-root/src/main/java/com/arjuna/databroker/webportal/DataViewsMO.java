@@ -22,8 +22,6 @@ public class DataViewsMO implements Serializable
     public DataViewsMO()
     {
         _dataViews = new LinkedList<DataBrokerConnectionVO>();
-
-        doLoad();
     }
 
     public List<DataBrokerConnectionVO> getDataViews()
