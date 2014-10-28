@@ -27,16 +27,15 @@
                     var dataviews = [];
 
                     <ui:repeat value="#{dataviews.dataViews}" var="_dataview">
-                    dataviews.push('#{_dataview.name}');
+                    dataviews.push({name:'#{_dataview.name}',summary:'#{_dataview.summary}'});
                     </ui:repeat>
 
                     var adverts = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name', 'summary'),
                         queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        local: jQuery.map(dataviews, function(dataview) { return { value: dataview }; })
+                        local: dataviews
                     });
 
-                    // kicks off the loading/processing of `local` and `prefetch`
                     adverts.initialize();
 
                     jQuery('.home .typeahead').typeahead({
@@ -47,7 +46,7 @@
                         },
                         {
                             name: 'adverts',
-                            displayKey: 'value',
+                            displayKey: 'name',
                             source: adverts.ttAdapter()
                         });
 
