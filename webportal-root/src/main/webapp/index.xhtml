@@ -47,7 +47,15 @@
                         {
                             name: 'adverts',
                             displayKey: 'name',
-                            source: adverts.ttAdapter()
+                            source: adverts.ttAdapter(),
+                            templates: {
+                                empty: [
+                                    '<div class="empty-message">',
+                                    'Unable to find any adverts that match the current query',
+                                    '</div>'
+                                ].join('\n'),
+                                suggestion: Handlebars.compile('<h3>{{name}}</h3><p>{{summary}}</p>')
+                            }
                         });
 
 

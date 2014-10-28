@@ -3,7 +3,6 @@
 }
 
 .home .typeahead {
-    line-height: 70px;
     height: 70px;
     font-size: 32px;
 }
@@ -15,12 +14,22 @@
 .tt-dropdown-menu {
     width: 100%;
     background-color: #FFFFFF;
+    padding: 15px;
     -webkit-box-shadow: 0px 2px 5px 0px #d0d0d0;
     -moz-box-shadow:    0px 2px 5px 0px #d0d0d0;
     box-shadow:         0px 2px 5px 0px #d0d0d0;
 }
 
-.tt-suggestions {
-    line-height: 1.2em;
-    padding: 0 10px;
+.tt-suggestion {
+    margin-bottom: 15px;
+}
+
+.tt-suggestion h3 {
+    margin: 0;
+    line-height: 36px;
+}
+
+.tt-suggestion p {
+    font-size: 16px;
+    line-height: 20px;
 }
