@@ -30,7 +30,7 @@ public class MetaContentToListViewTest
             Map<String, String>       parentIdMap      = new HashMap<String, String>();
             Map<String, List<String>> childrenIdsMap   = new HashMap<String, List<String>>();
 
-            String testList0001 = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("TestList0001.rdf"));
+            String testList0001 = Utils.loadInputStream(MetaContentToListViewTest.class.getResourceAsStream("TestList0001.rdf"));
 
             ids.add("id1");
             contentMap.put("id1", testList0001);
