@@ -40,7 +40,6 @@ public class RDFMetadataStatement implements MetadataStatement
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T getValue(Class<T> valueClass)
     {
         if (_statement != null)
