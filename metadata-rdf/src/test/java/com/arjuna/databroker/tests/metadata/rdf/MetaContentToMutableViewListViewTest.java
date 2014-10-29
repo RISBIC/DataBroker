@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.arjuna.databroker.metadata.Metadata;
@@ -49,6 +50,7 @@ public class MetaContentToMutableViewListViewTest
     }
 
     @Test
+    @Ignore
     public void metadataContentToViewListView()
     {
         assertNotNull("Not expecting null Metadata Content object", _mutableMetadataContent);
