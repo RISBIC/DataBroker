@@ -28,11 +28,11 @@ public class MutableMetadataContentViewInvocationHandler implements InvocationHa
         GetMetadataMapping getMetadataMapping = method.getAnnotation(GetMetadataMapping.class);
         SetMetadataMapping setMetadataMapping = method.getAnnotation(SetMetadataMapping.class);
 
-        if ((method == OBJECT_EQUALS))
+        if (method.equals(OBJECT_EQUALS))
             throw new UnsupportedOperationException("'equals' not supported!");
-        else if (method == OBJECT_HASHCODE)
+        else if (method.equals(OBJECT_HASHCODE))
             throw new UnsupportedOperationException("'hashCode' not supported!");
-        else if (method == OBJECT_TOSTRING)
+        else if (method.equals(OBJECT_TOSTRING))
             return "View-" + _mutableMetadataContent;
         else if ((getMetadataMapping == null) && (setMetadataMapping == null))
             throw new UnsupportedOperationException("No annotation defined");
