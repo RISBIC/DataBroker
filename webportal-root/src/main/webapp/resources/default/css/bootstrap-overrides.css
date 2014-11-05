@@ -11,3 +11,15 @@ h2.has-add-new a{
     top: 0;
     margin-left: 10px;
 }
+
+a {
+    -webkit-transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    -o-transition: color .25s ease-in-out;
+    transition: color .25s ease-in-out;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #660000;
+}
