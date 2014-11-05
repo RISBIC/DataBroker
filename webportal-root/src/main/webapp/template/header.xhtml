@@ -20,7 +20,7 @@
             </h:form>
         </div>
         <div class="col-md-3">
-            <h:form styleClass="header-login pull-right">
+            <h:form styleClass="header-login pull-right" rendered="#{! auth.loggedIn}">
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-user"></i>
@@ -40,6 +40,18 @@
                         </h:commandLink>
                     </span>
                 </div>
+            </h:form>
+            <h:form styleClass="header-user pull-right" rendered="#{auth.loggedIn}">
+                <h4>Welcome!</h4>
+                <h4>
+                    <strong>#{auth.username}</strong>
+                </h4>
+                <h6>
+                    <h:commandLink action="#{auth.doSignout}">
+                        [ Signout ]
+                    </h:commandLink>
+                </h6>
+
             </h:form>
         </div>
     </div>
