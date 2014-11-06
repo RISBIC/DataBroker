@@ -19,9 +19,10 @@ public class AdvertClient
 {
     private static final Logger logger = Logger.getLogger(AdvertClient.class.getName());
 
-    public List<AdvertSummary> getAdverts(String serviceRootURL, String requesterId, String userId)
+    public List<AdvertNodeSummary> getAdverts(String serviceRootURL, String requesterId, String userId)
     {
-        List<AdvertSummary> adverts = new LinkedList<AdvertSummary>();
+        List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
+
         try
         {
             if ((serviceRootURL != null) && (requesterId != null) && (userId != null))

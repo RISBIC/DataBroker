@@ -13,15 +13,17 @@ public class AdvertVO implements Serializable
     public AdvertVO()
     {
         _serviceURL   = null;
+        _requesterId  = null;
         _metadataId   = null;
         _metadataPath = null;
         _rootNode     = null;
         _node         = null;
     }
 
-    public AdvertVO(String serviceURL, String metadataId, String metadataPath, Boolean rootNode, AdvertNodeVO node)
+    public AdvertVO(String serviceURL, String requesterId, String metadataId, String metadataPath, Boolean rootNode, AdvertNodeVO node)
     {
         _serviceURL   = serviceURL;
+        _requesterId  = requesterId;
         _metadataId   = metadataId;
         _metadataPath = metadataPath;
         _rootNode     = rootNode;
@@ -36,6 +38,16 @@ public class AdvertVO implements Serializable
     public void setServiceURL(String serviceURL)
     {
         _serviceURL = serviceURL;
+    }
+
+    public String getRequesterId()
+    {
+        return _requesterId;
+    }
+
+    public void setRequesterId(String requesterId)
+    {
+        _requesterId = requesterId;
     }
 
     public String getMetadataId()
@@ -79,6 +91,7 @@ public class AdvertVO implements Serializable
     }
 
     private String       _serviceURL;
+    private String       _requesterId;
     private String       _metadataId;
     private String       _metadataPath;
     private Boolean      _rootNode;
