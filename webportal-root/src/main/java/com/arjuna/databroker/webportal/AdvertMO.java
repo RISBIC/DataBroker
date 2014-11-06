@@ -123,15 +123,15 @@ public class AdvertMO implements Serializable
                 {
                     String serviceRootURL = _serviceRootURLs.get(index);
                     String requesterId    = _requesterIds.get(index);
-    
+
                     List<AdvertNodeSummary> advertNodeSummaries = _advertClient.getAdverts(serviceRootURL, requesterId, _userId);
-    
+
                     if (advertNodeSummaries != null)
                     {
                         Map<String, AdvertNodeVO> advertNodeMap = new HashMap<String, AdvertNodeVO>();
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
                             advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDiscription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
-    
+
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
                         {
                             List<AdvertNodeVO> childNodes = new LinkedList<AdvertNodeVO>();
@@ -139,7 +139,7 @@ public class AdvertMO implements Serializable
                                 childNodes.add(advertNodeMap.get(childNodeId));
                             advertNodeMap.get(advertNodeSummary.getId()).setChildNodes(childNodes);
                         }
-    
+
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
                             _adverts.add(new AdvertVO(serviceRootURL, requesterId, advertNodeSummary.getMetadataId(), advertNodeSummary.getMetadataPath(), advertNodeSummary.isRootNode(), advertNodeMap.get(advertNodeSummary.getId())));
                     }
