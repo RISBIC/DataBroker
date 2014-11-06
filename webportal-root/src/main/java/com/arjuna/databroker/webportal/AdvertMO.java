@@ -5,15 +5,17 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.comms.AdvertClient;
-import com.arjuna.databroker.webportal.comms.AdvertSummary;
+import com.arjuna.databroker.webportal.comms.AdvertNodeSummary;
 
 @SessionScoped
 @ManagedBean(name="advert")
@@ -114,13 +116,37 @@ public class AdvertMO implements Serializable
                 _errorMessage = "Null 'service root URLs' or 'requester ids'";
             else if (_serviceRootURLs.size() != _requesterIds.size())
                 _errorMessage = "Size mismatch between 'service root URLs' or 'requester ids'";
-            for (int index = 0; index < _serviceRootURLs.size(); index++)
+            else
             {
-                List<AdvertSummary> advertSummaries = _advertClient.getAdverts(_serviceRootURLs.get(index), _requesterIds.get(index), _userId);
-                for (AdvertSummary advertSummary: advertSummaries)
-                    _adverts.add(new AdvertVO(advertSummary.getServiceURL(), advertSummary.getMetadataId(), advertSummary.getMetadataPath(), advertSummary.isRootNode(), null));
+                _errorMessage = null;
+                for (int index = 0; index < _serviceRootURLs.size(); index++)
+                {
+                    String serviceRootURL = _serviceRootURLs.get(index);
+                    String requesterId    = _requesterIds.get(index);
+    
+                    List<AdvertNodeSummary> advertNodeSummaries = _advertClient.getAdverts(serviceRootURL, requesterId, _userId);
+    
+                    if (advertNodeSummaries != null)
+                    {
+                        Map<String, AdvertNodeVO> advertNodeMap = new HashMap<String, AdvertNodeVO>();
+                        for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
+                            advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDiscription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
+    
+                        for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
+                        {
+                            List<AdvertNodeVO> childNodes = new LinkedList<AdvertNodeVO>();
+                            for (String childNodeId: advertNodeSummary.getChildNodeIds())
+                                childNodes.add(advertNodeMap.get(childNodeId));
+                            advertNodeMap.get(advertNodeSummary.getId()).setChildNodes(childNodes);
+                        }
+    
+                        for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
+                            _adverts.add(new AdvertVO(serviceRootURL, requesterId, advertNodeSummary.getMetadataId(), advertNodeSummary.getMetadataPath(), advertNodeSummary.isRootNode(), advertNodeMap.get(advertNodeSummary.getId())));
+                    }
+                    else
+                        _errorMessage = "Failed to obtain adverts from \"" + _serviceRootURLs + "\"";
+                }
             }
-            _errorMessage = null;
         }
         catch (Throwable throwable)
         {

@@ -15,28 +15,70 @@ public class AdvertNodeSummary implements Serializable
 
     public AdvertNodeSummary()
     {
-        _nodeClass   = null;
-        _name        = null;
-        _summary     = null;
-        _discription = null;
-        _dateCreated = null;
-        _dateUpdate  = null;
-        _owner       = null;
-        _tags        = Collections.emptyList();
-        _childNodes  = Collections.emptyList();
+        _id           = null;
+        _nodeClass    = null;
+        _name         = null;
+        _summary      = null;
+        _discription  = null;
+        _dateCreated  = null;
+        _dateUpdate   = null;
+        _owner        = null;
+        _tags         = Collections.emptyList();
+        _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeSummary(String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<AdvertNodeSummary> childNodes)
+    public AdvertNodeSummary(String id, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
     {
-        _nodeClass   = nodeClass;
-        _name        = name;
-        _summary     = summary;
-        _discription = discription;
-        _dateCreated = dataCreated;
-        _dateUpdate  = dateUpdate;
-        _owner       = owner;
-        _tags        = tags;
-        _childNodes  = childNodes;
+        _id           = id;
+        _nodeClass    = nodeClass;
+        _name         = name;
+        _summary      = summary;
+        _discription  = discription;
+        _dateCreated  = dataCreated;
+        _dateUpdate   = dateUpdate;
+        _owner        = owner;
+        _tags         = tags;
+        _childNodeIds = childNodeIds;
+    }
+
+    public String getId()
+    {
+        return _id;
+    }
+
+    public void setId(String id)
+    {
+        _id = id;
+    }
+
+    public String getMetadataId()
+    {
+        return _metadataId;
+    }
+
+    public void setMetadataId(String metadataId)
+    {
+        _metadataId = metadataId;
+    }
+
+    public String getMetadataPath()
+    {
+        return _metadataPath;
+    }
+
+    public void setMetadataPath(String metadataPath)
+    {
+        _metadataPath = metadataPath;
+    }
+
+    public Boolean isRootNode()
+    {
+        return _rootNode;
+    }
+
+    public void setRootNode(Boolean rootNode)
+    {
+        _rootNode = rootNode;
     }
 
     public String getNodeClass()
@@ -119,23 +161,27 @@ public class AdvertNodeSummary implements Serializable
         _tags = tags;
     }
 
-    public List<AdvertNodeSummary> getChildNodes()
+    public List<String> getChildNodeIds()
     {
-        return _childNodes;
+        return _childNodeIds;
     }
 
-    public void setChildNodes(List<AdvertNodeSummary> childNodes)
+    public void setChildNodeIds(List<String> childNodeIds)
     {
-        _childNodes = childNodes;
+        _childNodeIds = childNodeIds;
     }
 
-    private String                  _nodeClass;
-    private String                  _name;
-    private String                  _summary;
-    private String                  _discription;
-    private Date                    _dateCreated;
-    private Date                    _dateUpdate;
-    private String                  _owner;
-    private List<String>            _tags;
-    private List<AdvertNodeSummary> _childNodes;
+    private String       _id;
+    private String       _metadataId;
+    private String       _metadataPath;
+    private Boolean      _rootNode;
+    private String       _nodeClass;
+    private String       _name;
+    private String       _summary;
+    private String       _discription;
+    private Date         _dateCreated;
+    private Date         _dateUpdate;
+    private String       _owner;
+    private List<String> _tags;
+    private List<String> _childNodeIds;
 }
