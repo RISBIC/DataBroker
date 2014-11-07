@@ -106,7 +106,7 @@ public class AdvertMO implements Serializable
         return "/dataadverts/dataview?faces-redirect=true";
     }
 
-    public void load()
+    private void load()
     {
         logger.log(Level.FINE, "AdvertMO.load");
         try

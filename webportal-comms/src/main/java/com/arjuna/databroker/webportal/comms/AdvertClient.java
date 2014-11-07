@@ -13,6 +13,7 @@ import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.util.GenericType;
 import org.jboss.resteasy.util.HttpResponseCodes;
+import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 
 @Stateless
 public class AdvertClient
@@ -31,22 +32,24 @@ public class AdvertClient
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
 
-                ClientResponse<String> response = request.get(new GenericType<String>() {});
+                ClientResponse<List<AdvertNodeDTO>> response = request.get(new GenericType<List<AdvertNodeDTO>>() {});
 
                 if (response.getStatus() == HttpResponseCodes.SC_OK)
                 {
-                    @SuppressWarnings("unused")
-                    String content = response.getEntity(); // TODO
+                    List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
+
+                    for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
+                        adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDiscription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
                 }
                 else
-                    logger.log(Level.WARNING, "Problem in 'getContent' getting entity " + response.getStatus());
+                    logger.log(Level.WARNING, "Problem in 'getAdverts' getting entity " + response.getStatus());
             }
             else
-                logger.log(Level.WARNING, "Invalid parameter in 'getContent' for getting content");
+                logger.log(Level.WARNING, "Invalid parameter in 'getAdverts' for getting adverts");
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Problem in 'getContent'", throwable);
+            logger.log(Level.WARNING, "Problem in 'getAdverts'", throwable);
         }
 
         return adverts;
