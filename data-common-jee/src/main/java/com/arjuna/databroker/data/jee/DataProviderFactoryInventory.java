@@ -10,8 +10,6 @@ public interface DataProviderFactoryInventory
 {
     public Collection<DataProviderFactory> getDataProviderFactories();
 
-    public <T extends DataProviderFactory> Collection<T> getDataProviderFactories(Class<T> dataProviderClass);
-
     public boolean addDataProviderFactory(DataProviderFactory dataProviderFactory);
 
     public boolean removeDataProviderFactory(DataProviderFactory dataProviderFactory);

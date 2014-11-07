@@ -10,8 +10,6 @@ public interface DataConsumerFactoryInventory
 {
     public Collection<DataConsumerFactory> getDataConsumerFactories();
 
-    public <T extends DataConsumerFactory> Collection<T> getDataConsumerFactories(Class<T> dataConsumerClass);
-
     public boolean addDataConsumerFactory(DataConsumerFactory dataConsumerFactory);
 
     public boolean removeDataConsumerFactory(DataConsumerFactory dataConsumerFactory);

@@ -8,11 +8,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.Singleton;
 
 @Singleton(name="DataConsumerFactoryInventory")
 public class GlobalDataConsumerFactoryInventory implements DataConsumerFactoryInventory
 {
+    private static final Logger logger = Logger.getLogger(GlobalDataConsumerFactoryInventory.class.getName());
+
     public GlobalDataConsumerFactoryInventory()
     {
         _dataConsumerFactories = new LinkedList<DataConsumerFactory>();
@@ -20,28 +25,22 @@ public class GlobalDataConsumerFactoryInventory implements DataConsumerFactoryIn
 
     public Collection<DataConsumerFactory> getDataConsumerFactories()
     {
+    	logger.log(Level.FINE, "GlobalDataConsumerFactoryInventory.getDataConsumerFactories");
+
         return Collections.unmodifiableList(_dataConsumerFactories);
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends DataConsumerFactory> Collection<T> getDataConsumerFactories(Class<T> dataConsumerClass)
-    {
-        List<T> dataConsumerFactories = new LinkedList<T>();
-
-        for (DataConsumerFactory dataConsumerFactory: _dataConsumerFactories)
-            if (dataConsumerClass.isAssignableFrom(dataConsumerFactory.getClass()))
-                dataConsumerFactories.add((T) dataConsumerFactory);
-
-        return dataConsumerFactories;
     }
 
     public boolean addDataConsumerFactory(DataConsumerFactory dataConsumerFactory)
     {
+    	logger.log(Level.FINE, "GlobalDataConsumerFactoryInventory.addDataConsumerFactory: " + dataConsumerFactory);
+
         return _dataConsumerFactories.add(dataConsumerFactory);
     }
 
     public boolean removeDataConsumerFactory(DataConsumerFactory dataConsumerFactory)
     {
+    	logger.log(Level.FINE, "GlobalDataConsumerFactoryInventory.removeDataConsumerFactory: " + dataConsumerFactory);
+
         return _dataConsumerFactories.remove(dataConsumerFactory);
     }
 
