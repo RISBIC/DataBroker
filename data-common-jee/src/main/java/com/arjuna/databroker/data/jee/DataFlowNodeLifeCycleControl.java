@@ -8,7 +8,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -192,7 +191,7 @@ public class DataFlowNodeLifeCycleControl
                         Collection<DataConsumerFactory> dataConsumerFactories       = (Collection<DataConsumerFactory>) _dataConsumerFactoryInventory.getDataConsumerFactories((Class<DataConsumerFactory>) field.getType());
                         Iterator<DataConsumerFactory>   dataConsumerFactoryIterator = dataConsumerFactories.iterator();
                         while ((dataConsumer == null) && dataConsumerFactoryIterator.hasNext())
-                            dataConsumer = dataConsumerFactoryIterator.next().createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]);
+                            dataConsumer = dataConsumerFactoryIterator.next().createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), field.getGenericType());
 
                         if (dataConsumer != null)
                             field.set(dataFlowNode, dataConsumer);
@@ -222,7 +221,7 @@ public class DataFlowNodeLifeCycleControl
                         Collection<DataProviderFactory> dataProviderFactories       = (Collection<DataProviderFactory>) _dataProviderFactoryInventory.getDataProviderFactories((Class<DataProviderFactory>) field.getType());
                         Iterator<DataProviderFactory>   dataProviderFactoryIterator = dataProviderFactories.iterator();
                         while ((dataProvider == null) && dataProviderFactoryIterator.hasNext())
-                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode, (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]);
+                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode, field.getGenericType());
 
                         if (dataProvider != null)
                             field.set(dataFlowNode, dataProvider);

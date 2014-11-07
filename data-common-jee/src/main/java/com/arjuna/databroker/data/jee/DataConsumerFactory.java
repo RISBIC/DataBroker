@@ -4,11 +4,12 @@
 
 package com.arjuna.databroker.data.jee;
 
+import java.lang.reflect.Type;
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlowNode;
 
 public interface DataConsumerFactory
 {
-    public <T> DataConsumer<T> createDataConsumer(DataFlowNode dataFlowNode, String methodName, Class<T> dataClass)
+    public <T> DataConsumer<T> createDataConsumer(DataFlowNode dataFlowNode, String methodName, Type dataConsumerType)
         throws Exception;
 }

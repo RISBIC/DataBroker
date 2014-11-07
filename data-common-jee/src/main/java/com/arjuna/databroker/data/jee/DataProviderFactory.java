@@ -4,11 +4,13 @@
 
 package com.arjuna.databroker.data.jee;
 
+import java.lang.reflect.Type;
+
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataProvider;
 
 public interface DataProviderFactory
 {
-    public <T> DataProvider<T> createDataProvider(DataFlowNode dataFlowNode, Class<T> dataClass)
+    public <T> DataProvider<T> createDataProvider(DataFlowNode dataFlowNode, Type dataProviderType)
         throws Exception;
 }
