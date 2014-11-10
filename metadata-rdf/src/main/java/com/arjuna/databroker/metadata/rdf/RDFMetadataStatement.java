@@ -128,9 +128,9 @@ public class RDFMetadataStatement implements MetadataStatement
                 return (T) Double.valueOf(valueNode.asLiteral().getDouble());
             else if (valueClass.getAnnotation(MetadataView.class) != null)
             {
-            	RDFMutableMetadataContent rdfMutableMetadataContent = new RDFMutableMetadataContent(valueNode.asResource());
+                RDFMutableMetadataContent rdfMutableMetadataContent = new RDFMutableMetadataContent(valueNode.asResource());
 
-            	return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { valueClass }, new MutableMetadataContentViewInvocationHandler(rdfMutableMetadataContent));
+                return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { valueClass }, new MutableMetadataContentViewInvocationHandler(rdfMutableMetadataContent));
             }
             else
                 return null;

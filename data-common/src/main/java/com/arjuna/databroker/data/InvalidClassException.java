@@ -6,7 +6,7 @@ package com.arjuna.databroker.data;
 
 public class InvalidClassException extends Exception
 {
-    private static final long serialVersionUID = -5586107644840362294L;
+    private static final long serialVersionUID = -5131571040576044438L;
 
     public InvalidClassException(String reason, String className)
     {

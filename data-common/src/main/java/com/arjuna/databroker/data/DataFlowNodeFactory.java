@@ -74,6 +74,7 @@ public interface DataFlowNodeFactory
         throws InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException;
 
     /**
+     * Returns a created data flow node.
      * 
      * @param name the intended name of the data flow node
      * @param dataFlowNodeClass the class of the data flow node
