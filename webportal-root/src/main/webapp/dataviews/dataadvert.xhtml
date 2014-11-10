@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">Data Advert</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="dataadvert_style.css"/>
+            <script src="http://d3js.org/d3.v3.min.js"></script>
+        </ui:define>
+
+        <ui:define name="body">
+            <ui:include src="/fragments/header.xhtml">
+                <ui:param name="titletext" value="Data Advert"/>
+            </ui:include>
+            <ui:include src="/fragments/navigation_reload.xhtml">
+                <ui:param name="doreloadobject" value="#{advert}"/>
+                <ui:param name="doreloadaction" value="doReload"/>
+            </ui:include>
+            <h:form id="content" styleClass="dataadvert">
+                <h:panelGroup styleClass="dataadvert" layout="block">
+                    <h:panelGroup styleClass="dataadvert-title" layout="block">
+                        <h:outputText styleClass="dataadvert-title" value="Data Advert"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
+                        <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:outputScript name="dataflow/glyphs.js"/>
+                    <script type="text/javascript">
+                        var margin = {top: 16, right: 32, bottom: 16, left: 32};
+                        var width  = 1280 - margin.right - margin.left;
+                        var height = 640 - margin.top - margin.bottom;
+
+                        var i        = 0;
+                        var duration = 750;
+                        var root;
+
+                        var tree = d3.layout.tree().size([height, width]);
+
+                        var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+
+                        var svg = d3.select("#content").append("svg")
+                            .attr("width", width + margin.right + margin.left)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                        var root = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
+                        root.x0 = height / 2;
+                        root.y0 = 0;
+
+                        update(root);
+
+                        d3.select(self.frameElement).style("height", "640px");
+
+                        function update(source)
+                        {
+                            var nodes = tree.nodes(root).reverse();
+                            var links = tree.links(nodes);
+
+                            nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+                            var node = svg.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+                            var nodeEnter = node.enter().append("g")
+                                .attr("class", "node")
+                                .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+                                .on("click", click);
+
+                            nodeEnter.append("circle")
+                                .attr("r", 1e-6)
+                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
+
+                            nodeEnter.append("text")
+                                .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+                                .attr("dy", ".35em")
+                                .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                                .text(function(d) { return d.name; })
+                                .style("fill-opacity", 1e-6);
+
+                            var nodeUpdate = node.transition()
+                                .duration(duration)
+                                .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+                            nodeUpdate.select("circle")
+                                .attr("r", 4.5)
+                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
+
+                            nodeUpdate.select("text")
+                                .style("fill-opacity", 1);
+
+                            var nodeExit = node.exit().transition()
+                                .duration(duration)
+                                .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+                                .remove();
+
+                            nodeExit.select("circle")
+                                .attr("r", 1e-6);
+
+                            nodeExit.select("text")
+                                .style("fill-opacity", 1e-6);
+
+                            var link = svg.selectAll("path.link").data(links, function(d) { return d.target.id; });
+
+                            link.enter().insert("path", "g")
+                                .attr("class", "link")
+                                .attr("d", function(d)
+                                {
+                                    var o = {x: source.x0, y: source.y0};
+                                    return diagonal({source: o, target: o});
+                                });
+
+                            link.transition()
+                                .duration(duration)
+                                .attr("d", diagonal);
+
+                            link.exit().transition()
+                                .duration(duration)
+                                .attr("d", function(d)
+                                {
+                                    var o = {x: source.x, y: source.y};
+                                    return diagonal({source: o, target: o});
+                                })
+                                .remove();
+
+                            nodes.forEach(function(d)
+                            {
+                                d.x0 = d.x;
+                                d.y0 = d.y;
+                            });
+                        }
+
+                        function click(d)
+                        {
+                            if (d.children)
+                            {
+                                d._children = d.children;
+                                d.children = null;
+                            }
+                            else
+                            {
+                                d.children = d._children;
+                                d._children = null;
+                            }
+                            update(d);
+                        }
+                    </script>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

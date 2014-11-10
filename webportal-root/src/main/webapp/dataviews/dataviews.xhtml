@@ -42,6 +42,7 @@
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Actions"/>
                             </f:facet>
+                            <h:commandLink styleClass="dataviews-button" action="#{advert.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Advert"/>
                             <h:commandLink styleClass="dataviews-button" action="#{dataview.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Examine"/>
                         </h:column>
                     </h:dataTable>

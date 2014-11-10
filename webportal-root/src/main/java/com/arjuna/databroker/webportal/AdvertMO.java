@@ -5,6 +5,7 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -74,6 +75,16 @@ public class AdvertMO implements Serializable
         _adverts = adverts;
     }
 
+    public String getAdvertsJSON()
+    {
+        return _advertsJSON;
+    }
+
+    public void setAdvertsJSON(String advertsJSON)
+    {
+        _advertsJSON = advertsJSON;
+    }
+
     public String getErrorMessage()
     {
         return _errorMessage;
@@ -84,17 +95,32 @@ public class AdvertMO implements Serializable
         _errorMessage = errorMessage;
     }
 
+    public String doLoad(String serviceRootURL, String requesterId, String userId)
+    {
+        logger.log(Level.FINE, "AdvertMO.doLoad: " + serviceRootURL + ", " + requesterId + ", " + userId);
+
+        _serviceRootURLs = new LinkedList<String>();
+        _requesterIds    = new LinkedList<String>();
+        Collections.addAll(_serviceRootURLs, serviceRootURL);
+        Collections.addAll(_requesterIds, requesterId);
+        _userId = userId;
+
+        load();
+
+        return "/dataviews/dataadvert?faces-redirect=true";
+    }
+
     public String doLoad(List<String> serviceRootURLs, List<String> requesterIds, String userId)
     {
-        logger.log(Level.FINE, "AdvertMO.doLoad: " + _serviceRootURLs + ", " + _requesterIds + ", " + userId);
-
+        logger.log(Level.FINE, "AdvertMO.doLoad: " + serviceRootURLs + ", " + requesterIds + ", " + userId);
+ 
         _serviceRootURLs = serviceRootURLs;
         _requesterIds    = requesterIds;
         _userId          = userId;
 
         load();
 
-        return "/dataadverts/dataview?faces-redirect=true";
+        return "/dataviews/dataadvert?faces-redirect=true";
     }
 
     public String doReload()
@@ -103,7 +129,7 @@ public class AdvertMO implements Serializable
 
         load();
 
-        return "/dataadverts/dataview?faces-redirect=true";
+        return "/dataadverts/dataadvert?faces-redirect=true";
     }
 
     private void load()
@@ -112,13 +138,14 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
+            _advertsJSON  = null;
+            _errorMessage = null;
             if ((_serviceRootURLs == null) || (_requesterIds == null))
                 _errorMessage = "Null 'service root URLs' or 'requester ids'";
             else if (_serviceRootURLs.size() != _requesterIds.size())
                 _errorMessage = "Size mismatch between 'service root URLs' or 'requester ids'";
             else
             {
-                _errorMessage = null;
                 for (int index = 0; index < _serviceRootURLs.size(); index++)
                 {
                     String serviceRootURL = _serviceRootURLs.get(index);
@@ -146,6 +173,8 @@ public class AdvertMO implements Serializable
                     else
                         _errorMessage = "Failed to obtain adverts from \"" + _serviceRootURLs + "\"";
                 }
+
+                _advertsJSON = advertsToJSON(_adverts);
             }
         }
         catch (Throwable throwable)
@@ -156,9 +185,23 @@ public class AdvertMO implements Serializable
         }
     }
 
+    private String advertsToJSON(List<AdvertVO> adverts)
+    {
+        StringBuffer result = new StringBuffer();
+
+        result.append("'[ { \"name\": \"Top Level\", \"parent\": \"null\", \"children\": [");
+        result.append(" { \"name\": \"Level 2: A\", \"parent\": \"Top Level\", \"children\": [");
+        result.append(" { \"name\": \"Son of A\", \"parent\": \"Level 2: A\" },");
+        result.append(" { \"name\": \"Daughter of A\", \"parent\": \"Level 2: A\" } ] },");
+        result.append(" { \"name\": \"Level 2: B\", \"parent\": \"Top Level\" } ] } ]'");
+
+        return result.toString();
+    }
+
     private List<String>   _serviceRootURLs;
     private List<String>   _requesterIds;
     private String         _userId;
+    private String         _advertsJSON;
     private List<AdvertVO> _adverts;
     private String         _errorMessage;
 

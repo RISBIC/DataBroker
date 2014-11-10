@@ -37,6 +37,8 @@ public class AdvertClient
                 if (response.getStatus() == HttpResponseCodes.SC_OK)
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
+ 
+                    logger.log(Level.FINE, "Received 'adverts' [" + advertNodeDTOs + "]");
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
                         adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDiscription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
