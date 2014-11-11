@@ -32,5 +32,5 @@ public abstract class AdvertNodeVO implements Serializable
         _childNodes = childNodes;
     }
 
-   private List<AdvertNodeVO> _childNodes;
+    private List<AdvertNodeVO> _childNodes;
 }

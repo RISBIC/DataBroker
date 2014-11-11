@@ -30,7 +30,46 @@
                         <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
                     </h:panelGroup>
-                    <h:outputScript name="dataflow/glyphs.js"/>
+
+                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.adverts}" var="_advert" rendered="#{empty advert.errorMessage}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Service URL"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.serviceURL}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Requester Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.requesterId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Metadata Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.metadataId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Metadata Path"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.metadataPath}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Root Node"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.rootNode}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Node Id"/>
+                            </f:facet>
+                            <h:outputText styleClass="dataadvert-value" value="#{_advert.node.name}"/>
+                        </h:column>
+                    </h:dataTable>
+
                     <script type="text/javascript">
                         var margin = {top: 16, right: 32, bottom: 16, left: 32};
                         var width  = 1280 - margin.right - margin.left;

@@ -68,6 +68,29 @@ th.dataadvert-header
 	color:			#EEEEEE;
 }
 
+td.dataadvert-column
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+span.dataadvert-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+span.dataadvert-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
 .node
 {
 	cursor:			pointer;

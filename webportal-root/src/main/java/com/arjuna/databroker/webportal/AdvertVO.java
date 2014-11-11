@@ -70,7 +70,7 @@ public class AdvertVO implements Serializable
         _metadataPath = metadataPath;
     }
 
-    public Boolean isRootNode()
+    public Boolean getRootNode()
     {
         return _rootNode;
     }
