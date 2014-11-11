@@ -244,8 +244,8 @@ public class DataFlowNodeLifeCycleControl
     }
 
     @EJB(name="DataConsumerFactoryInventory")
-    private static DataConsumerFactoryInventory _dataConsumerFactoryInventory;
+    private DataConsumerFactoryInventory _dataConsumerFactoryInventory;
 
     @EJB(name="DataProviderFactoryInventory")
-    private static DataProviderFactoryInventory _dataProviderFactoryInventory;
+    private DataProviderFactoryInventory _dataProviderFactoryInventory;
 }
