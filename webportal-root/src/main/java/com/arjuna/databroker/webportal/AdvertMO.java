@@ -189,7 +189,7 @@ public class AdvertMO implements Serializable
     {
         StringBuffer result = new StringBuffer();
 
-        result.append("'[ { \"name\": \"Top Level\", \"parent\": \"null\", \"children\": [");
+        result.append("'[ { \"name\": \"Top Level\", \"parent\": null, \"children\": [");
         result.append(" { \"name\": \"Level 2: A\", \"parent\": \"Top Level\", \"children\": [");
         result.append(" { \"name\": \"Son of A\", \"parent\": \"Level 2: A\" },");
         result.append(" { \"name\": \"Daughter of A\", \"parent\": \"Level 2: A\" } ] },");
