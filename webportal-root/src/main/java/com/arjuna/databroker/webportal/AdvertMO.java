@@ -189,11 +189,42 @@ public class AdvertMO implements Serializable
     {
         StringBuffer result = new StringBuffer();
 
-        result.append("'[ { \"name\": \"Top Level\", \"parent\": null, \"children\": [");
-        result.append(" { \"name\": \"Level 2: A\", \"parent\": \"Top Level\", \"children\": [");
-        result.append(" { \"name\": \"Son of A\", \"parent\": \"Level 2: A\" },");
-        result.append(" { \"name\": \"Daughter of A\", \"parent\": \"Level 2: A\" } ] },");
-        result.append(" { \"name\": \"Level 2: B\", \"parent\": \"Top Level\" } ] } ]'");
+        result.append("'[ ");
+        boolean firstAdvert = true;
+        for (AdvertVO advert: _adverts)
+        {
+            if (firstAdvert)
+                firstAdvert = false;
+            else
+                result.append(", ");
+            advertsToJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
+        }
+        result.append(" ]'");
+
+        return result.toString();
+    }
+
+    private String advertsToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
+    {
+        result.append("{ ");
+        if (advertStandardNode.getName() != null)
+            result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
+        if (advertStandardNode.getSummary() != null)
+            result.append("\"summary\": \"" + advertStandardNode.getSummary() + "\", ");
+        if (advertStandardNode.getDiscription() != null)
+            result.append("\"discription\": \"" + advertStandardNode.getDiscription() + "\", ");
+        result.append("\"children\": [");
+        boolean firstChild = true;
+        for (AdvertNodeVO childNode: advertStandardNode.getChildNodes())
+        {
+            if (firstChild)
+                firstChild = false;
+            else
+                result.append(", ");
+            advertsToJSON(result, advert, (AdvertStandardNodeVO) childNode);
+        }
+        result.append(" ]");
+        result.append(" }");
 
         return result.toString();
     }
