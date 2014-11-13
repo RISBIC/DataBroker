@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.DELETE;
@@ -19,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
@@ -29,8 +31,10 @@ import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
+import com.arjuna.databroker.data.connector.NamedDataProvider;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
+import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 
 @Path("/dataflownodelink")
 @Stateless
@@ -72,6 +76,13 @@ public class DataFlowNodeLinkWS
                                 ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
                                 
                                 observableDataProvider.addDataConsumer(observerDataConsumer);
+                            }
+                            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                            {
+                            	NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                            	ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+                                
+                            	referrerDataConsumer.addReferredName(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
                             }
                             else
                                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
@@ -126,8 +137,15 @@ public class DataFlowNodeLinkWS
                             {
                                 ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
                                 ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-                                
+
                                 observableDataProvider.removeDataConsumer(observerDataConsumer);
+                            }
+                            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                            {
+                            	NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                            	ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+
+                            	referrerDataConsumer.removeReferredName(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
                             }
                             else
                                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
