@@ -32,6 +32,7 @@
                 </div>
                 <div class="col-md-9">
                     <h:form styleClass="users">
+                        <h2><span class="databroker-count">#{fn:length(users.users)}</span> Users | <h:commandLink action="#{users.doAdd}">Create</h:commandLink></h2>
                         <h:panelGroup styleClass="users" layout="block">
                             <h:dataTable styleClass="users table" headerClass="users-header" columnClasses="users-column-one,users-column-two,users-column-three" value="#{users.users}" var="_user">
                                 <h:column>
