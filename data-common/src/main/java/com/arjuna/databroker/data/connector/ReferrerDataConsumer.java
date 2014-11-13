@@ -19,19 +19,19 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
      * @return name associated with the Referrer Data Consumer
      */
 
-	public Class<?> getNameClass();
+    public Class<?> getNameClass();
 
-	/**
-     * Add name of named data provider to referrer data consumer.
+    /**
+     * Add named data provider to referrer data consumer.
      * 
      * @param name of the named data provider
      */
-    public <N> void addReferredName(N name);
+    public <N> void addReferredTo(N name);
 
-	/**
-     * Remove name of named data provider from referrer data consumer.
+    /**
+     * Remove named data provider from referrer data consumer.
      * 
      * @param name of the named data provider
      */
-    public <N> void removeReferredName(N name);
+    public <N> void removeReferredTo(N name);
 }
