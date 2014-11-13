@@ -22,8 +22,8 @@ public class NavigationMO implements Serializable
         _locations = new LinkedList<LocationVO>();
 
         _locations.add(new LocationVO("Home", "/index?faces-redirect=true", "fa fa-home"));
-        _locations.add(new LocationVO("Search", "/search/searchhome?faces-redirect=true", "fa fa-search"));
-        _locations.add(new LocationVO("Data Flows", "/create/createhome?faces-redirect=true", "fa fa-puzzle-piece"));
+        _locations.add(new LocationVO("Search", "/dataviews/dataviews?faces-redirect=true", "fa fa-search"));
+        _locations.add(new LocationVO("Data Flows", "/dataflows/dataflows?faces-redirect=true", "fa fa-puzzle-piece"));
         _locations.add(new LocationVO("Config", "/users/users?faces-redirect=true", "fa fa-cog"));
     }
 
