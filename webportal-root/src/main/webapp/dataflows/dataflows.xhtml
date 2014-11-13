@@ -12,14 +12,9 @@
             <link rel="stylesheet" type="text/css" href="dataflows_style.css"/>
         </ui:define>
 
+        <f:event type="preRenderView" listener="#{databrokerconnections.doLoad}"/>
+
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
-                <ui:param name="titletext" value="Data Flows"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation_reload.xhtml">
-                <ui:param name="doreloadobject" value="#{dataflows}"/>
-                <ui:param name="doreloadaction" value="doLoad"/>
-            </ui:include>
             <h:form styleClass="dataflows">
                 <h:panelGroup styleClass="dataflows" layout="block">
                     <h:panelGroup styleClass="dataflows-title" layout="block">
