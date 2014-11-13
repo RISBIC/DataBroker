@@ -12,11 +12,11 @@ import com.arjuna.databroker.data.DataProvider;
 public interface NamedDataProvider<T> extends DataProvider<T>
 {
     /**
-     * Gets name associated with the Data Provider.
+     * Gets name associated with the Named Data Provider.
      * 
      * @param nameClass the class of the name required
      *
-     * @return name associated with the Data Provider
+     * @return name associated with the Named Data Provider
      */
     public <N> N getName(Class<N> nameClass);
 }
