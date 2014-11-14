@@ -42,6 +42,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>${version.org.apache.jena}</version>
+        </dependency>
+        <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common</artifactId>
             <version>1.0.0p1m2l</version>
