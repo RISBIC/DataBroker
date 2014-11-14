@@ -16,6 +16,9 @@ public class AdvertNodeDTO implements Serializable
     public AdvertNodeDTO()
     {
         _id           = null;
+        _metadataId   = null;
+        _metadataPath = null;
+        _rootNode     = null;
         _nodeClass    = null;
         _name         = null;
         _summary      = null;
@@ -27,9 +30,12 @@ public class AdvertNodeDTO implements Serializable
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeDTO(String id, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeDTO(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
+        _metadataId   = metadataId;
+        _metadataPath = metadataPath;
+        _rootNode     = rootNode;
         _nodeClass    = nodeClass;
         _name         = name;
         _summary      = summary;
@@ -71,7 +77,7 @@ public class AdvertNodeDTO implements Serializable
         _metadataPath = metadataPath;
     }
 
-    public Boolean isRootNode()
+    public Boolean getRootNode()
     {
         return _rootNode;
     }

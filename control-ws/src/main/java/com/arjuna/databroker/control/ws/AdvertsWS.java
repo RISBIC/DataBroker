@@ -5,11 +5,13 @@
 package com.arjuna.databroker.control.ws;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -17,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
@@ -46,9 +49,21 @@ public class AdvertsWS
  
             for (String metadataBlogId: metadataBlogIds)
             {
-                String id = UUID.randomUUID().toString();
+                String       id           = UUID.randomUUID().toString();
+                String       metadataId   = metadataBlogId;
+                String       metadataPath = null;
+                Boolean      rootNode     = null;
+                String       nodeClass    = "Test";
+                String       name         = null;
+                String       summary      = null;
+                String       discription  = null;
+                Date         dataCreated  = null;
+                Date         dateUpdate   = null;
+                String       owner        = null;
+                List<String> tags         = Collections.<String>emptyList();
+                List<String> childNodeIds = Collections.<String>emptyList();
 
-                AdvertNodeDTO advertNodeDTO = new AdvertNodeDTO(id, "Test", metadataBlogId, null, null, null, null, null, Collections.<String>emptyList(), Collections.<String>emptyList());
+                AdvertNodeDTO advertNodeDTO = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, discription, dataCreated, dateUpdate, owner, tags, childNodeIds);
 
                 result.add(advertNodeDTO);
             }
