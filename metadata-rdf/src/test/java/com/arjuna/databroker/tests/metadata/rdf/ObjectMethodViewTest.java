@@ -17,7 +17,7 @@ import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.rdf.StoreMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 
-public class MetaContentToViewTest
+public class ObjectMethodViewTest
 {
     @BeforeClass
     public static void setupInventory()
@@ -48,24 +48,13 @@ public class MetaContentToViewTest
     }
 
     @Test
-    public void metadataContentToView()
+    public void toStringMethod()
     {
-        assertNotNull("Not expecting null Metadata Content object", _metadataContent);
-
         TestView testView = _metadataContent.getView(TestView.class);
         assertNotNull("Not expecting null Test View object", testView);
 
-        String prop01Value = testView.getProp01();
-        assertEquals("Unexpecting prop01 value", "Value 01", prop01Value);
-
-        String prop02Value = testView.getProp02();
-        assertEquals("Unexpecting prop02 value", "Value 02", prop02Value);
-
-        String prop03Value = testView.getProp03();
-        assertEquals("Unexpecting prop03 value", "Value 03", prop03Value);
-
-        String prop04Value = testView.getProp04();
-        assertEquals("Unexpecting prop04 value", "Value 04", prop04Value);
+        String stringForm = testView.toString();
+        assertNotNull("Not expecting null for string form Test View object", stringForm);
     }
 
     private static MetadataContent _metadataContent;

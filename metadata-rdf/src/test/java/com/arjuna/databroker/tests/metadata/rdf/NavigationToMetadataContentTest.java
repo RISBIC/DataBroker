@@ -32,7 +32,7 @@ public class NavigationToMetadataContentTest
             Map<String, String>       parentIdMap      = new HashMap<String, String>();
             Map<String, List<String>> childrenIdsMap   = new HashMap<String, List<String>>();
 
-            String test0001 = Utils.loadInputStream(DescriptionSearchTest.class.getResourceAsStream("Test0001.rdf"));
+            String test0001 = Utils.loadInputStream(NavigationToMetadataContentTest.class.getResourceAsStream("Test0001.rdf"));
 
             ids.add("id");
             contentMap.put("id", test0001);

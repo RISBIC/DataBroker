@@ -5,10 +5,17 @@
 <!--                                                                                                          -->
 
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:t="http://rdfs.arjuna.com/metadata/test#">
-    <t:Test rdf:about="http://rdf.arjuna.com/test0003#Test01">
-        <t:prop01>Value 01</t:prop01>
-        <t:prop02>Value 02</t:prop02>
-        <t:prop03>Value 03</t:prop03>
-        <t:prop04>Value 04</t:prop04>
-    </t:Test>
+    <t:TestList rdf:about="http://rdf.arjuna.com/testlist0001#TestList01">
+        <t:proplist01>
+            <rdf:Seq>
+                <rdf:li>Value 01</rdf:li>
+            </rdf:Seq>
+        </t:proplist01>
+        <t:proplist02>
+            <rdf:Seq>
+                <rdf:li>Value 01</rdf:li>
+                <rdf:li>Value 02</rdf:li>
+            </rdf:Seq>
+        </t:proplist02>
+    </t:TestList>
 </rdf:RDF>

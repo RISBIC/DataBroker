@@ -17,7 +17,7 @@ import com.arjuna.databroker.metadata.MetadataInventory;
 import com.arjuna.databroker.metadata.rdf.StoreMetadataInventory;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentsSelector;
 
-public class MetaContentToViewTest
+public class MetaContentToListViewTest
 {
     @BeforeClass
     public static void setupInventory()
@@ -30,16 +30,16 @@ public class MetaContentToViewTest
             Map<String, String>       parentIdMap      = new HashMap<String, String>();
             Map<String, List<String>> childrenIdsMap   = new HashMap<String, List<String>>();
 
-            String test0001 = Utils.loadInputStream(MetaContentToViewTest.class.getResourceAsStream("Test0001.rdf"));
+            String testList0001 = Utils.loadInputStream(MetaContentToListViewTest.class.getResourceAsStream("TestList0001.rdf"));
 
             ids.add("id1");
-            contentMap.put("id1", test0001);
+            contentMap.put("id1", testList0001);
 
             DummyMetadataContentStore dummyMetadataContentStore = new DummyMetadataContentStore(ids, contentMap, descriptionIdMap, parentIdMap, childrenIdsMap);
             MetadataInventory         metadataInventory         = new StoreMetadataInventory(dummyMetadataContentStore);
             Metadata                  metadata                  = metadataInventory.metadata("id1").getMetadata();
 
-            _metadataContent = metadata.contents().selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01").getMetadataContent();
+            _metadataContent = metadata.contents().selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/testlist0001#TestList01").getMetadataContent();
         }
         catch (Throwable throwable)
         {
@@ -48,24 +48,23 @@ public class MetaContentToViewTest
     }
 
     @Test
-    public void metadataContentToView()
+    public void metadataContentToListView()
     {
         assertNotNull("Not expecting null Metadata Content object", _metadataContent);
 
-        TestView testView = _metadataContent.getView(TestView.class);
-        assertNotNull("Not expecting null Test View object", testView);
+        TestListView testListView = _metadataContent.getView(TestListView.class);
+        assertNotNull("Not expecting null Test List View object", testListView);
 
-        String prop01Value = testView.getProp01();
-        assertEquals("Unexpecting prop01 value", "Value 01", prop01Value);
+        List<String> propList01Value = testListView.getPropList01();
+        assertNotNull("Not expecting null value for propList01", propList01Value);
+        assertEquals("Unexpecting propList01 length", 1, propList01Value.size());
+        assertEquals("Unexpect value for propList01[0]", "Value 01", propList01Value.get(0));
 
-        String prop02Value = testView.getProp02();
-        assertEquals("Unexpecting prop02 value", "Value 02", prop02Value);
-
-        String prop03Value = testView.getProp03();
-        assertEquals("Unexpecting prop03 value", "Value 03", prop03Value);
-
-        String prop04Value = testView.getProp04();
-        assertEquals("Unexpecting prop04 value", "Value 04", prop04Value);
+        List<String> propList02Value = testListView.getPropList02();
+        assertNotNull("Not expecting null value for propList02", propList02Value);
+        assertEquals("Unexpecting propList02 value", 2, propList02Value.size());
+        assertEquals("Unexpect value for propList02[0]", "Value 01", propList02Value.get(0));
+        assertEquals("Unexpect value for propList02[1]", "Value 02", propList02Value.get(1));
     }
 
     private static MetadataContent _metadataContent;

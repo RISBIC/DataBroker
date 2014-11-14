@@ -10,7 +10,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value=ElementType.TYPE)
-public @interface MetadataContentView 
+@Target(value=ElementType.METHOD)
+public @interface GetMetadataMapping 
 {
+    public String name();
+    public String type();
 }

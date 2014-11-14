@@ -80,7 +80,7 @@ public class DescriptionSearchTest
         RDFMetadataContentsSelector rdfDescriptionMetadataContentsSelector = descriptionMetadataContentsSelector.selector(RDFMetadataContentsSelector.class);
         assertNotNull("Not expecting null RDF Metadata Contents Selector object", rdfDescriptionMetadataContentsSelector);
 
-        MetadataContentSelector keywordMetadataContentSelector = rdfDescriptionMetadataContentsSelector.withPropertyValue("http://rdfs.arjuna.com/test0002#keyword", "Keyword01");
+        MetadataContentSelector keywordMetadataContentSelector = rdfDescriptionMetadataContentsSelector.withPropertyValue("http://rdfs.arjuna.com/metadata/test#keyword", "Keyword01");
         assertNotNull("Not expecting null Keyword Metadata Contents Selector object", keywordMetadataContentSelector);
 
         MetadataContent keywordMetadataContent = keywordMetadataContentSelector.getMetadataContent();

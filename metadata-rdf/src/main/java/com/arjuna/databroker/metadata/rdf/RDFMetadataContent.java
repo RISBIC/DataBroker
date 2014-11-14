@@ -7,7 +7,7 @@ package com.arjuna.databroker.metadata.rdf;
 import java.lang.reflect.Proxy;
 import com.arjuna.databroker.metadata.MetadataContent;
 import com.arjuna.databroker.metadata.MutableMetadataContent;
-import com.arjuna.databroker.metadata.annotations.MetadataContentView;
+import com.arjuna.databroker.metadata.annotations.MetadataView;
 import com.arjuna.databroker.metadata.invocationhandlers.MetadataContentViewInvocationHandler;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataContentSelector;
 import com.arjuna.databroker.metadata.rdf.selectors.RDFMetadataStatementSelector;
@@ -24,19 +24,6 @@ public class RDFMetadataContent implements MetadataContent
     public RDFMetadataContent(Resource resource)
     {
         _resource = resource;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <V> V getView(Class<V> viewInterface)
-        throws IllegalArgumentException
-    {
-        if (! viewInterface.isInterface())
-            throw new IllegalArgumentException("View Interface is not an interface");
-        else if (! viewInterface.isAnnotationPresent(MetadataContentView.class))
-            throw new IllegalArgumentException("View Interface is not annotated as a MetadataContentView");
-        else
-            return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MetadataContentViewInvocationHandler(this));
     }
 
     @Override
@@ -80,6 +67,19 @@ public class RDFMetadataContent implements MetadataContent
             return (S) new RDFMetadataContentSelector(_resource);
         else
             return null;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <V> V getView(Class<V> viewInterface)
+        throws IllegalArgumentException
+    {
+        if (! viewInterface.isInterface())
+            throw new IllegalArgumentException("View Interface is not an interface");
+        else if (! viewInterface.isAnnotationPresent(MetadataView.class))
+            throw new IllegalArgumentException("View Interface is not annotated as a MetadataView");
+        else
+            return (V) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class<?>[] { viewInterface }, new MetadataContentViewInvocationHandler(this));
     }
 
     protected Resource _resource;

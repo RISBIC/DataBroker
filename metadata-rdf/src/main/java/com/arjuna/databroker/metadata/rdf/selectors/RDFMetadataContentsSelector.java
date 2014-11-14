@@ -45,5 +45,5 @@ public class RDFMetadataContentsSelector implements MetadataContentsSelector
             return null;
     }
 
-    private Model _model;
+    protected Model _model;
 }
