@@ -115,24 +115,24 @@ public class AdvertsWS
 
     private void scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
     {
-    	AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
+        AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
     }
 
     private AdvertNodeDTO obtainAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
     {
-    	AdvertNodeDTO result = advertMap.get(subject);
-    	if (result == null)
-    	{
-    		result = createAdvertNode(subject, metadataBlogId, rootNode);
-    		advertMap.put(subject, result);
-    	}
+        AdvertNodeDTO result = advertMap.get(subject);
+        if (result == null)
+        {
+            result = createAdvertNode(subject, metadataBlogId, rootNode);
+            advertMap.put(subject, result);
+        }
 
-    	return result;
+        return result;
     }
 
     private AdvertNodeDTO createAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode)
     {
-    	AdvertNodeDTO advertNode = null;
+        AdvertNodeDTO advertNode = null;
 
         try
         {
@@ -161,9 +161,9 @@ public class AdvertsWS
             if (titleStatement != null)
                 name = titleStatement.getString();
             if (summaryStatement != null)
-                name = summaryStatement.getString();
+                summary = summaryStatement.getString();
             if (detailsStatement != null)
-                name = detailsStatement.getString();
+                discription = detailsStatement.getString();
 
             advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, discription, dataCreated, dateUpdate, owner, tags, childNodeIds);
         }
