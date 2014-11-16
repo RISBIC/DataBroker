@@ -59,27 +59,11 @@ public class AdvertsWS
             {
                 logger.info("metadata blob id: " + metadataBlogIds);
 
-                Map<String, Resource> resourceMap = new HashMap<String, Resource>();
+                Map<Resource, AdvertNodeDTO> advertMap = new HashMap<Resource, AdvertNodeDTO>();
 
-                mapMetadataBlob(resourceMap, metadataBlogId);
+                scanMetadataBlob(metadataBlogId, advertMap);
 
-                String       id           = UUID.randomUUID().toString();
-                String       metadataId   = metadataBlogId;
-                String       metadataPath = null;
-                Boolean      rootNode     = null;
-                String       nodeClass    = "Test";
-                String       name         = null;
-                String       summary      = null;
-                String       discription  = null;
-                Date         dataCreated  = null;
-                Date         dateUpdate   = null;
-                String       owner        = null;
-                List<String> tags         = Collections.<String>emptyList();
-                List<String> childNodeIds = Collections.<String>emptyList();
-
-                AdvertNodeDTO advertNodeDTO = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, discription, dataCreated, dateUpdate, owner, tags, childNodeIds);
-
-                result.add(advertNodeDTO);
+                result.addAll(advertMap.values());
             }
 
             return result;
@@ -94,7 +78,7 @@ public class AdvertsWS
 
     private static final String[] knownRootNodeTypeURIs = { "http://rdfs.arjuna.com/datasource#DataSource" };
 
-    private void mapMetadataBlob(Map<String, Resource> resourceMap, String metadataBlogId)
+    private void scanMetadataBlob(String metadataBlogId, Map<Resource, AdvertNodeDTO> advertMap)
     {
         try
         {
@@ -117,8 +101,9 @@ public class AdvertsWS
                 while (statements.hasNext())
                 {
                     Statement statement = statements.nextStatement();
-                    resourceMap.put(UUID.randomUUID().toString(), statement.getResource());
-                    logger.info("statement: " + statement.asTriple().toString());
+                    Resource  subject   = statement.getSubject();
+
+                    scanSubject(subject, metadataBlogId, true, advertMap);
                 }
             }
         }
@@ -126,6 +111,68 @@ public class AdvertsWS
         {
             logger.log(Level.WARNING, "Unable to map metadata blob", throwable);
         }
+    }
+
+    private void scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
+    {
+    	AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
+    }
+
+    private AdvertNodeDTO obtainAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
+    {
+    	AdvertNodeDTO result = advertMap.get(subject);
+    	if (result == null)
+    	{
+    		result = createAdvertNode(subject, metadataBlogId, rootNode);
+    		advertMap.put(subject, result);
+    	}
+
+    	return result;
+    }
+
+    private AdvertNodeDTO createAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode)
+    {
+    	AdvertNodeDTO advertNode = null;
+
+        try
+        {
+            logger.info("createAdvertNode: subject - " + subject.getURI().toString());
+
+            Property  hasTitle         = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+            Property  hasSummary       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+            Property  hasDetails       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+            Statement titleStatement   = subject.getProperty(hasTitle);
+            Statement summaryStatement = subject.getProperty(hasSummary);
+            Statement detailsStatement = subject.getProperty(hasDetails);
+
+            String       id           = UUID.randomUUID().toString();
+            String       metadataId   = metadataBlogId;
+            String       metadataPath = subject.getURI();
+            String       nodeClass    = null;
+            String       name         = null;
+            String       summary      = null;
+            String       discription  = null;
+            Date         dataCreated  = null;
+            Date         dateUpdate   = null;
+            String       owner        = null;
+            List<String> tags         = Collections.<String>emptyList();
+            List<String> childNodeIds = Collections.<String>emptyList();
+
+            if (titleStatement != null)
+                name = titleStatement.getString();
+            if (summaryStatement != null)
+                name = summaryStatement.getString();
+            if (detailsStatement != null)
+                name = detailsStatement.getString();
+
+            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, discription, dataCreated, dateUpdate, owner, tags, childNodeIds);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Unable to create advert", throwable);
+        }
+        
+        return advertNode;
     }
 
     @EJB
