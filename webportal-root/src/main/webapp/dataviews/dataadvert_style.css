@@ -91,6 +91,33 @@ span.dataadvert-value
 	padding:		1em 0 1em 0;
 }
 
+table.dataadvert-node
+{
+	margin:			0;
+	border:			0;
+	width:			100%;
+}
+
+td.dataadvert-node-column
+{
+	vertical-align:		text-top;
+}
+
+span.dataadvert-node-label
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	font-style:		italic;
+}
+
+span.dataadvert-node-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
 .node
 {
 	cursor:			pointer;

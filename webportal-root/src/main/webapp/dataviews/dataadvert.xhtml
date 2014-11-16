@@ -64,9 +64,20 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Node Id"/>
+                                <h:outputText styleClass="dataadvert-header" value="Node"/>
                             </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.node.name}"/>
+                            <h:panelGrid styleClass="dataadvert-node" columnClasses="dataadvert-node-column" columns="2">
+                                <h:outputText styleClass="dataadvert-node-label" value="Name:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.name}"/>
+                                <h:outputText styleClass="dataadvert-node-label" value="Summary:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.summary}"/>
+                                <h:outputText styleClass="dataadvert-node-label" value="Discription:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.discription}"/>
+                                <h:outputText styleClass="dataadvert-node-label" value="# Tags:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.tags.size()}"/>
+                                <h:outputText styleClass="dataadvert-node-label" value="# Children:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.childNodes.size()}"/>
+                            </h:panelGrid>
                         </h:column>
                     </h:dataTable>
 
