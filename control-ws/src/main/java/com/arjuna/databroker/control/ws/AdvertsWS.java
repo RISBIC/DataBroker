@@ -60,7 +60,7 @@ public class AdvertsWS
  
             for (String metadataBlogId: metadataBlogIds)
             {
-                Map<Resource, AdvertNodeDTO> advertMap = new HashMap<Resource, AdvertNodeDTO>();
+                Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
 
                 scanMetadataBlob(metadataBlogId, advertMap);
 
@@ -84,7 +84,7 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/xssf#Spreadsheet"
     };
 
-    private void scanMetadataBlob(String metadataBlogId, Map<Resource, AdvertNodeDTO> advertMap)
+    private void scanMetadataBlob(String metadataBlogId, Map<String, AdvertNodeDTO> advertMap)
     {
         try
         {
@@ -123,43 +123,46 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/datasource#producesDataSet",
         "http://rdfs.arjuna.com/datasource#hasField",
         "http://rdfs.arjuna.com/datasource#hasType",
-        "http://rdfs.arjuna.com/datasource#hasRawType"
+        "http://rdfs.arjuna.com/access#AccessInfo"
     };
 
-    private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
+    private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<String, AdvertNodeDTO> advertMap)
     {
-        AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
-
-        for (String knownChildPropertyURI: knownChildPropertyURIs)
+        if (! advertMap.containsKey(subject.getURI()))
         {
-            Property     knownChildProperty = subject.getModel().getProperty(knownChildPropertyURI);
-            StmtIterator statements         = subject.getModel().listStatements(subject, knownChildProperty, (RDFNode) null);
+            AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
 
             List<String> childNodeIds = new LinkedList<String>();
-            while (statements.hasNext())
+            for (String knownChildPropertyURI: knownChildPropertyURIs)
             {
-                Statement statement    = statements.nextStatement();
-                Resource  childSubject = statement.getResource();
+                Property     knownChildProperty = subject.getModel().getProperty(knownChildPropertyURI);
+                StmtIterator statements         = subject.getModel().listStatements(subject, knownChildProperty, (RDFNode) null);
 
-                logger.info("childSubjectURI: " + childSubject.getURI());
+                while (statements.hasNext())
+                {
+                    Statement statement    = statements.nextStatement();
+                    Resource  childSubject = statement.getResource();
 
-                AdvertNodeDTO childAdvertNode = scanSubject(childSubject, metadataBlogId, false, advertMap);
+                    AdvertNodeDTO childAdvertNode = scanSubject(childSubject, metadataBlogId, false, advertMap);
 
-                childNodeIds.add(childAdvertNode.getId());
+                    childNodeIds.add(childAdvertNode.getId());
+                }
             }
             advertNode.setChildNodeIds(childNodeIds);
-        }
 
-        return advertNode;
+            return advertNode;
+        }
+        else
+            return obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
     }
 
-    private AdvertNodeDTO obtainAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
+    private AdvertNodeDTO obtainAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode, Map<String, AdvertNodeDTO> advertMap)
     {
-        AdvertNodeDTO result = advertMap.get(subject);
+        AdvertNodeDTO result = advertMap.get(subject.getURI());
         if (result == null)
         {
             result = createAdvertNode(subject, metadataBlogId, rootNode);
-            advertMap.put(subject, result);
+            advertMap.put(subject.getURI(), result);
         }
         else
             result.setRootNode(rootNode || result.getRootNode());
@@ -173,7 +176,7 @@ public class AdvertsWS
 
         try
         {
-            logger.info("createAdvertNode: subject - " + subject.getURI().toString());
+            logger.log(Level.FINE, "createAdvertNode: subject - " + subject.getURI());
 
             Property  hasTitle         = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
             Property  hasSummary       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
