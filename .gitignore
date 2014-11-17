@@ -1,3 +1,7 @@
+### Eclipse ###
+/.project
+/.settings
+
 # Created by https://www.gitignore.io
 
 ### Intellij ###
