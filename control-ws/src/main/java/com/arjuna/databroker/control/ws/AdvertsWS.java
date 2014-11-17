@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -22,12 +23,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -57,8 +60,6 @@ public class AdvertsWS
  
             for (String metadataBlogId: metadataBlogIds)
             {
-                logger.info("metadata blob id: " + metadataBlogIds);
-
                 Map<Resource, AdvertNodeDTO> advertMap = new HashMap<Resource, AdvertNodeDTO>();
 
                 scanMetadataBlob(metadataBlogId, advertMap);
@@ -76,7 +77,12 @@ public class AdvertsWS
         }
     }
 
-    private static final String[] knownRootNodeTypeURIs = { "http://rdfs.arjuna.com/datasource#DataSource" };
+    private static final String[] knownRootNodeTypeURIs =
+    {
+        "http://rdfs.arjuna.com/datasource#DataSource",
+        "http://rdfs.arjuna.com/jdbc/postgresql#Database",
+        "http://rdfs.arjuna.com/xssf#Spreadsheet"
+    };
 
     private void scanMetadataBlob(String metadataBlogId, Map<Resource, AdvertNodeDTO> advertMap)
     {
@@ -93,10 +99,8 @@ public class AdvertsWS
 
             for (String knownRootNodeTypeURI: knownRootNodeTypeURIs)
             {
-                logger.info("node type: " + knownRootNodeTypeURI);
-
-                Property     knownRootNodeTypeProperty = model.getProperty(knownRootNodeTypeURI);
-                StmtIterator statements                = model.listStatements(null, rdfTypeProperty, knownRootNodeTypeProperty);
+                Resource     knownRootNodeTypeResource = model.getResource(knownRootNodeTypeURI);
+                StmtIterator statements                = model.listStatements(null, rdfTypeProperty, knownRootNodeTypeResource);
 
                 while (statements.hasNext())
                 {
@@ -113,9 +117,40 @@ public class AdvertsWS
         }
     }
 
-    private void scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
+    private static final String[] knownChildPropertyURIs =
+    {
+        "http://rdfs.arjuna.com/datasource#hasDataService",
+        "http://rdfs.arjuna.com/datasource#producesDataSet",
+        "http://rdfs.arjuna.com/datasource#hasField",
+        "http://rdfs.arjuna.com/datasource#hasType",
+        "http://rdfs.arjuna.com/datasource#hasRawType"
+    };
+
+    private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
     {
         AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
+
+        for (String knownChildPropertyURI: knownChildPropertyURIs)
+        {
+            Property     knownChildProperty = subject.getModel().getProperty(knownChildPropertyURI);
+            StmtIterator statements         = subject.getModel().listStatements(subject, knownChildProperty, (RDFNode) null);
+
+            List<String> childNodeIds = new LinkedList<String>();
+            while (statements.hasNext())
+            {
+                Statement statement    = statements.nextStatement();
+                Resource  childSubject = statement.getResource();
+
+                logger.info("childSubjectURI: " + childSubject.getURI());
+
+                AdvertNodeDTO childAdvertNode = scanSubject(childSubject, metadataBlogId, false, advertMap);
+
+                childNodeIds.add(childAdvertNode.getId());
+            }
+            advertNode.setChildNodeIds(childNodeIds);
+        }
+
+        return advertNode;
     }
 
     private AdvertNodeDTO obtainAdvertNode(Resource subject, String metadataBlogId, Boolean rootNode, Map<Resource, AdvertNodeDTO> advertMap)
@@ -126,6 +161,8 @@ public class AdvertsWS
             result = createAdvertNode(subject, metadataBlogId, rootNode);
             advertMap.put(subject, result);
         }
+        else
+            result.setRootNode(rootNode || result.getRootNode());
 
         return result;
     }
