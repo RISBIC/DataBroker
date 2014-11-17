@@ -18,7 +18,7 @@ public class AdvertNodeSummary implements Serializable
         _id           = null;
         _metadataId   = null;
         _metadataPath = null;
-        _rootNode     = null;
+        _isRootNode   = null;
         _nodeClass    = null;
         _name         = null;
         _summary      = null;
@@ -30,12 +30,12 @@ public class AdvertNodeSummary implements Serializable
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean isRootNode, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
         _metadataId   = metadataId;
         _metadataPath = metadataPath;
-        _rootNode     = rootNode;
+        _isRootNode   = isRootNode;
         _nodeClass    = nodeClass;
         _name         = name;
         _summary      = summary;
@@ -77,14 +77,14 @@ public class AdvertNodeSummary implements Serializable
         _metadataPath = metadataPath;
     }
 
-    public Boolean isRootNode()
+    public Boolean getIsRootNode()
     {
-        return _rootNode;
+        return _isRootNode;
     }
 
-    public void setRootNode(Boolean rootNode)
+    public void setIsRootNode(Boolean isRootNode)
     {
-        _rootNode = rootNode;
+        _isRootNode = isRootNode;
     }
 
     public String getNodeClass()
@@ -180,7 +180,7 @@ public class AdvertNodeSummary implements Serializable
     private String       _id;
     private String       _metadataId;
     private String       _metadataPath;
-    private Boolean      _rootNode;
+    private Boolean      _isRootNode;
     private String       _nodeClass;
     private String       _name;
     private String       _summary;
