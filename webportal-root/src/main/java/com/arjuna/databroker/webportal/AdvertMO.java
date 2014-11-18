@@ -168,8 +168,7 @@ public class AdvertMO implements Serializable
                         }
 
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
-                            if (advertNodeSummary.getIsRootNode())
-                                _adverts.add(new AdvertVO(serviceRootURL, requesterId, advertNodeSummary.getMetadataId(), advertNodeSummary.getMetadataPath(), advertNodeSummary.getIsRootNode(), advertNodeMap.get(advertNodeSummary.getId())));
+                            _adverts.add(new AdvertVO(serviceRootURL, requesterId, advertNodeSummary.getMetadataId(), advertNodeSummary.getMetadataPath(), advertNodeSummary.getIsRootNode(), advertNodeMap.get(advertNodeSummary.getId())));
                     }
                     else
                         _errorMessage = "Failed to obtain adverts from \"" + _serviceRootURLs + "\"";
@@ -193,13 +192,14 @@ public class AdvertMO implements Serializable
         result.append("'{ \"root\" : \"The Root\", \"children\": [ ");
         boolean firstAdvert = true;
         for (AdvertVO advert: _adverts)
-        {
-            if (firstAdvert)
-                firstAdvert = false;
-            else
-                result.append(", ");
-            advertsToJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
-        }
+            if (advert.getIsRootNode())
+            {
+                if (firstAdvert)
+                    firstAdvert = false;
+                else
+                    result.append(", ");
+                advertsToJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
+            }
         result.append(" ] }'");
 
         return result.toString();
