@@ -13,13 +13,14 @@
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Data View Description"/>
             </ui:include>
             <ui:include src="/fragments/navigation_reload.xhtml">
                 <ui:param name="doreloadobject" value="#{metadata}"/>
                 <ui:param name="doreloadaction" value="doReload"/>
-            </ui:include>
+            </ui:include>-->
             <h:form styleClass="metadata">
                 <h:panelGroup styleClass="metadata" layout="block">
                     <h:panelGroup styleClass="metadata-title" layout="block">
@@ -32,9 +33,13 @@
                     <h:panelGrid styleClass="metadata-info" columnClasses="metadata-treecolumn,metadata-descriptioncolumn" columns="2" border="0" cellpadding="0" cellspacing="1em" rendered="#{empty metadata.errorMessage}">
                         <rich:tree styleClass="metadata-tree" var="metadataNode" toggleType="client" selectionType="ajax" selectionChangeListener="${metadatanode.selectionChanged}">
                             <rich:treeModelRecursiveAdaptor roots="#{metadata.rootNodes}" nodes="#{metadataNode.subNodes}">
-                                <rich:treeNode>
+                                <rich:treeNode type="Type">
                                     <h:outputText value="#{metadataNode.name}"/>
                                 </rich:treeNode>
+                                <rich:treeNode iconLeaf="/images/tree/disc.gif" icon="/images/tree/disc.gif">
+                                    <h:outputText value="#{metadataNode.type}"/>
+                                </rich:treeNode>
+
                             </rich:treeModelRecursiveAdaptor>
                         </rich:tree>
                         <a4j:outputPanel ajaxRendered="true" layout="block">

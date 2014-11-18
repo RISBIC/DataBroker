@@ -4,6 +4,7 @@
 
 package com.arjuna.databroker.webportal;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
@@ -16,6 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.comms.MetadataClient;
+import com.google.gson.*;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -36,6 +38,12 @@ public class MetadataListMO implements Serializable
     {
         _items        = new LinkedList<MetadataItemVO>();
         _errorMessage = null;
+    }
+
+    public String toJSON(){
+
+        Gson gson = new Gson();
+        return gson.toJson(getItems());
     }
 
     public List<MetadataItemVO> getItems()

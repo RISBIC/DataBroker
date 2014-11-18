@@ -22,6 +22,9 @@
                         <h:outputText styleClass="metadatalist-error-title" value="Error Message: "/>
                         <h:outputText styleClass="metadatalist-error-message" value="#{metadatalist.errorMessage}"/>
                     </h:panelGroup>
+                    <div>
+                        #{metadatalist.toJSON()}
+                    </div>
                     <h:panelGroup layout="block" rendered="#{empty metadatalist.errorMessage}">
                         <ui:repeat value="#{metadatalist.items}" var="itemLevel1">
                             <h:panelGroup styleClass="metadatalist-level1" layout="block">
