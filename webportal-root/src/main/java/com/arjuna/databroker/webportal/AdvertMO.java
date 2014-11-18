@@ -35,6 +35,7 @@ public class AdvertMO implements Serializable
         _requesterIds    = Collections.emptyList();
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
+        _advert          = null;
 
         _serverStatusMessages = new HashMap<String, String>();
         _errorMessage         = null;
@@ -104,6 +105,21 @@ public class AdvertMO implements Serializable
         return _adverts;
     }
 
+    public AdvertVO getAdvert(String metadataPath, String metadataId)
+    {
+
+        for (AdvertVO advert : _adverts) {
+
+           if(advert.getMetadataPath() == metadataPath && advert.getMetadataId() == metadataId){
+               return advert;
+           }
+
+        }
+
+        //If advert not found, return null
+        return null;
+    }
+
     public void setAdverts(List<AdvertVO> adverts)
     {
         _adverts = adverts;
@@ -126,7 +142,7 @@ public class AdvertMO implements Serializable
 
     public void setServerStatusMessages(List<Map.Entry<String, String>> serverStatusMessages)
     {
-//        _serverStatusMessages = serverStatusMessages;
+        _serverStatusMessages = serverStatusMessages;
     }
 
     public String getErrorMessage()
@@ -146,7 +162,7 @@ public class AdvertMO implements Serializable
 
     public void setServerErrorMessages(List<Map.Entry<String, String>> serverErrorMessages)
     {
-//        _serverErrorMessages = serverErrorMessages;
+        _serverErrorMessages = serverErrorMessages;
     }
 
     public Boolean getAsyncLoadInProgress()
@@ -191,6 +207,7 @@ public class AdvertMO implements Serializable
             return "/dataviews/dataadvert?faces-redirect=true";
         }
     }
+
 
     public String doReload()
     {
@@ -533,6 +550,7 @@ public class AdvertMO implements Serializable
     private List<String>   _requesterIds;
     private String         _userId;
     private List<AdvertVO> _adverts;
+    private AdvertVO       _advert;
     private String         _advertsJSON;
 
     private Map<String, String> _serverStatusMessages;
