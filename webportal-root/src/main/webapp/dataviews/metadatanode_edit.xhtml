@@ -9,14 +9,15 @@
         <ui:define name="title">Data View Description Edit</ui:define>
 
         <ui:define name="head">
-            <link rel="stylesheet" type="text/css" href="metadatanode_edit_style.css"/>
+            <!--<link rel="stylesheet" type="text/css" href="metadatanode_edit_style.css"/>-->
         </ui:define>
 
         <ui:define name="body">
-            <ui:include src="/fragments/header.xhtml">
+            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+            <!--<ui:include src="/fragments/header.xhtml">
                 <ui:param name="titletext" value="Data View Description"/>
             </ui:include>
-            <ui:include src="/fragments/navigation.xhtml"/>
+            <ui:include src="/fragments/navigation.xhtml"/>-->
             <h:form styleClass="metadatanode">
                 <h:panelGroup styleClass="metadatanode" layout="block">
                     <h:panelGroup styleClass="metadatanode-title" layout="block">

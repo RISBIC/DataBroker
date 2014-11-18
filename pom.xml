@@ -97,8 +97,7 @@
                 <version>8.1.0.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            -->
+            </dependency> -->
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-bom</artifactId>
