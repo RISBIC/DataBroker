@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="../template.xhtml">
-        <ui:define name="title">Data Advert</ui:define>
+        <ui:define name="title">Data Adverts</ui:define>
 
         <ui:define name="head">
             <link rel="stylesheet" type="text/css" href="dataadvert_style.css"/>
@@ -24,13 +24,19 @@
             <h:form id="content" styleClass="dataadvert">
                 <h:panelGroup styleClass="dataadvert" layout="block">
                     <h:panelGroup styleClass="dataadvert-title" layout="block">
-                        <h:outputText styleClass="dataadvert-title" value="Single Data Advert!!!"/>
+                        <h:outputText styleClass="dataadvert-title" value="Data Advert"/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
                         <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.advert}" var="_advert" rendered="#{empty advert.errorMessage}">
+                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.adverts}" var="_advert" rendered="#{empty advert.errorMessage}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="dataadvert-header" value="Service URL"/>
+                            </f:facet>
+                            <h:commandLink styleClass="dataviews-button btn btn-default btn-xs" action="#{advert.doLoad(_advert.serviceURL, _advert.requesterId, auth.username, _advert.metadataPath, _advert.metadataId)}" value="Advert"/>
+                        </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataadvert-header" value="Service URL"/>
