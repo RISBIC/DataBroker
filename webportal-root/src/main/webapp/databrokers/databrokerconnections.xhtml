@@ -4,7 +4,7 @@
 <!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="../template.xhtml">
         <ui:define name="title">DataBrokers</ui:define>
 
@@ -20,31 +20,28 @@
                             </li>
                             <li>
                                 <h4 class="active"><h:commandLink action="#{databrokerconnections.doLoad}">Data Brokers</h:commandLink></h4>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <h5><h:commandLink action="#{databrokerconnections.doAdd}">Add</h:commandLink></h5>
-                                    </li>
-                                </ul>
                             </li>
                         </ul>
                     </h:form>
                 </div>
-                <div class="col-md-9">
-                    <h:form>
+                <div class="col-md-9 databroker-list">
+                    <h:form rendered="#{fn:length(databrokerconnections.dataBrokerConnections) > 0}">
+                        <h2><span class="databroker-count">#{fn:length(databrokerconnections.dataBrokerConnections)}</span> Data Broker Connections | <h:commandLink action="#{databrokerconnections.doAdd}">Create</h:commandLink></h2>
                         <ui:repeat value="#{databrokerconnections.dataBrokerConnections}" var="_dataBrokerConnection">
                             <div class="row databroker-connection">
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     <h3><h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.name}"/></h3>
                                     <p class="sub-title"><h:outputText styleClass="databrokers-value" value="#{_dataBrokerConnection.summary}"/></p>
-                                </div>
-                                <div class="col-md-1">
-                                    <h:commandLink action="#{databrokerconnection.doChange(_dataBrokerConnection.id)}"><i class="fa fa-pencil"></i></h:commandLink>
-                                </div>
-                                <div class="col-md-1">
-                                    <h:commandLink action="#{databrokerconnections.doRemove(_dataBrokerConnection.id)}"><i class="fa fa-trash"></i></h:commandLink>
+                                    <ul class="databroker-actions list-inline">
+                                        <li><h:commandLink action="#{databrokerconnection.doChange(_dataBrokerConnection.id)}"><i class="fa fa-pencil"></i>Edit</h:commandLink></li>
+                                        <li><h:commandLink action="#{databrokerconnections.doRemove(_dataBrokerConnection.id)}"><i class="fa fa-trash"></i>Remove</h:commandLink></li>
+                                    </ul>
                                 </div>
                             </div>
                         </ui:repeat>
+                    </h:form>
+                    <h:form rendered="#{fn:length(databrokerconnections.dataBrokerConnections) == 0}">
+                        <h4 class="empty-list">There are currently no data broker connections. Why don't <h:commandLink action="#{databrokerconnections.doAdd}">add</h:commandLink> you one?</h4>
                     </h:form>
                 </div>
             </div>
