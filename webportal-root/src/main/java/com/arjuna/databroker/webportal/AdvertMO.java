@@ -157,7 +157,7 @@ public class AdvertMO implements Serializable
                     {
                         Map<String, AdvertNodeVO> advertNodeMap = new HashMap<String, AdvertNodeVO>();
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
-                            advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDiscription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
+                            advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDescription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
 
                         for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
                         {
@@ -212,8 +212,8 @@ public class AdvertMO implements Serializable
             result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
         if (advertStandardNode.getSummary() != null)
             result.append("\"summary\": \"" + advertStandardNode.getSummary() + "\", ");
-        if (advertStandardNode.getDiscription() != null)
-            result.append("\"discription\": \"" + advertStandardNode.getDiscription() + "\", ");
+        if (advertStandardNode.getDescription() != null)
+            result.append("\"description\": \"" + advertStandardNode.getDescription() + "\", ");
         result.append("\"children\": [");
         boolean firstChild = true;
         for (AdvertNodeVO childNode: advertStandardNode.getChildNodes())
