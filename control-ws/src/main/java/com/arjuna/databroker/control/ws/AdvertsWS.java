@@ -122,8 +122,7 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/datasource#hasDataService",
         "http://rdfs.arjuna.com/datasource#producesDataSet",
         "http://rdfs.arjuna.com/datasource#hasField",
-        "http://rdfs.arjuna.com/datasource#hasType",
-        "http://rdfs.arjuna.com/access#AccessInfo"
+        "http://rdfs.arjuna.com/access#hasAccessInfo"
     };
 
     private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<String, AdvertNodeDTO> advertMap)

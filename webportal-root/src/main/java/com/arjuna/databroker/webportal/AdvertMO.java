@@ -32,6 +32,7 @@ public class AdvertMO implements Serializable
         _requesterIds    = null;
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
+        _advert          = null;
         _errorMessage    = null;
     }
 
@@ -68,6 +69,21 @@ public class AdvertMO implements Serializable
     public List<AdvertVO> getAdverts()
     {
         return _adverts;
+    }
+
+    public AdvertVO getAdvert(String metadataPath, String metadataId)
+    {
+
+        for (AdvertVO advert : _adverts) {
+
+           if(advert.getMetadataPath() == metadataPath && advert.getMetadataId() == metadataId){
+               return advert;
+           }
+
+        }
+
+        //If advert not found, return null
+        return null;
     }
 
     public void setAdverts(List<AdvertVO> adverts)
@@ -107,7 +123,7 @@ public class AdvertMO implements Serializable
 
         load();
 
-        return "/dataviews/dataadvert?faces-redirect=true";
+        return "/dataviews/dataadverts?faces-redirect=true";
     }
 
     public String doLoad(List<String> serviceRootURLs, List<String> requesterIds, String userId)
@@ -120,6 +136,20 @@ public class AdvertMO implements Serializable
 
         load();
 
+        return "/dataviews/dataadverts?faces-redirect=true";
+    }
+
+    public String doLoad(String serviceRootURL, String requesterId, String userId, String metadataPath, String metadataId)
+    {
+        logger.log(Level.WARNING, "AdvertMO.doLoad: " + metadataPath);
+
+        _serviceRootURLs = new LinkedList<String>();
+        _requesterIds    = new LinkedList<String>();
+        Collections.addAll(_serviceRootURLs, serviceRootURL);
+        Collections.addAll(_requesterIds, requesterId);
+        _userId = userId;
+        _advert = getAdvert(metadataPath, metadataId);
+
         return "/dataviews/dataadvert?faces-redirect=true";
     }
 
@@ -129,7 +159,7 @@ public class AdvertMO implements Serializable
 
         load();
 
-        return "/dataadverts/dataadvert?faces-redirect=true";
+        return "/dataadverts/dataadverts?faces-redirect=true";
     }
 
     private void load()
@@ -235,6 +265,7 @@ public class AdvertMO implements Serializable
     private String         _userId;
     private String         _advertsJSON;
     private List<AdvertVO> _adverts;
+    private AdvertVO       _advert;
     private String         _errorMessage;
 
     @EJB
