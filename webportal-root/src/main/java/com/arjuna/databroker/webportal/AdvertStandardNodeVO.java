@@ -18,20 +18,20 @@ public class AdvertStandardNodeVO extends AdvertNodeVO
         _nodeClass   = null;
         _name        = null;
         _summary     = null;
-        _discription = null;
+        _description = null;
         _dateCreated = null;
         _dateUpdate  = null;
         _owner       = null;
         _tags        = Collections.emptyList();
     }
 
-    public AdvertStandardNodeVO(String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<AdvertNodeVO> childNodes)
+    public AdvertStandardNodeVO(String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<AdvertNodeVO> childNodes)
     {
         super(childNodes);
         _nodeClass   = nodeClass;
         _name        = name;
         _summary     = summary;
-        _discription = discription;
+        _description = description;
         _dateCreated = dataCreated;
         _dateUpdate  = dateUpdate;
         _owner       = owner;
@@ -68,14 +68,14 @@ public class AdvertStandardNodeVO extends AdvertNodeVO
         _summary = summary;
     }
 
-    public String getDiscription()
+    public String getDescription()
     {
-        return _discription;
+        return _description;
     }
 
-    public void setDiscription(String discription)
+    public void setDescription(String description)
     {
-        _discription = discription;
+        _description = description;
     }
 
     public Date getDateCreated()
@@ -121,7 +121,7 @@ public class AdvertStandardNodeVO extends AdvertNodeVO
     private String       _nodeClass;
     private String       _name;
     private String       _summary;
-    private String       _discription;
+    private String       _description;
     private Date         _dateCreated;
     private Date         _dateUpdate;
     private String       _owner;

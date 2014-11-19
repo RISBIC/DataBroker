@@ -22,7 +22,7 @@ public class AdvertNodeSummary implements Serializable
         _nodeClass    = null;
         _name         = null;
         _summary      = null;
-        _discription  = null;
+        _description  = null;
         _dateCreated  = null;
         _dateUpdate   = null;
         _owner        = null;
@@ -30,7 +30,7 @@ public class AdvertNodeSummary implements Serializable
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean isRootNode, String nodeClass, String name, String summary, String discription, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean isRootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
         _metadataId   = metadataId;
@@ -39,7 +39,7 @@ public class AdvertNodeSummary implements Serializable
         _nodeClass    = nodeClass;
         _name         = name;
         _summary      = summary;
-        _discription  = discription;
+        _description  = description;
         _dateCreated  = dataCreated;
         _dateUpdate   = dateUpdate;
         _owner        = owner;
@@ -117,14 +117,14 @@ public class AdvertNodeSummary implements Serializable
         _summary = summary;
     }
 
-    public String getDiscription()
+    public String getDescription()
     {
-        return _discription;
+        return _description;
     }
 
-    public void setDiscription(String discription)
+    public void setDescription(String description)
     {
-        _discription = discription;
+        _description = description;
     }
 
     public Date getDateCreated()
@@ -184,7 +184,7 @@ public class AdvertNodeSummary implements Serializable
     private String       _nodeClass;
     private String       _name;
     private String       _summary;
-    private String       _discription;
+    private String       _description;
     private Date         _dateCreated;
     private Date         _dateUpdate;
     private String       _owner;

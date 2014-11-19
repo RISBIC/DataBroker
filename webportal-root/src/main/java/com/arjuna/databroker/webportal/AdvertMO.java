@@ -528,8 +528,8 @@ public class AdvertMO implements Serializable
             result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
         if (advertStandardNode.getSummary() != null)
             result.append("\"summary\": \"" + advertStandardNode.getSummary() + "\", ");
-        if (advertStandardNode.getDiscription() != null)
-            result.append("\"discription\": \"" + advertStandardNode.getDiscription() + "\", ");
+        if (advertStandardNode.getDescription() != null)
+            result.append("\"description\": \"" + advertStandardNode.getDescription() + "\", ");
         result.append("\"children\": [");
         boolean firstChild = true;
         for (AdvertNodeVO childNode: advertStandardNode.getChildNodes())
