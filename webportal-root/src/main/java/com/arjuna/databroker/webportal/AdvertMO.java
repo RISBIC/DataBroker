@@ -6,6 +6,7 @@ package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -118,14 +119,14 @@ public class AdvertMO implements Serializable
         _advertsJSON = advertsJSON;
     }
 
-    public Map<String, String> getServerStatusMessages()
+    public List<Map.Entry<String, String>> getServerStatusMessages()
     {
-        return _serverStatusMessages;
+        return Collections.list(Collections.enumeration(_serverStatusMessages.entrySet()));
     }
 
-    public void setServerStatusMessages(Map<String, String> serverStatusMessages)
+    public void setServerStatusMessages(List<Map.Entry<String, String>> serverStatusMessages)
     {
-        _serverStatusMessages = serverStatusMessages;
+//        _serverStatusMessages = serverStatusMessages;
     }
 
     public String getErrorMessage()
@@ -138,14 +139,14 @@ public class AdvertMO implements Serializable
         _errorMessage = errorMessage;
     }
 
-    public Map<String, String> getServerErrorMessages()
+    public List<Map.Entry<String, String>> getServerErrorMessages()
     {
-        return _serverErrorMessages;
+        return Collections.list(Collections.enumeration(_serverErrorMessages.entrySet()));
     }
 
-    public void setServerErrorMessages(Map<String, String> serverErrorMessages)
+    public void setServerErrorMessages(List<Map.Entry<String, String>> serverErrorMessages)
     {
-        _serverErrorMessages = serverErrorMessages;
+//        _serverErrorMessages = serverErrorMessages;
     }
 
     public Boolean getAsyncLoadInProgress()
@@ -215,8 +216,8 @@ public class AdvertMO implements Serializable
 
             _serviceRootURLs = new LinkedList<String>();
             _requesterIds    = new LinkedList<String>();
-            Collections.addAll(_serviceRootURLs, serviceRootURL);
-            Collections.addAll(_requesterIds, requesterId);
+            Collections.addAll(_serviceRootURLs, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL);
+            Collections.addAll(_requesterIds, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId);
             _userId = userId;
 
             asyncLoad();
@@ -255,6 +256,11 @@ public class AdvertMO implements Serializable
 
             return "/dataadverts/dataadvert?faces-redirect=true";
         }
+    }
+
+    public String doRefresh()
+    {
+        return "/dataadverts/dataadvert?faces-redirect=true";
     }
 
     private void load()
@@ -345,9 +351,14 @@ public class AdvertMO implements Serializable
         public LoadWorker()
         {
             _asyncLoadInProgress = false;
-            _waitObject          = new Object();
-            _stop                = false;
+            _startWaitObject     = new Object();
+            _workToDo            = false;
             _finish              = false;
+        }
+
+        public Boolean getAsyncLoadInProgress()
+        {
+            return _asyncLoadInProgress;
         }
 
         public void restartWorking(List<String> serviceRootURLs, List<String> requesterIds, String userId)
@@ -361,25 +372,32 @@ public class AdvertMO implements Serializable
             else if (_workServiceRootURLs.size() != _workRequesterIds.size())
                 _errorMessage = "Size mismatch between 'service root URLs' or 'requester ids'";
             else
-                _waitObject.notify();
+            {
+                synchronized (_startWaitObject)
+                {
+                    _workToDo = true;
+                    _startWaitObject.notify();
+                }
+            }
         }
 
         public void stopWorking()
         {
-            _stop = true;
-            if (_asyncLoadInProgress)
+            synchronized (_startWaitObject)
+            {
+                _workToDo = false;
                 this.interrupt();
-        }
-
-        public Boolean getAsyncLoadInProgress()
-        {
-            return _asyncLoadInProgress;
+            }
         }
 
         public void finish()
         {
-            _stop   = true;
-            _finish = true;
+            synchronized (_startWaitObject)
+            {
+                _workToDo = false;
+                _finish   = true;
+                this.interrupt();
+            }
         }
 
         public void run()
@@ -387,16 +405,16 @@ public class AdvertMO implements Serializable
             while (! _finish)
             {
                 try
-                {                    
-                    synchronized (_waitObject)
+                {
+                    synchronized (_startWaitObject)
                     {
-                        _waitObject.wait();
+                        if (! _workToDo)
+                            _startWaitObject.wait();
                     }
 
                     _asyncLoadInProgress = true;
 
-                    _stop = true;
-                    for (int index = 0; (! _stop) && (index < _workServiceRootURLs.size()); index++)
+                    for (int index = 0; _workToDo && (index < _workServiceRootURLs.size()); index++)
                     {
                         String serviceRootURL = _workServiceRootURLs.get(index);
                         String requesterIds   = _workRequesterIds.get(index);
@@ -415,11 +433,15 @@ public class AdvertMO implements Serializable
                         }
                     }
                 }
+                catch (InterruptedException interruptedException)
+                {
+                }
                 catch (Throwable throwable)
                 {
                     logger.log(Level.WARNING, "Problem getting adverts", throwable);
                 }
 
+                _workToDo            = false;
                 _asyncLoadInProgress = false;
             }
         }
@@ -429,8 +451,8 @@ public class AdvertMO implements Serializable
         private String       _workUserId;
 
         private volatile boolean _asyncLoadInProgress;
-        private final    Object  _waitObject;
-        private volatile boolean _stop;
+        private volatile boolean _workToDo;
+        private final    Object  _startWaitObject;
         private volatile boolean _finish;
     }
 
