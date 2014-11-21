@@ -190,7 +190,7 @@ public class AdvertsWS
             String       nodeClass    = null;
             String       name         = null;
             String       summary      = null;
-            String       discription  = null;
+            String       description  = null;
             Date         dataCreated  = null;
             Date         dateUpdate   = null;
             String       owner        = null;
@@ -202,9 +202,9 @@ public class AdvertsWS
             if (summaryStatement != null)
                 summary = summaryStatement.getString();
             if (detailsStatement != null)
-                discription = detailsStatement.getString();
+                description = detailsStatement.getString();
 
-            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, discription, dataCreated, dateUpdate, owner, tags, childNodeIds);
+            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dataCreated, dateUpdate, owner, tags, childNodeIds);
         }
         catch (Throwable throwable)
         {

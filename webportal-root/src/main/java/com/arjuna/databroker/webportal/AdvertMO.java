@@ -6,7 +6,6 @@ package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -119,14 +118,14 @@ public class AdvertMO implements Serializable
         _advertsJSON = advertsJSON;
     }
 
-    public List<Map.Entry<String, String>> getServerStatusMessages()
+    public Map<String, String> getServerStatusMessages()
     {
-        return Collections.list(Collections.enumeration(_serverStatusMessages.entrySet()));
+        return _serverStatusMessages;
     }
 
-    public void setServerStatusMessages(List<Map.Entry<String, String>> serverStatusMessages)
+    public void setServerStatusMessages(Map<String, String> serverStatusMessages)
     {
-//        _serverStatusMessages = serverStatusMessages;
+        _serverStatusMessages = serverStatusMessages;
     }
 
     public String getErrorMessage()
@@ -139,14 +138,14 @@ public class AdvertMO implements Serializable
         _errorMessage = errorMessage;
     }
 
-    public List<Map.Entry<String, String>> getServerErrorMessages()
+    public Map<String, String> getServerErrorMessages()
     {
-        return Collections.list(Collections.enumeration(_serverErrorMessages.entrySet()));
+        return _serverErrorMessages;
     }
 
-    public void setServerErrorMessages(List<Map.Entry<String, String>> serverErrorMessages)
+    public void setServerErrorMessages(Map<String, String> serverErrorMessages)
     {
-//        _serverErrorMessages = serverErrorMessages;
+        _serverErrorMessages = serverErrorMessages;
     }
 
     public Boolean getAsyncLoadInProgress()
@@ -467,7 +466,7 @@ public class AdvertMO implements Serializable
         {
             Map<String, AdvertNodeVO> advertNodeMap = new HashMap<String, AdvertNodeVO>();
             for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
-                advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDiscription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
+                advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDescription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
 
             for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
             {
@@ -511,8 +510,8 @@ public class AdvertMO implements Serializable
             result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
         if (advertStandardNode.getSummary() != null)
             result.append("\"summary\": \"" + advertStandardNode.getSummary() + "\", ");
-        if (advertStandardNode.getDiscription() != null)
-            result.append("\"discription\": \"" + advertStandardNode.getDiscription() + "\", ");
+        if (advertStandardNode.getDescription() != null)
+            result.append("\"description\": \"" + advertStandardNode.getDescription() + "\", ");
         result.append("\"children\": [");
         boolean firstChild = true;
         for (AdvertNodeVO childNode: advertStandardNode.getChildNodes())
