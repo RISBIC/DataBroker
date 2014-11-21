@@ -200,6 +200,9 @@ public class AdvertMO implements Serializable
 
             _loadWorker.stopWorking();
 
+            Collections.addAll(_serviceRootURLs, "http://10.1.20.246/", "http://10.1.20.246:80/");
+            Collections.addAll(_requesterIds, "arjuna", "arjuna");
+
             load();
 
             return "/dataadverts/dataadvert?faces-redirect=true";
@@ -216,8 +219,8 @@ public class AdvertMO implements Serializable
 
             _serviceRootURLs = new LinkedList<String>();
             _requesterIds    = new LinkedList<String>();
-            Collections.addAll(_serviceRootURLs, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL, serviceRootURL);
-            Collections.addAll(_requesterIds, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId, requesterId);
+            Collections.addAll(_serviceRootURLs, serviceRootURL);
+            Collections.addAll(_requesterIds, requesterId);
             _userId = userId;
 
             asyncLoad();
