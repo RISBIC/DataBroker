@@ -208,6 +208,20 @@ public class AdvertMO implements Serializable
         }
     }
 
+    public String doLoad(String serviceRootURL, String requesterId, String userId, String metadataPath, String metadataId)
+    {
+        logger.log(Level.WARNING, "AdvertMO.doLoad: " + metadataPath);
+
+        _serviceRootURLs = new LinkedList<String>();
+        _requesterIds    = new LinkedList<String>();
+        Collections.addAll(_serviceRootURLs, serviceRootURL);
+        Collections.addAll(_requesterIds, requesterId);
+        _userId = userId;
+        _advert = getAdvert(metadataPath, metadataId);
+
+        return "/dataviews/dataadvert?faces-redirect=true";
+    }
+
 
     public String doReload()
     {
