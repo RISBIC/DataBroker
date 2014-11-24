@@ -24,7 +24,7 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
      * 
      * @return the named data providers associated with the data consumer
      */
-    public Collection<NamedDataProvider<T>> getDataProvider();
+    public Collection<NamedDataProvider<T>> getDataProviders();
 
     /**
      * Add named data provider to referrer data consumer.
