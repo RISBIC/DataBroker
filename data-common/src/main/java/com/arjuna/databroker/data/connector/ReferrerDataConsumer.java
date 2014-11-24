@@ -4,6 +4,7 @@
 
 package com.arjuna.databroker.data.connector;
 
+import java.util.Collection;
 import com.arjuna.databroker.data.DataConsumer;
 
 /**
@@ -16,8 +17,14 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
      *
      * @return name associated with the Referrer Data Consumer
      */
-
     public Class<?> getNameClass();
+
+    /**
+     * Returns the named data providers associated with the data consumer.
+     * 
+     * @return the named data providers associated with the data consumer
+     */
+    public Collection<NamedDataProvider<T>> getDataProvider();
 
     /**
      * Add named data provider to referrer data consumer.
