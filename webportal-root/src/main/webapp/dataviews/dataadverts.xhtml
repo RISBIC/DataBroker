@@ -14,45 +14,43 @@
 
         <ui:define name="body">
 
-            <f:event type="preRenderView" listener="#{advert.doAsyncLoad(dataviews.dataViewConnectionURLs, dataviews.dataViewRequesterIds, auth.username)}"/>
+            <f:event type="preRenderView" listener="#{advert.doLoad(dataviews.dataViewConnectionURLs, dataviews.dataViewRequesterIds, auth.username)}"/>
 
-            <h:form>
+            <!--<h:form>
                 <a4j:poll id="poll" interval="5000" enabled="#{advert.getAsyncLoadInProgress()}" reRender="poll,advertsJson" />
-            </h:form>
+            </h:form>-->
 
 
             <h:form id="advertsForm" name="advertsForm" styleClass="dataadverts">
-                <h:panelGroup styleClass="dataadvert" layout="block">
-                    <h1>Data Adverts</h1>
-                    <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
-                        <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
-                        <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
-                    </h:panelGroup>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4>Filters go here</h4>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control input-large" placeholder="Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
-                                </div>
+                <h1>Data Adverts</h1>
+                <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
+                    <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
+                    <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
+                </h:panelGroup>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Filters go here</h4>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control input-large" placeholder="Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
                             </div>
-                            <div id="advert-list" class="row" data-bind="foreach: filteredItems">
-                                <div class="col-md-12 advert"  data-bind="click: $parent.viewItem">
-                                    <span class="hidden" data-bind="text: commandId"></span>
-                                    <h3 data-bind="text: name"></h3>
-                                    <p data-bind="text: summary"></p>
-                                    <p data-bind="text: description"></p>
-                                    <small data-bind="visible: tags.length > 0"><i class="fa fa-tag"></i></small>
-                                    <hr />
-                                </div>
+                        </div>
+                        <div id="advert-list" class="row" data-bind="foreach: filteredItems">
+                            <div class="col-md-12 advert"  data-bind="click: $parent.viewItem">
+                                <span class="hidden" data-bind="text: commandId"></span>
+                                <h3 data-bind="text: name"></h3>
+                                <p data-bind="text: summary"></p>
+                                <p data-bind="text: description"></p>
+                                <small data-bind="visible: tags.length > 0"><i class="fa fa-tag"></i></small>
+                                <hr />
                             </div>
                         </div>
                     </div>
-                </h:panelGroup>
-                <ui:repeat var="_advert" varStatus="status" value="#{advert.adverts}">
-                    <h:commandLink styleClass="hidden" id="advert-#{status.index}" action="#{advert.doLoad(_advert.serviceURL, _advert.requesterId, auth.username, _advert.metadataPath, _advert.metadataId)}"></h:commandLink>
+                </div>
+                <ui:repeat id="commandLinks" var="_advert" varStatus="status" value="#{advert.adverts}">
+                    <h:commandLink styleClass="hidden" id="link" action="#{advert.doLoad(_advert.serviceURL, _advert.requesterId, auth.username, _advert.metadataPath, _advert.metadataId)}"></h:commandLink>
                 </ui:repeat>
                 <script id="advertsJson" type="text/javascript">
 
@@ -96,11 +94,14 @@
                     filter: ko.observable(""),
                     search: ko.observable(""),
                     viewItem: function(advert) {
-                        console.log(advert);
-                        console.log(advert.commandId());
-                        console.log(document.querySelectorAll('[data-foo]'));
 
-                        document.querySelectorAll('[' +  + ']')[0].click();
+                        var linkNumber = advert.commandId().replace('advert-', '');
+
+                        console.log(advert.commandId());
+                        console.log(linkNumber);
+                        console.log(document.getElementById('advertsForm:commandLinks:' + linkNumber + ':link'));
+
+                        document.getElementById('advertsForm:commandLinks:' + linkNumber + ':link').click();
                     },
                     addItem: function(advert) {
                         this.items.push(new Advert(advert));
