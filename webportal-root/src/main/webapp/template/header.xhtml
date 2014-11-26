@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
 <body>
+
+<f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
+
 <ui:composition>
 
     <div class="row">
@@ -10,13 +13,28 @@
         </div>
         <div class="col-md-7">
             <h:form styleClass="navigation">
-                <ui:repeat value="#{navigation.locations}" var="location">
+                <!--<ui:repeat value="#{navigation.locations}" var="location">
                     <h:commandLink styleClass="navigation-item h4" action="#{navigation.doGoTo(location.name)}">
                         <i class="#{location.iconClass}"></i>
                         <span>#{location.name}</span>
                     </h:commandLink>
-                </ui:repeat>
-                <h:panelGroup styleClass="navigation-end" layout="block"/>
+                </ui:repeat>-->
+                <h:commandLink styleClass="navigation-item h4" action="#{navigation.doGoTo('Home')}">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </h:commandLink>
+                <h:commandLink styleClass="navigation-item h4" action="#{dataviews.doLoad}">
+                    <i class="fa fa-search"></i>
+                    <span>Search</span>
+                </h:commandLink>
+                <h:commandLink styleClass="navigation-item h4" action="#{navigation.doGoTo('Data Flows')}">
+                    <i class="fa fa-puzzle-piece"></i>
+                    <span>Data Flows</span>
+                </h:commandLink>
+                <h:commandLink styleClass="navigation-item h4" action="#{navigation.doGoTo('Config')}">
+                    <i class="fa fa-cog"></i>
+                    <span>Config</span>
+                </h:commandLink>
             </h:form>
         </div>
         <div class="col-md-3">

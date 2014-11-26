@@ -34,3 +34,7 @@
     font-size: 16px;
     line-height: 20px;
 }
+
+.advert h3 {
+    text-transform: capitalize;
+}

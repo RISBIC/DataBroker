@@ -35,12 +35,10 @@ public class AdvertMO implements Serializable
         _requesterIds    = Collections.emptyList();
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
-        _advert          = null;
-
+        _currentAdvert   = null;
+        _errorMessage    = null;
         _serverStatusMessages = new HashMap<String, String>();
-        _errorMessage         = null;
         _serverErrorMessages  = new HashMap<String, String>();
-
         _loadWorker = new LoadWorker();
         _syncObject = new Object();
     }
@@ -105,19 +103,14 @@ public class AdvertMO implements Serializable
         return _adverts;
     }
 
-    public AdvertVO getAdvert(String metadataPath, String metadataId)
+    public AdvertVO getCurrentAdvert()
     {
+        return _currentAdvert;
+    }
 
-        for (AdvertVO advert : _adverts) {
-
-           if(advert.getMetadataPath() == metadataPath && advert.getMetadataId() == metadataId){
-               return advert;
-           }
-
-        }
-
-        //If advert not found, return null
-        return null;
+    public void setCurrentAdvert(AdvertVO currentAdvert)
+    {
+        _currentAdvert = currentAdvert;
     }
 
     public void setAdverts(List<AdvertVO> adverts)
@@ -190,7 +183,7 @@ public class AdvertMO implements Serializable
         }
     }
 
-    public String doLoad(List<String> serviceRootURLs, List<String> requesterIds, String userId)
+    public String doLoad(LinkedList<String> serviceRootURLs, LinkedList<String> requesterIds, String userId)
     {
         synchronized (_syncObject)
         {
@@ -217,11 +210,19 @@ public class AdvertMO implements Serializable
         Collections.addAll(_serviceRootURLs, serviceRootURL);
         Collections.addAll(_requesterIds, requesterId);
         _userId = userId;
-        _advert = getAdvert(metadataPath, metadataId);
+
+        load();
+
+        for(AdvertVO advert : getAdverts()){
+
+            if(advert.getMetadataId().equals(metadataId) && advert.getMetadataPath().equals(metadataPath)){
+                setCurrentAdvert(advert);
+            }
+
+        }
 
         return "/dataviews/dataadvert?faces-redirect=true";
     }
-
 
     public String doReload()
     {
@@ -260,7 +261,7 @@ public class AdvertMO implements Serializable
         }
     }
 
-    public String doAsyncLoad(List<String> serviceRootURLs, List<String> requesterIds, String userId)
+    public String doAsyncLoad(LinkedList<String> serviceRootURLs, LinkedList<String> requesterIds, String userId)
     {
         synchronized (_syncObject)
         {
@@ -538,6 +539,16 @@ public class AdvertMO implements Serializable
     private String advertsToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
     {
         result.append("{ ");
+        if (advert.getServiceURL() != null)
+            result.append("\"serviceURL\": \"" + advert.getServiceURL() + "\", ");
+        if (advert.getRequesterId() != null)
+            result.append("\"requesterId\": \"" + advert.getRequesterId() + "\", ");
+        if (advert.getMetadataId() != null)
+            result.append("\"metadataId\": \"" + advert.getMetadataId() + "\", ");
+        if (advert.getMetadataPath() != null)
+            result.append("\"metadataPath\": \"" + advert.getMetadataPath() + "\", ");
+        if (advert.getIsRootNode() != null)
+            result.append("\"isRootNode\": \"" + advert.getIsRootNode() + "\", ");
         if (advertStandardNode.getName() != null)
             result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
         if (advertStandardNode.getSummary() != null)
@@ -564,13 +575,11 @@ public class AdvertMO implements Serializable
     private List<String>   _requesterIds;
     private String         _userId;
     private List<AdvertVO> _adverts;
-    private AdvertVO       _advert;
+    private AdvertVO       _currentAdvert;
+    private String         _errorMessage;
     private String         _advertsJSON;
-
     private Map<String, String> _serverStatusMessages;
-    private String              _errorMessage;
     private Map<String, String> _serverErrorMessages;
-
     private LoadWorker     _loadWorker;
     private Object         _syncObject;
 

@@ -10,202 +10,128 @@
 
         <ui:define name="head">
             <link rel="stylesheet" type="text/css" href="dataadvert_style.css"/>
-            <script src="http://d3js.org/d3.v3.min.js"></script>
         </ui:define>
 
         <ui:define name="body">
-            <!--<ui:include src="/fragments/header.xhtml">
-                <ui:param name="titletext" value="Data Advert"/>
-            </ui:include>
-            <ui:include src="/fragments/navigation_reload.xhtml">
-                <ui:param name="doreloadobject" value="#{advert}"/>
-                <ui:param name="doreloadaction" value="doReload"/>
-            </ui:include>-->
-            <h:form id="content" styleClass="dataadvert">
+
+            <f:event type="preRenderView" listener="#{advert.doAsyncLoad(dataviews.dataViewConnectionURLs, dataviews.dataViewRequesterIds, auth.username)}"/>
+
+            <h:form>
+                <a4j:poll id="poll" interval="5000" enabled="#{advert.getAsyncLoadInProgress()}" reRender="poll,advertsJson" />
+            </h:form>
+
+
+            <h:form id="advertsForm" name="advertsForm" styleClass="dataadverts">
                 <h:panelGroup styleClass="dataadvert" layout="block">
-                    <h:panelGroup styleClass="dataadvert-title" layout="block">
-                        <h:outputText styleClass="dataadvert-title" value="Data Advert"/>
-                    </h:panelGroup>
+                    <h1>Data Adverts</h1>
                     <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
                         <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.adverts}" var="_advert" rendered="#{empty advert.errorMessage}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Service URL"/>
-                            </f:facet>
-                            <h:commandLink styleClass="dataviews-button btn btn-default btn-xs" action="#{advert.doLoad(_advert.serviceURL, _advert.requesterId, auth.username, _advert.metadataPath, _advert.metadataId)}" value="Advert"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Service URL"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.serviceURL}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Requester Id"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.requesterId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Metadata Id"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.metadataId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Metadata Path"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.metadataPath}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Root Node"/>
-                            </f:facet>
-                            <h:outputText styleClass="dataadvert-value" value="#{_advert.isRootNode}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText styleClass="dataadvert-header" value="Node"/>
-                            </f:facet>
-                            <h:panelGrid styleClass="dataadvert-node" columnClasses="dataadvert-node-column" columns="2">
-                                <h:outputText styleClass="dataadvert-node-label" value="Name:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.name}"/>
-                                <h:outputText styleClass="dataadvert-node-label" value="Summary:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.summary}"/>
-                                <h:outputText styleClass="dataadvert-node-label" value="Discription:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.discription}"/>
-                                <h:outputText styleClass="dataadvert-node-label" value="# Tags:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.tags.size()}"/>
-                                <h:outputText styleClass="dataadvert-node-label" value="# Children:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.childNodes.size()}"/>
-                            </h:panelGrid>
-                        </h:column>
-                    </h:dataTable>
-                    <script type="text/javascript">
-                        var margin = {top: 16, right: 32, bottom: 16, left: 32};
-                        var width  = 1280 - margin.right - margin.left;
-                        var height = 640 - margin.top - margin.bottom;
-
-                        var i        = 0;
-                        var duration = 750;
-                        var root;
-
-                        var tree = d3.layout.tree().size([height, width]);
-
-                        var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
-
-                        var svg = d3.select("#content").append("svg")
-                            .attr("width", width + margin.right + margin.left)
-                            .attr("height", height + margin.top + margin.bottom)
-                            .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-                        var root = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
-                        root.x0 = height / 2;
-                        root.y0 = 0;
-
-                        update(root);
-
-                        d3.select(self.frameElement).style("height", "640px");
-
-                        function update(source)
-                        {
-                            var nodes = tree.nodes(root).reverse();
-                            var links = tree.links(nodes);
-
-                            nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-                            var node = svg.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-                            var nodeEnter = node.enter().append("g")
-                                .attr("class", "node")
-                                .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-                                .on("click", click);
-
-                            nodeEnter.append("circle")
-                                .attr("r", 1e-6)
-                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
-
-                            nodeEnter.append("text")
-                                .attr("x", 0)
-                                .attr("dy", "1.35em")
-                                .attr("text-anchor", "middle")
-                                .text(function(d) { return d.name; })
-                                .style("fill-opacity", 1e-6);
-
-                            var nodeUpdate = node.transition()
-                                .duration(duration)
-                                .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-                            nodeUpdate.select("circle")
-                                .attr("r", 4.5)
-                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
-
-                            nodeUpdate.select("text")
-                                .style("fill-opacity", 1);
-
-                            var nodeExit = node.exit().transition()
-                                .duration(duration)
-                                .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-                                .remove();
-
-                            nodeExit.select("circle")
-                                .attr("r", 1e-6);
-
-                            nodeExit.select("text")
-                                .style("fill-opacity", 1e-6);
-
-                            var link = svg.selectAll("path.link").data(links, function(d) { return d.target.id; });
-
-                            link.enter().insert("path", "g")
-                                .attr("class", "link")
-                                .attr("d", function(d)
-                                {
-                                    var o = {x: source.x0, y: source.y0};
-                                    return diagonal({source: o, target: o});
-                                });
-
-                            link.transition()
-                                .duration(duration)
-                                .attr("d", diagonal);
-
-                            link.exit().transition()
-                                .duration(duration)
-                                .attr("d", function(d)
-                                {
-                                    var o = {x: source.x, y: source.y};
-                                    return diagonal({source: o, target: o});
-                                })
-                                .remove();
-
-                            nodes.forEach(function(d)
-                            {
-                                d.x0 = d.x;
-                                d.y0 = d.y;
-                            });
-                        }
-
-                        function click(d)
-                        {
-                            if (d.children)
-                            {
-                                d._children = d.children;
-                                d.children = null;
-                            }
-                            else
-                            {
-                                d.children = d._children;
-                                d._children = null;
-                            }
-                            update(d);
-                        }
-                    </script>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>Filters go here</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control input-large" placeholder="Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                                </div>
+                            </div>
+                            <div id="advert-list" class="row" data-bind="foreach: filteredItems">
+                                <div class="col-md-12 advert"  data-bind="click: $parent.viewItem">
+                                    <span class="hidden" data-bind="text: commandId"></span>
+                                    <h3 data-bind="text: name"></h3>
+                                    <p data-bind="text: summary"></p>
+                                    <p data-bind="text: description"></p>
+                                    <small data-bind="visible: tags.length > 0"><i class="fa fa-tag"></i></small>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </h:panelGroup>
+                <ui:repeat var="_advert" varStatus="status" value="#{advert.adverts}">
+                    <h:commandLink styleClass="hidden" id="advert-#{status.index}" action="#{advert.doLoad(_advert.serviceURL, _advert.requesterId, auth.username, _advert.metadataPath, _advert.metadataId)}"></h:commandLink>
+                </ui:repeat>
+                <script id="advertsJson" type="text/javascript">
+
+                    var allAdverts = [
+                        <ui:repeat var="_advert" varStatus="status" value="#{advert.adverts}">
+                        {
+                            commandId: 'advert-#{status.index}',
+                            name: '#{_advert.node.name}',
+                            summary: '#{_advert.node.summary}',
+                            description: '#{_advert.node.description}',
+                            //tags: #{_advert.node.tags.size()},
+                            tags: 2,
+                            children: #{_advert.node.childNodes.size()},
+                            serviceURL: '#{_advert.serviceURL}',
+                            requesterId: '#{_advert.requesterId}',
+                            metadataId: '#{_advert.metadataId}',
+                            metadataPath: '#{_advert.metadataPath}',
+                            isRootNode: #{_advert.isRootNode}
+                        },
+                        </ui:repeat>
+                        ];
+
+                    console.log(allAdverts);
+
+                </script>
             </h:form>
+            <script type="text/javascript">
+
+                function Advert(advert) {
+                    this.commandId = ko.observable(advert.commandId),
+                    this.name = ko.observable(advert.name),
+                    this.summary = ko.observable(advert.summary),
+                    this.description = ko.observable(advert.description),
+                    this.tags = ko.observable(advert.tags),
+                    this.children = ko.observable(advert.children)
+                }
+
+                var viewModel = {
+                    categories: ["Bread", "Dairy", "Fruits", "Vegetables"],
+                    items: ko.observableArray([]),
+                    filter: ko.observable(""),
+                    search: ko.observable(""),
+                    viewItem: function(advert) {
+                        console.log(advert);
+                        console.log(advert.commandId());
+                        console.log(document.querySelectorAll('[data-foo]'));
+
+                        document.querySelectorAll('[' +  + ']')[0].click();
+                    },
+                    addItem: function(advert) {
+                        this.items.push(new Advert(advert));
+                    },
+                    removeItem: function(advert) {
+                        this.items.remove(advert);
+                    }
+                };
+
+                viewModel.filteredItems = ko.computed(function() {
+                    var filter = this.filter().toLowerCase();
+                    if (!filter) {
+                        return this.items();
+                    } else {
+                        return ko.utils.arrayFilter(this.items(), function(item) {
+
+                            return item.name().toLowerCase().indexOf(filter) !== -1;
+                        });
+                    }
+                }, viewModel);
+
+
+                var mappedData = ko.utils.arrayMap(allAdverts, function(advert) {
+                    return new Advert(advert);
+                });
+
+                viewModel.items(mappedData);
+
+                ko.applyBindings(viewModel);
+
+            </script>
         </ui:define>
     </ui:composition>
 </html>

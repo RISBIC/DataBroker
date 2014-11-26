@@ -21,7 +21,7 @@
                 <ui:param name="doreloadobject" value="#{advert}"/>
                 <ui:param name="doreloadaction" value="doReload"/>
             </ui:include>-->
-            <h:form id="content" styleClass="dataadvert">
+            <h:form styleClass="dataadvert">
                 <h:panelGroup styleClass="dataadvert" layout="block">
                     <h:panelGroup styleClass="dataadvert-title" layout="block">
                         <h:outputText styleClass="dataadvert-title" value="Single Data Advert!!!"/>
@@ -30,7 +30,7 @@
                         <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
                     </h:panelGroup>
-                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.advert}" var="_advert" rendered="#{empty advert.errorMessage}">
+                    <h:dataTable styleClass="dataadvert" headerClass="dataadvert-header" columnClasses="dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column,dataadvert-column" value="#{advert.currentAdvert}" var="_advert" rendered="#{empty advert.errorMessage}">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText styleClass="dataadvert-header" value="Service URL"/>

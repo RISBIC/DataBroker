@@ -5,6 +5,7 @@
 package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import javax.ejb.EJB;
@@ -22,7 +23,9 @@ public class DataViewsMO implements Serializable
     public DataViewsMO()
     {
         _dataViews = new LinkedList<DataBrokerConnectionVO>();
-    }
+        _dataViewConnectionURLs = new LinkedList<String>();
+        _dataViewRequesterIds = new LinkedList<String>();
+}
 
     public List<DataBrokerConnectionVO> getDataViews()
     {
@@ -34,11 +37,31 @@ public class DataViewsMO implements Serializable
         _dataViews = dataViews;
     }
 
+    public List<String> getDataViewConnectionURLs()
+    {
+        return _dataViewConnectionURLs;
+    }
+
+    public void setDataViewConnectionURLs(List<String> dataViewConnectionURLs)
+    {
+        _dataViewConnectionURLs = dataViewConnectionURLs;
+    }
+
+    public List<String> getDataViewRequesterIds()
+    {
+        return _dataViewRequesterIds;
+    }
+
+    public void setDataViewRequesterIds(List<String> dataViewRequesterIds)
+    {
+        _dataViewRequesterIds = dataViewRequesterIds;
+    }
+
     public String doLoad()
     {
         load();
 
-        return "/dataviews/dataviews?faces-redirect=true";
+        return "/dataviews/dataadverts?faces-redirect=true";
     }
 
     public boolean load()
@@ -48,8 +71,14 @@ public class DataViewsMO implements Serializable
             List<DataBrokerEntity> dataBrokers = _dataBrokerUtils.listDataBrokers();
 
             _dataViews.clear();
-            for (DataBrokerEntity dataBroker: dataBrokers)
+            _dataViewConnectionURLs.clear();
+            _dataViewRequesterIds.clear();
+
+            for (DataBrokerEntity dataBroker: dataBrokers) {
                 _dataViews.add(new DataBrokerConnectionVO(dataBroker.getId().toString(), dataBroker.getName(), dataBroker.getSummary(), dataBroker.getServiceRootURL(), dataBroker.getRequesterId()));
+                _dataViewConnectionURLs.add(dataBroker.getServiceRootURL());
+                _dataViewRequesterIds.add(dataBroker.getRequesterId());
+            }
 
             return true;
         }
@@ -63,6 +92,8 @@ public class DataViewsMO implements Serializable
     }
 
     private List<DataBrokerConnectionVO> _dataViews;
+    private List<String> _dataViewConnectionURLs;
+    private List<String> _dataViewRequesterIds;
 
     @EJB
     private DataBrokerUtils _dataBrokerUtils;
