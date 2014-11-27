@@ -35,6 +35,7 @@ public class AdvertMO implements Serializable
         _requesterIds    = Collections.emptyList();
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
+        _advertsJSON     = "'{ \"children\": [ ] }'";
         _currentAdvert   = null;
         _errorMessage    = null;
         _serverStatusMessages = new HashMap<String, String>();
@@ -302,7 +303,7 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = null;
+            _advertsJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -352,7 +353,7 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = null;
+            _advertsJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -463,6 +464,8 @@ public class AdvertMO implements Serializable
                         {
                             _serverStatusMessages.put(serviceRootURL, "Failed");
                         }
+
+                        _advertsJSON = advertsToJSON(_adverts);
                     }
                 }
                 catch (InterruptedException interruptedException)
