@@ -232,9 +232,6 @@ public class AdvertMO implements Serializable
 
             _loadWorker.stopWorking();
 
-            Collections.addAll(_serviceRootURLs, "http://10.1.20.246/", "http://10.1.20.246:80/");
-            Collections.addAll(_requesterIds, "arjuna", "arjuna");
-
             load();
 
             return "/dataadverts/dataadvert?faces-redirect=true";
