@@ -34,6 +34,7 @@ public class AdvertMO implements Serializable
         _requesterIds    = Collections.emptyList();
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
+        _advertsJSON     = "'{ \"children\": [ ] }'";
 
         _serverStatusMessages = new HashMap<String, String>();
         _errorMessage         = null;
@@ -199,9 +200,6 @@ public class AdvertMO implements Serializable
 
             _loadWorker.stopWorking();
 
-            Collections.addAll(_serviceRootURLs, "http://10.1.20.246/", "http://10.1.20.246:80/");
-            Collections.addAll(_requesterIds, "arjuna", "arjuna");
-
             load();
 
             return "/dataadverts/dataadvert?faces-redirect=true";
@@ -272,7 +270,7 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = null;
+            _advertsJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -322,7 +320,7 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = null;
+            _advertsJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -433,6 +431,8 @@ public class AdvertMO implements Serializable
                         {
                             _serverStatusMessages.put(serviceRootURL, "Failed");
                         }
+
+                        _advertsJSON = advertsToJSON(_adverts);
                     }
                 }
                 catch (InterruptedException interruptedException)
@@ -487,7 +487,7 @@ public class AdvertMO implements Serializable
     {
         StringBuffer result = new StringBuffer();
 
-        result.append("'{ \"root\" : \"The Root\", \"children\": [ ");
+        result.append("'{ \"children\": [ ");
         boolean firstAdvert = true;
         for (AdvertVO advert: _adverts)
             if (advert.getIsRootNode())
