@@ -58,7 +58,7 @@ function visit(parent, visitFn, childrenFn) {
 
 // Call visit function to establish maxLabelLength
 visit(treeData, function(d) {
-    d.name = d.name || d.root;
+    d.name = d.name || d.root || '';
     totalNodes++;
     maxLabelLength = Math.max(d.name.length, maxLabelLength);
 
@@ -411,12 +411,6 @@ function update(source) {
         .attr('style', function(d) {
             var style;
 
-            if (d.source.depth === 0) {
-                style = 'display:none;';
-            } else {
-                style = '';
-            }
-
             return style;
         });
 
@@ -457,4 +451,5 @@ root.y0 = 0;
 
 // Layout the tree initially and center on the root node.
 update(root);
-centerNode(root.children[0]);
+//centerNode(root.children[0]);
+centerNode(root);

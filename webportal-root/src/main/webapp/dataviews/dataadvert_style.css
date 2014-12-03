@@ -120,15 +120,7 @@ span.dataadvert-node-value
 }
 
 
-#content {
-    padding-top: 0 !important;
-}
 
-#content .container {
-    width: auto;
-    margin: 0;
-    padding: 0;
-}
 
 .hidden {
     display:none;

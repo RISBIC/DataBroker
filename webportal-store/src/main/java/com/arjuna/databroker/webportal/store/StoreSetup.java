@@ -27,12 +27,12 @@ public class StoreSetup implements Serializable
     {
         if (_dataBrokerUtils.listDataBrokers().size() == 0)
         {
-            _dataBrokerUtils.createDataBroker("Test localhost 80", "Test localhost 80", "http://localhost:80/", "arjuna");
+            //_dataBrokerUtils.createDataBroker("Test localhost 80", "Test localhost 80", "http://localhost:80/", "arjuna");
             _dataBrokerUtils.createDataBroker("Test localhost 8080", "Test localhost 8080", "http://localhost:8080/", "arjuna");
             _dataBrokerUtils.createDataBroker("SMN - Arjuna", "Newcastle City Council Speed Management Network (Arjuna: databroker)", "http://databroker:80/", "arjuna");
             _dataBrokerUtils.createDataBroker("SMN - Arjuna", "Newcastle City Council Speed Management Network (Home: ouseburn)", "http://ouseburn:80/", "arjuna");
-            _dataBrokerUtils.createDataBroker("SMN - OpenShift", "Newcastle City Council Speed Management Network (OpenShift)", "http://127.11.214.129:8080/", "arjuna");
-            _dataBrokerUtils.createDataBroker("Soft-DB - OpenShift", "Sunderland City Council Geodata (OpenShift)", "http://127.8.113.1:8080/", "arjuna");
+            //_dataBrokerUtils.createDataBroker("SMN - OpenShift", "Newcastle City Council Speed Management Network (OpenShift)", "http://127.11.214.129:8080/", "arjuna");
+            //_dataBrokerUtils.createDataBroker("Soft-DB - OpenShift", "Sunderland City Council Geodata (OpenShift)", "http://127.8.113.1:8080/", "arjuna");
         }
 
         if (_usersUtils.listUsers().size() == 0)
