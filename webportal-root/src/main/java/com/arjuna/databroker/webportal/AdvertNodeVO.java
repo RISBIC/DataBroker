@@ -14,12 +14,24 @@ public abstract class AdvertNodeVO implements Serializable
 
     public AdvertNodeVO()
     {
-        _childNodes = Collections.emptyList();
+        _metadataPath = null;
+        _childNodes   = Collections.emptyList();
     }
 
-    public AdvertNodeVO(List<AdvertNodeVO> childNodes)
+    public String getMetadataPath()
     {
-        _childNodes = childNodes;
+        return _metadataPath;
+    }
+
+    public void setMetadataPath(String metadataPath)
+    {
+        _metadataPath = metadataPath;
+    }
+
+    public AdvertNodeVO(String metadataPath, List<AdvertNodeVO> childNodes)
+    {
+        _metadataPath = metadataPath;
+        _childNodes   = childNodes;
     }
 
     public List<AdvertNodeVO> getChildNodes()
@@ -32,5 +44,6 @@ public abstract class AdvertNodeVO implements Serializable
         _childNodes = childNodes;
     }
 
+    private String             _metadataPath;
     private List<AdvertNodeVO> _childNodes;
 }

@@ -25,9 +25,9 @@ public class AdvertStandardNodeVO extends AdvertNodeVO
         _tags        = Collections.emptyList();
     }
 
-    public AdvertStandardNodeVO(String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<AdvertNodeVO> childNodes)
+    public AdvertStandardNodeVO(String metadatePath, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<AdvertNodeVO> childNodes)
     {
-        super(childNodes);
+        super(metadatePath, childNodes);
         _nodeClass   = nodeClass;
         _name        = name;
         _summary     = summary;

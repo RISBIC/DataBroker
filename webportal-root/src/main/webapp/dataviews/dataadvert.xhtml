@@ -10,6 +10,17 @@
 
         <ui:define name="head">
             <link rel="stylesheet" type="text/css" href="dataadvert_style.css"/>
+            <style>
+                #content {
+                    padding-top: 0 !important;
+                }
+
+                #content .container {
+                    width: auto;
+                    margin: 0;
+                    padding: 0;
+                }
+            </style>
             <script src="http://d3js.org/d3.v3.min.js"></script>
 
         </ui:define>
@@ -139,7 +150,21 @@
             </div>
 
             <script type="text/javascript">
+            var metadataPath = '<h:outputText escape="false" value="#{advert.currentAdvert.metadataPath}"/>';
+            var metadataId = '<h:outputText escape="false" value="#{advert.currentAdvert.metadataId}"/>';
             var treeData = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
+
+            function recTree(node) {
+                _.each(node.children, function(child){
+                    if (child.metadataPath + child.metadataId === metadataPath + metadataId) {
+                        treeData = child;
+                    } else {
+                        recTree(child);
+                    }
+                })
+            }
+
+            recTree(treeData)
             </script>
 
             <script src="tree.js"></script>
