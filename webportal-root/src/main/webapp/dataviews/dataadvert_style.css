@@ -118,27 +118,68 @@ span.dataadvert-node-value
 	padding:		1em 0 1em 0;
 }
 
-.node
-{
-	cursor:			pointer;
+
+#content {
+    padding-top: 0 !important;
 }
 
-.node circle
-{
-	fill:			#EEEEEE;
-	stroke:			#CC7733;
-	stroke-width:		2.5px;
+#content .container {
+    width: auto;
+    margin: 0;
+    padding: 0;
 }
 
-.node text
-{
-	font-size:		1em;
-	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+.hidden {
+    display:none;
 }
 
-.link
-{
-	fill:			none;
-	stroke:			#CC7733;
-	stroke-width:		2.5px;
+.node, .node:hover {
+    cursor: pointer;
+}
+
+.overlay{
+    border-right: 1px solid #ddd;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: #a80000;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font-size:10px;
+    font-family:sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+
+.templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+}
+
+.ghostCircle.show{
+    display:block;
+}
+
+.ghostCircle, .activeDrag .ghostCircle{
+    display: none;
+}
+
+#tree-container, #infopanel {
+    float: left;
+}
+
+#infopanel {
+    width: 20%;
+}
+
+.panel-inner {
+    padding: 20px;
 }
