@@ -7,64 +7,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="template.xhtml">
         <ui:define name="title">DataBroker Portal</ui:define>
-
         <ui:define name="body">
-
-            <f:event type="preRenderView" listener="#{dataviews.doLoad}"/>
-
             <div class="home">
                 <div class="row">
                     <div class="col-md-12">
                         <h1>I'm looking for data about...</h1>
-                        <input class="typeahead form-control input-lg" type="text"/>
+                        <h:form>
+                            <div class="input-group input-group-lg">
+                                <h:inputText binding="#{searchString}" styleClass="form-control" />
+                                <span class="input-group-btn">
+                                    <h:commandButton action="#{dataviews.doLoad(searchString.value)}" value="Search" styleClass="btn btn-default"></h:commandButton>
+                                </span>
+                            </div>
+                        </h:form>
                     </div>
                 </div>
             </div>
-            <script type="application/javascript">
-
-                jQuery(document).ready(function(){
-
-                    var dataviews = [];
-
-                    <ui:repeat value="#{dataviews.dataViews}" var="_dataview">
-                    dataviews.push({name:'#{_dataview.name}',summary:'#{_dataview.summary}'});
-                    </ui:repeat>
-
-                    var adverts = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name', 'summary'),
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        local: dataviews
-                    });
-
-                    adverts.initialize();
-
-                    jQuery('.home .typeahead').typeahead({
-                            hint: true,
-                            highlight: true,
-                            minLength: 1,
-                            limit: 10
-                        },
-                        {
-                            name: 'adverts',
-                            displayKey: 'name',
-                            source: adverts.ttAdapter(),
-                            templates: {
-                                empty: [
-                                    '<div class="empty-message">',
-                                    'Unable to find any adverts that match the current query',
-                                    '</div>'
-                                ].join('\n'),
-                                suggestion: Handlebars.compile('<h3>{{name}}</h3><p>{{summary}}</p>')
-                            }
-                        });
-
-
-                });
-
-
-            </script>
-
         </ui:define>
     </ui:composition>
-
 </html>

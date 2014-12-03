@@ -34,7 +34,7 @@
                     <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="text" class="form-control input-large" placeholder="Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                                <input id="advertFilter" type="text" value="#{param['searchString']}" class="form-control input-lg" placeholder="Search..." data-bind="value: filter, valueUpdate: 'afterkeydown'" />
                             </div>
                         </div>
                         <div id="advert-list" class="row" data-bind="foreach: filteredItems">
@@ -61,8 +61,7 @@
                             name: '#{_advert.node.name}',
                             summary: '#{_advert.node.summary}',
                             description: '#{_advert.node.description}',
-                            //tags: #{_advert.node.tags.size()},
-                            tags: 2,
+                            tags: #{_advert.node.tags.size()},
                             children: #{_advert.node.childNodes.size()},
                             serviceURL: '#{_advert.serviceURL}',
                             requesterId: '#{_advert.requesterId}',
@@ -91,8 +90,8 @@
                 var viewModel = {
                     categories: ["Bread", "Dairy", "Fruits", "Vegetables"],
                     items: ko.observableArray([]),
-                    filter: ko.observable(""),
-                    search: ko.observable(""),
+                    filter: ko.observable("#{param['searchString']}"),
+                    search: ko.observable("#{param['searchString']}"),
                     viewItem: function(advert) {
 
                         var linkNumber = advert.commandId().replace('advert-', '');
@@ -118,7 +117,7 @@
                     } else {
                         return ko.utils.arrayFilter(this.items(), function(item) {
 
-                            return item.name().toLowerCase().indexOf(filter) !== -1;
+                            return (item.name().toLowerCase().indexOf(filter) !== -1 || item.summary().toLowerCase().indexOf(filter) !== -1 || item.description().toLowerCase().indexOf(filter) !== -1);
                         });
                     }
                 }, viewModel);
