@@ -11,6 +11,9 @@ import java.util.LinkedList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+
 import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 
@@ -62,6 +65,15 @@ public class DataViewsMO implements Serializable
         load();
 
         return "/dataviews/dataadverts?faces-redirect=true";
+    }
+
+    public String doLoad(String searchString)
+    {
+        System.out.println(searchString);
+
+        load();
+
+        return "/dataviews/dataadverts?searchString=" + searchString + "&faces-redirect=true";
     }
 
     public boolean load()
