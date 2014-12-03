@@ -202,6 +202,7 @@ function toggleChildren(d) {
         d._children = null;
     }
     return d;
+
 }
 
 // Toggle children on click.
