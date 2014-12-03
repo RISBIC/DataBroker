@@ -6,7 +6,6 @@ package com.arjuna.databroker.webportal;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -499,7 +498,7 @@ public class AdvertMO implements Serializable
         {
             Map<String, AdvertNodeVO> advertNodeMap = new HashMap<String, AdvertNodeVO>();
             for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
-                advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDescription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
+                advertNodeMap.put(advertNodeSummary.getId(), new AdvertStandardNodeVO(advertNodeSummary.getMetadataPath(), advertNodeSummary.getNodeClass(), advertNodeSummary.getName(), advertNodeSummary.getSummary(), advertNodeSummary.getDescription(), advertNodeSummary.getDateCreated(), advertNodeSummary.getDateUpdate(), advertNodeSummary.getOwner(), advertNodeSummary.getTags(), null));
 
             for (AdvertNodeSummary advertNodeSummary: advertNodeSummaries)
             {
@@ -520,7 +519,7 @@ public class AdvertMO implements Serializable
     {
         StringBuffer result = new StringBuffer();
 
-        result.append("'{ \"root\" : \"The Root\", \"children\": [ ");
+        result.append("'{ \"children\": [ ");
         boolean firstAdvert = true;
         for (AdvertVO advert: _adverts)
             if (advert.getIsRootNode())
@@ -546,9 +545,7 @@ public class AdvertMO implements Serializable
         if (advert.getMetadataId() != null)
             result.append("\"metadataId\": \"" + advert.getMetadataId() + "\", ");
         if (advert.getMetadataPath() != null)
-            result.append("\"metadataPath\": \"" + advert.getMetadataPath() + "\", ");
-        if (advert.getIsRootNode() != null)
-            result.append("\"isRootNode\": \"" + advert.getIsRootNode() + "\", ");
+            result.append("\"metadataPath\": \"" + advertStandardNode.getMetadataPath() + "\", ");
         if (advertStandardNode.getName() != null)
             result.append("\"name\": \"" + advertStandardNode.getName() + "\", ");
         if (advertStandardNode.getSummary() != null)
