@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.comms.AdvertClient;
 import com.arjuna.databroker.webportal.comms.AdvertNodeSummary;
+import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 
 @SessionScoped
 @ManagedBean(name="advert")
@@ -53,18 +54,14 @@ public class AdvertMO implements Serializable
     }
 
     @PreDestroy
-    private void shutdownWorker()
-    {
+    private void shutdownWorker() {
         logger.log(Level.FINE, "AdvertMO.shutdownWorker");
 
-        try
-        {
+        try {
             _loadWorker.stopWorking();
             _loadWorker.finish();
             _loadWorker.join();
-        }
-        catch (Throwable throwable)
-        {
+        } catch (Throwable throwable) {
             logger.log(Level.WARNING, "AdvertMO.shutdownWorker", throwable);
         }
     }

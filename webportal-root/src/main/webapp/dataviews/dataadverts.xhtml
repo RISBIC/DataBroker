@@ -29,7 +29,14 @@
                 </h:panelGroup>
                 <div class="row">
                     <div class="col-md-4">
-                        <h4>Filters go here</h4>
+                        <h4>Data Brokers</h4>
+                        <ui:repeat var="_dataView" varStatus="status" value="#{dataviews.dataViews}">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="#{_dataView.id}" data-bind="checked: dataBrokers" /> #{_dataView.name}
+                                </label>
+                            </div>
+                        </ui:repeat>
                     </div>
                     <div class="col-md-8">
                         <div class="row">
@@ -54,9 +61,21 @@
                 </ui:repeat>
                 <script id="advertsJson" type="text/javascript">
 
-                    var allAdverts = [
+                    var dataBrokers = [];
+                    var allAdverts = [];
+
+                        <ui:repeat var="_broker" varStatus="status" value="#{dataviews.dataViews}">
+                            dataBrokers.push({
+                                id: '#{_broker.id}',
+                                name: '#{_broker.name}',
+                                summary: '#{_broker.summary}'
+                            });
+                        </ui:repeat>
+
+
+
                         <ui:repeat var="_advert" varStatus="status" value="#{advert.adverts}">
-                        {
+                        allAdverts.push({
                             commandId: 'advert-#{status.index}',
                             name: '#{_advert.node.name}',
                             summary: '#{_advert.node.summary}',
@@ -68,11 +87,13 @@
                             metadataId: '#{_advert.metadataId}',
                             metadataPath: '#{_advert.metadataPath}',
                             isRootNode: #{_advert.isRootNode}
-                        },
+                        });
                         </ui:repeat>
-                        ];
 
-                    console.log(allAdverts);
+
+                    var nodes = _.filter(allAdverts, function(advert) { return advert.children > 0; });
+
+                    console.log(nodes);
 
                 </script>
             </h:form>
@@ -88,18 +109,13 @@
                 }
 
                 var viewModel = {
-                    categories: ["Bread", "Dairy", "Fruits", "Vegetables"],
+                    dataBrokers: ko.observableArray([]),
                     items: ko.observableArray([]),
                     filter: ko.observable("#{param['searchString']}"),
                     search: ko.observable("#{param['searchString']}"),
                     viewItem: function(advert) {
 
                         var linkNumber = advert.commandId().replace('advert-', '');
-
-                        console.log(advert.commandId());
-                        console.log(linkNumber);
-                        console.log(document.getElementById('advertsForm:commandLinks:' + linkNumber + ':link'));
-
                         document.getElementById('advertsForm:commandLinks:' + linkNumber + ':link').click();
                     },
                     addItem: function(advert) {
@@ -112,19 +128,26 @@
 
                 viewModel.filteredItems = ko.computed(function() {
                     var filter = this.filter().toLowerCase();
+                    var dataBrokers = this.dataBrokers();
+
+                    console.log(dataBrokers);
+
                     if (!filter) {
                         return this.items();
                     } else {
                         return ko.utils.arrayFilter(this.items(), function(item) {
-
                             return (item.name().toLowerCase().indexOf(filter) !== -1 || item.summary().toLowerCase().indexOf(filter) !== -1 || item.description().toLowerCase().indexOf(filter) !== -1);
                         });
                     }
                 }, viewModel);
 
 
-                var mappedData = ko.utils.arrayMap(allAdverts, function(advert) {
-                    return new Advert(advert);
+                var mappedData = ko.utils.arrayMap(nodes, function(advert) {
+
+                    /*if(advert.children > 0) {*/
+                        return new Advert(advert);
+                    /*}*/
+
                 });
 
                 viewModel.items(mappedData);
