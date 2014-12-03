@@ -21,6 +21,8 @@
                 <ui:param name="doreloadobject" value="#{advert}"/>
                 <ui:param name="doreloadaction" value="doReload"/>
             </ui:include>-->
+
+            <!---
             <h:form styleClass="dataadvert">
                 <h:panelGroup styleClass="dataadvert" layout="block">
                     <h:panelGroup styleClass="dataadvert-title" layout="block">
@@ -70,8 +72,8 @@
                                 <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.name}"/>
                                 <h:outputText styleClass="dataadvert-node-label" value="Summary:"/>
                                 <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.summary}"/>
-                                <h:outputText styleClass="dataadvert-node-label" value="Discription:"/>
-                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.discription}"/>
+                                <h:outputText styleClass="dataadvert-node-label" value="Description:"/>
+                                <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.description}"/>
                                 <h:outputText styleClass="dataadvert-node-label" value="# Tags:"/>
                                 <h:outputText styleClass="dataadvert-node-value" value="#{_advert.node.tags.size()}"/>
                                 <h:outputText styleClass="dataadvert-node-label" value="# Children:"/>
@@ -79,127 +81,69 @@
                             </h:panelGrid>
                         </h:column>
                     </h:dataTable>
-                    <script type="text/javascript">
-                        var margin = {top: 16, right: 32, bottom: 16, left: 32};
-                        var width  = 1280 - margin.right - margin.left;
-                        var height = 640 - margin.top - margin.bottom;
+        </h:panelGroup>
+    </h:form>
+    -->
 
-                        var i        = 0;
-                        var duration = 750;
-                        var root;
+            <div id="tree-container"></div>
+            <div id="infopanel">
+                <div class="panel-inner">
 
-                        var tree = d3.layout.tree().size([height, width]);
+                    <form id="nodeInformation" data-bind="template: { foreach: fields}">
 
-                        var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+                        <div data-bind="if: formFieldType === 'text'">
+                            <div class="form-group" data-bind="with: $data">
+                                <label data-bind="attr: { for: id }, text: label"></label>
+                                <input type="text" class="form-control" data-bind="attr: { id: id }, value: value"></input>
+                            </div>
+                        </div>
 
-                        var svg = d3.select("#content").append("svg")
-                            .attr("width", width + margin.right + margin.left)
-                            .attr("height", height + margin.top + margin.bottom)
-                            .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                        <div data-bind="if: formFieldType === 'textarea'">
+                            <div class="form-group" data-bind="with: $data">
+                                <label data-bind="attr: { for: id }, text: label"></label>
+                                <textarea class="form-control" data-bind="attr: { id: id }, text: value"></textarea>
+                            </div>
+                        </div>
+                    </form>
 
-                        var root = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
-                        root.x0 = height / 2;
-                        root.y0 = 0;
-
-                        update(root);
-
-                        d3.select(self.frameElement).style("height", "640px");
-
-                        function update(source)
-                        {
-                            var nodes = tree.nodes(root).reverse();
-                            var links = tree.links(nodes);
-
-                            nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-                            var node = svg.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-                            var nodeEnter = node.enter().append("g")
-                                .attr("class", "node")
-                                .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-                                .on("click", click);
-
-                            nodeEnter.append("circle")
-                                .attr("r", 1e-6)
-                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
-
-                            nodeEnter.append("text")
-                                .attr("x", 0)
-                                .attr("dy", "1.35em")
-                                .attr("text-anchor", "middle")
-                                .text(function(d) { return d.name; })
-                                .style("fill-opacity", 1e-6);
-
-                            var nodeUpdate = node.transition()
-                                .duration(duration)
-                                .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-                            nodeUpdate.select("circle")
-                                .attr("r", 4.5)
-                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
-
-                            nodeUpdate.select("text")
-                                .style("fill-opacity", 1);
-
-                            var nodeExit = node.exit().transition()
-                                .duration(duration)
-                                .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-                                .remove();
-
-                            nodeExit.select("circle")
-                                .attr("r", 1e-6);
-
-                            nodeExit.select("text")
-                                .style("fill-opacity", 1e-6);
-
-                            var link = svg.selectAll("path.link").data(links, function(d) { return d.target.id; });
-
-                            link.enter().insert("path", "g")
-                                .attr("class", "link")
-                                .attr("d", function(d)
-                                {
-                                    var o = {x: source.x0, y: source.y0};
-                                    return diagonal({source: o, target: o});
-                                });
-
-                            link.transition()
-                                .duration(duration)
-                                .attr("d", diagonal);
-
-                            link.exit().transition()
-                                .duration(duration)
-                                .attr("d", function(d)
-                                {
-                                    var o = {x: source.x, y: source.y};
-                                    return diagonal({source: o, target: o});
-                                })
-                                .remove();
-
-                            nodes.forEach(function(d)
-                            {
-                                d.x0 = d.x;
-                                d.y0 = d.y;
-                            });
-                        }
-
-                        function click(d)
-                        {
-                            if (d.children)
-                            {
-                                d._children = d.children;
-                                d.children = null;
-                            }
-                            else
-                            {
-                                d.children = d._children;
-                                d._children = null;
-                            }
-                            update(d);
-                        }
+                    <script type="text/html" id="fields-template-short">
+                        //<![CDATA[
+                        <div class="form-group" data-bind="with: $data">
+                            <label data-bind="attr: { for: id }, text: label"></label>
+                            <input type="text" class="form-control" data-bind="attr: { id: id }, value: value">
+                        </div>
+                                //]]>
                     </script>
-                </h:panelGroup>
-            </h:form>
+
+                    <script type="text/html" id="fields-template-long">
+                        //<![CDATA[
+                        <div class="form-group" data-bind="with: $data">
+                            <label data-bind="attr: { for: id }, text: label"></label>
+                            <textarea class="form-control" data-bind="attr: { id: id }, text: value"></textarea>
+                        </div>
+                                //]]>
+                    </script>
+
+                    <script type="text/html" id="fields-template">
+                        //<![CDATA[
+                        <div data-bind="template: { name: 'fields-template-long', if: typeof value === 'string' && value.length > 35, data: $data }">
+                        </div>
+
+                        <div data-bind="template: { name: 'fields-template-short', if: typeof value !== 'string' || (typeof value === 'string' && value.length < 36), data: $data }">
+                        </div>
+                        //]]>
+                    </script>
+
+                </div>
+            </div>
+
+            <script type="text/javascript">
+            var treeData = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
+            </script>
+
+            <script src="tree.js"></script>
+
+
         </ui:define>
     </ui:composition>
 </html>
