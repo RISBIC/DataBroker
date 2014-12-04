@@ -26,9 +26,9 @@
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </rdfs:Property>
 
-    <rdfs:Property rdf:about="http://rdfs.arjuna.com/advert#hasAdvertDiscription">
-        <rdfs:label>Has Advert Discription</rdfs:label>
-        <rdfs:comment>Has Advert Discription</rdfs:comment>
+    <rdfs:Property rdf:about="http://rdfs.arjuna.com/advert#hasAdvertDescription">
+        <rdfs:label>Has Advert Description</rdfs:label>
+        <rdfs:comment>Has Advert Description</rdfs:comment>
         <rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </rdfs:Property>

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:pg="http://rdfs.arjuna.com/jdbc/postgresql#" xmlns:d="http://rdfs.arjuna.com/description#">
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#761430de-f910-4002-9db6-de80e33996b2">
+        <d:hasTitle>companyname</d:hasTitle>
+        <pg:hasFieldName>companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#cf8cf7cb-f3de-499f-b6e7-8bd54aa920ee">
+        <d:hasTitle>companynumber</d:hasTitle>
+        <pg:hasFieldName>companynumber</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#add78d62-12f3-46dc-ac6a-a419654a207e">
+        <d:hasTitle>regaddresscareof</d:hasTitle>
+        <pg:hasFieldName>regaddresscareof</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#e18d787d-dd63-441d-976d-490b65cad063">
+        <d:hasTitle>regaddresspobox</d:hasTitle>
+        <pg:hasFieldName>regaddresspobox</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#4dc6a10a-c141-45b7-aa44-5a40739818ea">
+        <d:hasTitle>regaddressaddressline1</d:hasTitle>
+        <pg:hasFieldName>regaddressaddressline1</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#ac7fbfbc-d0e6-44f4-8e8c-d85a8d1bc2d6">
+        <d:hasTitle>regaddressaddressline2</d:hasTitle>
+        <pg:hasFieldName>regaddressaddressline2</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#24338b1b-00f5-45e3-a65f-7bed76393e88">
+        <d:hasTitle>regaddressposttown</d:hasTitle>
+        <pg:hasFieldName>regaddressposttown</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#1b746b9f-8925-47e4-8200-2514db1c9f4d">
+        <d:hasTitle>regaddresscounty</d:hasTitle>
+        <pg:hasFieldName>regaddresscounty</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#529ac57d-d13f-45f9-b81c-7661b7be7e30">
+        <d:hasTitle>regaddresscountry</d:hasTitle>
+        <pg:hasFieldName>regaddresscountry</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#5eb99e84-4452-4e05-a34e-c053ba2cb10a">
+        <d:hasTitle>regaddresspostcode</d:hasTitle>
+        <pg:hasFieldName>regaddresspostcode</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#0f97a9d1-0334-438d-b36a-21ea81914696">
+        <d:hasTitle>companycategory</d:hasTitle>
+        <pg:hasFieldName>companycategory</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#5db7c79e-29c9-4f7c-96c7-a1d34343bfec">
+        <d:hasTitle>companystatus</d:hasTitle>
+        <pg:hasFieldName>companystatus</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#7e348f5b-81d4-4f97-8570-f499945d351c">
+        <d:hasTitle>countryoforigin</d:hasTitle>
+        <pg:hasFieldName>countryoforigin</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#9793685d-f3c7-4083-8a10-678111e8919e">
+        <d:hasTitle>dissolutiondate</d:hasTitle>
+        <pg:hasFieldName>dissolutiondate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#8d636f8b-78c3-4cf0-af87-61959bb4dac2">
+        <d:hasTitle>incorporationdate</d:hasTitle>
+        <pg:hasFieldName>incorporationdate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#e5d9b787-1338-4839-a228-6d8fb75a2419">
+        <d:hasTitle>accountsaccountrefday</d:hasTitle>
+        <pg:hasFieldName>accountsaccountrefday</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#2116e967-f846-44f3-b285-bd24c71a448e">
+        <d:hasTitle>accountsaccountrefmonth</d:hasTitle>
+        <pg:hasFieldName>accountsaccountrefmonth</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#fe11db19-c8d1-47f3-8e46-d49fdb1fce9f">
+        <d:hasTitle>accountsnextduedate</d:hasTitle>
+        <pg:hasFieldName>accountsnextduedate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#8cc1a727-2474-435e-b2e4-21d40b6a6c69">
+        <d:hasTitle>accountslastmadeupdate</d:hasTitle>
+        <pg:hasFieldName>accountslastmadeupdate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#e2a32150-501e-424c-8294-169d633a5dd4">
+        <d:hasTitle>accountsaccountcategory</d:hasTitle>
+        <pg:hasFieldName>accountsaccountcategory</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#1d77642f-ded6-402b-8489-920da5f8e24f">
+        <d:hasTitle>returnsnextduedate</d:hasTitle>
+        <pg:hasFieldName>returnsnextduedate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#b4433d2e-7ff8-48fa-8552-95ac7379a118">
+        <d:hasTitle>returnslastmadeupdate</d:hasTitle>
+        <pg:hasFieldName>returnslastmadeupdate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#617e41e6-f725-4e62-804d-d0e971f78ec2">
+        <d:hasTitle>mortgagesnummortcharges</d:hasTitle>
+        <pg:hasFieldName>mortgagesnummortcharges</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#8289a3c7-c673-4632-bca2-9146784c582e">
+        <d:hasTitle>mortgagesnummortoutstanding</d:hasTitle>
+        <pg:hasFieldName>mortgagesnummortoutstanding</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#99ac4aec-0fe3-4dac-9def-cd7ea478ee05">
+        <d:hasTitle>mortgagesnummortpartsatisfied</d:hasTitle>
+        <pg:hasFieldName>mortgagesnummortpartsatisfied</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#ff9a16e8-c7fa-4d80-a7e9-bec594353b93">
+        <d:hasTitle>mortgagesnummortsatisfied</d:hasTitle>
+        <pg:hasFieldName>mortgagesnummortsatisfied</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#1dad006d-4202-45fd-9e88-389fc1048484">
+        <d:hasTitle>siccodesictext_1</d:hasTitle>
+        <pg:hasFieldName>siccodesictext_1</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#352a7774-b168-4a05-9419-16594361b1e5">
+        <d:hasTitle>siccodesictext_2</d:hasTitle>
+        <pg:hasFieldName>siccodesictext_2</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#cb5f3799-a835-4a85-97c9-552f55c03eac">
+        <d:hasTitle>siccodesictext_3</d:hasTitle>
+        <pg:hasFieldName>siccodesictext_3</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#5bf50d2c-6bc8-4f52-ae3b-41ce02baa8f1">
+        <d:hasTitle>siccodesictext_4</d:hasTitle>
+        <pg:hasFieldName>siccodesictext_4</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#5b57b144-a8e6-43f7-880f-ed8c724b3167">
+        <d:hasTitle>limitedpartnershipsnumgenpartners</d:hasTitle>
+        <pg:hasFieldName>limitedpartnershipsnumgenpartners</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#ada9d55d-343f-4842-968d-cb317017595b">
+        <d:hasTitle>limitedpartnershipsnumlimpartners</d:hasTitle>
+        <pg:hasFieldName>limitedpartnershipsnumlimpartners</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#0977c7fc-b0a5-4a1c-8bcf-7f1400e228c8">
+        <d:hasTitle>uri</d:hasTitle>
+        <pg:hasFieldName>uri</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#851c8e68-dd95-4d4e-bbd7-2c551179615d">
+        <d:hasTitle>previousname_1condate</d:hasTitle>
+        <pg:hasFieldName>previousname_1condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#f5f91702-3f73-4a37-b1eb-d15b5d0502be">
+        <d:hasTitle>previousname_1companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_1companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#7db0477e-6331-4f6c-99f8-44ae83b682d1">
+        <d:hasTitle>previousname_2condate</d:hasTitle>
+        <pg:hasFieldName>previousname_2condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#90c646ba-38c6-4cfb-9395-19eaab6644df">
+        <d:hasTitle>previousname_2companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_2companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#8f4a00cf-04cf-4bc1-8cf3-7a5a91c63732">
+        <d:hasTitle>previousname_3condate</d:hasTitle>
+        <pg:hasFieldName>previousname_3condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#6120435a-5329-4e9c-83d1-00cf5f24087e">
+        <d:hasTitle>previousname_3companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_3companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#903be1b7-0f21-412f-bb58-3fcce0a315d6">
+        <d:hasTitle>previousname_4condate</d:hasTitle>
+        <pg:hasFieldName>previousname_4condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#93bc9db8-81c9-4d91-96cd-26a9d6f69fd6">
+        <d:hasTitle>previousname_4companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_4companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#fb2c941c-135f-4347-8cca-02e7abf3c6f8">
+        <d:hasTitle>previousname_5condate</d:hasTitle>
+        <pg:hasFieldName>previousname_5condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#7f69d4ea-6b5d-4fef-a552-62e4727e929f">
+        <d:hasTitle>previousname_5companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_5companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#b0da6e68-f179-428b-adc1-f102bfa439d2">
+        <d:hasTitle>previousname_6condate</d:hasTitle>
+        <pg:hasFieldName>previousname_6condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#02391693-faaa-40be-abdc-78f9edd7160e">
+        <d:hasTitle>previousname_6companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_6companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#0a9eef4a-37de-4ced-b3f0-8669ed4252a8">
+        <d:hasTitle>previousname_7condate</d:hasTitle>
+        <pg:hasFieldName>previousname_7condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#3f212d18-603e-47e3-b0a4-f7798a3ce397">
+        <d:hasTitle>previousname_7companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_7companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#3825d8e9-8cb6-4fc0-8ee6-ae00d216ce7e">
+        <d:hasTitle>previousname_8condate</d:hasTitle>
+        <pg:hasFieldName>previousname_8condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#f49f7070-55be-4cf2-88dd-a7ab58d67710">
+        <d:hasTitle>previousname_8companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_8companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#d1c0cdde-dca3-4657-ad0c-e6308eb8cf74">
+        <d:hasTitle>previousname_9condate</d:hasTitle>
+        <pg:hasFieldName>previousname_9condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#a8fdc1a7-4a1e-4e5e-9184-d1482c329438">
+        <d:hasTitle>previousname_9companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_9companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#59d6a808-0edb-46b9-86e5-4a6ac35cc465">
+        <d:hasTitle>previousname_10condate</d:hasTitle>
+        <pg:hasFieldName>previousname_10condate</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#8caa5829-05b5-498d-bfba-60a0179dc486">
+        <d:hasTitle>previousname_10companyname</d:hasTitle>
+        <pg:hasFieldName>previousname_10companyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#03e45378-105c-4f9a-9375-decb14862b0f">
+        <d:hasTitle>cleancompanyname</d:hasTitle>
+        <pg:hasFieldName>cleancompanyname</pg:hasFieldName>
+        <pg:hasFieldType>text</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Field rdf:about="http://rdf.companieshouse.gov.uk/business_data#173758a8-4e17-4aef-8822-7f38d3fee1c2">
+        <d:hasTitle>id</d:hasTitle>
+        <pg:hasFieldName>id</pg:hasFieldName>
+        <pg:hasFieldType>bigserial</pg:hasFieldType>
+    </pg:Field>
+
+    <pg:Table rdf:about="http://rdf.companieshouse.gov.uk/business_data#050ab717-2ba8-47c5-b948-e900a1ad5652">
+        <d:hasTitle>table_3ed48507_e7c7_4c15_bcef_9948dfb5eed6</d:hasTitle>
+        <pg:hasTableName>table_3ed48507_e7c7_4c15_bcef_9948dfb5eed6</pg:hasTableName>
+        <pg:hasTableField>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#761430de-f910-4002-9db6-de80e33996b2"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#cf8cf7cb-f3de-499f-b6e7-8bd54aa920ee"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#add78d62-12f3-46dc-ac6a-a419654a207e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#e18d787d-dd63-441d-976d-490b65cad063"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#4dc6a10a-c141-45b7-aa44-5a40739818ea"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#ac7fbfbc-d0e6-44f4-8e8c-d85a8d1bc2d6"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#24338b1b-00f5-45e3-a65f-7bed76393e88"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#1b746b9f-8925-47e4-8200-2514db1c9f4d"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#529ac57d-d13f-45f9-b81c-7661b7be7e30"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#5eb99e84-4452-4e05-a34e-c053ba2cb10a"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#0f97a9d1-0334-438d-b36a-21ea81914696"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#5db7c79e-29c9-4f7c-96c7-a1d34343bfec"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#7e348f5b-81d4-4f97-8570-f499945d351c"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#9793685d-f3c7-4083-8a10-678111e8919e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#8d636f8b-78c3-4cf0-af87-61959bb4dac2"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#e5d9b787-1338-4839-a228-6d8fb75a2419"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#2116e967-f846-44f3-b285-bd24c71a448e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#fe11db19-c8d1-47f3-8e46-d49fdb1fce9f"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#8cc1a727-2474-435e-b2e4-21d40b6a6c69"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#e2a32150-501e-424c-8294-169d633a5dd4"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#1d77642f-ded6-402b-8489-920da5f8e24f"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#b4433d2e-7ff8-48fa-8552-95ac7379a118"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#617e41e6-f725-4e62-804d-d0e971f78ec2"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#8289a3c7-c673-4632-bca2-9146784c582e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#99ac4aec-0fe3-4dac-9def-cd7ea478ee05"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#ff9a16e8-c7fa-4d80-a7e9-bec594353b93"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#1dad006d-4202-45fd-9e88-389fc1048484"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#352a7774-b168-4a05-9419-16594361b1e5"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#cb5f3799-a835-4a85-97c9-552f55c03eac"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#5bf50d2c-6bc8-4f52-ae3b-41ce02baa8f1"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#5b57b144-a8e6-43f7-880f-ed8c724b3167"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#ada9d55d-343f-4842-968d-cb317017595b"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#0977c7fc-b0a5-4a1c-8bcf-7f1400e228c8"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#851c8e68-dd95-4d4e-bbd7-2c551179615d"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#f5f91702-3f73-4a37-b1eb-d15b5d0502be"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#7db0477e-6331-4f6c-99f8-44ae83b682d1"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#90c646ba-38c6-4cfb-9395-19eaab6644df"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#8f4a00cf-04cf-4bc1-8cf3-7a5a91c63732"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#6120435a-5329-4e9c-83d1-00cf5f24087e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#903be1b7-0f21-412f-bb58-3fcce0a315d6"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#93bc9db8-81c9-4d91-96cd-26a9d6f69fd6"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#fb2c941c-135f-4347-8cca-02e7abf3c6f8"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#7f69d4ea-6b5d-4fef-a552-62e4727e929f"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#b0da6e68-f179-428b-adc1-f102bfa439d2"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#02391693-faaa-40be-abdc-78f9edd7160e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#0a9eef4a-37de-4ced-b3f0-8669ed4252a8"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#3f212d18-603e-47e3-b0a4-f7798a3ce397"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#3825d8e9-8cb6-4fc0-8ee6-ae00d216ce7e"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#f49f7070-55be-4cf2-88dd-a7ab58d67710"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#d1c0cdde-dca3-4657-ad0c-e6308eb8cf74"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#a8fdc1a7-4a1e-4e5e-9184-d1482c329438"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#59d6a808-0edb-46b9-86e5-4a6ac35cc465"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#8caa5829-05b5-498d-bfba-60a0179dc486"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#03e45378-105c-4f9a-9375-decb14862b0f"/>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#173758a8-4e17-4aef-8822-7f38d3fee1c2"/>
+            </rdf:Seq>
+        </pg:hasTableField>
+    </pg:Table>
+
+    <pg:Database rdf:about="http://rdf.companieshouse.gov.uk/business_data#databroker">
+        <d:hasTitle>databroker</d:hasTitle>
+        <pg:hasDatabaseType>PostgreSQL</pg:hasDatabaseType>
+        <pg:hasDatabaseHostName>localhost</pg:hasDatabaseHostName>
+        <pg:hasDatabasePortNumber>5432</pg:hasDatabasePortNumber>
+        <pg:hasDatabaseUserName>username</pg:hasDatabaseUserName>
+        <pg:hasDatabasePassword>password</pg:hasDatabasePassword>
+        <pg:hasDatabaseName>databroker</pg:hasDatabaseName>
+        <pg:hasDatabaseTable>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://rdf.companieshouse.gov.uk/business_data#050ab717-2ba8-47c5-b948-e900a1ad5652"/>
+            </rdf:Seq>
+       </pg:hasDatabaseTable>
+    </pg:Database>
+</rdf:RDF>
+
