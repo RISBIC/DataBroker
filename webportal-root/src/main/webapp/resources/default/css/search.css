@@ -35,6 +35,19 @@
     line-height: 20px;
 }
 
+.advert {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
 .advert h3 {
     text-transform: capitalize;
+}
+
+.advert:hover {
+    color: #a80000;
+    cursor: pointer;
 }
