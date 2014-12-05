@@ -145,10 +145,9 @@ public class DataFlowNodeLifeCycleControl
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
                             if (logger.isLoggable(Level.FINE))
-                                logger.log(Level.FINE, "Life cycle operation \"" + method.getName() + "\" failed", throwable);
-                            else
-                                logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
+                                logger.log(Level.FINE, "Exception:", throwable);
                         }
                     }
                     else
