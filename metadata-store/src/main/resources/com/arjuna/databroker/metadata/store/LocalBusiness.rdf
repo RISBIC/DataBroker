@@ -170,37 +170,33 @@
     <pg:Table rdf:about="http://rdf.library.newcastle.gov.uk/local_business#5a03049a-02ef-4b80-9c79-15af8be07827">
         <d:hasTitle>library_d53d3d30_430a_4235_ab14_9f4455f727d6</d:hasTitle>
         <pg:hasTableName>library_d53d3d30_430a_4235_ab14_9f4455f727d6</pg:hasTableName>
-        <pg:hasTableField>
-            <rdf:Seq>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c86965f2-5ed0-4863-9528-c996654b91ee"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#b2af2dad-bf0a-4d27-b9e6-3386fdae8810"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#6eda627f-47fb-41ee-a42e-412fea3e5c95"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#afc170b7-102e-4028-a2e8-c21a2bef7676"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#78172a88-cb4c-44b7-9fb8-50f4ad0b2470"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#28596b50-cc3b-410c-bd97-ce9cb09d9ac8"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#807f0b3e-1ae3-4391-b68f-e12dba9c109b"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#e9bb69f5-a9d9-4934-8816-0861b0fc04b1"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#d38ed53a-1199-41c5-9318-3eca5d216146"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c64b3545-61b8-4b0f-91b0-3a81f5139f25"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f2d423b3-2e5f-46e7-807e-61e8af24a65a"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#cd506fa5-d708-435e-90a1-eb4a52ac0ac3"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f3352caf-8484-42af-ba38-e33d20020ddc"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c9ef9e39-ec64-414a-83c4-9bae7958701d"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#26a3323e-8372-43a6-b4da-b2f1a376fcec"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#efb9f128-a125-49e4-9ac3-5ca788944b3d"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f3684d2b-0346-452e-9908-ff73871a82a8"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#bc92871a-f44d-48cf-800f-cc641ebea621"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#ec436b16-085e-40b9-828a-6d41eba83e52"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#3eb3f8d0-59cb-4929-a1f5-68cd897cfdbc"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f52f661e-436c-4791-9f25-58fee351d2d6"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#1bed7b58-e292-4081-9122-3c5bc28a527b"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#7b8f59ea-20ed-4cba-899c-a4b2f8e1c7ac"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#0a63f62a-d29c-46db-8558-5c5a0895ecab"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#13de908c-6491-4523-aa6c-e32ce178b28c"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#92f26f6b-78fe-4a59-b558-874dcee3072e"/>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#6be2ce77-88f2-437c-a437-675d2c31254b"/>
-            </rdf:Seq>
-        </pg:hasTableField>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c86965f2-5ed0-4863-9528-c996654b91ee"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#b2af2dad-bf0a-4d27-b9e6-3386fdae8810"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#6eda627f-47fb-41ee-a42e-412fea3e5c95"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#afc170b7-102e-4028-a2e8-c21a2bef7676"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#78172a88-cb4c-44b7-9fb8-50f4ad0b2470"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#28596b50-cc3b-410c-bd97-ce9cb09d9ac8"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#807f0b3e-1ae3-4391-b68f-e12dba9c109b"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#e9bb69f5-a9d9-4934-8816-0861b0fc04b1"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#d38ed53a-1199-41c5-9318-3eca5d216146"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c64b3545-61b8-4b0f-91b0-3a81f5139f25"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f2d423b3-2e5f-46e7-807e-61e8af24a65a"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#cd506fa5-d708-435e-90a1-eb4a52ac0ac3"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f3352caf-8484-42af-ba38-e33d20020ddc"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c9ef9e39-ec64-414a-83c4-9bae7958701d"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#26a3323e-8372-43a6-b4da-b2f1a376fcec"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#efb9f128-a125-49e4-9ac3-5ca788944b3d"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f3684d2b-0346-452e-9908-ff73871a82a8"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#bc92871a-f44d-48cf-800f-cc641ebea621"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#ec436b16-085e-40b9-828a-6d41eba83e52"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#3eb3f8d0-59cb-4929-a1f5-68cd897cfdbc"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#f52f661e-436c-4791-9f25-58fee351d2d6"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#1bed7b58-e292-4081-9122-3c5bc28a527b"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#7b8f59ea-20ed-4cba-899c-a4b2f8e1c7ac"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#0a63f62a-d29c-46db-8558-5c5a0895ecab"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#13de908c-6491-4523-aa6c-e32ce178b28c"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#92f26f6b-78fe-4a59-b558-874dcee3072e"/>
+        <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#6be2ce77-88f2-437c-a437-675d2c31254b"/>
     </pg:Table>
 
     <pg:Database rdf:about="http://rdf.library.newcastle.gov.uk/local_business#databroker">
@@ -211,10 +207,6 @@
         <pg:hasDatabaseUserName>username</pg:hasDatabaseUserName>
         <pg:hasDatabasePassword>password</pg:hasDatabasePassword>
         <pg:hasDatabaseName>databroker</pg:hasDatabaseName>
-        <pg:hasDatabaseTable>
-            <rdf:Seq>
-                <rdf:li rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#5a03049a-02ef-4b80-9c79-15af8be07827"/>
-            </rdf:Seq>
-       </pg:hasDatabaseTable>
+        <pg:hasDatabaseTable rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#5a03049a-02ef-4b80-9c79-15af8be07827"/>
     </pg:Database>
 </rdf:RDF>
