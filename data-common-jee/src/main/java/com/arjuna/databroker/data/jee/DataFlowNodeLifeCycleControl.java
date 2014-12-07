@@ -43,8 +43,12 @@ public class DataFlowNodeLifeCycleControl
     public static <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
+        ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try
         {
+            ClassLoader newClassLoader = dataFlowNodeFactory.getClass().getClassLoader();
+            Thread.currentThread().setContextClassLoader(newClassLoader);
+
             T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
 
             injectDataConnectors(dataFlowNode);
@@ -81,6 +85,10 @@ public class DataFlowNodeLifeCycleControl
         catch (MissingPropertyException missingPropertyException)
         {
             throw missingPropertyException;
+        }
+        finally
+        {
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
         }
     }
 
