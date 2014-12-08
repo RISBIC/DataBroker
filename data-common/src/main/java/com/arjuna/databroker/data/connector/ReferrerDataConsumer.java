@@ -15,8 +15,6 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
     /**
      * Gets name class associated with the Referrer Data Consumer.
      * 
-     * @param nameClass the class of the name required
-     *
      * @return name associated with the Referrer Data Consumer
      */
     public Class<?> getNameClass();
