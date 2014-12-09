@@ -30,9 +30,11 @@ import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
+import com.arjuna.databroker.data.jee.annotation.PostConfig;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
 import com.arjuna.databroker.data.jee.annotation.PostDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreActivated;
+import com.arjuna.databroker.data.jee.annotation.PreConfig;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
 
@@ -105,6 +107,20 @@ public class DataFlowNodeLifeCycleControl
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
 
         return Boolean.TRUE;
+    }
+
+    public static void enterReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PreConfig.class);
+    }
+
+    public static void exitReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PostConfig.class);
+        invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
     }
 
     public static Boolean removeDataFlowNode(DataFlow dataFlow, String name)
