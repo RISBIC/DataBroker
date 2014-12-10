@@ -143,11 +143,7 @@
 
 
                 var mappedData = ko.utils.arrayMap(nodes, function(advert) {
-
-                    /*if(advert.children > 0) {*/
                         return new Advert(advert);
-                    /*}*/
-
                 });
 
                 viewModel.items(mappedData);

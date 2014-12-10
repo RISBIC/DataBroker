@@ -336,7 +336,8 @@
     </pg:Field>
 
     <pg:Table rdf:about="http://rdf.companieshouse.gov.uk/business_data#050ab717-2ba8-47c5-b948-e900a1ad5652">
-        <d:hasTitle>table_3ed48507_e7c7_4c15_bcef_9948dfb5eed6</d:hasTitle>
+        <d:hasTitle>Business Information</d:hasTitle>
+        <d:hasSummary>A database holding information about local businesses provided by Companies House</d:hasSummary>
         <pg:hasTableName>table_3ed48507_e7c7_4c15_bcef_9948dfb5eed6</pg:hasTableName>
         <pg:hasTableField rdf:resource="http://rdf.companieshouse.gov.uk/business_data#761430de-f910-4002-9db6-de80e33996b2"/>
         <pg:hasTableField rdf:resource="http://rdf.companieshouse.gov.uk/business_data#cf8cf7cb-f3de-499f-b6e7-8bd54aa920ee"/>
@@ -396,7 +397,8 @@
     </pg:Table>
 
     <pg:Database rdf:about="http://rdf.companieshouse.gov.uk/business_data#databroker">
-        <d:hasTitle>databroker</d:hasTitle>
+        <d:hasTitle>Local Businesses</d:hasTitle>
+        <d:hasSummary>A database holding information about local businesses provided by Companies House</d:hasSummary>
         <pg:hasDatabaseType>PostgreSQL</pg:hasDatabaseType>
         <pg:hasDatabaseHostName>localhost</pg:hasDatabaseHostName>
         <pg:hasDatabasePortNumber>5432</pg:hasDatabasePortNumber>

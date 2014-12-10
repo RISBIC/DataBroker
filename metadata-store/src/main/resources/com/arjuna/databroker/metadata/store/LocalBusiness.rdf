@@ -168,7 +168,8 @@
     </pg:Field>
 
     <pg:Table rdf:about="http://rdf.library.newcastle.gov.uk/local_business#5a03049a-02ef-4b80-9c79-15af8be07827">
-        <d:hasTitle>library_d53d3d30_430a_4235_ab14_9f4455f727d6</d:hasTitle>
+        <d:hasTitle>Business Information</d:hasTitle>
+        <d:hasSummary>A database table holding information about local businesses provided by Newcastle City Library</d:hasSummary>
         <pg:hasTableName>library_d53d3d30_430a_4235_ab14_9f4455f727d6</pg:hasTableName>
         <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#c86965f2-5ed0-4863-9528-c996654b91ee"/>
         <pg:hasTableField rdf:resource="http://rdf.library.newcastle.gov.uk/local_business#b2af2dad-bf0a-4d27-b9e6-3386fdae8810"/>
@@ -200,7 +201,8 @@
     </pg:Table>
 
     <pg:Database rdf:about="http://rdf.library.newcastle.gov.uk/local_business#databroker">
-        <d:hasTitle>databroker</d:hasTitle>
+        <d:hasTitle>Local Businesses</d:hasTitle>
+        <d:hasSummary>A database holding information about local businesses provided by Newcastle City Library</d:hasSummary>
         <pg:hasDatabaseType>PostgreSQL</pg:hasDatabaseType>
         <pg:hasDatabaseHostName>10.1.20.246</pg:hasDatabaseHostName>
         <pg:hasDatabasePortNumber>0</pg:hasDatabasePortNumber>
