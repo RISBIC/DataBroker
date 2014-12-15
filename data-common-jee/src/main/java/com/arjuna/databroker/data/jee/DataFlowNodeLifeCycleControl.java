@@ -16,6 +16,7 @@ import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
+import com.arjuna.databroker.data.DataFlowNodeState;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.InvalidClassException;
 import com.arjuna.databroker.data.InvalidMetaPropertyException;
@@ -28,6 +29,7 @@ import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
+import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
 import com.arjuna.databroker.data.jee.annotation.PostConfig;
@@ -252,6 +254,32 @@ public class DataFlowNodeLifeCycleControl
                     catch (Throwable throwable)
                     {
                         logger.log(Level.WARNING, "DataProvider injection failed of \"" + field.getName(), throwable);
+                    }
+                }
+
+                if (field.isAnnotationPresent(DataFlowNodeStateInjection.class))
+                {
+                    try
+                    {
+                        logger.log(Level.FINE, "DataFlowNodeStateInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+                        boolean accessable = field.isAccessible();
+                        field.setAccessible(true);
+                        if (field.getType().isAssignableFrom(DataFlowNodeState.class))
+                        {
+                            DataFlowNodeState dataFlowNodeState = new DefaultDataFlowNodeState(null);
+                            field.set(dataFlowNode, dataFlowNodeState);
+                        }
+                        else
+                            logger.log(Level.WARNING, "DataFlowNodeState injection failed, unsupported type: " + field.getType());
+                        field.setAccessible(accessable);
+                    }
+                    catch (IllegalAccessException illegalAccessException)
+                    {
+                        logger.log(Level.WARNING, "DataFlowNodeState injection failed of \"" + field.getName() + "\": " + illegalAccessException);
+                    }
+                    catch (Throwable throwable)
+                    {
+                        logger.log(Level.WARNING, "DataFlowNodeState injection failed of \"" + field.getName(), throwable);
                     }
                 }
             }
