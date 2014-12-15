@@ -29,8 +29,10 @@ import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
+import com.arjuna.databroker.data.connector.NamedDataProvider;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
+import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 
 @Path("/dataflownodelink")
 @Stateless
@@ -70,8 +72,15 @@ public class DataFlowNodeLinkWS
                             {
                                 ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
                                 ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-                                
+
                                 observableDataProvider.addDataConsumer(observerDataConsumer);
+                            }
+                            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                            {
+                                NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                                ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+
+                                referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
                             }
                             else
                                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
@@ -126,8 +135,15 @@ public class DataFlowNodeLinkWS
                             {
                                 ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
                                 ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-                                
+
                                 observableDataProvider.removeDataConsumer(observerDataConsumer);
+                            }
+                            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                            {
+                                NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                                ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+
+                                referrerDataConsumer.removeReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
                             }
                             else
                                 throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);

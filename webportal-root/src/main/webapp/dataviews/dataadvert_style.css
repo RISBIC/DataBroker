@@ -1,0 +1,144 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.dataadvert
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataadvert
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataadvert-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.dataadvert-title
+{
+}
+
+div.dataadvert-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.dataadvert-error-title
+{
+	font-weight:		bold;
+}
+
+span.dataadvert-error-message
+{
+	color:			#EEA05D;
+}
+
+table.dataadvert
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.dataadvert-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.dataadvert-column
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+}
+
+span.dataadvert-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+span.dataadvert-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+table.dataadvert-node
+{
+	margin:			0;
+	border:			0;
+	width:			100%;
+}
+
+td.dataadvert-node-column
+{
+	vertical-align:		text-top;
+}
+
+span.dataadvert-node-label
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	font-style:		italic;
+}
+
+span.dataadvert-node-value
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+}
+
+.node
+{
+	cursor:			pointer;
+}
+
+.node circle
+{
+	fill:			#EEEEEE;
+	stroke:			#CC7733;
+	stroke-width:		2.5px;
+}
+
+.node text
+{
+	font-size:		1em;
+	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+}
+
+.link
+{
+	fill:			none;
+	stroke:			#CC7733;
+	stroke-width:		2.5px;
+}

@@ -30,9 +30,11 @@ import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
+import com.arjuna.databroker.data.jee.annotation.PostConfig;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
 import com.arjuna.databroker.data.jee.annotation.PostDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreActivated;
+import com.arjuna.databroker.data.jee.annotation.PreConfig;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
 
@@ -43,8 +45,12 @@ public class DataFlowNodeLifeCycleControl
     public static <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
+        ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try
         {
+            ClassLoader newClassLoader = dataFlowNodeFactory.getClass().getClassLoader();
+            Thread.currentThread().setContextClassLoader(newClassLoader);
+
             T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
 
             injectDataConnectors(dataFlowNode);
@@ -82,6 +88,10 @@ public class DataFlowNodeLifeCycleControl
         {
             throw missingPropertyException;
         }
+        finally
+        {
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
+        }
     }
 
     public static Boolean processCreatedDataFlowNode(DataFlowNode dataFlowNode, DataFlow dataFlow)
@@ -97,6 +107,20 @@ public class DataFlowNodeLifeCycleControl
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
 
         return Boolean.TRUE;
+    }
+
+    public static void enterReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PreConfig.class);
+    }
+
+    public static void exitReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PostConfig.class);
+        invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
     }
 
     public static Boolean removeDataFlowNode(DataFlow dataFlow, String name)
@@ -145,10 +169,9 @@ public class DataFlowNodeLifeCycleControl
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
                             if (logger.isLoggable(Level.FINE))
-                                logger.log(Level.FINE, "Life cycle operation \"" + method.getName() + "\" failed", throwable);
-                            else
-                                logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
+                                logger.log(Level.FINE, "Exception:", throwable);
                         }
                     }
                     else
