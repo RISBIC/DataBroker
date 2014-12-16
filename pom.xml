@@ -58,6 +58,7 @@
     <modules>
         <module>data-common</module>
         <module>data-common-jee</module>
+        <module>data-common-jee-store</module>
         <module>control-common</module>
         <module>control-core</module>
         <module>control-xmlconfig</module>
