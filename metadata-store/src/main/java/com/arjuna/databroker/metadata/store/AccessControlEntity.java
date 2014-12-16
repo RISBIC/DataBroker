@@ -8,11 +8,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class AccessControlEntity implements Serializable
@@ -23,8 +21,9 @@ public class AccessControlEntity implements Serializable
     {
     }
 
-    public AccessControlEntity(MetadataEntity metadata, String requesterId, String userId, Boolean canList, Boolean canRead, Boolean canUpdate, Boolean canRemove, Boolean canCreateChild, Boolean canChangeAccess)
+    public AccessControlEntity(String id, MetadataEntity metadata, String requesterId, String userId, Boolean canList, Boolean canRead, Boolean canUpdate, Boolean canRemove, Boolean canCreateChild, Boolean canChangeAccess)
     {
+        _id              = id;
         _metadata        = metadata;
         _requesterId     = requesterId;
         _userId          = userId;
@@ -138,8 +137,6 @@ public class AccessControlEntity implements Serializable
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     protected String _id;
 
     @JoinColumn(name = "metadata")
