@@ -5,30 +5,29 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-// import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-// import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import org.hibernate.annotations.Type;
 
 @Entity
 public class DataFlowNodeEntity implements Serializable
 {
-    private static final long serialVersionUID = 6585424677180130492L;
+    private static final long serialVersionUID = 7120653672640034870L;
 
     public DataFlowNodeEntity()
     {
     }
 
-    public DataFlowNodeEntity(String id, DataFlowNodeEntity parent, DataFlowNodeEntity description, String content)
+    public DataFlowNodeEntity(String id, String name, Map<String, String> properties, String nodeClassName)
     {
-        _id           = id;
-        _parent       = parent;
-        _description  = description;
-        _content      = content;
+        _id             = id;
+        _name           = name;               
+        _properties     = properties;
+        _nodeClassName  = nodeClassName;
     }
 
     public String getId()
@@ -41,50 +40,61 @@ public class DataFlowNodeEntity implements Serializable
         _id = id;
     }
 
-    public void setParent(DataFlowNodeEntity parent)
+    public void setName(String name)
     {
-        _parent = parent;
+        _name = name;
     }
 
-    public DataFlowNodeEntity getParent()
+    public String getName()
     {
-        return _parent;
+        return _name;
     }
 
-    public void setDescription(DataFlowNodeEntity description)
+    public void setProperties(Map<String, String> properties)
     {
-        _description = description;
+        _properties = properties;
     }
 
-    public DataFlowNodeEntity getDescription()
+    public Map<String, String> getProperties()
     {
-        return _description;
+        return _properties;
     }
 
-    public void setContent(String content)
+    public void setNodeClassName(String nodeClassName)
     {
-        _content = content;
+        _nodeClassName = nodeClassName;
     }
 
-    public String getContent()
+    public String getNodeClassName()
     {
-        return _content;
+        return _nodeClassName;
+    }
+
+    public void setDataFlow(DataFlowEntity dataFlow)
+    {
+        _dataFlow = dataFlow;
+    }
+
+    public DataFlowEntity getDataFlow()
+    {
+        return _dataFlow;
     }
 
     @Id
     @Column(name = "id")
     protected String _id;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "parent")
-    protected DataFlowNodeEntity _parent;
+    @Column(name = "name")
+    protected String _name;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "description")
-    protected DataFlowNodeEntity _description;
+    @Type(type = "serializable")
+    @Column(name = "properties")
+    protected Map<String, String> _properties;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "content")
-    protected String _content;
+    @Column(name = "nodeClassName")
+    protected String _nodeClassName;
+
+    @ManyToOne
+    @JoinColumn(name="dataFlow", nullable=false)
+    public DataFlowEntity _dataFlow;
 }

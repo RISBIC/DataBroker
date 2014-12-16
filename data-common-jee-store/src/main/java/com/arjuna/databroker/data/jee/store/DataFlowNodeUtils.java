@@ -20,6 +20,6 @@ public class DataFlowNodeUtils
 {
     private static final Logger logger = Logger.getLogger(DataFlowNodeUtils.class.getName());
 
-    @PersistenceContext(unitName="DataFlow")
+    @PersistenceContext(unitName="Data")
     private EntityManager _entityManager;
 }

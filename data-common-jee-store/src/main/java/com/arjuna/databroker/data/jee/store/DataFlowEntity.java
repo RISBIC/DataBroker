@@ -5,35 +5,29 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.OneToMany;
 
 @Entity
 public class DataFlowEntity implements Serializable
 {
-    private static final long serialVersionUID = -396262545228429102L;
+    private static final long serialVersionUID = -7243768175433344968L;
 
     public DataFlowEntity()
     {
     }
 
-    public DataFlowEntity(DataFlowNodeEntity metadata, String requesterId, String userId, Boolean canList, Boolean canRead, Boolean canUpdate, Boolean canRemove, Boolean canCreateChild, Boolean canChangeAccess)
+    public DataFlowEntity(String id, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowLinkEntity> dataFlowLinks)
     {
-        _metadata        = metadata;
-        _requesterId     = requesterId;
-        _userId          = userId;
-        _canList         = canList;
-        _canRead         = canRead;
-        _canUpdate       = canUpdate;
-        _canRemove       = canRemove;
-        _canCreateChild  = canCreateChild;
-        _canChangeAccess = canChangeAccess;
+        _id            = id;
+        _dataFlowNodes = dataFlowNodes;
+        _dataFlowLinks = dataFlowLinks;
     }
 
     public String getId()
@@ -46,127 +40,35 @@ public class DataFlowEntity implements Serializable
         _id = id;
     }
 
-    public DataFlowNodeEntity getMetadata()
+    public Set<DataFlowNodeEntity> getDataFlowNodes()
     {
-        return _metadata;
+        return _dataFlowNodes;
     }
 
-    public void setMetadata(DataFlowNodeEntity metadata)
+    public void setDataFlowNodes(Set<DataFlowNodeEntity> dataFlowNodes)
     {
-        _metadata = metadata;
+        _dataFlowNodes = dataFlowNodes;
     }
 
-    public String getRequesterId()
+    public Set<DataFlowLinkEntity> getDataFlowLinks()
     {
-        return _requesterId;
+        return _dataFlowLinks;
     }
 
-    public void setRequester(String requesterId)
+    public void setDataFlowLinks(Set<DataFlowLinkEntity> dataFlowLinks)
     {
-        _requesterId = requesterId;
-    }
-
-    public String getUserId()
-    {
-        return _userId;
-    }
-
-    public void setUserId(String userId)
-    {
-        _userId = userId;
-    }
-
-    public Boolean getCanList()
-    {
-        return _canList;
-    }
-
-    public void setCanList(Boolean canList)
-    {
-        _canList = canList;
-    }
-
-    public Boolean getCanRead()
-    {
-        return _canRead;
-    }
-
-    public void setCanRead(Boolean canRead)
-    {
-        _canRead = canRead;
-    }
-
-    public Boolean getCanUpdate()
-    {
-        return _canUpdate;
-    }
-
-    public void setCanUpdate(Boolean canUpdate)
-    {
-        _canUpdate = canUpdate;
-    }
-
-    public Boolean getCanRemove()
-    {
-        return _canRemove;
-    }
-
-    public void setCanRemove(Boolean canRemove)
-    {
-        _canRemove = canRemove;
-    }
-
-    public Boolean getCanCreateChild()
-    {
-        return _canCreateChild;
-    }
-
-    public void setCanCreateChild(Boolean canCreateChild)
-    {
-        _canCreateChild = canCreateChild;
-    }
-
-    public Boolean getCanChangeAccess()
-    {
-        return _canChangeAccess;
-    }
-
-    public void setCanChangeAccess(Boolean canChangeAccess)
-    {
-        _canChangeAccess = canChangeAccess;
+        _dataFlowLinks = dataFlowLinks;
     }
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     protected String _id;
 
-    @JoinColumn(name = "metadata")
-    @ManyToOne(fetch = FetchType.LAZY)
-    protected DataFlowNodeEntity _metadata;
+    @Column(name = "dataFlowNodes")
+    @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
+    protected Set<DataFlowNodeEntity> _dataFlowNodes;
 
-    @Column(name = "requesterId")
-    protected String _requesterId;
-
-    @Column(name = "userId")
-    protected String _userId;
-
-    @Column(name = "canList")
-    protected Boolean _canList;
-
-    @Column(name = "canRead")
-    protected Boolean _canRead;
-
-    @Column(name = "canUpdate")
-    protected Boolean _canUpdate;
-
-    @Column(name = "canRemove")
-    protected Boolean _canRemove;
-
-    @Column(name = "canCreateChild")
-    protected Boolean _canCreateChild;
-
-    @Column(name = "canChangeAccess")
-    protected Boolean _canChangeAccess;
+    @Column(name = "dataFlowLinks")
+    @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
+    protected Set<DataFlowLinkEntity> _dataFlowLinks;
 }
