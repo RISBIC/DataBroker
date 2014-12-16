@@ -5,30 +5,26 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-// import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-// import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class DataFlowLinkEntity implements Serializable
 {
-    private static final long serialVersionUID = 6585424677180130492L;
+    private static final long serialVersionUID = 1636112437064485251L;
 
     public DataFlowLinkEntity()
     {
     }
 
-    public DataFlowLinkEntity(String id, DataFlowLinkEntity parent, DataFlowLinkEntity description, String content)
+    public DataFlowLinkEntity(String id, DataFlowNodeEntity nodeSource, DataFlowNodeEntity nodeSink)
     {
-        _id           = id;
-        _parent       = parent;
-        _description  = description;
-        _content      = content;
+        _id         = id;
+        _nodeSource = nodeSource;
+        _nodeSink   = nodeSink;
     }
 
     public String getId()
@@ -41,50 +37,47 @@ public class DataFlowLinkEntity implements Serializable
         _id = id;
     }
 
-    public void setParent(DataFlowLinkEntity parent)
+    public void setNodeSource(DataFlowNodeEntity nodeSource)
     {
-        _parent = parent;
+        _nodeSource = nodeSource;
     }
 
-    public DataFlowLinkEntity getParent()
+    public DataFlowNodeEntity getNodeSink()
     {
-        return _parent;
+        return _nodeSink;
     }
 
-    public void setDescription(DataFlowLinkEntity description)
+    public void setNodeSink(DataFlowNodeEntity nodeSink)
     {
-        _description = description;
+        _nodeSink = nodeSink;
     }
 
-    public DataFlowLinkEntity getDescription()
+    public DataFlowNodeEntity getNodeSource()
     {
-        return _description;
+        return _nodeSource;
     }
 
-    public void setContent(String content)
+    public void setDataFlow(DataFlowEntity dataFlow)
     {
-        _content = content;
+        _dataFlow = dataFlow;
     }
 
-    public String getContent()
+    public DataFlowEntity getDataFlow()
     {
-        return _content;
+        return _dataFlow;
     }
 
     @Id
     @Column(name = "id")
     protected String _id;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "parent")
-    protected DataFlowLinkEntity _parent;
+    @Column(name = "nodeSource")
+    protected DataFlowNodeEntity _nodeSource;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "description")
-    protected DataFlowLinkEntity _description;
+    @Column(name = "nodeSink")
+    protected DataFlowNodeEntity _nodeSink;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "content")
-    protected String _content;
+    @ManyToOne
+    @JoinColumn(name="dataFlow", nullable=false)
+    public DataFlowEntity _dataFlow;
 }
