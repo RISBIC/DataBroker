@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.arjuna.databroker.data.DataConsumer;
@@ -266,7 +267,10 @@ public class DataFlowNodeLifeCycleControl
                         field.setAccessible(true);
                         if (field.getType().isAssignableFrom(DataFlowNodeState.class))
                         {
-                            DataFlowNodeState dataFlowNodeState = new DefaultDataFlowNodeState(null);
+//                            DataFlowNodeState dataFlowNodeState = new DefaultDataFlowNodeState(null);
+                            String id = UUID.randomUUID().toString();
+                            Class<?> storeDataFlowNodeStateClass = Class.forName("com.arjuna.databroker.data.jee.store.StoreDataFlowNodeState");
+                            DataFlowNodeState dataFlowNodeState = (DataFlowNodeState) storeDataFlowNodeStateClass.newInstance();
                             field.set(dataFlowNode, dataFlowNodeState);
                         }
                         else
