@@ -5,7 +5,6 @@
 package com.arjuna.databroker.data.jee;
 
 import java.io.Serializable;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.arjuna.databroker.data.DataFlowNodeState;
@@ -14,11 +13,16 @@ public class DefaultDataFlowNodeState implements DataFlowNodeState
 {
     private static final Logger logger = Logger.getLogger(DefaultDataFlowNodeState.class.getName());
 
-    public DefaultDataFlowNodeState(UUID uuid)
+    public DefaultDataFlowNodeState(String id)
     {
-        logger.log(Level.FINE, "DefaultDataFlowNodeState: " + uuid);
+        logger.log(Level.FINE, "DefaultDataFlowNodeState: " + id);
 
-        _uuid = uuid;
+        _id = id;
+    }
+
+    public String getId()
+    {
+        return _id;
     }
 
     @Override
@@ -33,6 +37,6 @@ public class DefaultDataFlowNodeState implements DataFlowNodeState
         _state = state;
     }
 
-    private UUID         _uuid;
+    private String       _id;
     private Serializable _state;
 }
