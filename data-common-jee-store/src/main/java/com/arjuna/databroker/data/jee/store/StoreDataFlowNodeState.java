@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
 import com.arjuna.databroker.data.DataFlowNodeState;
 
 public class StoreDataFlowNodeState implements DataFlowNodeState
@@ -22,6 +22,15 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
     {
         logger.log(Level.WARNING, "StoreDataFlowNodeState: for testing only");
 
+        try
+        {
+            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "StoreDataFlowNodeState: no dataFlowNodeUtils found", throwable);
+        }
+
         _id = UUID.randomUUID().toString();
 
         _dataFlowNodeUtils.create(_id, "Test", Collections.<String, String>emptyMap(), "The Node Class Name");
@@ -30,6 +39,15 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
     public StoreDataFlowNodeState(String name, Map<String, String> properties, String nodeClassName)
     {
         logger.log(Level.WARNING, "StoreDataFlowNodeState: " + name + ", " + properties + ", " + nodeClassName);
+
+        try
+        {
+            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "StoreDataFlowNodeState: no dataFlowNodeUtils found", throwable);
+        }
 
         _id = UUID.randomUUID().toString();
 
@@ -40,8 +58,17 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
     {
         logger.log(Level.FINE, "StoreDataFlowNodeState: " + id);
 
+        try
+        {
+            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "StoreDataFlowNodeState: no dataFlowNodeUtils found", throwable);
+        }
+
         _id = id;
-    }
+     }
 
     public String getId()
     {
@@ -62,6 +89,5 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
 
     private String _id;
 
-    @EJB
     private DataFlowNodeUtils _dataFlowNodeUtils;
 }
