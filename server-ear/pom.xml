@@ -145,7 +145,6 @@
                         </ejbModule>
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>
-<<<<<<< HEAD
                             <artifactId>data-core-jee</artifactId>
                             <bundleFileName>data-core-jee.jar</bundleFileName>
                         </ejbModule>
@@ -153,9 +152,6 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-core-jee-store</artifactId>
                             <bundleFileName>data-core-jee-store.jar</bundleFileName>
-=======
-                            <artifactId>data-common-jee-store</artifactId>
->>>>>>> Initital skeleton for JPA based durability of data flows
                         </ejbModule>
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>
