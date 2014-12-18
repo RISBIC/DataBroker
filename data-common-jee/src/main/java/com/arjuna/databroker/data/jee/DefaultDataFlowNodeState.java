@@ -7,7 +7,6 @@ package com.arjuna.databroker.data.jee;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.arjuna.databroker.data.DataFlowNodeState;
 
 public class DefaultDataFlowNodeState implements DataFlowNodeState
 {
