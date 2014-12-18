@@ -5,12 +5,16 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 public class DataFlowEntity implements Serializable
@@ -21,9 +25,11 @@ public class DataFlowEntity implements Serializable
     {
     }
 
-    public DataFlowEntity(String id, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowLinkEntity> dataFlowLinks)
+    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowLinkEntity> dataFlowLinks)
     {
         _id            = id;
+        _name          = name;
+        _properties    = properties;
         _dataFlowNodes = dataFlowNodes;
         _dataFlowLinks = dataFlowLinks;
     }
@@ -36,6 +42,26 @@ public class DataFlowEntity implements Serializable
     public void setId(String id)
     {
         _id = id;
+    }
+
+    public String getName()
+    {
+        return _name;
+    }
+
+    public void setName(String name)
+    {
+        _name = name;
+    }
+
+    public Map<String, String> getProperties()
+    {
+        return _properties;
+    }
+
+    public void setProperties(Map<String, String> properties)
+    {
+        _properties = properties;
     }
 
     public Set<DataFlowNodeEntity> getDataFlowNodes()
@@ -61,6 +87,13 @@ public class DataFlowEntity implements Serializable
     @Id
     @Column(name = "id")
     protected String _id;
+
+    @Column(name = "name")
+    protected String _name;
+
+    @Type(type = "serializable")
+    @Column(name = "properties")
+    protected Map<String, String> _properties;
 
     @Column(name = "dataFlowNodes")
     @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
