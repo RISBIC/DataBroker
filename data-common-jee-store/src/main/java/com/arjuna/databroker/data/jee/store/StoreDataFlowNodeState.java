@@ -5,54 +5,14 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
-import com.arjuna.databroker.data.DataFlowNodeState;
+import com.arjuna.databroker.data.jee.DataFlowNodeState;;
 
 public class StoreDataFlowNodeState implements DataFlowNodeState
 {
     private static final Logger logger = Logger.getLogger(StoreDataFlowNodeState.class.getName());
-
-    // TODO: Remove - for testing only
-    public StoreDataFlowNodeState()
-    {
-        logger.log(Level.WARNING, "StoreDataFlowNodeState: for testing only");
-
-        try
-        {
-            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
-        }
-        catch (Throwable throwable)
-        {
-            logger.log(Level.WARNING, "StoreDataFlowNodeState: no dataFlowNodeUtils found", throwable);
-        }
-
-        _id = UUID.randomUUID().toString();
-
-        _dataFlowNodeUtils.create(_id, "Test", Collections.<String, String>emptyMap(), "The Node Class Name");
-    }
-
-    public StoreDataFlowNodeState(String name, Map<String, String> properties, String nodeClassName)
-    {
-        logger.log(Level.WARNING, "StoreDataFlowNodeState: " + name + ", " + properties + ", " + nodeClassName);
-
-        try
-        {
-            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
-        }
-        catch (Throwable throwable)
-        {
-            logger.log(Level.WARNING, "StoreDataFlowNodeState: no dataFlowNodeUtils found", throwable);
-        }
-
-        _id = UUID.randomUUID().toString();
-
-        _dataFlowNodeUtils.create(_id, name, properties, nodeClassName);
-    }
 
     public StoreDataFlowNodeState(String id)
     {
@@ -87,7 +47,6 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
         _dataFlowNodeUtils.setState(_id, state);
     }
 
-    private String _id;
-
+    private String            _id;
     private DataFlowNodeUtils _dataFlowNodeUtils;
 }

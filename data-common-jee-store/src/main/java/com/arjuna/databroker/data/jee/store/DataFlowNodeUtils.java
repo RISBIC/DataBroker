@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -23,9 +24,9 @@ public class DataFlowNodeUtils
 {
     private static final Logger logger = Logger.getLogger(DataFlowNodeUtils.class.getName());
 
-    public void create(String id, String name, Map<String, String> properties, String nodeClassName)
+    public void create(String id, String name, Map<String, String> properties, String nodeClassName, DataFlowEntity dataFlow, Serializable state)
     {
-        DataFlowNodeEntity dataFlowNodeEntity = new DataFlowNodeEntity(id, name, properties, nodeClassName);
+        DataFlowNodeEntity dataFlowNodeEntity = new DataFlowNodeEntity(id, name, properties, nodeClassName, dataFlow, state);
 
         _entityManager.persist(dataFlowNodeEntity);
     }
@@ -59,7 +60,7 @@ public class DataFlowNodeUtils
 
     public void remove(String id)
     {
-        DataFlowNodeEntity dataFlowNodeEntity  = _entityManager.find(DataFlowNodeEntity.class, id);
+        DataFlowNodeEntity dataFlowNodeEntity = _entityManager.find(DataFlowNodeEntity.class, id);
 
         if (dataFlowNodeEntity != null)
             _entityManager.remove(dataFlowNodeEntity);
