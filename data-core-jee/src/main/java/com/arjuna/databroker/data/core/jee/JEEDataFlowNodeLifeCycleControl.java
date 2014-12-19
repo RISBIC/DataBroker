@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.data.jee;
+package com.arjuna.databroker.data.core.jee;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.ejb.Singleton;
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -29,6 +29,8 @@ import com.arjuna.databroker.data.connector.NamedDataProvider;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
+import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.jee.DataFlowNodeState;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
@@ -40,12 +42,14 @@ import com.arjuna.databroker.data.jee.annotation.PreActivated;
 import com.arjuna.databroker.data.jee.annotation.PreConfig;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
+import com.arjuna.databroker.data.jee.store.StoreDataFlowNodeState;
 
-public class DataFlowNodeLifeCycleControl
+@Singleton(name="DataFlowNodeLifeCycleControl")
+public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleControl
 {
-    private static final Logger logger = Logger.getLogger(DataFlowNodeLifeCycleControl.class.getName());
+    private static final Logger logger = Logger.getLogger(JEEDataFlowNodeLifeCycleControl.class.getName());
 
-    public static <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
+    public <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
         ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
@@ -54,9 +58,10 @@ public class DataFlowNodeLifeCycleControl
             ClassLoader newClassLoader = dataFlowNodeFactory.getClass().getClassLoader();
             Thread.currentThread().setContextClassLoader(newClassLoader);
 
-            T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
+            String dataFlowNodeId = UUID.randomUUID().toString();
+            T      dataFlowNode   = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
 
-            injectDataConnectors(dataFlowNode);
+            injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
             invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
             invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
@@ -97,9 +102,9 @@ public class DataFlowNodeLifeCycleControl
         }
     }
 
-    public static Boolean processCreatedDataFlowNode(DataFlowNode dataFlowNode, DataFlow dataFlow)
+    public Boolean processCreatedDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
-        injectDataConnectors(dataFlowNode);
+        injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
         invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
         invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
@@ -112,21 +117,21 @@ public class DataFlowNodeLifeCycleControl
         return Boolean.TRUE;
     }
 
-    public static void enterReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    public void enterReconfigDataFlowNode(DataFlowNode dataFlowNode)
     {
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
         invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
         invokeLifeCycleOperation(dataFlowNode, PreConfig.class);
     }
 
-    public static void exitReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    public void exitReconfigDataFlowNode(DataFlowNode dataFlowNode)
     {
         invokeLifeCycleOperation(dataFlowNode, PostConfig.class);
         invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
     }
 
-    public static Boolean removeDataFlowNode(DataFlow dataFlow, String name)
+    public Boolean removeDataFlowNode(DataFlow dataFlow, String name)
     {
         DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(name);
 
@@ -140,7 +145,7 @@ public class DataFlowNodeLifeCycleControl
         return result;
     }
 
-    public static Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
+    public Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
     {
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
 
@@ -154,7 +159,7 @@ public class DataFlowNodeLifeCycleControl
         return result;
     }
 
-    private static <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
+    private <A extends Annotation> void invokeLifeCycleOperation(DataFlowNode dataFlowNode, Class<A> annotation)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
@@ -193,11 +198,11 @@ public class DataFlowNodeLifeCycleControl
         }
     }
 
-    private static void injectDataConnectors(DataFlowNode dataFlowNode)
+    private void injectDataConnectors(String dataFlowNodeId, DataFlowNode dataFlowNode)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
-        logger.log(Level.FINE, "injectDataConnectors class = \"" + dataFlowNodeClass + "\"");
+        logger.log(Level.FINE, "injectDataConnectors id = \"" + dataFlowNodeId + "\", class = \"" + dataFlowNodeClass + "\"");
 
         while (dataFlowNodeClass != null)
         {
@@ -267,10 +272,7 @@ public class DataFlowNodeLifeCycleControl
                         field.setAccessible(true);
                         if (field.getType().isAssignableFrom(DataFlowNodeState.class))
                         {
-//                            DataFlowNodeState dataFlowNodeState = new DefaultDataFlowNodeState(null);
-                            String id = UUID.randomUUID().toString();
-                            Class<?> storeDataFlowNodeStateClass = Class.forName("com.arjuna.databroker.data.jee.store.StoreDataFlowNodeState");
-                            DataFlowNodeState dataFlowNodeState = (DataFlowNodeState) storeDataFlowNodeStateClass.newInstance();
+                            DataFlowNodeState dataFlowNodeState = new StoreDataFlowNodeState(dataFlowNodeId);
                             field.set(dataFlowNode, dataFlowNodeState);
                         }
                         else
