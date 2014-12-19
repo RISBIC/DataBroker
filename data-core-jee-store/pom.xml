@@ -13,11 +13,11 @@
         <version>1.0.0p1m2l</version>
     </parent>
 
-    <artifactId>data-common-jee-store</artifactId>
+    <artifactId>data-core-jee-store</artifactId>
 
     <packaging>ejb</packaging>
 
-    <name>Data Common JEE Store</name>
+    <name>Data Core JEE Store</name>
 
     <dependencies>
         <dependency>
