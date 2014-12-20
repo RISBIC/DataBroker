@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-common</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
