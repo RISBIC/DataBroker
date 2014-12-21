@@ -37,6 +37,7 @@
 
         <version.org.apache.jena>2.11.1</version.org.apache.jena>
         <version.org.richfaces>4.3.7.Final</version.org.richfaces>
+        <version.com.google.guava>10.0.1</version.com.google.guava>
 
         <!-- JBossAS-7.1.1.Final -->
         <servlet-api.version>3.0</servlet-api.version>
