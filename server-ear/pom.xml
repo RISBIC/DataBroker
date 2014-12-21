@@ -58,6 +58,12 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-core-jee</artifactId>
             <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
