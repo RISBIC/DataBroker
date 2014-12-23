@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common-jee</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
@@ -65,13 +65,13 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-core-jee</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-core-jee-store</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
