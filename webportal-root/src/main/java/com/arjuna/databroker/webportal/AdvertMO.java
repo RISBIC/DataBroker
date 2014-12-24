@@ -34,7 +34,8 @@ public class AdvertMO implements Serializable
         _requesterIds    = Collections.emptyList();
         _userId          = null;
         _adverts         = new LinkedList<AdvertVO>();
-        _advertsJSON     = "'{ \"children\": [ ] }'";
+        _advertsJSON     = "'[ ]'";
+        _advertTreeJSON  = "'{ \"children\": [ ] }'";
 
         _serverStatusMessages = new HashMap<String, String>();
         _errorMessage         = null;
@@ -117,6 +118,16 @@ public class AdvertMO implements Serializable
     public void setAdvertsJSON(String advertsJSON)
     {
         _advertsJSON = advertsJSON;
+    }
+
+    public String getAdvertTreeJSON()
+    {
+        return _advertTreeJSON;
+    }
+
+    public void setAdvertTreeJSON(String advertTreeJSON)
+    {
+        _advertTreeJSON = advertTreeJSON;
     }
 
     public Map<String, String> getServerStatusMessages()
@@ -270,7 +281,8 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = "'{ \"children\": [ ] }'";
+            _advertsJSON     = "'[ ]'";
+            _advertTreeJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -302,7 +314,8 @@ public class AdvertMO implements Serializable
                     }
                 }
 
-                _advertsJSON = advertsToJSON(_adverts);
+                _advertsJSON    = advertsToJSON(_adverts);
+                _advertTreeJSON = advertsToTreeJSON(_adverts);
             }
         }
         catch (Throwable throwable)
@@ -320,7 +333,7 @@ public class AdvertMO implements Serializable
         try
         {
             _adverts.clear();
-            _advertsJSON  = "'{ \"children\": [ ] }'";
+            _advertTreeJSON  = "'{ \"children\": [ ] }'";
             _serverStatusMessages.clear();
             _errorMessage = null;
             _serverErrorMessages.clear();
@@ -432,7 +445,8 @@ public class AdvertMO implements Serializable
                             _serverStatusMessages.put(serviceRootURL, "Failed");
                         }
 
-                        _advertsJSON = advertsToJSON(_adverts);
+                        _advertsJSON    = advertsToJSON(_adverts);
+                        _advertTreeJSON = advertsToTreeJSON(_adverts);
                     }
                 }
                 catch (InterruptedException interruptedException)
@@ -482,8 +496,62 @@ public class AdvertMO implements Serializable
         else
             _errorMessage = "Failed to obtain adverts from \"" + _serviceRootURLs + "\"";
     }
-
     private String advertsToJSON(List<AdvertVO> adverts)
+    {
+        StringBuffer result = new StringBuffer();
+
+        result.append("'[ ");
+        boolean firstAdvert = true;
+        for (AdvertVO advert: _adverts)
+        {
+            if (firstAdvert)
+                firstAdvert = false;
+            else
+                result.append(", ");
+            advertToJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
+        }
+        result.append(" ]'");
+
+        return result.toString();
+    }
+
+    private String advertToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
+    {
+        String name        = advertStandardNode.getName();
+        String summary     = advertStandardNode.getSummary();
+        String description = advertStandardNode.getDescription();
+
+        if ("".equals(name))
+            name = null;
+        if ("".equals(summary))
+            summary = null;
+        if ("".equals(description))
+            description = null;
+
+        if ((name != null) || (summary != null) || (description != null))
+        {
+            result.append("{ ");
+            if (name != null)
+                result.append("\"name\": \"" + name + "\"");
+            if (summary != null)
+            {
+                if (name != null)
+                    result.append("\", ");
+                result.append("\"summary\": \"" + summary + "\"");
+            }
+            if (description != null)
+            {
+                if ((name != null) || (summary != null))
+                    result.append("\", ");
+                result.append("\"description\": \"" + description);
+            }
+            result.append(" }");
+        }
+
+        return result.toString();
+    }
+
+    private String advertsToTreeJSON(List<AdvertVO> adverts)
     {
         StringBuffer result = new StringBuffer();
 
@@ -496,14 +564,14 @@ public class AdvertMO implements Serializable
                     firstAdvert = false;
                 else
                     result.append(", ");
-                advertsToJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
+                advertsToTreeJSON(result, advert, (AdvertStandardNodeVO) advert.getNode());
             }
         result.append(" ] }'");
 
         return result.toString();
     }
 
-    private String advertsToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
+    private String advertsToTreeJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
     {
         result.append("{ ");
         if (advertStandardNode.getName() != null)
@@ -520,7 +588,7 @@ public class AdvertMO implements Serializable
                 firstChild = false;
             else
                 result.append(", ");
-            advertsToJSON(result, advert, (AdvertStandardNodeVO) childNode);
+            advertsToTreeJSON(result, advert, (AdvertStandardNodeVO) childNode);
         }
         result.append(" ]");
         result.append(" }");
@@ -533,6 +601,7 @@ public class AdvertMO implements Serializable
     private String         _userId;
     private List<AdvertVO> _adverts;
     private String         _advertsJSON;
+    private String         _advertTreeJSON;
 
     private Map<String, String> _serverStatusMessages;
     private String              _errorMessage;

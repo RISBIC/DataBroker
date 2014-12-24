@@ -50,7 +50,7 @@ span.dataadvert-error-message
 	color:			#EEA05D;
 }
 
-table.dataadvert
+table.dataadvert-search
 {
 	margin:			0 -0.5em 0 -0.5em;
 	border:			0;
@@ -59,63 +59,98 @@ table.dataadvert
 	border-spacing:		0.5em;
 }
 
-th.dataadvert-header
+td.dataadvert-search-column-one
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 1em 1em 1em;
-	background-color:	#CC7733;
-	color:			#EEEEEE;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
 }
 
-td.dataadvert-column
+td.dataadvert-search-column-two
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 1em 1em 1em;
-	background-color:	#DDDDDD;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataadvert-search-label
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"].dataadvert-search-text
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
 	color:			#111111;
 }
 
-span.dataadvert-header
+table.dataadvert-results
 {
-	margin:			0;
+	margin:			0 -0.5em 0 -0.5em;
 	border:			0;
-	padding:		1em 0 1em 0;
-}
-
-span.dataadvert-value
-{
-	margin:			0;
-	border:			0;
-	padding:		1em 0 1em 0;
-}
-
-table.dataadvert-node
-{
-	margin:			0;
-	border:			0;
+	padding:		0;
 	width:			100%;
+	border-spacing:		0.5em;
 }
 
-td.dataadvert-node-column
-{
-	vertical-align:		text-top;
-}
-
-span.dataadvert-node-label
+td.dataadvert-results-column-one
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 0 1em 0;
-	font-style:		italic;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
 }
 
-span.dataadvert-node-value
+td.dataadvert-results-column-two
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 0 1em 0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataadvert-result-label
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"].dataadvert-result-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+input[type="text"][disabled].dataadvert-result-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
 }
 
 .node
