@@ -32,21 +32,87 @@
                     </h:panelGroup>
                     <h:panelGrid styleClass="dataadvert-search" columnClasses="dataadvert-search-column-one,dataadvert-search-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
                         <h:outputText styleClass="dataadvert-search-label" value="Search text:"/>
-                        <h:inputText id="searchtext" styleClass="dataadvert-search-text"/>
+                        <h:inputText id="searchtext" styleClass="dataadvert-search-text" onkeyup="searchAdverts()"/>
                     </h:panelGrid>
-                    <script type="text/javascript">
-                        var adverts = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
-                    </script>
                     <h:panelGrid styleClass="dataadvert-results" columnClasses="dataadvert-results-column-one,dataadvert-results-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
-                        <h:outputText styleClass="dataadvert-result-label" value="Name:"/>
-                        <h:outputText styleClass="dataadvert-result-value" value="#{_advert.node.name}"/>
+                        <h:outputText styleClass="dataadvert-result-label" value="Name"/>
+                        <h:outputText id="namefield" styleClass="dataadvert-result-value" value=" "/>
                         <h:outputText styleClass="dataadvert-result-label" value="Summary:"/>
-                        <h:outputText styleClass="dataadvert-result-value" value="#{_advert.node.summary}"/>
+                        <h:outputText id="summaryfield" styleClass="dataadvert-result-value" value=" "/>
                         <h:outputText styleClass="dataadvert-result-label" value="Description:"/>
-                        <h:outputText styleClass="dataadvert-result-value" value="#{_advert.node.description}"/>
+                        <h:outputText id="descriptionfield" styleClass="dataadvert-result-value" value=" "/>
                         <h:outputText styleClass="dataadvert-result-label" value="Tags:"/>
-                        <h:outputText styleClass="dataadvert-result-value" value="#{_advert.node.tags}"/>
+                        <h:outputText id="tagsfield" styleClass="dataadvert-result-value" value=" "/>
                     </h:panelGrid>
+                    <h:outputScript name="dataadvert/lunr-0.5.7.js"/>
+                    <h:outputScript>
+                        var adverts = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
+
+                        var textIndex = lunr(
+                            function ()
+                            {
+                                this.ref('path');
+                                this.field('name');
+                                this.field('summary');
+                                this.field('description');
+                            }
+                        )
+
+                        for (var advertIndex = 0; advertIndex &lt; adverts.length; advertIndex++)
+                            textIndex.add(adverts[advertIndex]);
+
+                        function findAdvert(path)
+                        {
+                            var advert = null;
+                            for (var advertIndex = 0; (advert == null) &amp;&amp; (advertIndex &lt; adverts.length); advertIndex++)
+                                if (path === adverts[advertIndex].path)
+                                    advert = adverts[advertIndex];
+
+                            return advert;
+                        }
+
+                        function searchAdverts()
+                        {
+                            var searchText    = document.getElementById('content:searchtext').value;
+                            var searchResults = textIndex.search(searchText);
+
+                            var nameField        = document.getElementById('content:namefield');
+                            var summaryField     = document.getElementById('content:summaryfield');
+                            var descriptionField = document.getElementById('content:descriptionfield');
+                            var tagsField        = document.getElementById('content:tagsfield');
+
+                            var advert = null;
+                            if (searchResults.length > 0)
+                                advert = findAdvert(searchResults[0].ref);
+
+                            if (advert != null)
+                            {
+                                if (advert.name)
+                                    nameField.innerHTML = advert.name;
+                                else
+                                    nameField.innerHTML = '';
+                                if (advert.summary)
+                                    summaryField.innerHTML = advert.summary;
+                                else
+                                    summaryField.innerHTML = '';
+                                if (advert.description)
+                                    descriptionField.innerHTML = advert.description;
+                                else
+                                    descriptionField.innerHTML = '';
+                                if (advert.tags)
+                                    tagsField.innerHTML = advert.tags;
+                                else
+                                    tagsField.innerHTML = '';
+                            }
+                            else
+                            {
+                                nameField.innerHTML        = '';
+                                summaryField.innerHTML     = '';
+                                descriptionField.innerHTML = '';
+                                tagsField.innerHTML        = '';
+                            }
+                        }
+                    </h:outputScript>
                     <script type="text/javascript">
                         var margin = {top: 16, right: 32, bottom: 16, left: 32};
                         var width  = 1280 - margin.right - margin.left;
