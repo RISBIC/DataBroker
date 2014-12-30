@@ -20,7 +20,7 @@ public class StoreDataFlowNodeState implements DataFlowNodeState
 
         try
         {
-            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-common-jee-store/DataFlowNodeUtils");
+            _dataFlowNodeUtils = (DataFlowNodeUtils) new InitialContext().lookup("java:global/databroker/data-core-jee-store/DataFlowNodeUtils");
         }
         catch (Throwable throwable)
         {
