@@ -13,7 +13,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
+
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -42,6 +45,9 @@ import com.arjuna.databroker.data.jee.annotation.PreActivated;
 import com.arjuna.databroker.data.jee.annotation.PreConfig;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
+import com.arjuna.databroker.data.jee.store.DataFlowEntity;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeUtils;
+import com.arjuna.databroker.data.jee.store.DataFlowUtils;
 import com.arjuna.databroker.data.jee.store.StoreDataFlowNodeState;
 
 @Singleton(name="DataFlowNodeLifeCycleControl")
@@ -60,6 +66,8 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
 
             String dataFlowNodeId = UUID.randomUUID().toString();
             T      dataFlowNode   = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
+            DataFlowEntity dataFlowEntity = _dataFlowUtils.find(dataFlow.getName());
+            _dataFlowNodeUtils.create(dataFlowNodeId, name, properties, dataFlowNode.getClass().getName(), dataFlowEntity, null);
 
             injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
@@ -293,4 +301,10 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
         }
     }
+
+    @EJB(name="DataFlowUtils")
+    private DataFlowUtils _dataFlowUtils;
+
+    @EJB(name="DataFlowNodeUtils")
+    private DataFlowNodeUtils _dataFlowNodeUtils;
 }
