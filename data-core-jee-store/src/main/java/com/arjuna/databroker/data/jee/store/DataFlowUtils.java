@@ -5,6 +5,8 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -35,9 +38,25 @@ public class DataFlowUtils
         DataFlowEntity dataFlowEntity = _entityManager.find(DataFlowEntity.class, id);
 
         if (dataFlowEntity == null)
-            logger.log(Level.WARNING, "Set State: Unable to find Data Flow Entity");
+            logger.log(Level.WARNING, "Get: Unable to find Data Flow Entity");
 
         return dataFlowEntity;
+    }
+
+    public DataFlowEntity find(String name)
+    {
+        try
+        {
+            TypedQuery<DataFlowEntity> query = _entityManager.createQuery("SELECT df FROM DataFlowEntity AS df WHERE (df._name = :name)", DataFlowEntity.class);
+            query.setParameter("name", name);
+
+            return query.getSingleResult();
+        }
+        catch (Throwable throwable)
+        {
+        	logger.log(Level.WARNING, "Find: Unable to find Data Flow Entity: " + name, throwable);
+            return null;
+        }
     }
 
     public void remove(String id)

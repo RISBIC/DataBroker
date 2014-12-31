@@ -33,6 +33,7 @@ import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
 
 @Path("/dataflowfactory")
@@ -162,6 +163,8 @@ public class DataFlowFactoryWS
     private DataFlowInventory _dataFlowInventory;
     @EJB(name="DataFlowNodeFactoryInventory")
     private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory;
+    @EJB(name="DataFlowLifeCycleControl")
+    private DataFlowLifeCycleControl _dataFlowLifeCycleControl;
     @EJB(name="DataFlowNodeLifeCycleControl")
     private DataFlowNodeLifeCycleControl _dataFlowNodeLifeCycleControl;
 }
