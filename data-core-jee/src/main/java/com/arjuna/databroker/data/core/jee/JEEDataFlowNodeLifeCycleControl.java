@@ -35,8 +35,10 @@ import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.jee.DataConsumerFactory;
 import com.arjuna.databroker.data.jee.DataConsumerFactoryInventory;
 import com.arjuna.databroker.data.jee.DataFlowNodeState;
+import com.arjuna.databroker.data.jee.DataProviderFactory;
 import com.arjuna.databroker.data.jee.DataProviderFactoryInventory;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
@@ -264,7 +266,7 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
                         Collection<DataProviderFactory> dataProviderFactories       = (Collection<DataProviderFactory>) _dataProviderFactoryInventory.getDataProviderFactories();
                         Iterator<DataProviderFactory>   dataProviderFactoryIterator = dataProviderFactories.iterator();
                         while ((dataProvider == null) && dataProviderFactoryIterator.hasNext())
-                            dataProvider = dataProviderFactoryIterator.next().createDataConsumer(dataFlowNode, dataProviderrInjection.methodName(), field.getGenericType());
+                            dataProvider = dataProviderFactoryIterator.next().createDataProvider(dataFlowNode, field.getGenericType());
 
                         if (dataProvider != null)
                             field.set(dataFlowNode, dataProvider);
