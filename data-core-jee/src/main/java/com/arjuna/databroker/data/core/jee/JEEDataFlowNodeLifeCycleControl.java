@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -33,7 +35,9 @@ import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.jee.DataConsumerFactoryInventory;
 import com.arjuna.databroker.data.jee.DataFlowNodeState;
+import com.arjuna.databroker.data.jee.DataProviderFactoryInventory;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
@@ -224,12 +228,15 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
                         DataConsumerInjection dataConsumerInjection = field.getAnnotation(DataConsumerInjection.class);
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
-                        if (field.getType().isAssignableFrom(DataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
-                        else if (field.getType().isAssignableFrom(ReferrerDataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createReferrerDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
-                        else if (field.getType().isAssignableFrom(ObserverDataConsumer.class))
-                            field.set(dataFlowNode, DataConsumerFactory.createObserverDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0]));
+
+                        DataConsumer<?>                 dataConsumer                = null;
+                        Collection<DataConsumerFactory> dataConsumerFactories       = (Collection<DataConsumerFactory>) _dataConsumerFactoryInventory.getDataConsumerFactories();
+                        Iterator<DataConsumerFactory>   dataConsumerFactoryIterator = dataConsumerFactories.iterator();
+                        while ((dataConsumer == null) && dataConsumerFactoryIterator.hasNext())
+                            dataConsumer = dataConsumerFactoryIterator.next().createDataConsumer(dataFlowNode, dataConsumerInjection.methodName(), field.getGenericType());
+
+                        if (dataConsumer != null)
+                            field.set(dataFlowNode, dataConsumer);
                         else
                             logger.log(Level.WARNING, "DataConsumer injection failed, unsupported type: " + field.getType());
                         field.setAccessible(accessable);
@@ -249,14 +256,18 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
                     try
                     {
                         logger.log(Level.FINE, "DataProviderInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+                        DataProviderInjection dataProviderInjection = field.getAnnotation(DataProviderInjection.class);
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
-                        if (field.getType().isAssignableFrom(DataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createDataProvider(dataFlowNode));
-                        else if (field.getType().isAssignableFrom(NamedDataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createNamedDataProvider(dataFlowNode));
-                        else if (field.getType().isAssignableFrom(ObservableDataProvider.class))
-                            field.set(dataFlowNode, DataProviderFactory.createObservableDataProvider(dataFlowNode));
+
+                        DataProvider<?>                 dataProvider                = null;
+                        Collection<DataProviderFactory> dataProviderFactories       = (Collection<DataProviderFactory>) _dataProviderFactoryInventory.getDataProviderFactories();
+                        Iterator<DataProviderFactory>   dataProviderFactoryIterator = dataProviderFactories.iterator();
+                        while ((dataProvider == null) && dataProviderFactoryIterator.hasNext())
+                            dataProvider = dataProviderFactoryIterator.next().createDataConsumer(dataFlowNode, dataProviderrInjection.methodName(), field.getGenericType());
+
+                        if (dataProvider != null)
+                            field.set(dataFlowNode, dataProvider);
                         else
                             logger.log(Level.WARNING, "DataProvider injection failed, unsupported type: " + field.getType());
                         field.setAccessible(accessable);
@@ -304,7 +315,10 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
 
     @EJB(name="DataFlowUtils")
     private DataFlowUtils _dataFlowUtils;
-
     @EJB(name="DataFlowNodeUtils")
     private DataFlowNodeUtils _dataFlowNodeUtils;
+    @EJB(name="DataConsumerFactoryInventory")
+    private DataConsumerFactoryInventory _dataConsumerFactoryInventory;
+    @EJB(name="DataProviderFactoryInventory")
+    private DataProviderFactoryInventory _dataProviderFactoryInventory;
 }
