@@ -31,5 +31,11 @@
             <version>${version.com.arjuna.databroker}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-common-jee</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
