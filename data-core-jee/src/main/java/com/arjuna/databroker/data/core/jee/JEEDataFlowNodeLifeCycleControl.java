@@ -58,6 +58,9 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
     public <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
+        if (logger.isLoggable(Level.FINE))
+            logger.log(Level.FINE, "createDataFlowNode: " + dataFlow.getName() + ", " + dataFlowNodeFactory.getName() + ", " + name + ", " + dataFlowNodeClass.getName() + ", " + metaProperties + ", " + properties);
+
         ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try
         {
@@ -141,6 +144,9 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
 
     public Boolean removeDataFlowNode(DataFlow dataFlow, String name)
     {
+        if (logger.isLoggable(Level.FINE))
+            logger.log(Level.FINE, "removeDataFlowNode: " + dataFlow.getName() + ", " + name);
+
         DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(name);
 
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
@@ -155,6 +161,9 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
 
     public Boolean removeDataFlowNode(DataFlowNode dataFlowNode)
     {
+        if (logger.isLoggable(Level.FINE))
+            logger.log(Level.FINE, "removeDataFlowNode: " + dataFlowNode.getName());
+
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
 
         Boolean result = Boolean.TRUE;
