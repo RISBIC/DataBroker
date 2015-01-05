@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
+ * Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
 package com.arjuna.databroker.data.connector;
@@ -14,7 +14,7 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
 {
     /**
      * Gets name class associated with the Referrer Data Consumer.
-     *
+     * 
      * @return name associated with the Referrer Data Consumer
      */
     public Class<?> getNameClass();

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">Data Advert</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="dataadvert_style.css"/>
+            <h:outputScript name="dataadvert/d3_min-3.5.3.js"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <ui:include src="/fragments/header.xhtml">
+                <ui:param name="titletext" value="Data Advert"/>
+            </ui:include>
+            <ui:include src="/fragments/navigation_reload.xhtml">
+                <ui:param name="doreloadobject" value="#{advert}"/>
+                <ui:param name="doreloadaction" value="doReload"/>
+            </ui:include>
+            <h:form id="content" styleClass="dataadvert">
+                <h:panelGroup styleClass="dataadvert" layout="block">
+                    <h:panelGroup styleClass="dataadvert-title" layout="block">
+                        <h:outputText styleClass="dataadvert-title" value="Data Advert"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataadvert-error" layout="block" rendered="#{not empty dataadvert.errorMessage}">
+                        <h:outputText styleClass="dataadvert-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataadvert-error-message" value="#{dataadvert.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:panelGrid styleClass="dataadvert-search" columnClasses="dataadvert-search-column-one,dataadvert-search-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
+                        <h:outputText styleClass="dataadvert-search-label" value="Search text:"/>
+                        <h:inputText id="searchtext" styleClass="dataadvert-search-text" onkeyup="searchAdverts()"/>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="dataadvert-results" columnClasses="dataadvert-results-column-one,dataadvert-results-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
+                        <h:outputText styleClass="dataadvert-result-label" value="Name"/>
+                        <h:outputText id="namefield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:outputText styleClass="dataadvert-result-label" value="Summary:"/>
+                        <h:outputText id="summaryfield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:outputText styleClass="dataadvert-result-label" value="Description:"/>
+                        <h:outputText id="descriptionfield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:outputText styleClass="dataadvert-result-label" value="Tags:"/>
+                        <h:outputText id="tagsfield" styleClass="dataadvert-result-value" value=" "/>
+                    </h:panelGrid>
+                    <h:outputScript name="dataadvert/lunr-0.5.7.js"/>
+                    <h:outputScript>
+                        var adverts = JSON.parse(<h:outputText escape="false" value="#{advert.advertsJSON}"/>);
+
+                        var textIndex = lunr(
+                            function ()
+                            {
+                                this.ref('path');
+                                this.field('name');
+                                this.field('summary');
+                                this.field('description');
+                            }
+                        )
+
+                        for (var advertIndex = 0; advertIndex &lt; adverts.length; advertIndex++)
+                            textIndex.add(adverts[advertIndex]);
+
+                        function findAdvert(path)
+                        {
+                            var advert = null;
+                            for (var advertIndex = 0; (advert == null) &amp;&amp; (advertIndex &lt; adverts.length); advertIndex++)
+                                if (path === adverts[advertIndex].path)
+                                    advert = adverts[advertIndex];
+
+                            return advert;
+                        }
+
+                        function searchAdverts()
+                        {
+                            var searchText    = document.getElementById('content:searchtext').value;
+                            var searchResults = textIndex.search(searchText);
+
+                            var nameField        = document.getElementById('content:namefield');
+                            var summaryField     = document.getElementById('content:summaryfield');
+                            var descriptionField = document.getElementById('content:descriptionfield');
+                            var tagsField        = document.getElementById('content:tagsfield');
+
+                            var advert = null;
+                            if (searchResults.length > 0)
+                                advert = findAdvert(searchResults[0].ref);
+
+                            if (advert != null)
+                            {
+                                if (advert.name)
+                                    nameField.innerHTML = advert.name;
+                                else
+                                    nameField.innerHTML = '';
+                                if (advert.summary)
+                                    summaryField.innerHTML = advert.summary;
+                                else
+                                    summaryField.innerHTML = '';
+                                if (advert.description)
+                                    descriptionField.innerHTML = advert.description;
+                                else
+                                    descriptionField.innerHTML = '';
+                                if (advert.tags)
+                                    tagsField.innerHTML = advert.tags;
+                                else
+                                    tagsField.innerHTML = '';
+                            }
+                            else
+                            {
+                                nameField.innerHTML        = '';
+                                summaryField.innerHTML     = '';
+                                descriptionField.innerHTML = '';
+                                tagsField.innerHTML        = '';
+                            }
+                        }
+                    </h:outputScript>
+                    <script type="text/javascript">
+                        var margin = {top: 16, right: 32, bottom: 16, left: 32};
+                        var width  = 1280 - margin.right - margin.left;
+                        var height = 640 - margin.top - margin.bottom;
+
+                        var i        = 0;
+                        var duration = 750;
+                        var root;
+
+                        var tree = d3.layout.tree().size([height, width]);
+
+                        var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+
+                        var svg = d3.select("#content").append("svg")
+                            .attr("width", width + margin.right + margin.left)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                        var root = JSON.parse(<h:outputText escape="false" value="#{advert.advertTreeJSON}"/>);
+                        root.x0 = height / 2;
+                        root.y0 = 0;
+
+                        update(root);
+
+                        d3.select(self.frameElement).style("height", "640px");
+
+                        function update(source)
+                        {
+                            var nodes = tree.nodes(root).reverse();
+                            var links = tree.links(nodes);
+
+                            nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+                            var node = svg.selectAll("g.node").data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+                            var nodeEnter = node.enter().append("g")
+                                .attr("class", "node")
+                                .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+                                .on("click", click);
+
+                            nodeEnter.append("circle")
+                                .attr("r", 1e-6)
+                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
+
+                            nodeEnter.append("text")
+                                .attr("x", 0)
+                                .attr("dy", "1.35em")
+                                .attr("text-anchor", "middle")
+                                .text(function(d) { return d.name; })
+                                .style("fill-opacity", 1e-6);
+
+                            var nodeUpdate = node.transition()
+                                .duration(duration)
+                                .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+                            nodeUpdate.select("circle")
+                                .attr("r", 4.5)
+                                .style("fill", function(d) { return d._children ? "#CC7733" : "#FFFFFF"; });
+
+                            nodeUpdate.select("text")
+                                .style("fill-opacity", 1);
+
+                            var nodeExit = node.exit().transition()
+                                .duration(duration)
+                                .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+                                .remove();
+
+                            nodeExit.select("circle")
+                                .attr("r", 1e-6);
+
+                            nodeExit.select("text")
+                                .style("fill-opacity", 1e-6);
+
+                            var link = svg.selectAll("path.link").data(links, function(d) { return d.target.id; });
+
+                            link.enter().insert("path", "g")
+                                .attr("class", "link")
+                                .attr("d", function(d)
+                                {
+                                    var o = {x: source.x0, y: source.y0};
+                                    return diagonal({source: o, target: o});
+                                });
+
+                            link.transition()
+                                .duration(duration)
+                                .attr("d", diagonal);
+
+                            link.exit().transition()
+                                .duration(duration)
+                                .attr("d", function(d)
+                                {
+                                    var o = {x: source.x, y: source.y};
+                                    return diagonal({source: o, target: o});
+                                })
+                                .remove();
+
+                            nodes.forEach(function(d)
+                            {
+                                d.x0 = d.x;
+                                d.y0 = d.y;
+                            });
+                        }
+
+                        function click(d)
+                        {
+                            if (d.children)
+                            {
+                                d._children = d.children;
+                                d.children = null;
+                            }
+                            else
+                            {
+                                d.children = d._children;
+                                d._children = null;
+                            }
+                            update(d);
+                        }
+                    </script>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

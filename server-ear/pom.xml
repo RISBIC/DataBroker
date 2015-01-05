@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--                                                                                                          -->
-<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -23,55 +23,73 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>data-common-jee</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-common</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-rdf</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core-jee</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core-jee-store</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-store</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-core</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-ws</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-ws</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>war</type>
         </dependency>
     </dependencies>
@@ -88,6 +106,12 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-common</artifactId>
                             <bundleFileName>data-common.jar</bundleFileName>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core</artifactId>
+                            <bundleFileName>data-core.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <jarModule>
@@ -112,6 +136,16 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-common-jee</artifactId>
                             <bundleFileName>data-common-jee.jar</bundleFileName>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core-jee</artifactId>
+                            <bundleFileName>data-core-jee.jar</bundleFileName>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core-jee-store</artifactId>
+                            <bundleFileName>data-core-jee-store.jar</bundleFileName>
                         </ejbModule>
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>

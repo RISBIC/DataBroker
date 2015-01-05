@@ -1,0 +1,169 @@
+/*                                                                                                          */
+/* Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. */
+/*                                                                                                          */
+
+form.dataadvert
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataadvert
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 2em;
+	color:			#111111;
+	background-color:	#FFFFFF;
+}
+
+div.dataadvert-title
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+	font-size:		1.5em;
+}
+
+span.dataadvert-title
+{
+}
+
+div.dataadvert-error
+{
+	margin:			0 0 0.5em 0;
+	border:			0;
+	padding:		0;
+}
+
+span.dataadvert-error-title
+{
+	font-weight:		bold;
+}
+
+span.dataadvert-error-message
+{
+	color:			#EEA05D;
+}
+
+table.dataadvert-search
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+td.dataadvert-search-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.dataadvert-search-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataadvert-search-label
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"].dataadvert-search-text
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+table.dataadvert-results
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+td.dataadvert-results-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.dataadvert-results-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.dataadvert-result-label
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+span.dataadvert-result-value
+{
+	display:		block;
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+.node
+{
+	cursor:			pointer;
+}
+
+.node circle
+{
+	fill:			#EEEEEE;
+	stroke:			#CC7733;
+	stroke-width:		2.5px;
+}
+
+.node text
+{
+	font-size:		1em;
+	font-family:		"Open Sans","Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
+}
+
+.link
+{
+	fill:			none;
+	stroke:			#CC7733;
+	stroke-width:		2.5px;
+}

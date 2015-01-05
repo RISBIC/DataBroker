@@ -1,20 +1,24 @@
 /*
- * Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
+ * Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.data.jee;
+package com.arjuna.databroker.data.core.jee;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -26,28 +30,52 @@ import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.databroker.data.connector.NamedDataProvider;
+import com.arjuna.databroker.data.connector.ObservableDataProvider;
+import com.arjuna.databroker.data.connector.ObserverDataConsumer;
+import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
+import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.jee.DataConsumerFactory;
+import com.arjuna.databroker.data.jee.DataConsumerFactoryInventory;
+import com.arjuna.databroker.data.jee.DataFlowNodeState;
+import com.arjuna.databroker.data.jee.DataProviderFactory;
+import com.arjuna.databroker.data.jee.DataProviderFactoryInventory;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
+import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
+import com.arjuna.databroker.data.jee.annotation.PostConfig;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
 import com.arjuna.databroker.data.jee.annotation.PostDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreActivated;
+import com.arjuna.databroker.data.jee.annotation.PreConfig;
 import com.arjuna.databroker.data.jee.annotation.PreDeactivated;
 import com.arjuna.databroker.data.jee.annotation.PreDelete;
+import com.arjuna.databroker.data.jee.store.DataFlowEntity;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeUtils;
+import com.arjuna.databroker.data.jee.store.DataFlowUtils;
+import com.arjuna.databroker.data.jee.store.StoreDataFlowNodeState;
 
 @Singleton(name="DataFlowNodeLifeCycleControl")
-public class DataFlowNodeLifeCycleControl
+public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleControl
 {
-    private static final Logger logger = Logger.getLogger(DataFlowNodeLifeCycleControl.class.getName());
+    private static final Logger logger = Logger.getLogger(JEEDataFlowNodeLifeCycleControl.class.getName());
 
     public <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
+        ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try
         {
-            T dataFlowNode = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
+            ClassLoader newClassLoader = dataFlowNodeFactory.getClass().getClassLoader();
+            Thread.currentThread().setContextClassLoader(newClassLoader);
 
-            injectDataConnectors(dataFlowNode);
+            String dataFlowNodeId = UUID.randomUUID().toString();
+            T      dataFlowNode   = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
+            DataFlowEntity dataFlowEntity = _dataFlowUtils.find(dataFlow.getName());
+            _dataFlowNodeUtils.create(dataFlowNodeId, name, properties, dataFlowNode.getClass().getName(), dataFlowEntity, null);
+
+            injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
             invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
             invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
@@ -82,11 +110,15 @@ public class DataFlowNodeLifeCycleControl
         {
             throw missingPropertyException;
         }
+        finally
+        {
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
+        }
     }
 
-    public Boolean processCreatedDataFlowNode(DataFlowNode dataFlowNode, DataFlow dataFlow)
+    public Boolean processCreatedDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
-        injectDataConnectors(dataFlowNode);
+        injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
         invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
         invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
@@ -97,6 +129,20 @@ public class DataFlowNodeLifeCycleControl
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
 
         return Boolean.TRUE;
+    }
+
+    public void enterReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PreConfig.class);
+    }
+
+    public void exitReconfigDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PostConfig.class);
+        invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
     }
 
     public Boolean removeDataFlowNode(DataFlow dataFlow, String name)
@@ -145,10 +191,9 @@ public class DataFlowNodeLifeCycleControl
                         }
                         catch (Throwable throwable)
                         {
+                            logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
                             if (logger.isLoggable(Level.FINE))
-                                logger.log(Level.FINE, "Life cycle operation \"" + method.getName() + "\" failed", throwable);
-                            else
-                                logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
+                                logger.log(Level.FINE, "Exception:", throwable);
                         }
                     }
                     else
@@ -167,11 +212,11 @@ public class DataFlowNodeLifeCycleControl
         }
     }
 
-    private void injectDataConnectors(DataFlowNode dataFlowNode)
+    private void injectDataConnectors(String dataFlowNodeId, DataFlowNode dataFlowNode)
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
-        logger.log(Level.FINE, "injectDataConnectors class = \"" + dataFlowNodeClass + "\"");
+        logger.log(Level.FINE, "injectDataConnectors id = \"" + dataFlowNodeId + "\", class = \"" + dataFlowNodeClass + "\"");
 
         while (dataFlowNodeClass != null)
         {
@@ -213,6 +258,7 @@ public class DataFlowNodeLifeCycleControl
                     try
                     {
                         logger.log(Level.FINE, "DataProviderInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+                        DataProviderInjection dataProviderInjection = field.getAnnotation(DataProviderInjection.class);
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
 
@@ -237,15 +283,44 @@ public class DataFlowNodeLifeCycleControl
                         logger.log(Level.WARNING, "DataProvider injection failed of \"" + field.getName(), throwable);
                     }
                 }
+
+                if (field.isAnnotationPresent(DataFlowNodeStateInjection.class))
+                {
+                    try
+                    {
+                        logger.log(Level.FINE, "DataFlowNodeStateInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+                        boolean accessable = field.isAccessible();
+                        field.setAccessible(true);
+                        if (field.getType().isAssignableFrom(DataFlowNodeState.class))
+                        {
+                            DataFlowNodeState dataFlowNodeState = new StoreDataFlowNodeState(dataFlowNodeId);
+                            field.set(dataFlowNode, dataFlowNodeState);
+                        }
+                        else
+                            logger.log(Level.WARNING, "DataFlowNodeState injection failed, unsupported type: " + field.getType());
+                        field.setAccessible(accessable);
+                    }
+                    catch (IllegalAccessException illegalAccessException)
+                    {
+                        logger.log(Level.WARNING, "DataFlowNodeState injection failed of \"" + field.getName() + "\": " + illegalAccessException);
+                    }
+                    catch (Throwable throwable)
+                    {
+                        logger.log(Level.WARNING, "DataFlowNodeState injection failed of \"" + field.getName(), throwable);
+                    }
+                }
             }
 
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
         }
     }
 
+    @EJB(name="DataFlowUtils")
+    private DataFlowUtils _dataFlowUtils;
+    @EJB(name="DataFlowNodeUtils")
+    private DataFlowNodeUtils _dataFlowNodeUtils;
     @EJB(name="DataConsumerFactoryInventory")
     private DataConsumerFactoryInventory _dataConsumerFactoryInventory;
-
     @EJB(name="DataProviderFactoryInventory")
     private DataProviderFactoryInventory _dataProviderFactoryInventory;
 }

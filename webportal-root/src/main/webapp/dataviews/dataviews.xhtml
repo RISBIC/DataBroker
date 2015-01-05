@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--                                                                                                          -->
-<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
@@ -42,6 +42,7 @@
                             <f:facet name="header">
                                 <h:outputText styleClass="dataviews-header" value="Actions"/>
                             </f:facet>
+                            <h:commandLink styleClass="dataviews-button" action="#{advert.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Advert"/>
                             <h:commandLink styleClass="dataviews-button" action="#{dataview.doLoad(_dataView.serviceRootURL, _dataView.requesterId, auth.username)}" value="Examine"/>
                         </h:column>
                     </h:dataTable>

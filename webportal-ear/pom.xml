@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--                                                                                                          -->
-<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>
-            <version>2.11.1</version>
+            <version>${version.org.apache.jena}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -40,25 +40,25 @@
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-store</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-comms</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
             <artifactId>webportal-root</artifactId>
-            <version>1.0.0p1m2l</version>
+            <version>${version.com.arjuna.databroker}</version>
             <type>war</type>
         </dependency>
     </dependencies>

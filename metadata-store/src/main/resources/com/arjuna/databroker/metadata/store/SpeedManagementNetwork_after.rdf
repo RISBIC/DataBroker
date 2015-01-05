@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--                                                                                                          -->
-<!-- Copyright (c) 2013-2014, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
 <!--                                                                                                          -->
 
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:d="http://rdfs.arjuna.com/description#" xmlns:ds="http://rdfs.arjuna.com/datasource#" xmlns:a="http://rdfs.arjuna.com/access#">
@@ -59,28 +59,32 @@
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#time">
         <d:hasTitle>time</d:hasTitle>
-        <d:hasSummary>The time at which the vehicle record was generated (The time at which the vehicle record was generated in milliseconds since midnight Coordinated Universal Time (UTC), 1 January 1970, not counting leap seconds)</d:hasSummary>
+        <d:hasSummary>Long</d:hasSummary>
+        <d:hasDetails>The time at which the vehicle record was generated (The time at which the vehicle record was generated in milliseconds since midnight Coordinated Universal Time (UTC), 1 January 1970, not counting leap seconds)</d:hasDetails>
         <ds:hasName>time</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Long"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#outstationId">
         <d:hasTitle>outstationId</d:hasTitle>
-        <d:hasSummary>The outstation id at which the vehicle record was generated</d:hasSummary>
+        <d:hasSummary>Short</d:hasSummary>
+        <d:hasDetails>The outstation id at which the vehicle record was generated</d:hasDetails>
         <ds:hasName>outstationId</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#lane">
         <d:hasTitle>lane</d:hasTitle>
-        <d:hasSummary>The lane at which the vehicle record was generated</d:hasSummary>
+        <d:hasSummary>Short</d:hasSummary>
+        <d:hasDetails>The lane at which the vehicle record was generated</d:hasDetails>
         <ds:hasName>lane</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#site">
         <d:hasTitle>site</d:hasTitle>
-        <d:hasSummary>The site at which the vehicle record was generated</d:hasSummary>
+        <d:hasSummary>Short</d:hasSummary>
+        <d:hasDetails>The site at which the vehicle record was generated</d:hasDetails>
         <ds:hasName>site</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
