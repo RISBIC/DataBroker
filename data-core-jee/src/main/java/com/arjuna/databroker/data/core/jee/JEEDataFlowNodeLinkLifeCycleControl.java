@@ -6,6 +6,7 @@ package com.arjuna.databroker.data.core.jee;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -28,7 +29,11 @@ import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.core.DataFlowNodeLinkLifeCycleControl;
 import com.arjuna.databroker.data.core.NoCompatableCommonDataTransportTypeException;
 import com.arjuna.databroker.data.core.NoCompatableCommonDataTypeException;
+import com.arjuna.databroker.data.jee.store.DataFlowEntity;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeEntity;
 import com.arjuna.databroker.data.jee.store.DataFlowNodeLinkUtils;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeUtils;
+import com.arjuna.databroker.data.jee.store.DataFlowUtils;
 
 @Singleton(name="DataFlowNodeLinkLifeCycleControl")
 public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLifeCycleControl
@@ -65,6 +70,11 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
             }
             else
                 throw new NoCompatableCommonDataTransportTypeException();
+
+            DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
+            DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+            _dataFlowNodeLinkUtils.create(UUID.randomUUID().toString(), sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
         }
         else
             throw new NoCompatableCommonDataTypeException();
@@ -187,6 +197,10 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
     private DataFlowInventory _dataFlowInventory;
     @EJB(name="DataFlowNodeFactoryInventory")
     private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory;
+    @EJB(name="DataFlowUtils")
+    private DataFlowUtils _dataFlowUtils;
+    @EJB(name="DataFlowNodeLUtils")
+    private DataFlowNodeUtils _dataFlowNodeUtils;
     @EJB(name="DataFlowNodeLinkUtils")
     private DataFlowNodeLinkUtils _dataFlowNodeLinkUtils;
 }

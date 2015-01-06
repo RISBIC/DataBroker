@@ -15,6 +15,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -22,6 +23,23 @@ import javax.persistence.PersistenceContext;
 public class DataFlowNodeUtils
 {
     private static final Logger logger = Logger.getLogger(DataFlowNodeUtils.class.getName());
+
+    public DataFlowNodeEntity find(String name, DataFlowEntity dataFlow)
+    {
+        try
+        {
+            TypedQuery<DataFlowNodeEntity> query = _entityManager.createQuery("SELECT dfn FROM DataFlowNodeEntity AS dfn WHERE (dfn._name = :name) AND (dfn._dataFlow = :dataFlow)", DataFlowNodeEntity.class);
+            query.setParameter("name", name);
+            query.setParameter("dataFlow", dataFlow);
+
+            return query.getSingleResult();
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Find: Unable to find Data Flow Entity: " + name, throwable);
+            return null;
+        }
+    }
 
     public void create(String id, String name, Map<String, String> properties, String nodeClassName, DataFlowEntity dataFlow, Serializable state)
     {
