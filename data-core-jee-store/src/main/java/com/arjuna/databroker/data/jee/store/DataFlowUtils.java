@@ -26,7 +26,7 @@ public class DataFlowUtils
 
     public void create(String id, String name, Map<String, String> properties)
     {
-        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowLinkEntity>emptySet());
+        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowNodeLinkEntity>emptySet());
 
         _entityManager.persist(dataFlowEntity);
     }

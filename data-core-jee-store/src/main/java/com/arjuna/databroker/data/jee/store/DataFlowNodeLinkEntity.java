@@ -12,19 +12,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class DataFlowLinkEntity implements Serializable
+public class DataFlowNodeLinkEntity implements Serializable
 {
     private static final long serialVersionUID = 1636112437064485251L;
 
-    public DataFlowLinkEntity()
+    public DataFlowNodeLinkEntity()
     {
     }
 
-    public DataFlowLinkEntity(String id, DataFlowNodeEntity nodeSource, DataFlowNodeEntity nodeSink)
+    public DataFlowNodeLinkEntity(String id, DataFlowNodeEntity nodeSource, DataFlowNodeEntity nodeSink, DataFlowEntity dataFlow)
     {
         _id         = id;
         _nodeSource = nodeSource;
         _nodeSink   = nodeSink;
+        _dataFlow   = dataFlow;
     }
 
     public String getId()
@@ -71,10 +72,10 @@ public class DataFlowLinkEntity implements Serializable
     @Column(name = "id")
     protected String _id;
 
-    @Column(name = "nodeSource")
+    @Column(name = "nodeSource", nullable=false)
     protected DataFlowNodeEntity _nodeSource;
 
-    @Column(name = "nodeSink")
+    @Column(name = "nodeSink", nullable=false)
     protected DataFlowNodeEntity _nodeSink;
 
     @ManyToOne

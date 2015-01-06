@@ -25,13 +25,13 @@ public class DataFlowEntity implements Serializable
     {
     }
 
-    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowLinkEntity> dataFlowLinks)
+    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowNodeLinkEntity> dataFlowNodeLinks)
     {
-        _id            = id;
-        _name          = name;
-        _properties    = properties;
-        _dataFlowNodes = dataFlowNodes;
-        _dataFlowLinks = dataFlowLinks;
+        _id                = id;
+        _name              = name;
+        _properties        = properties;
+        _dataFlowNodes     = dataFlowNodes;
+        _dataFlowNodeLinks = dataFlowNodeLinks;
     }
 
     public String getId()
@@ -74,14 +74,14 @@ public class DataFlowEntity implements Serializable
         _dataFlowNodes = dataFlowNodes;
     }
 
-    public Set<DataFlowLinkEntity> getDataFlowLinks()
+    public Set<DataFlowNodeLinkEntity> getDataFlowNodeLinks()
     {
-        return _dataFlowLinks;
+        return _dataFlowNodeLinks;
     }
 
-    public void setDataFlowLinks(Set<DataFlowLinkEntity> dataFlowLinks)
+    public void setDataFlowNodeLinks(Set<DataFlowNodeLinkEntity> dataFlowNodeLinks)
     {
-        _dataFlowLinks = dataFlowLinks;
+        _dataFlowNodeLinks = dataFlowNodeLinks;
     }
 
     @Id
@@ -99,7 +99,7 @@ public class DataFlowEntity implements Serializable
     @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
     protected Set<DataFlowNodeEntity> _dataFlowNodes;
 
-    @Column(name = "dataFlowLinks")
+    @Column(name = "dataFlowNodeLinks")
     @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
-    protected Set<DataFlowLinkEntity> _dataFlowLinks;
+    protected Set<DataFlowNodeLinkEntity> _dataFlowNodeLinks;
 }
