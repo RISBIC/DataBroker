@@ -25,11 +25,12 @@ public class DataFlowEntity implements Serializable
     {
     }
 
-    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowNodeLinkEntity> dataFlowNodeLinks)
+    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowNodeLinkEntity> dataFlowNodeLinks, String className)
     {
         _id                = id;
         _name              = name;
         _properties        = properties;
+        _className         = className;
         _dataFlowNodes     = dataFlowNodes;
         _dataFlowNodeLinks = dataFlowNodeLinks;
     }
@@ -64,6 +65,16 @@ public class DataFlowEntity implements Serializable
         _properties = properties;
     }
 
+    public String getClassName()
+    {
+        return _className;
+    }
+
+    public void setClassName(String className)
+    {
+        _className = className;
+    }
+
     public Set<DataFlowNodeEntity> getDataFlowNodes()
     {
         return _dataFlowNodes;
@@ -94,6 +105,9 @@ public class DataFlowEntity implements Serializable
     @Type(type = "serializable")
     @Column(name = "properties")
     protected Map<String, String> _properties;
+
+    @Column(name = "className")
+    protected String _className;
 
     @Column(name = "dataFlowNodes")
     @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)

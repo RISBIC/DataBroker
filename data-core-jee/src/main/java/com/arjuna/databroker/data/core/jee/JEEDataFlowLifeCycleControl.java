@@ -4,6 +4,7 @@
 
 package com.arjuna.databroker.data.core.jee;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -23,12 +24,34 @@ import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.jee.store.DataFlowEntity;
 import com.arjuna.databroker.data.jee.store.DataFlowUtils;
 
 @Singleton(name="DataFlowLifeCycleControl")
 public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
 {
     private static final Logger logger = Logger.getLogger(JEEDataFlowLifeCycleControl.class.getName());
+
+    public void recreateDataFlows()
+    {
+        logger.log(Level.FINE, "recreateDataFlows");
+
+        try
+        {
+            List<DataFlowEntity> dataFlowEntites = _dataFlowUtils.list();
+
+            for (DataFlowEntity dataFlowEntity: dataFlowEntites)
+            {
+                logger.log(Level.FINER, "recreateDataFlows: " + dataFlowEntity.getId() + ", " + dataFlowEntity.getName());
+
+                recreateDataFlow(dataFlowEntity);
+            }
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "recreateDataFlows: recreate failed", throwable);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     public <T extends DataFlow> T createDataFlow(String name, Map<String, String> metaProperties, Map<String, String> properties)
@@ -49,7 +72,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
                 dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
             _dataFlowInventory.addDataFlow(dataFlow);
 
-            _dataFlowUtils.create(UUID.randomUUID().toString(), name, properties);
+            _dataFlowUtils.create(UUID.randomUUID().toString(), name, properties, dataFlow.getClass());
 
             return (T) dataFlow;
         }
@@ -75,6 +98,25 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         }
         else
             return false;
+    }
+
+    public void recreateDataFlow(DataFlowEntity dataFlowEntity)
+    {
+        logger.log(Level.FINE, "recreateDataFlow: " + dataFlowEntity.getId());
+
+        try
+        {
+            Class<?>            dataFlowClass = Thread.currentThread().getContextClassLoader().loadClass(dataFlowEntity.getClassName());
+            AbstractJEEDataFlow dataFlow      = (AbstractJEEDataFlow) dataFlowClass.newInstance();
+            dataFlow.setName(dataFlowEntity.getName());
+            dataFlow.setProperties(dataFlowEntity.getProperties());
+
+            _dataFlowInventory.addDataFlow(dataFlow);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "recreateDataFlow: Recreate failed" + dataFlowEntity.getId(), throwable);
+        }
     }
 
     @EJB(name="DataFlowFactory")

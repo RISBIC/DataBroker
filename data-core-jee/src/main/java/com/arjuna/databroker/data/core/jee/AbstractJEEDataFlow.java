@@ -2,21 +2,21 @@
  * Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.control.core;
+package com.arjuna.databroker.data.core.jee;
 
 import java.util.Map;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.DataFlowNodeInventory;
 
-public class StandardDataFlow implements DataFlow
+public abstract class AbstractJEEDataFlow implements DataFlow
 {
-    public StandardDataFlow(String name, Map<String, String> properties)
+    public AbstractJEEDataFlow(String name, Map<String, String> properties)
     {
         _name                         = name;
         _properties                   = properties;
-        _dataFlowNodeInventory        = new StandardDataFlowNodeInventory();
-        _dataFlowNodeFactoryInventory = new StandardDataFlowNodeFactoryInventory();
+        _dataFlowNodeInventory        = new JEEDataFlowNodeInventory();
+        _dataFlowNodeFactoryInventory = new JEEDataFlowNodeFactoryInventory();
     }
 
     @Override
@@ -25,10 +25,20 @@ public class StandardDataFlow implements DataFlow
         return _name;
     }
 
+    public void setName(String name)
+    {
+        _name = name;
+    }
+
     @Override
     public Map<String, String> getProperties()
     {
         return _properties;
+    }
+
+    public void setProperties(Map<String, String> properties)
+    {
+        _properties = properties;
     }
 
     @Override

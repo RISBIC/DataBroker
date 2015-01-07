@@ -2,7 +2,7 @@
  * Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.control.core;
+package com.arjuna.databroker.data.core.jee;
 
 import java.util.Collection;
 import java.util.Collections;

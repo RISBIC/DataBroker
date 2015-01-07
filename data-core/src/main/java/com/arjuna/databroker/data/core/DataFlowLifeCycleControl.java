@@ -14,8 +14,10 @@ import com.arjuna.databroker.data.MissingPropertyException;
 
 public interface DataFlowLifeCycleControl
 {
+    public void recreateDataFlows();
+
     public <T extends DataFlow> T createDataFlow(String name, Map<String, String> metaProperties, Map<String, String> properties)
-        throws InvalidNameException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException;
+            throws InvalidNameException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException;
 
     public Boolean removeDataFlow(DataFlow dataFlow);
 }

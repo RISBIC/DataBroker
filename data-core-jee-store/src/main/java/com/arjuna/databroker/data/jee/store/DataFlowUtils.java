@@ -5,6 +5,7 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +25,9 @@ public class DataFlowUtils
 {
     private static final Logger logger = Logger.getLogger(DataFlowUtils.class.getName());
 
-    public void create(String id, String name, Map<String, String> properties)
+    public void create(String id, String name, Map<String, String> properties, Class<?> dataFlowClass)
     {
-        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowNodeLinkEntity>emptySet());
+        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowNodeLinkEntity>emptySet(), dataFlowClass.getName());
 
         _entityManager.persist(dataFlowEntity);
     }
@@ -52,8 +53,23 @@ public class DataFlowUtils
         }
         catch (Throwable throwable)
         {
-        	logger.log(Level.WARNING, "Find: Unable to find Data Flow Entity: " + name, throwable);
+            logger.log(Level.WARNING, "Find: Unable to find Data Flow Entity: " + name, throwable);
             return null;
+        }
+    }
+
+    public List<DataFlowEntity> list()
+    {
+        try
+        {
+            TypedQuery<DataFlowEntity> query = _entityManager.createQuery("SELECT df FROM DataFlowEntity AS df", DataFlowEntity.class);
+
+            return query.getResultList();
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Find: Unable to list Data Flow Entity");
+            return Collections.emptyList();
         }
     }
 
