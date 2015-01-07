@@ -150,10 +150,13 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
         DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(name);
 
         invokeLifeCycleOperation(dataFlowNode, PreDeactivated.class);
+        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
 
         Boolean result = dataFlow.getDataFlowNodeInventory().removeDataFlowNode(dataFlowNode);
 
-        invokeLifeCycleOperation(dataFlowNode, PostDeactivated.class);
+        DataFlowEntity dataFlowEntity = _dataFlowUtils.find(dataFlow.getName());
+        _dataFlowNodeUtils.remove(dataFlowNode.getName(), dataFlowEntity);
+
         invokeLifeCycleOperation(dataFlowNode, PreDelete.class);
 
         return result;

@@ -13,6 +13,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -28,9 +29,14 @@ public class DataFlowNodeLinkUtils
         _entityManager.persist(dataFlowNodeLinkEntity);
     }
 
-    public void remove(String id)
+    public void remove(DataFlowNodeEntity nodeSource, DataFlowNodeEntity nodeSink, DataFlowEntity dataFlow)
     {
-        DataFlowNodeLinkEntity dataFlowNodeLinkEntity = _entityManager.find(DataFlowNodeLinkEntity.class, id);
+        TypedQuery<DataFlowNodeLinkEntity> query = _entityManager.createQuery("SELECT dfnl FROM DataFlowNodeLinkEntity AS dfnl WHERE (dfnl._nodeSource = :nodeSource) AND (dfnl._nodeSink = :nodeSink) AND (dfnl._dataFlow = :dataFlow)", DataFlowNodeLinkEntity.class);
+        query.setParameter("nodeSource", nodeSource);
+        query.setParameter("nodeSink", nodeSink);
+        query.setParameter("dataFlow", dataFlow);
+
+        DataFlowNodeLinkEntity dataFlowNodeLinkEntity = query.getSingleResult();
 
         if (dataFlowNodeLinkEntity != null)
             _entityManager.remove(dataFlowNodeLinkEntity);

@@ -75,9 +75,13 @@ public class DataFlowNodeUtils
             logger.log(Level.WARNING, "Set State: Unable to find Data Flow Node Entity");
     }
 
-    public void remove(String id)
+    public void remove(String name, DataFlowEntity dataFlow)
     {
-        DataFlowNodeEntity dataFlowNodeEntity = _entityManager.find(DataFlowNodeEntity.class, id);
+        TypedQuery<DataFlowNodeEntity> query = _entityManager.createQuery("SELECT dfn FROM DataFlowNodeEntity AS dfn WHERE (dfn._name = :name) AND (dfn._dataFlow = :dataFlow)", DataFlowNodeEntity.class);
+        query.setParameter("name", name);
+        query.setParameter("dataFlow", dataFlow);
+
+        DataFlowNodeEntity dataFlowNodeEntity = query.getSingleResult();
 
         if (dataFlowNodeEntity != null)
             _entityManager.remove(dataFlowNodeEntity);

@@ -112,6 +112,11 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
             }
             else
                 throw new NoCompatableCommonDataTransportTypeException();
+
+            DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
+            DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+            _dataFlowNodeLinkUtils.remove(sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
         }
         else
             throw new NoCompatableCommonDataTypeException();

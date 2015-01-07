@@ -57,9 +57,12 @@ public class DataFlowUtils
         }
     }
 
-    public void remove(String id)
+    public void remove(String name)
     {
-        DataFlowEntity dataFlowEntity = _entityManager.find(DataFlowEntity.class, id);
+        TypedQuery<DataFlowEntity> query = _entityManager.createQuery("SELECT df FROM DataFlowEntity AS df WHERE (df._name = :name)", DataFlowEntity.class);
+        query.setParameter("name", name);
+
+        DataFlowEntity dataFlowEntity = query.getSingleResult();
 
         if (dataFlowEntity != null)
             _entityManager.remove(dataFlowEntity);

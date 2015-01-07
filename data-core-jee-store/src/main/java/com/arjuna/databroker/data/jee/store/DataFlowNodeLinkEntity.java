@@ -72,10 +72,12 @@ public class DataFlowNodeLinkEntity implements Serializable
     @Column(name = "id")
     protected String _id;
 
-    @Column(name = "nodeSource", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "nodeSource", nullable=false)
     protected DataFlowNodeEntity _nodeSource;
 
-    @Column(name = "nodeSink", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "nodeSink", nullable=false)
     protected DataFlowNodeEntity _nodeSink;
 
     @ManyToOne

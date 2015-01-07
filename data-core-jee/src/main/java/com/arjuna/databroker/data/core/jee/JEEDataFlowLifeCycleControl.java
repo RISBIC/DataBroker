@@ -68,7 +68,9 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         {
             for (DataFlowNode dataFlowNode: dataFlow.getDataFlowNodeInventory().getDataFlowNodes())
                 _dataFlowNodeLifeCycleControl.removeDataFlowNode(dataFlow, dataFlowNode.getName());
-            
+
+            _dataFlowUtils.remove(dataFlow.getName());
+
             return _dataFlowInventory.removeDataFlow(dataFlow);
         }
         else
