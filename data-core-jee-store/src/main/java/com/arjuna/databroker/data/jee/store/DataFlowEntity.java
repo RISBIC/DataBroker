@@ -5,15 +5,14 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -25,14 +24,15 @@ public class DataFlowEntity implements Serializable
     {
     }
 
-    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowNodeLinkEntity> dataFlowNodeLinks, String className)
+    public DataFlowEntity(String id, String name, Map<String, String> properties, Set<DataFlowNodeEntity> dataFlowNodes, Set<DataFlowNodeLinkEntity> dataFlowNodeLinks, String className, List<String> dataFlowNodeFactoryClassNames)
     {
-        _id                = id;
-        _name              = name;
-        _properties        = properties;
-        _className         = className;
-        _dataFlowNodes     = dataFlowNodes;
-        _dataFlowNodeLinks = dataFlowNodeLinks;
+        _id                            = id;
+        _name                          = name;
+        _properties                    = properties;
+        _className                     = className;
+        _dataFlowNodes                 = dataFlowNodes;
+        _dataFlowNodeLinks             = dataFlowNodeLinks;
+        _dataFlowNodeFactoryClassNames = dataFlowNodeFactoryClassNames;
     }
 
     public String getId()
@@ -95,6 +95,16 @@ public class DataFlowEntity implements Serializable
         _dataFlowNodeLinks = dataFlowNodeLinks;
     }
 
+    public List<String> getDataFlowNodeFactoryClassNames()
+    {
+        return _dataFlowNodeFactoryClassNames;
+    }
+
+    public void setDataFlowNodeFactoryClassNames(List<String> dataFlowNodeFactoryClassNames)
+    {
+        _dataFlowNodeFactoryClassNames = dataFlowNodeFactoryClassNames;
+    }
+
     @Id
     @Column(name = "id")
     protected String _id;
@@ -116,4 +126,8 @@ public class DataFlowEntity implements Serializable
     @Column(name = "dataFlowNodeLinks")
     @OneToMany(mappedBy = "_dataFlow", cascade = CascadeType.ALL)
     protected Set<DataFlowNodeLinkEntity> _dataFlowNodeLinks;
+
+    @Type(type = "serializable")
+    @Column(name = "dataFlowNodeFactoryClassNames")
+    protected List<String> _dataFlowNodeFactoryClassNames;
 }

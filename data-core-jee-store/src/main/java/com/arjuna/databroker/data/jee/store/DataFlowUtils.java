@@ -5,6 +5,7 @@
 package com.arjuna.databroker.data.jee.store;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,9 +26,13 @@ public class DataFlowUtils
 {
     private static final Logger logger = Logger.getLogger(DataFlowUtils.class.getName());
 
-    public void create(String id, String name, Map<String, String> properties, Class<?> dataFlowClass)
+    public void create(String id, String name, Map<String, String> properties, Class<?> dataFlowClass, List<Class<?>> dataFlowNodeFactoryClasses)
     {
-        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowNodeLinkEntity>emptySet(), dataFlowClass.getName());
+        List<String> dataFlowNodeFactoryClassNames = new LinkedList<String>();
+        for (Class<?> dataFlowNodeFactoryClass: dataFlowNodeFactoryClasses)
+            dataFlowNodeFactoryClassNames.add(dataFlowNodeFactoryClass.getName());
+
+        DataFlowEntity dataFlowEntity = new DataFlowEntity(id, name, properties, Collections.<DataFlowNodeEntity>emptySet(), Collections.<DataFlowNodeLinkEntity>emptySet(), dataFlowClass.getName(), dataFlowNodeFactoryClassNames);
 
         _entityManager.persist(dataFlowEntity);
     }

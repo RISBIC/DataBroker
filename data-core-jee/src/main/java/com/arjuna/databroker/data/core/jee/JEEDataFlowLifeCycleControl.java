@@ -4,6 +4,8 @@
 
 package com.arjuna.databroker.data.core.jee;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,6 +27,7 @@ import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
 import com.arjuna.databroker.data.jee.store.DataFlowEntity;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeEntity;
 import com.arjuna.databroker.data.jee.store.DataFlowUtils;
 
 @Singleton(name="DataFlowLifeCycleControl")
@@ -44,7 +47,9 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
             {
                 logger.log(Level.FINER, "recreateDataFlows: " + dataFlowEntity.getId() + ", " + dataFlowEntity.getName());
 
-                recreateDataFlow(dataFlowEntity);
+                DataFlow dataFlow = recreateDataFlow(dataFlowEntity);
+                if (dataFlow != null)
+                    _dataFlowInventory.addDataFlow(recreateDataFlow(dataFlowEntity));
             }
         }
         catch (Throwable throwable)
@@ -72,7 +77,11 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
                 dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
             _dataFlowInventory.addDataFlow(dataFlow);
 
-            _dataFlowUtils.create(UUID.randomUUID().toString(), name, properties, dataFlow.getClass());
+            List<Class<?>> dataFlowNodeFactoryClasses = new LinkedList<Class<?>>();
+            for (DataFlowNodeFactory dataFlowNodeFactory: dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactorys())
+                dataFlowNodeFactoryClasses.add(dataFlowNodeFactory.getClass());
+
+            _dataFlowUtils.create(UUID.randomUUID().toString(), name, properties, dataFlow.getClass(), dataFlowNodeFactoryClasses);
 
             return (T) dataFlow;
         }
@@ -100,7 +109,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
             return false;
     }
 
-    public void recreateDataFlow(DataFlowEntity dataFlowEntity)
+    private DataFlow recreateDataFlow(DataFlowEntity dataFlowEntity)
     {
         logger.log(Level.FINE, "recreateDataFlow: " + dataFlowEntity.getId());
 
@@ -111,12 +120,72 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
             dataFlow.setName(dataFlowEntity.getName());
             dataFlow.setProperties(dataFlowEntity.getProperties());
 
-            _dataFlowInventory.addDataFlow(dataFlow);
+            for (String dataFlowNodeFactoryClassName: dataFlowEntity.getDataFlowNodeFactoryClassNames())
+                for (DataFlowNodeFactory dataFlowNodeFactory: _dataFlowNodeFactoryInventory.getDataFlowNodeFactorys())
+                    if (dataFlowNodeFactoryClassName.equals(dataFlowNodeFactory.getClass().getName()))
+                        dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
+
+            for (DataFlowNodeEntity dataFlowNodeEntity: dataFlowEntity.getDataFlowNodes())
+            {
+                DataFlowNode dataFlowNode = recreateDataFlowNode(dataFlowNodeEntity, dataFlow);
+                if (dataFlowNode != null)
+                    dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
+            }
+
+            return dataFlow;
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "recreateDataFlow: Recreate failed" + dataFlowEntity.getId(), throwable);
+            logger.log(Level.WARNING, "recreateDataFlow: Recreate failed - " + dataFlowEntity.getId(), throwable);
         }
+
+        return null;
+    }
+
+    private DataFlowNode recreateDataFlowNode(DataFlowNodeEntity dataFlowNodeEntity, DataFlow dataFlow)
+    {
+        logger.log(Level.FINE, "recreateDataFlowNode: " + dataFlowNodeEntity.getId());
+
+        try
+        {
+            Class<?> dataFlowNodeClass = null;
+            Iterator<DataFlowNodeFactory> dataFlowNodeFactoryIterator = _dataFlowNodeFactoryInventory.getDataFlowNodeFactorys().iterator();
+            while ((dataFlowNodeClass == null) && dataFlowNodeFactoryIterator.hasNext())
+            {
+                try
+                {
+                    DataFlowNodeFactory dataFlowNodeFactory = dataFlowNodeFactoryIterator.next();
+                    dataFlowNodeClass = dataFlowNodeFactory.getClass().getClassLoader().loadClass(dataFlowNodeEntity.getClassName());
+                }
+                catch (ClassNotFoundException classNotFoundException)
+                {
+                }
+            }
+
+            if (dataFlowNodeClass != null)
+            {
+                DataFlowNode dataFlowNode = (DataFlowNode) dataFlowNodeClass.newInstance();
+                dataFlowNode.setName(dataFlowNodeEntity.getName());
+                dataFlowNode.setProperties(dataFlowNodeEntity.getProperties());
+                dataFlowNode.setDataFlow(dataFlow);
+
+                _dataFlowNodeLifeCycleControl.processCreatedDataFlowNode(dataFlowNodeEntity.getId(), dataFlowNode, null);
+
+                return dataFlowNode;
+            }
+            else
+            {
+                logger.log(Level.WARNING, "recreateDataFlowNode: Class load failed - " + dataFlowNodeEntity.getId());
+
+                return null;
+            }
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "recreateDataFlowNode: Recreate failed - " + dataFlowNodeEntity.getId(), throwable);
+        }
+
+        return null;
     }
 
     @EJB(name="DataFlowFactory")

@@ -24,12 +24,12 @@ public class DataFlowNodeEntity implements Serializable
 
     public DataFlowNodeEntity(String id, String name, Map<String, String> properties, String nodeClassName, DataFlowEntity dataFlow, Serializable state)
     {
-        _id             = id;
-        _name           = name;               
-        _properties     = properties;
-        _nodeClassName  = nodeClassName;
-        _dataFlow       = dataFlow;
-        _state          = state;
+        _id         = id;
+        _name       = name;               
+        _properties = properties;
+        _className  = nodeClassName;
+        _dataFlow   = dataFlow;
+        _state      = state;
     }
 
     public String getId()
@@ -62,14 +62,14 @@ public class DataFlowNodeEntity implements Serializable
         _properties = properties;
     }
 
-    public String getNodeClassName()
+    public String getClassName()
     {
-        return _nodeClassName;
+        return _className;
     }
 
-    public void setNodeClassName(String nodeClassName)
+    public void setClassName(String className)
     {
-        _nodeClassName = nodeClassName;
+        _className = className;
     }
 
     public DataFlowEntity getDataFlow()
@@ -103,8 +103,8 @@ public class DataFlowNodeEntity implements Serializable
     @Column(name = "properties")
     protected Map<String, String> _properties;
 
-    @Column(name = "nodeClassName")
-    protected String _nodeClassName;
+    @Column(name = "className")
+    protected String _className;
 
     @ManyToOne
     @JoinColumn(name="dataFlow", nullable=false)
