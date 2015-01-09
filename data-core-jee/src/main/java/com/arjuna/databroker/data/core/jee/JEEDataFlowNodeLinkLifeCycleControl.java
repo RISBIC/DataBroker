@@ -83,6 +83,43 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
     }
 
     @Override
+    public <T> Boolean recreateDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
+        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
+    {
+        logger.log(Level.FINE, "createDataFlowNodeLink");
+
+        @SuppressWarnings("unchecked")
+        Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
+
+        DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
+        DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
+
+        if ((dataProvider != null) && (dataConsumer != null))
+        {
+            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+            {
+                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+
+                observableDataProvider.addDataConsumer(observerDataConsumer);
+            }
+            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+            {
+                NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+
+                referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+            }
+            else
+                throw new NoCompatableCommonDataTransportTypeException();
+        }
+        else
+            throw new NoCompatableCommonDataTypeException();
+
+        return true;
+    }
+
+    @Override
     public <T> Boolean removeDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
         throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
     {

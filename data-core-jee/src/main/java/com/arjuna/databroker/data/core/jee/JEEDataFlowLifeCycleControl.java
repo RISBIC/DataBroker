@@ -207,7 +207,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
             DataFlowNode sourceDataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataFlowNodeEntity.getNodeSource().getName());
             DataFlowNode sinkDataFlowNode   = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataFlowNodeEntity.getNodeSink().getName());
 
-            return _dataFlowNodeLinkLifeCycleControl.createDataFlowNodeLink(sourceDataFlowNode, sinkDataFlowNode, dataFlow);
+            return _dataFlowNodeLinkLifeCycleControl.recreateDataFlowNodeLink(sourceDataFlowNode, sinkDataFlowNode, dataFlow);
         }
         catch (Throwable throwable)
         {
