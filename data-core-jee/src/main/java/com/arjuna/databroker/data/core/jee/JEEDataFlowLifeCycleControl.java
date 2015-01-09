@@ -26,8 +26,10 @@ import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 import com.arjuna.databroker.data.core.DataFlowNodeLifeCycleControl;
+import com.arjuna.databroker.data.core.DataFlowNodeLinkLifeCycleControl;
 import com.arjuna.databroker.data.jee.store.DataFlowEntity;
 import com.arjuna.databroker.data.jee.store.DataFlowNodeEntity;
+import com.arjuna.databroker.data.jee.store.DataFlowNodeLinkEntity;
 import com.arjuna.databroker.data.jee.store.DataFlowUtils;
 
 @Singleton(name="DataFlowLifeCycleControl")
@@ -120,6 +122,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
             dataFlow.setName(dataFlowEntity.getName());
             dataFlow.setProperties(dataFlowEntity.getProperties());
 
+            boolean dataFlowActivatable = true;
             for (String dataFlowNodeFactoryClassName: dataFlowEntity.getDataFlowNodeFactoryClassNames())
                 for (DataFlowNodeFactory dataFlowNodeFactory: _dataFlowNodeFactoryInventory.getDataFlowNodeFactorys())
                     if (dataFlowNodeFactoryClassName.equals(dataFlowNodeFactory.getClass().getName()))
@@ -130,7 +133,16 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
                 DataFlowNode dataFlowNode = recreateDataFlowNode(dataFlowNodeEntity, dataFlow);
                 if (dataFlowNode != null)
                     dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
+                else
+                    dataFlowActivatable = false;
             }
+
+            for (DataFlowNodeLinkEntity dataFlowNodeLinkEntity: dataFlowEntity.getDataFlowNodeLinks())
+                dataFlowActivatable = dataFlowActivatable && recreateDataFlowNodeLink(dataFlowNodeLinkEntity, dataFlow);
+
+            if (dataFlowActivatable)
+                for (DataFlowNode dataFlowNode: dataFlow.getDataFlowNodeInventory().getDataFlowNodes())
+                    _dataFlowNodeLifeCycleControl.activateDataFlowNode(dataFlowNode);
 
             return dataFlow;
         }
@@ -169,7 +181,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
                 dataFlowNode.setProperties(dataFlowNodeEntity.getProperties());
                 dataFlowNode.setDataFlow(dataFlow);
 
-                _dataFlowNodeLifeCycleControl.processCreatedDataFlowNode(dataFlowNodeEntity.getId(), dataFlowNode, null);
+                _dataFlowNodeLifeCycleControl.completeCreationDataFlowNode(dataFlowNodeEntity.getId(), dataFlowNode);
 
                 return dataFlowNode;
             }
@@ -188,6 +200,23 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         return null;
     }
 
+    private Boolean recreateDataFlowNodeLink(DataFlowNodeLinkEntity dataFlowNodeEntity, DataFlow dataFlow)
+    {
+        try
+        {
+            DataFlowNode sourceDataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataFlowNodeEntity.getNodeSource().getName());
+            DataFlowNode sinkDataFlowNode   = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataFlowNodeEntity.getNodeSink().getName());
+
+            return _dataFlowNodeLinkLifeCycleControl.createDataFlowNodeLink(sourceDataFlowNode, sinkDataFlowNode, dataFlow);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "recreateDataFlowNodeLink: Recreate failed - " + dataFlowNodeEntity.getId(), throwable);
+
+            return false;
+        }
+    }
+
     @EJB(name="DataFlowFactory")
     private DataFlowFactory _dataFlowFactory;
     @EJB(name="DataFlowInventory")
@@ -196,6 +225,8 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
     private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory;
     @EJB(name="DataFlowNodeLifeCycleControl")
     private DataFlowNodeLifeCycleControl _dataFlowNodeLifeCycleControl;
+    @EJB(name="DataFlowNodeLinkLifeCycleControl")
+    private DataFlowNodeLinkLifeCycleControl _dataFlowNodeLinkLifeCycleControl;
     @EJB(name="DataFlowUtils")
     private DataFlowUtils _dataFlowUtils;
 }

@@ -20,7 +20,11 @@ public interface DataFlowNodeLifeCycleControl
     public <T extends DataFlowNode> T createDataFlowNode(DataFlow dataFlow, DataFlowNodeFactory dataFlowNodeFactory, String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException;
 
-    public Boolean processCreatedDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow);
+    public Boolean completeCreationDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode);
+
+    public Boolean completeCreationAndActivateDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow);
+
+    public Boolean activateDataFlowNode(DataFlowNode dataFlowNode);
 
     public void enterReconfigDataFlowNode(DataFlowNode dataFlowNode);
 

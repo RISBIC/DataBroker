@@ -73,7 +73,7 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
 
             DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
             DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
-            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sinkDataFlowNode.getName(), dataFlowEntity);
             _dataFlowNodeLinkUtils.create(UUID.randomUUID().toString(), sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
         }
         else

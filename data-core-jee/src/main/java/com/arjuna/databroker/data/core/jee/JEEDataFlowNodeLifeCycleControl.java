@@ -13,10 +13,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowNode;
@@ -113,7 +111,16 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
         }
     }
 
-    public Boolean processCreatedDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
+    public Boolean completeCreationDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode)
+    {
+        injectDataConnectors(dataFlowNodeId, dataFlowNode);
+
+        invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean completeCreationAndActivateDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
         injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
@@ -123,6 +130,14 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
         if (dataFlow != null)
             dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
 
+        invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean activateDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
 
         return Boolean.TRUE;

@@ -38,6 +38,11 @@ public class DataFlowNodeLinkEntity implements Serializable
         _id = id;
     }
 
+    public DataFlowNodeEntity getNodeSource()
+    {
+        return _nodeSource;
+    }
+
     public void setNodeSource(DataFlowNodeEntity nodeSource)
     {
         _nodeSource = nodeSource;
@@ -51,11 +56,6 @@ public class DataFlowNodeLinkEntity implements Serializable
     public void setNodeSink(DataFlowNodeEntity nodeSink)
     {
         _nodeSink = nodeSink;
-    }
-
-    public DataFlowNodeEntity getNodeSource()
-    {
-        return _nodeSource;
     }
 
     public void setDataFlow(DataFlowEntity dataFlow)
