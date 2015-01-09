@@ -18,7 +18,7 @@ public class DataFlowNodeLinkClient
 {
     private static final Logger logger = Logger.getLogger(DataFlowNodeLinkClient.class.getName());
 
-    public String createDataFlowNodeLink(String serviceRootURL, String dataFlowId, String sourceDataFlowNodeId, String sinkDataFlowNodeId)
+    public Boolean createDataFlowNodeLink(String serviceRootURL, String dataFlowId, String sourceDataFlowNodeId, String sinkDataFlowNodeId)
     {
         logger.log(Level.FINE, "DataFlowNodeLinkClient.createDataFlowNodeLink: " + serviceRootURL + ", " + dataFlowId + ", " + sourceDataFlowNodeId + ", " + sinkDataFlowNodeId);
 
@@ -30,7 +30,7 @@ public class DataFlowNodeLinkClient
             request.queryParameter("sinkdataflownodeid", sinkDataFlowNodeId);
             request.accept(MediaType.APPLICATION_JSON);
 
-            ClientResponse<String> response = request.post(new GenericType<String>() {});
+            ClientResponse<Boolean> response = request.post(new GenericType<Boolean>() {});
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity();
@@ -38,14 +38,14 @@ public class DataFlowNodeLinkClient
             {
                 logger.log(Level.WARNING, "DataFlowNodeLinkClient.createDataFlowNodeLink: status = " + response.getStatus());
 
-                return null;
+                return false;
             }
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Problem in 'createDataFlow'", throwable);
+            logger.log(Level.WARNING, "Problem in 'createDataFlowNodeLink'", throwable);
 
-            return null;
+            return false;
         }
     }
 
@@ -67,14 +67,14 @@ public class DataFlowNodeLinkClient
                 return response.getEntity();
             else
             {
-                logger.log(Level.WARNING, "Problem with rest call for 'removeDataFlow'");
+                logger.log(Level.WARNING, "Problem with rest call for 'removeDataFlowNodeLink'");
 
                 return false;
             }
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Problem in 'removeDataFlow'", throwable);
+            logger.log(Level.WARNING, "Problem in 'removeDataFlowNodeLink'", throwable);
 
             return false;
         }

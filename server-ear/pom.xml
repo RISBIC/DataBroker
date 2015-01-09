@@ -52,6 +52,24 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core-jee</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
+            <artifactId>data-core-jee-store</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
             <artifactId>metadata-store</artifactId>
             <version>${version.com.arjuna.databroker}</version>
             <type>ejb</type>
@@ -92,6 +110,12 @@
                         </jarModule>
                         <jarModule>
                             <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core</artifactId>
+                            <bundleFileName>data-core.jar</bundleFileName>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-common</artifactId>
                             <bundleFileName>metadata-common.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
@@ -112,6 +136,16 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>data-common-jee</artifactId>
                             <bundleFileName>data-common-jee.jar</bundleFileName>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core-jee</artifactId>
+                            <bundleFileName>data-core-jee.jar</bundleFileName>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>data-core-jee-store</artifactId>
+                            <bundleFileName>data-core-jee-store.jar</bundleFileName>
                         </ejbModule>
                         <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>

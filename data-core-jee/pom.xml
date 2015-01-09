@@ -13,38 +13,22 @@
         <version>1.0.0p1m2l</version>
     </parent>
 
-    <artifactId>control-ws</artifactId>
+    <artifactId>data-core-jee</artifactId>
 
-    <packaging>war</packaging>
+    <packaging>ejb</packaging>
 
-    <name>Control WS</name>
+    <name>Data Core JEE</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_${servlet-api.version}_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!-- JBossAS-7.1.1.Final
-            <groupId>org.jboss.spec.javax.ws.rs</groupId>
-            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-            -->
-            <!-- WildFly-8.1.0.Final -->
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <!-- -->
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_${ejb-api.version}_spec</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.jena</groupId>
-            <artifactId>jena-core</artifactId>
-            <version>${version.org.apache.jena}</version>
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
@@ -66,31 +50,7 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
-            <artifactId>data-core-jee</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>metadata-common</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>metadata-store</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>control-common</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>control-core</artifactId>
+            <artifactId>data-core-jee-store</artifactId>
             <version>${version.com.arjuna.databroker}</version>
             <scope>provided</scope>
         </dependency>

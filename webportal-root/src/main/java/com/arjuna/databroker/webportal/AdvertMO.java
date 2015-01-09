@@ -517,8 +517,7 @@ public class AdvertMO implements Serializable
 
     private String advertToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
     {
-
-    	String path        = advert.getMetadataPath();
+        String path        = advert.getMetadataPath();
         String name        = advertStandardNode.getName();
         String summary     = advertStandardNode.getSummary();
         String description = advertStandardNode.getDescription();
