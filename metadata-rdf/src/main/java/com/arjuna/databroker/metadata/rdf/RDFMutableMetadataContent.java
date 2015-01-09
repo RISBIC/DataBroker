@@ -64,8 +64,6 @@ public class RDFMutableMetadataContent extends RDFMetadataContent implements Mut
         _resource.removeAll(property);
     }
 
-    
-    
     @Override
     @SuppressWarnings("unchecked")
     public <S extends MutableMetadataContentSelector> S mutableSelector(Class<S> c)

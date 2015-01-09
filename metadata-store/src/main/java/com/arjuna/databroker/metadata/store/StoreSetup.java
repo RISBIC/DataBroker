@@ -91,14 +91,14 @@ public class StoreSetup implements Serializable
         catch (IOException ioException)
         {
             ioException.printStackTrace();
-            
+
             return null;
         }
     }
 
     @PersistenceContext(unitName="Metadata")
     private EntityManager _entityManager;
-    
+
     @EJB
     private MetadataContentStore _metadataContentStore;
 }

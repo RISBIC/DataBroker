@@ -15,7 +15,7 @@ public class MetadataContentViewInvocationHandler implements InvocationHandler
     private static final Method OBJECT_EQUALS   = getObjectMethod("equals", Object.class);
     private static final Method OBJECT_HASHCODE = getObjectMethod("hashCode");
     private static final Method OBJECT_TOSTRING = getObjectMethod("toString");
-    
+
     public MetadataContentViewInvocationHandler(MetadataContent metadataContent)
     {
         _metadataContent = metadataContent;

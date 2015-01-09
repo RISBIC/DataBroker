@@ -54,7 +54,7 @@ public class RDFMutableMetadataStatement extends RDFMetadataStatement implements
             }
         }
     }
-    
+
     private static <T> void setValue(Statement valueStatement, T value, Class<T> valueClass)
     {
         if (valueStatement != null)

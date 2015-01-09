@@ -69,7 +69,7 @@ public class MetadataWS
             if (_accessControlUtils.canRead(id, requesterId, userId))
             {
                 String content = _metadataContentStore.getContent(id);
-            
+
                 if (content != null)
                     return content;
                 else

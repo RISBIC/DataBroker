@@ -24,7 +24,7 @@ public class Dummy01DataFlowNodeFactory implements DataFlowNodeFactory
         _name       = name;
         _properties = properties;
     }
-    
+
     @Override
     public String getName()
     {

@@ -50,7 +50,7 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     public List<String> getMetaPropertyNames()
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.getMetaPropertyNames");
-        
+
         List<String> metaPropertyNames = new LinkedList<String>();
 
         metaPropertyNames.add(TYPE_METAPROPERYNAME);

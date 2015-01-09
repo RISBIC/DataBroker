@@ -134,7 +134,7 @@ public class UserMO implements Serializable
             _errorMessage  = "Problem: " + throwable.toString();
             _activeAccount = Boolean.FALSE;
         }
- 
+
         return "/users/user?faces-redirect=true";
     }
 

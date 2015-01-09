@@ -15,7 +15,7 @@ public interface MutableMetadataContent extends MetadataContent
 
     public <S extends MutableMetadataContentSelector> S mutableSelector(Class<S> c)
         throws IllegalArgumentException;
-    
+
     public <T> void addMetadataStatement(String name, T value);
     public <T> void removeMetadataStatement(String name);
 }

@@ -92,7 +92,7 @@ public class DataFlowMO implements Serializable
     public void setDataFlowNodeId(String dataFlowNodeId)
     {
         logger.log(Level.FINE, "DataFlowMO.setDataFlowNodeId: " + dataFlowNodeId);
-       
+
         _dataFlowNodeId = dataFlowNodeId;
     }
 
@@ -255,7 +255,7 @@ public class DataFlowMO implements Serializable
             _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sourceDataFlowNode);
 
         load();
-        
+
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
@@ -268,7 +268,7 @@ public class DataFlowMO implements Serializable
             _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _processorDataFlowNode);
 
         load();
-        
+
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
@@ -280,7 +280,7 @@ public class DataFlowMO implements Serializable
             _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sinkDataFlowNode);
 
         load();
-        
+
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
@@ -329,7 +329,7 @@ public class DataFlowMO implements Serializable
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
-    
+
     public void load()
     {
         logger.log(Level.FINE, "DataFlowMO.load");
@@ -450,7 +450,7 @@ public class DataFlowMO implements Serializable
         dataFlowNodesJSONBuffer.append(" ]");
 
         dataFlowNodesJSONBuffer.append(" }'");
-       
+
         if (logger.isLoggable(Level.FINER))
             logger.log(Level.FINER, "DataFlowMO.dataFlowNodesToJSON: <" + dataFlowNodesJSONBuffer.toString() + ">");
 

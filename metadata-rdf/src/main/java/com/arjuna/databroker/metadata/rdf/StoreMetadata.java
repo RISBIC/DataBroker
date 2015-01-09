@@ -65,7 +65,7 @@ public class StoreMetadata implements Metadata
             Reader reader = new StringReader(content);
             model.read(reader, null);
             reader.close();
-    
+
             return new RDFMetadataContentsSelector(model);
         }
         catch (Throwable throwable)

@@ -16,7 +16,7 @@
             <property name="Name01" value="Value01"/>
         </properties>
     </dataFlowNodeFactory>
-    
+
     <dataFlowNodeFactory name="DFNF2" class="com.arjuna.databroker.tests.control.xmlconfig.Dummy02DataFlowNodeFactory">
         <metaProperties>
             <metaProperty name="MetaName01" value="MetaValue01"/>

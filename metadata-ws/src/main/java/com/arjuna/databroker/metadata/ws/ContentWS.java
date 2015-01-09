@@ -68,7 +68,7 @@ public class ContentWS
             if (_accessControlUtils.canRead(id, requesterId, userId))
             {
                 String content = _metadataContentStore.getContent(id);
-            
+
                 if (content != null)
                     return content;
                 else
@@ -159,7 +159,7 @@ public class ContentWS
                 logger.log(Level.WARNING, "putMetadata: Invalid parameters: requesterId=[" + requesterId + "]");
                 return false;
             }
-            
+
             if (_accessControlUtils.canUpdate(id, requesterId, userId))
             {
                 if (! _metadataContentStore.setContent(id, content))
@@ -174,7 +174,7 @@ public class ContentWS
         {
             logger.log(Level.WARNING, "putMetadata: Problem in 'putMetadata'", throwable);
         }
-        
+
         return false;
     }
 

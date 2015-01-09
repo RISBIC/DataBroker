@@ -72,7 +72,7 @@ public class AccessControlUtils
     public boolean canUpdate(String id, String requesterId, String userId)
     {
         logger.log(Level.FINE, "AccessControlUtils.canUpdate: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
-        
+
         try
         {
             MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
@@ -97,7 +97,7 @@ public class AccessControlUtils
     public boolean canRemove(String id, String requesterId, String userId)
     {
         logger.log(Level.FINE, "AccessControlUtils.canRemove: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
-        
+
         try
         {
             MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
@@ -122,7 +122,7 @@ public class AccessControlUtils
     public boolean canCreateChild(String id, String requesterId, String userId)
     {
         logger.log(Level.FINE, "AccessControlUtils.canCreateChild: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
-    
+
         try
         {
             MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
@@ -155,7 +155,7 @@ public class AccessControlUtils
     public boolean canChangeAccess(String id, String requesterId, String userId)
     {
         logger.log(Level.FINE, "AccessControlUtils.canChangeAccess: \"" + id + "\", \"" + requesterId + "\", \"" + userId + "\"");
-    
+
         try
         {
             MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);

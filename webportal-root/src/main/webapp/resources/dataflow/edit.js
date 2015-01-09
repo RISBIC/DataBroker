@@ -65,7 +65,7 @@ DataFlowEdit.prototype.doUnselect = function(item)
 DataFlowEdit.prototype.doSelect = function(item)
 {
     this.item = item;
-    
+
     var linkStart = this.linkStart;
 
     if ((this.linkStart != undefined) && (this.linkStart instanceof ProducerGlyph))

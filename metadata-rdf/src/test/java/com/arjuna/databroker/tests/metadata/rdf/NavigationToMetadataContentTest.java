@@ -58,7 +58,7 @@ public class NavigationToMetadataContentTest
 
         MetadataContentSelector metadataContentSelector = metadataContentsSelector.selector(RDFMetadataContentsSelector.class).withPath("http://rdf.arjuna.com/test0001#Test01");
         assertNotNull("Not expecting null RDF Metadata Content Selector object", metadataContentSelector);
-        
+
         MetadataContent metadataContent = metadataContentSelector.getMetadataContent();
         assertNotNull("Not expecting null Metadata Content object", metadataContent);
     }

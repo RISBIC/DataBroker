@@ -14,7 +14,7 @@ public class DataSourceTreeNode extends AbstractTreeNode
     private static final long serialVersionUID = 5613737687374980737L;
 
     private static final String TYPE = "Data Source";
-    
+
     public DataSourceTreeNode()
     {
     }

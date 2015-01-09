@@ -185,7 +185,7 @@ public class MetadataNodeEditMO implements Serializable
             logger.log(Level.WARNING, "Problem generating Tree", throwable);
             _errorMessage = "Problem occured while generating presentation of metadata";
         }
-        
+
         return "/dataviews/metadatanode_edit_done?faces-redirect=true";
     }
 

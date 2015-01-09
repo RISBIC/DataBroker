@@ -53,7 +53,7 @@ public class MetadataUtils implements MetadataContentStore
         try
         {
             MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
-            
+
             if (metadataEntity != null)
                 return metadataEntity.getContent();
             else
@@ -99,7 +99,7 @@ public class MetadataUtils implements MetadataContentStore
         try
         {
             MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
-            
+
             if ((metadataEntity != null) && (metadataEntity.getDescription() != null))
                 return metadataEntity.getDescription().getId();
             else
@@ -147,7 +147,7 @@ public class MetadataUtils implements MetadataContentStore
         try
         {
             MetadataEntity metadataEntity = _entityManager.find(MetadataEntity.class, id);
-            
+
             if ((metadataEntity != null) && (metadataEntity.getParent() != null))
                 return metadataEntity.getParent().getId();
             else

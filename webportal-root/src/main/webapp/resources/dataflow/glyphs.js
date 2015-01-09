@@ -91,7 +91,7 @@ DataFlowGlyph.prototype.layout = function(context, x, y, width, height)
         }
         currentProcessorX = currentProcessorX + (processorLevelWidths[processorLevel] / 2.0) + DataFlowGlyph.processorGapWidth;
     }
-    
+
     var totalServiceWidth = (ServiceGlyph.bodyWidth * this.services.length) + (DataFlowGlyph.serviceGap * Math.max(0, this.services.length - 1));
     var currentServiceX = x + ((width - totalServiceWidth) / 2.0);
     var currentServiceY = y + (ServiceGlyph.bodyHeight / 2.0);

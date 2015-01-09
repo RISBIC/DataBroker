@@ -138,7 +138,7 @@ public class DataBrokerConnectionMO implements Serializable
         try
         {
             DataBrokerEntity dataBroker = null;
-            
+
             _errorMessage = null;
             dataBroker = _dataBrokerUtils.retrieveDataBroker(id);
 

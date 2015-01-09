@@ -565,7 +565,7 @@ public class XMLConfig
         for (char ch: text.toCharArray())
             if (! Character.isWhitespace(ch))
                 return false;
-        
+
         return true;
     }
 
@@ -665,7 +665,7 @@ public class XMLConfig
                         {
                             ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
                             ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-                            
+
                             observableDataProvider.addDataConsumer(observerDataConsumer);
                             return true;
                         }

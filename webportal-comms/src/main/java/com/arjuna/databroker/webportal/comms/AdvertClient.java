@@ -37,7 +37,7 @@ public class AdvertClient
                 if (response.getStatus() == HttpResponseCodes.SC_OK)
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
- 
+
                     logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)

@@ -57,7 +57,7 @@ public class AdvertsWS
 
             List<AdvertNodeDTO> result          = new LinkedList<AdvertNodeDTO>();
             List<String>        metadataBlogIds = _accessControlUtils.listAccessable(requesterId, userId);
- 
+
             for (String metadataBlogId: metadataBlogIds)
             {
                 Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
@@ -212,7 +212,7 @@ public class AdvertsWS
         {
             logger.log(Level.WARNING, "Unable to create advert", throwable);
         }
-        
+
         return advertNode;
     }
 

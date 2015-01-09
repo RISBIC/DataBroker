@@ -71,7 +71,7 @@ public class UsersUtils
                 throw new IllegalArgumentException("Problem encoding password");
             }
         }
-                
+
         UserEntity userEntity = new UserEntity(userName, password);
         _entityManager.persist(userEntity);
 
@@ -127,7 +127,7 @@ public class UsersUtils
         UserEntity userEntity = _entityManager.find(UserEntity.class, userName);
         userEntity.setPassword(password);
         _entityManager.merge(userEntity);
-        
+
         Query rolesDelete = _entityManager.createQuery("DELETE FROM RoleEntity WHERE _userName = :userName");
         rolesDelete.setParameter("userName", userName);
         rolesDelete.executeUpdate();

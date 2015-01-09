@@ -50,7 +50,7 @@ public class NavigationMO implements Serializable
 //            else if (name.equals(currentLocation.getName()))
 //                page = currentLocation.getPage();
         }
-        
+
         if (page != null)
             return page;
         else

@@ -175,7 +175,7 @@
     <profiles>
         <profile>
             <id>jbossas</id>
-    
+
             <build>
                 <plugins>
                     <plugin>
@@ -196,7 +196,7 @@
 
         <profile>
             <id>wildfly</id>
-    
+
             <build>
                 <plugins>
                     <plugin>
@@ -217,7 +217,7 @@
 
         <profile>
             <id>openshift</id>
-    
+
             <build>
                 <plugins>
                     <plugin>

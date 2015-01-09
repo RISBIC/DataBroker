@@ -153,7 +153,7 @@ public class DataFlowNodeCreateMO implements Serializable
             if (_factoryName != null)
             {
                 List<String> metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
-    
+
                 if (! metaPropertyNames.isEmpty())
                 {
                     _metaProperties = new LinkedList<PropertyVO>();
@@ -182,7 +182,7 @@ public class DataFlowNodeCreateMO implements Serializable
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doFactoryNameSubmit");
 
         List<String> metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
-        
+
         if (! metaPropertyNames.isEmpty())
         {
             _metaProperties = new LinkedList<PropertyVO>();
