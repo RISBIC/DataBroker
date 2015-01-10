@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.arjuna.databroker</groupId>
         <artifactId>system</artifactId>
-        <version>1.0.0p1m2l</version>
+        <version>1.0.0p1m3l</version>
     </parent>
 
     <artifactId>metadata-rdf</artifactId>
