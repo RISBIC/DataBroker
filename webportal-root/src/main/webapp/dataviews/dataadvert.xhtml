@@ -36,13 +36,13 @@
                     </h:panelGrid>
                     <h:panelGrid styleClass="dataadvert-results" columnClasses="dataadvert-results-column-one,dataadvert-results-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
                         <h:outputText styleClass="dataadvert-result-label" value="Name"/>
-                        <h:outputText id="namefield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:inputTextarea id="namefield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
                         <h:outputText styleClass="dataadvert-result-label" value="Summary:"/>
-                        <h:outputText id="summaryfield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:inputTextarea id="summaryfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
                         <h:outputText styleClass="dataadvert-result-label" value="Description:"/>
-                        <h:outputText id="descriptionfield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:inputTextarea id="descriptionfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
                         <h:outputText styleClass="dataadvert-result-label" value="Tags:"/>
-                        <h:outputText id="tagsfield" styleClass="dataadvert-result-value" value=" "/>
+                        <h:inputTextarea id="tagsfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
                     </h:panelGrid>
                     <h:outputScript name="dataadvert/lunr-0.5.7.js"/>
                     <h:outputScript>
@@ -88,28 +88,28 @@
                             if (advert != null)
                             {
                                 if (advert.name)
-                                    nameField.innerHTML = advert.name;
+                                    nameField.value = advert.name;
                                 else
-                                    nameField.innerHTML = '';
+                                    nameField.value = '';
                                 if (advert.summary)
-                                    summaryField.innerHTML = advert.summary;
+                                    summaryField.value = advert.summary;
                                 else
-                                    summaryField.innerHTML = '';
+                                    summaryField.value = '';
                                 if (advert.description)
-                                    descriptionField.innerHTML = advert.description;
+                                    descriptionField.value = advert.description;
                                 else
-                                    descriptionField.innerHTML = '';
+                                    descriptionField.value = '';
                                 if (advert.tags)
-                                    tagsField.innerHTML = advert.tags;
+                                    tagsField.value = advert.tags;
                                 else
-                                    tagsField.innerHTML = '';
+                                    tagsField.value = '';
                             }
                             else
                             {
-                                nameField.innerHTML        = '';
-                                summaryField.innerHTML     = '';
-                                descriptionField.innerHTML = '';
-                                tagsField.innerHTML        = '';
+                                nameField.value        = '';
+                                summaryField.value     = '';
+                                descriptionField.value = '';
+                                tagsField.value        = '';
                             }
                         }
                     </h:outputScript>
