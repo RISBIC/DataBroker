@@ -144,6 +144,24 @@ textarea[disabled].dataadvert-result-value
 	color:			#111111;
 }
 
+input[type="text"].dataadvert-result-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	font-size:		1em;
+	color:			#111111;
+}
+
+input[type="text"][disabled].dataadvert-result-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	font-size:		1em;
+	color:			#111111;
+}
+
 .node
 {
 	cursor:			pointer;

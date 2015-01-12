@@ -43,6 +43,12 @@
                         <h:inputTextarea id="descriptionfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
                         <h:outputText styleClass="dataadvert-result-label" value="Tags:"/>
                         <h:inputTextarea id="tagsfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
+                        <h:outputText styleClass="dataadvert-result-label" value="Result:"/>
+                        <h:panelGroup>
+                            <h:inputText id="resultindexfield" styleClass="dataadvert-result-value" value=" " onkeyup="updateFields()"/>
+                            <h:outputText value=" of "/>
+                            <h:inputText id="resultcountfield" styleClass="dataadvert-result-value" value=" " disabled="true"/>
+                        </h:panelGroup>
                     </h:panelGrid>
                     <h:outputScript name="dataadvert/lunr-0.5.7.js"/>
                     <h:outputScript>
@@ -61,6 +67,8 @@
                         for (var advertIndex = 0; advertIndex &lt; adverts.length; advertIndex++)
                             textIndex.add(adverts[advertIndex]);
 
+                        searchAdverts();
+
                         function findAdvert(path)
                         {
                             var advert = null;
@@ -71,19 +79,40 @@
                             return advert;
                         }
 
+                        var searchResults = [ ];
+
                         function searchAdverts()
                         {
-                            var searchText    = document.getElementById('content:searchtext').value;
-                            var searchResults = textIndex.search(searchText);
+                            var searchText = document.getElementById('content:searchtext').value;
 
+                            searchResults = textIndex.search(searchText);
+
+                            updateFields();
+                        }
+
+                        function updateFields()
+                        {
                             var nameField        = document.getElementById('content:namefield');
                             var summaryField     = document.getElementById('content:summaryfield');
                             var descriptionField = document.getElementById('content:descriptionfield');
                             var tagsField        = document.getElementById('content:tagsfield');
+                            var resultIndexField = document.getElementById('content:resultindexfield');
+                            var resultCountField = document.getElementById('content:resultcountfield');
+
+                            var resultIndex = parseInt(resultIndexField.value);
+                            if (isNaN(resultIndex))
+                            {
+                                if (searchResults.length > 0)
+                                    resultIndex = 1;
+                                else
+                                    resultIndex = 0;
+                            }
+                            else if (resultIndex > searchResults.length)
+                                resultIndex = searchResults.length;
 
                             var advert = null;
-                            if (searchResults.length > 0)
-                                advert = findAdvert(searchResults[0].ref);
+                            if ((searchResults.length > 0) &amp;&amp; (resultIndex > 0))
+                                advert = findAdvert(searchResults[resultIndex - 1].ref);
 
                             if (advert != null)
                             {
@@ -103,6 +132,8 @@
                                     tagsField.value = advert.tags;
                                 else
                                     tagsField.value = '';
+                                resultIndexField.value = resultIndex;
+                                resultCountField.value = searchResults.length;
                             }
                             else
                             {
@@ -110,6 +141,8 @@
                                 summaryField.value     = '';
                                 descriptionField.value = '';
                                 tagsField.value        = '';
+                                resultIndexField.value = '';
+                                resultCountField.value = '';
                             }
                         }
                     </h:outputScript>
