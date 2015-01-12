@@ -57,7 +57,7 @@
                         var textIndex = lunr(
                             function ()
                             {
-                                this.ref('path');
+                                this.ref('key');
                                 this.field('name');
                                 this.field('summary');
                                 this.field('description');
@@ -65,15 +65,18 @@
                         )
 
                         for (var advertIndex = 0; advertIndex &lt; adverts.length; advertIndex++)
+                        {
+                            adverts[advertIndex].key = adverts[advertIndex].id + "@" + adverts[advertIndex].path;
                             textIndex.add(adverts[advertIndex]);
+                        }
 
                         searchAdverts();
 
-                        function findAdvert(path)
+                        function findAdvert(key)
                         {
                             var advert = null;
                             for (var advertIndex = 0; (advert == null) &amp;&amp; (advertIndex &lt; adverts.length); advertIndex++)
-                                if (path === adverts[advertIndex].path)
+                                if (key === adverts[advertIndex].key)
                                     advert = adverts[advertIndex];
 
                             return advert;

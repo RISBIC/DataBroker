@@ -517,6 +517,7 @@ public class AdvertMO implements Serializable
 
     private String advertToJSON(StringBuffer result, AdvertVO advert, AdvertStandardNodeVO advertStandardNode)
     {
+        String id          = advert.getMetadataId();
         String path        = advert.getMetadataPath();
         String name        = advertStandardNode.getName();
         String summary     = advertStandardNode.getSummary();
@@ -532,7 +533,8 @@ public class AdvertMO implements Serializable
         if ((name != null) || (summary != null) || (description != null))
         {
             result.append("{ ");
-            result.append("\"path\": \"" + path + "\"");
+            result.append("\"id\": \"" + id + "\"");
+            result.append(", \"path\": \"" + path + "\"");
             if (name != null)
                 result.append(", \"name\": \"" + name + "\"");
             if (summary != null)
