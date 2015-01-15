@@ -8,12 +8,15 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import com.arjuna.databroker.webportal.comms.DataFlowFactoryClient;
+import com.arjuna.databroker.webportal.comms.DataFlowFactorySummary;
+import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
 @ManagedBean(name="dataflowcreate")
@@ -40,6 +43,26 @@ public class DataFlowCreateMO implements Serializable
     public void setServiceRootURL(String serviceRootURL)
     {
         _serviceRootURL = serviceRootURL;
+    }
+
+    public String getFactoryName()
+    {
+        return _factoryName;
+    }
+
+    public void setFactoryName(String factoryName)
+    {
+        _factoryName = factoryName;
+    }
+
+    public List<PropertyVO> getFactoryProperties()
+    {
+        return _factoryProperties;
+    }
+
+    public void setFactoryProperties(List<PropertyVO> factoryProperties)
+    {
+        _factoryProperties = factoryProperties;
     }
 
     public List<PropertyVO> getMetaProperties()
@@ -88,28 +111,55 @@ public class DataFlowCreateMO implements Serializable
 
         _serviceRootURL = serviceRootURL;
 
-        _metaProperties = null;
-        _name           = null;
-        _properties     = null;
-        _errorMessage   = null;
+        _factoryName       = null;
+        _factoryProperties = null;
+        _metaProperties    = null;
+        _name              = null;
+        _properties        = null;
+        _errorMessage      = null;
         if (_dataFlowFactoryClient != null)
         {
-            List<String> metaPropertyNames = _dataFlowFactoryClient.getMetaPropertyNames(_serviceRootURL);
+            List<String> metaPropertyNames = null;
+            try
+            {
+                DataFlowFactorySummary dataFlowFactorySummary = _dataFlowFactoryClient.getInfo(_serviceRootURL);
+                _factoryName       = dataFlowFactorySummary.getName();
+                _factoryProperties = new LinkedList<PropertyVO>();
+                for (Entry<String, String> property: dataFlowFactorySummary.getProperties().entrySet())
+                    _factoryProperties.add(new PropertyVO(property.getKey(), property.getValue()));
 
-            if (! metaPropertyNames.isEmpty())
+                logger.log(Level.WARNING, "dataFlowFactorySummary: " + _factoryName + ", " + _factoryProperties);
+
+                metaPropertyNames  = _dataFlowFactoryClient.getMetaPropertyNames(_serviceRootURL);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+
+            if ((metaPropertyNames != null) && (! metaPropertyNames.isEmpty()))
             {
                 _metaProperties = new LinkedList<PropertyVO>();
                 for (String metaPropertyName: metaPropertyNames)
                     _metaProperties.add(new PropertyVO(metaPropertyName, ""));
             }
-            else
+            else if (metaPropertyNames != null)
             {
-                _metaProperties = new LinkedList<PropertyVO>();
-                List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, Collections.<String, String>emptyMap());
+                try
+                {
+                    _metaProperties = new LinkedList<PropertyVO>();
 
-                _properties = new LinkedList<PropertyVO>();
-                for (String propertyName: propertyNames)
-                    _properties.add(new PropertyVO(propertyName, ""));
+                    List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, Collections.<String, String>emptyMap());
+
+                    _properties = new LinkedList<PropertyVO>();
+                    for (String propertyName: propertyNames)
+                        _properties.add(new PropertyVO(propertyName, ""));
+                }
+                catch (RequestProblemException requestProblemException)
+                {
+                    _errorMessage = requestProblemException.getMessage();
+                    _properties = null;
+                }
             }
         }
         else
@@ -122,11 +172,19 @@ public class DataFlowCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowCreateMO.doSubmit");
 
-        List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, PropertyVO.toMap(_metaProperties));
+        try
+        {
+            List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, PropertyVO.toMap(_metaProperties));
 
-        _properties = new LinkedList<PropertyVO>();
-        for (String propertyName: propertyNames)
-            _properties.add(new PropertyVO(propertyName, ""));
+            _properties = new LinkedList<PropertyVO>();
+            for (String propertyName: propertyNames)
+                _properties.add(new PropertyVO(propertyName, ""));
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            _errorMessage = requestProblemException.getMessage();
+            _properties = null;
+        }
 
         return "/dataflows/dataflow_create?faces-redirect=true";
     }
@@ -141,23 +199,39 @@ public class DataFlowCreateMO implements Serializable
         _errorMessage   = null;
         if (_dataFlowFactoryClient != null)
         {
-            List<String> metaPropertyNames = _dataFlowFactoryClient.getMetaPropertyNames(_serviceRootURL);
+            List<String> metaPropertyNames = null;
+            try
+            {
+                metaPropertyNames = _dataFlowFactoryClient.getMetaPropertyNames(_serviceRootURL);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
-            if (! metaPropertyNames.isEmpty())
+            if ((metaPropertyNames != null) && (! metaPropertyNames.isEmpty()))
             {
                 _metaProperties = new LinkedList<PropertyVO>();
                 for (String metaPropertyName: metaPropertyNames)
                     _metaProperties.add(new PropertyVO(metaPropertyName, ""));
             }
-            else
+            else if (metaPropertyNames != null)
             {
-                List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, Collections.<String, String>emptyMap());
-
-                if (! propertyNames.isEmpty())
+                try
                 {
-                    _properties = new LinkedList<PropertyVO>();
-                    for (String propertyName: propertyNames)
-                        _properties.add(new PropertyVO(propertyName, ""));
+                    List<String> propertyNames = _dataFlowFactoryClient.getPropertyNames(_serviceRootURL, Collections.<String, String>emptyMap());
+
+                    if (! propertyNames.isEmpty())
+                    {
+                        _properties = new LinkedList<PropertyVO>();
+                        for (String propertyName: propertyNames)
+                            _properties.add(new PropertyVO(propertyName, ""));
+                    }
+                }
+                catch (RequestProblemException requestProblemException)
+                {
+                    _errorMessage = requestProblemException.getMessage();
+                    _properties = null;
                 }
             }
         }
@@ -179,11 +253,24 @@ public class DataFlowCreateMO implements Serializable
         logger.log(Level.FINE, "DataFlowCreateMO.doCreate");
 
         if (_dataFlowFactoryClient != null)
-            _dataFlowFactoryClient.createDataFlow(_serviceRootURL, _name, PropertyVO.toMap(_metaProperties), PropertyVO.toMap(_properties));
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowFactoryClient.createDataFlow(_serviceRootURL, _name, PropertyVO.toMap(_metaProperties), PropertyVO.toMap(_properties));
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
         else
             _errorMessage = "Unable to contact DataBroker";
 
-        return "/dataflows/dataflow_create_done?faces-redirect=true";
+        if (_errorMessage == null)
+            return "/dataflows/dataflow_create_done?faces-redirect=true";
+        else
+            return "/dataflows/dataflow_create?faces-redirect=true";
     }
 
     public String doDone()
@@ -194,6 +281,8 @@ public class DataFlowCreateMO implements Serializable
     }
 
     private String           _serviceRootURL;
+    private String           _factoryName;
+    private List<PropertyVO> _factoryProperties;
     private List<PropertyVO> _metaProperties;
     private String           _name;
     private List<PropertyVO> _properties;

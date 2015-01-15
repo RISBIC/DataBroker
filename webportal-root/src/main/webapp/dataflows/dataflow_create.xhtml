@@ -26,6 +26,23 @@
                         <h:outputText styleClass="dataflowcreate-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataflowcreate-error-message" value="#{dataflowcreate.errorMessage}"/>
                     </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{(not empty dataflowcreate.factoryName) and (not empty dataflowcreate.factoryProperties)}">
+                        <h:panelGrid styleClass="dataflowcreate-properties" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
+                            <h:outputText styleClass="dataflowcreate-property-name" value="DataFlow Factory Name"/>
+                            <h:inputText styleClass="dataflowcreate-property-value" value="#{dataflowcreate.factoryName}" disabled="true"/>
+                        </h:panelGrid>
+                        <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
+                            <h:outputText styleClass="dataflowcreate-subtitle" value="DataFlow Factory Properties"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.factoryProperties}" var="_factoryProperties">
+                            <h:column>
+                                <h:outputText styleClass="dataflowcreate-property-name" value="#{_factoryProperties.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputTextarea styleClass="dataflowcreate-property-value" value="#{_factoryProperties.value}" disabled="true"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
                     <h:panelGroup layout="block" rendered="#{not empty dataflowcreate.metaProperties}">
                         <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
                             <h:outputText styleClass="dataflowcreate-subtitle" value="Meta Properties"/>

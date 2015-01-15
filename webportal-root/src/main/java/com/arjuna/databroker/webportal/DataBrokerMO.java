@@ -17,6 +17,7 @@ import com.arjuna.databroker.webportal.comms.DataBrokerSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowFactoryClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.DataFlowSummary;
+import com.arjuna.databroker.webportal.comms.RequestProblemException;
 import com.arjuna.databroker.webportal.store.DataBrokerEntity;
 import com.arjuna.databroker.webportal.store.DataBrokerUtils;
 
@@ -122,8 +123,15 @@ public class DataBrokerMO implements Serializable
 
         if (_serviceRootURL != null)
         {
-            if (! _dataFlowFactoryClient.removeDataFlow(_serviceRootURL, dataFlowName))
-                _errorMessage = "Unable to remove data flow \"" + dataFlowName + "\"";
+            try
+            {
+                if (! _dataFlowFactoryClient.removeDataFlow(_serviceRootURL, dataFlowName))
+                     _errorMessage = "Unable to remove data flow \"" + dataFlowName + "\"";
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
         }
         else
             _errorMessage = "Unable to contact server";

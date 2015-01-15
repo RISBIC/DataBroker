@@ -22,6 +22,10 @@
                     <h:panelGroup styleClass="dataflowcreate-title" layout="block">
                         <h:outputText styleClass="dataflowcreate-title" value="DataFlow"/>
                     </h:panelGroup>
+                    <h:panelGroup styleClass="dataflowcreate-error" layout="block" rendered="#{not empty dataflowcreate.errorMessage}">
+                        <h:outputText styleClass="dataflowcreate-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="dataflowcreate-error-message" value="#{dataflowcreate.errorMessage}"/>
+                    </h:panelGroup>
                     <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
                         <h:outputText styleClass="dataflowcreate-subtitle" value="Attributes"/>
                     </h:panelGroup>

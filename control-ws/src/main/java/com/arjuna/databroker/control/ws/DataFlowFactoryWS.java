@@ -22,13 +22,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import com.arjuna.databroker.control.comms.CreatePropertiesDTO;
+import com.arjuna.databroker.control.comms.DataFlowFactoryDTO;
 import com.arjuna.databroker.control.comms.PropertiesDTO;
 import com.arjuna.databroker.control.comms.PropertyNamesDTO;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowFactory;
 import com.arjuna.databroker.data.DataFlowInventory;
+import com.arjuna.databroker.data.InvalidMetaPropertyException;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
+import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 
@@ -37,6 +40,19 @@ import com.arjuna.databroker.data.core.DataFlowLifeCycleControl;
 public class DataFlowFactoryWS
 {
     private static final Logger logger = Logger.getLogger(DataFlowFactoryWS.class.getName());
+
+    @GET
+    @Path("_info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DataFlowFactoryDTO getInfoJSON()
+    {
+        logger.log(Level.FINE, "DataFlowFactoryWS.getInfoJSON");
+
+        if (_dataFlowFactory != null)
+            return new DataFlowFactoryDTO(_dataFlowFactory.getName(), _dataFlowFactory.getProperties());
+        else
+            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    }
 
     @GET
     @Path("_metapropertynames")
@@ -57,21 +73,12 @@ public class DataFlowFactoryWS
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public PropertyNamesDTO getPropertyNamesJSON(PropertiesDTO metaProperties)
-        throws InvalidPropertyException, MissingPropertyException
+        throws InvalidMetaPropertyException, MissingMetaPropertyException
     {
         logger.log(Level.FINE, "DataFlowFactoryWS.getPropertyNamesJSON");
 
         if (_dataFlowFactory != null)
-        {
-            try
-            {
-                return new PropertyNamesDTO(_dataFlowFactory.getPropertyNames(metaProperties.getProperties()));
-            }
-            catch (Throwable throwable)
-            {
-                throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-            }
-        }
+            return new PropertyNamesDTO(_dataFlowFactory.getPropertyNames(metaProperties.getProperties()));
         else
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
@@ -80,7 +87,7 @@ public class DataFlowFactoryWS
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String createDataFlowJSON(@QueryParam("name") String name, CreatePropertiesDTO createProperties)
-        throws InvalidNameException, InvalidPropertyException, MissingPropertyException
+        throws InvalidNameException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
         logger.log(Level.FINE, "DataFlowFactoryWS.createDataFlowJSON");
 
@@ -88,16 +95,9 @@ public class DataFlowFactoryWS
         {
             if (name != null)
             {
-                try
-                {
-                    DataFlow dataFlow = _dataFlowLifeCycleControl.createDataFlow(name, createProperties.getMetaProperties(), createProperties.getProperties());
+                DataFlow dataFlow = _dataFlowLifeCycleControl.createDataFlow(name, createProperties.getMetaProperties(), createProperties.getProperties());
 
-                    return dataFlow.getName();
-                }
-                catch (Throwable throwable)
-                {
-                    throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                }
+                return dataFlow.getName();
             }
             else
                 throw new WebApplicationException(422); // Unprocessable Entity Error Code

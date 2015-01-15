@@ -5,6 +5,7 @@
 package com.arjuna.databroker.data.core.jee;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,10 @@ public class GlobalDataFlowFactory implements DataFlowFactory
     {
         logger.log(Level.FINE, "GlobalDataFlowFactory.getProperties");
 
-        return Collections.emptyMap();
+        Map<String, String> properties = new HashMap<String, String>();
+        properties.put("Description", "This Data Flow Factory supports the creation of both Standard (Type: 'Standard') and Durable (Type: 'Durable') Data Flows");
+
+        return properties;
     }
 
     @Override
