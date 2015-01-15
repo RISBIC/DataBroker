@@ -20,7 +20,7 @@
             <h:form styleClass="dataflowcreate">
                 <h:panelGroup styleClass="dataflowcreate" layout="block">
                     <h:panelGroup styleClass="dataflowcreate-title" layout="block">
-                        <h:outputText styleClass="dataflowcreate-title" value="DataFlow Create"/>
+                        <h:outputText styleClass="dataflowcreate-title" value="DataFlow Factory"/>
                     </h:panelGroup>
                     <h:panelGroup styleClass="dataflowcreate-error" layout="block" rendered="#{not empty dataflowcreate.errorMessage}">
                         <h:outputText styleClass="dataflowcreate-error-title" value="Error Message: "/>
@@ -28,11 +28,11 @@
                     </h:panelGroup>
                     <h:panelGroup layout="block" rendered="#{(not empty dataflowcreate.factoryName) and (not empty dataflowcreate.factoryProperties)}">
                         <h:panelGrid styleClass="dataflowcreate-properties" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" columns="2" border="0" cellpadding="0" cellspacing="0">
-                            <h:outputText styleClass="dataflowcreate-property-name" value="DataFlow Factory Name"/>
+                            <h:outputText styleClass="dataflowcreate-property-name" value="Factory Name"/>
                             <h:inputText styleClass="dataflowcreate-property-value" value="#{dataflowcreate.factoryName}" disabled="true"/>
                         </h:panelGrid>
                         <h:panelGroup styleClass="dataflowcreate-subtitle" layout="block">
-                            <h:outputText styleClass="dataflowcreate-subtitle" value="DataFlow Factory Properties"/>
+                            <h:outputText styleClass="dataflowcreate-subtitle" value="Factory Properties"/>
                         </h:panelGroup>
                         <h:dataTable styleClass="dataflowcreate-properties" headerClass="dataflowcreate-properties-header" columnClasses="dataflowcreate-properties-column-one,dataflowcreate-properties-column-two" value="#{dataflowcreate.factoryProperties}" var="_factoryProperties">
                             <h:column>
