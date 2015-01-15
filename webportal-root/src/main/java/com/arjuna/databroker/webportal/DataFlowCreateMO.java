@@ -128,8 +128,6 @@ public class DataFlowCreateMO implements Serializable
                 for (Entry<String, String> property: dataFlowFactorySummary.getProperties().entrySet())
                     _factoryProperties.add(new PropertyVO(property.getKey(), property.getValue()));
 
-                logger.log(Level.WARNING, "dataFlowFactorySummary: " + _factoryName + ", " + _factoryProperties);
-
                 metaPropertyNames  = _dataFlowFactoryClient.getMetaPropertyNames(_serviceRootURL);
             }
             catch (RequestProblemException requestProblemException)
