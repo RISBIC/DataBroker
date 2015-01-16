@@ -8,19 +8,9 @@ public class NoCompatableCommonDataTypeException extends Exception
 {
     private static final long serialVersionUID = 1433619460887117645L;
 
-    public NoCompatableCommonDataTypeException()
-    {
-        super();
-    }
-
     public NoCompatableCommonDataTypeException(String message)
     {
         super(message);
-    }
-
-    public NoCompatableCommonDataTypeException(Throwable throwable)
-    {
-        super(throwable);
     }
 
     public NoCompatableCommonDataTypeException(String message, Throwable throwable)

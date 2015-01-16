@@ -10,11 +10,11 @@ import com.arjuna.databroker.data.DataFlowNode;
 public interface DataFlowNodeLinkLifeCycleControl
 {
     public <T> Boolean createDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-       throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
+       throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
 
     public <T> Boolean recreateDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
+        throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
 
     public <T> Boolean removeDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
+        throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException;
 }

@@ -12,15 +12,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkClient;
+import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
 @ManagedBean(name="dataflow")
@@ -312,20 +311,36 @@ public class DataFlowMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowMO.doCreateLink: [" + _linkSourceDataFlowNode + "] [" + _linkSinkDataFlowNode + "]");
 
-        if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
-            _dataFlowNodeLinkClient.createDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode);
-
-        load();
+        try
+        {
+            _errorMessage = null;
+            if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
+                if (_dataFlowNodeLinkClient.createDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode))
+                    load();
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            _errorMessage = requestProblemException.getMessage();
+        }
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
 
     public String doRemoveLink()
     {
-        if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
-            _dataFlowNodeLinkClient.removeDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode);
+        logger.log(Level.FINE, "DataFlowMO.doRemoveLink: [" + _linkSourceDataFlowNode + "] [" + _linkSinkDataFlowNode + "]");
 
-        load();
+        try
+        {
+            _errorMessage = null;
+            if ((_linkSourceDataFlowNode != null) && (! "".equals(_linkSourceDataFlowNode)) && (_linkSinkDataFlowNode != null) && (! "".equals(_linkSinkDataFlowNode)))
+                if (_dataFlowNodeLinkClient.removeDataFlowNodeLink(_serviceRootURL, _id, _linkSourceDataFlowNode, _linkSinkDataFlowNode))
+                    load();
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            _errorMessage = requestProblemException.getMessage();
+        }
 
         return "/dataflows/dataflow?faces-redirect=true";
     }

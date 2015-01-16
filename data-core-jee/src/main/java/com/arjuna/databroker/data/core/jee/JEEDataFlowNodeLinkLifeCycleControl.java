@@ -27,6 +27,7 @@ import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
 import com.arjuna.databroker.data.connector.ReferrerDataConsumer;
 import com.arjuna.databroker.data.core.DataFlowNodeLinkLifeCycleControl;
+import com.arjuna.databroker.data.core.DataFlowNodeLinkManagementException;
 import com.arjuna.databroker.data.core.NoCompatableCommonDataTransportTypeException;
 import com.arjuna.databroker.data.core.NoCompatableCommonDataTypeException;
 import com.arjuna.databroker.data.jee.store.DataFlowEntity;
@@ -42,121 +43,136 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
 
     @Override
     public <T> Boolean createDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
+        throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
     {
         logger.log(Level.FINE, "createDataFlowNodeLink");
 
         @SuppressWarnings("unchecked")
         Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
 
-        DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
-        DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
-
-        if ((dataProvider != null) && (dataConsumer != null))
+        if (linkClass != null)
         {
-            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+            DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
+            DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
+    
+            if ((dataProvider != null) && (dataConsumer != null))
             {
-                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
-                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-
-                observableDataProvider.addDataConsumer(observerDataConsumer);
-            }
-            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
-            {
-                NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
-                ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
-
-                referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                {
+                    ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                    ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+    
+                    observableDataProvider.addDataConsumer(observerDataConsumer);
+                }
+                else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                {
+                    NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                    ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+    
+                    referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                }
+                else
+                    throw new NoCompatableCommonDataTransportTypeException("No common data transport for class " + linkClass.getName());
+    
+                DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
+                DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+                DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sinkDataFlowNode.getName(), dataFlowEntity);
+                _dataFlowNodeLinkUtils.create(UUID.randomUUID().toString(), sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
             }
             else
-                throw new NoCompatableCommonDataTransportTypeException();
-
-            DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
-            DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
-            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sinkDataFlowNode.getName(), dataFlowEntity);
-            _dataFlowNodeLinkUtils.create(UUID.randomUUID().toString(), sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
+                throw new DataFlowNodeLinkManagementException("Unable to find data consumer/provider for class " + linkClass.getName());
         }
         else
-            throw new NoCompatableCommonDataTypeException();
+            throw new NoCompatableCommonDataTypeException("No common data class");
 
         return true;
     }
 
     @Override
     public <T> Boolean recreateDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
+        throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
     {
-        logger.log(Level.FINE, "createDataFlowNodeLink");
+        logger.log(Level.FINE, "recreateDataFlowNodeLink");
 
         @SuppressWarnings("unchecked")
         Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
 
-        DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
-        DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
-
-        if ((dataProvider != null) && (dataConsumer != null))
+        if (linkClass != null)
         {
-            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
-            {
-                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
-                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+            DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
+            DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
 
-                observableDataProvider.addDataConsumer(observerDataConsumer);
-            }
-            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+            if ((dataProvider != null) && (dataConsumer != null))
             {
-                NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
-                ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+                if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                {
+                    ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                    ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
 
-                referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                    observableDataProvider.addDataConsumer(observerDataConsumer);
+                }
+                else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                {
+                    NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
+                    ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
+
+                    referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                }
+                else
+                    throw new NoCompatableCommonDataTransportTypeException("No common data transport for class " + linkClass.getName());
             }
             else
-                throw new NoCompatableCommonDataTransportTypeException();
+                throw new DataFlowNodeLinkManagementException("Unable to find data consumer/provider for class " + linkClass.getName());
         }
         else
-            throw new NoCompatableCommonDataTypeException();
+            throw new NoCompatableCommonDataTypeException("No common data class");
 
         return true;
     }
 
     @Override
     public <T> Boolean removeDataFlowNodeLink(DataFlowNode sourceDataFlowNode, DataFlowNode sinkDataFlowNode, DataFlow dataFlow)
-        throws NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
+        throws DataFlowNodeLinkManagementException, NoCompatableCommonDataTypeException, NoCompatableCommonDataTransportTypeException
     {
         logger.log(Level.FINE, "removeDataFlowNodeLink");
 
         @SuppressWarnings("unchecked")
         Class<T> linkClass = (Class<T>) getLinkClass(sourceDataFlowNode, sinkDataFlowNode);
 
-        DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
-        DataConsumer<T> dataConsumer = getSinkConsumer(sourceDataFlowNode, linkClass);
-
-        if ((dataProvider != null) && (dataConsumer != null))
+        if (linkClass != null)
         {
-            if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
-            {
-                ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
-                ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
+            DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
+            DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
 
-                observableDataProvider.removeDataConsumer(observerDataConsumer);
-            }
-            else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+            if ((dataProvider != null) && (dataConsumer != null))
             {
-                NamedDataProvider<?>    namedDataProvider    = (NamedDataProvider<?>) dataProvider;
-                ReferrerDataConsumer<?> referrerDataConsumer = (ReferrerDataConsumer<?>) dataConsumer;
+                if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
+                {
+                    ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
+                    ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
 
-                referrerDataConsumer.removeReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                    observableDataProvider.removeDataConsumer(observerDataConsumer);
+                }
+                else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
+                {
+                    NamedDataProvider<?>    namedDataProvider    = (NamedDataProvider<?>) dataProvider;
+                    ReferrerDataConsumer<?> referrerDataConsumer = (ReferrerDataConsumer<?>) dataConsumer;
+
+                    referrerDataConsumer.removeReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
+                }
+                else
+                    throw new NoCompatableCommonDataTransportTypeException("No common data transport for class " + linkClass.getName());
+
+                DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
+                DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
+                DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sinkDataFlowNode.getName(), dataFlowEntity);
+                _dataFlowNodeLinkUtils.remove(sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
             }
             else
-                throw new NoCompatableCommonDataTransportTypeException();
-
-            DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
-            DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
-            DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
-            _dataFlowNodeLinkUtils.remove(sourceDataFlowNodeEntity, sinkDataFlowNodeEntity, dataFlowEntity);
+                throw new DataFlowNodeLinkManagementException("Unable to find data consumer/provider for class " + linkClass.getName());
         }
         else
-            throw new NoCompatableCommonDataTypeException();
+            throw new NoCompatableCommonDataTypeException("No common data class");
 
         return true;
     }

@@ -114,6 +114,8 @@ public class DataBrokerMO implements Serializable
     {
         removeDataFlow(dataFlowId);
 
+        reload();
+
         return "/dataflows/databroker?faces-redirect=true";
     }
 
