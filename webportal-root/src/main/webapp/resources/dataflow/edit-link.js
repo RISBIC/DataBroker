@@ -165,7 +165,7 @@ DataFlowLinkEdit.prototype.areLinkDataFlowNodes = function()
         var links = this.dataFlowControl.dataFlow.links;
 
         for (var linkIndex = 0; linkIndex < links.length; linkIndex++)
-            if ((this.producer == links.producer) && (this.consumer == links.consumer))
+            if ((this.producer == links[linkIndex].producer) && (this.consumer == links[linkIndex].consumer))
                 return true;
     }
 
