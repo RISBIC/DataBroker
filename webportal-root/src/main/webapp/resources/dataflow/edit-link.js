@@ -111,6 +111,8 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             item.bodyStyle   = DataFlowLinkEdit.SELECTED_PRODUCER_BODYSTYLE;
             item.borderStyle = DataFlowLinkEdit.SELECTED_PRODUCER_BORDERSTYLE;
             selectLinkSourceDataFlowNode(item.parent.name);
+
+            linkedDataFlowNodes(this.areLinkDataFlowNodes());
         }
         else
         {
@@ -118,6 +120,7 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             item.bodyStyle   = ProducerGlyph.DEFAULT_BODYSTYLE;
             item.borderStyle = ProducerGlyph.DEFAULT_BORDERSTYLE;
             selectLinkSourceDataFlowNode("");
+            linkedDataFlowNodes(false);
         }
     }
     else if (item instanceof ConsumerGlyph)
@@ -133,6 +136,8 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             item.bodyStyle   = DataFlowLinkEdit.SELECTED_CONSUMER_BODYSTYLE;
             item.borderStyle = DataFlowLinkEdit.SELECTED_CONSUMER_BORDERSTYLE;
             selectLinkSinkDataFlowNode(item.parent.name);
+
+            linkedDataFlowNodes(this.areLinkDataFlowNodes());
         }
         else
         {
@@ -140,6 +145,7 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
             item.bodyStyle   = ConsumerGlyph.DEFAULT_BODYSTYLE;
             item.borderStyle = ConsumerGlyph.DEFAULT_BORDERSTYLE;
             selectLinkSinkDataFlowNode("");
+            linkedDataFlowNodes(false);
         }
     }
     else if (item instanceof LinkGlyph)
@@ -147,6 +153,21 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
         item.lineStyle = DataFlowLinkEdit.SELECTED_LINK_LINESTYLE;
         selectLinkSourceDataFlowNode(item.producer.parent.name);
         selectLinkSinkDataFlowNode(item.consumer.parent.name);
+        linkedDataFlowNodes(true);
     }
     this.dataFlowControl.redraw();
+}
+
+DataFlowLinkEdit.prototype.areLinkDataFlowNodes = function()
+{
+    if ((this.producer != null) && (this.consumer != null))
+    {
+        var links = this.dataFlowControl.dataFlow.links;
+
+        for (var linkIndex = 0; linkIndex < links.length; linkIndex++)
+            if ((this.producer == links.producer) && (this.consumer == links.consumer))
+                return true;
+    }
+
+    return false;
 }

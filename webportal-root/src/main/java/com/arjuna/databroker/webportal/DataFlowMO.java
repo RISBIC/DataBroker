@@ -49,6 +49,7 @@ public class DataFlowMO implements Serializable
         _storeDataFlowNode          = "";
         _linkSourceDataFlowNode     = "";
         _linkSinkDataFlowNode       = "";
+        _linkedDataFlowNodes        = false;
 
         _errorMessage = null;
     }
@@ -192,11 +193,11 @@ public class DataFlowMO implements Serializable
         return _linkSourceDataFlowNode;
     }
 
-    public void setLinkSourceDataFlowNode(String sourceDataFlowNode)
+    public void setLinkSourceDataFlowNode(String linkSourceDataFlowNode)
     {
-        logger.log(Level.FINER, "DataFlowMO.setLinkSourceDataFlowNode: " + sourceDataFlowNode);
+        logger.log(Level.FINER, "DataFlowMO.setLinkSourceDataFlowNode: " + linkSourceDataFlowNode);
 
-        _linkSourceDataFlowNode = sourceDataFlowNode;
+        _linkSourceDataFlowNode = linkSourceDataFlowNode;
     }
 
     public String getLinkSinkDataFlowNode()
@@ -206,18 +207,25 @@ public class DataFlowMO implements Serializable
         return _linkSinkDataFlowNode;
     }
 
-    public void setLinkSinkDataFlowNode(String sinkDataFlowNode)
+    public void setLinkSinkDataFlowNode(String linkSinkDataFlowNode)
     {
-        logger.log(Level.FINER, "DataFlowMO.setLinkSinkDataFlowNode: " + sinkDataFlowNode);
+        logger.log(Level.FINER, "DataFlowMO.setLinkSinkDataFlowNode: " + linkSinkDataFlowNode);
 
-        _linkSinkDataFlowNode = sinkDataFlowNode;
+        _linkSinkDataFlowNode = linkSinkDataFlowNode;
     }
 
-    public boolean getLinkedDataFlowNode()
+    public Boolean getLinkedDataFlowNodes()
     {
-        logger.log(Level.FINER, "DataFlowMO.getLinkedDataFlowNode");
+        logger.log(Level.FINER, "DataFlowMO.getLinkedDataFlowNodes: " + _linkedDataFlowNodes);
 
-        return false; // TODO
+        return _linkedDataFlowNodes;
+    }
+
+    public void setLinkedDataFlowNodes(Boolean linkedDataFlowNodes)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setLinkedDataFlowNodes: " + _linkedDataFlowNodes);
+
+        _linkedDataFlowNodes = linkedDataFlowNodes;
     }
 
     public String getErrorMessage()
@@ -396,6 +404,7 @@ public class DataFlowMO implements Serializable
             _storeDataFlowNode      = "";
             _linkSourceDataFlowNode = "";
             _linkSinkDataFlowNode   = "";
+            _linkedDataFlowNodes    = false;
         }
         else
             _errorMessage = "Unable to query DataBroker";
@@ -490,6 +499,7 @@ public class DataFlowMO implements Serializable
     private String                             _storeDataFlowNode;
     private String                             _linkSourceDataFlowNode;
     private String                             _linkSinkDataFlowNode;
+    private Boolean                            _linkedDataFlowNodes;
 
     private String _errorMessage;
 

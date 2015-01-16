@@ -217,7 +217,7 @@ input[type="text"][disabled].dataflow-property-value
 
 div.dataflow-actions
 {
-	margin:			0 0 1em 0;
+	margin:			0;
 	border:			0;
 	padding:		0;
 	text-align:		center;
@@ -225,7 +225,7 @@ div.dataflow-actions
 
 a.dataflow-button
 {
-	margin:				0 1em 0 0;
+	margin:				0.5em 0.5em 0.5em 0.5em;
 	border:				0;
 	padding:			0.25em 0.5em 0.25em 0.5em;
 	font-size:			1em;
@@ -239,6 +239,7 @@ a.dataflow-button
 
 a.dataflow-button:link
 {
+	display:		inline-block;
 	background-color:	#EE7711;
 	color:			#EEEEEE;
 	text-decoration:	none;
@@ -246,6 +247,7 @@ a.dataflow-button:link
 
 a.dataflow-button:visited
 {
+	display:		inline-block;
 	background-color:	#EE7711;
 	color:			#EEEEEE;
 	text-decoration:	none;
@@ -253,6 +255,7 @@ a.dataflow-button:visited
 
 a.dataflow-button:hover
 {
+	display:		inline-block;
 	background-color:	#EEA05D;
 	color:			#EEEEEE;
 	text-decoration:	none;
@@ -260,6 +263,7 @@ a.dataflow-button:hover
 
 a.dataflow-button:active
 {
+	display:		inline-block;
 	background-color:	#777777;
 	color:			#EEEEEE;
 	text-decoration:	none;
@@ -267,9 +271,10 @@ a.dataflow-button:active
 
 span.dataflow-button
 {
-	margin:				0 1em 0 0;
+	margin:				0.5em 0.5em 0.5em 0.5em;
 	border:				0;
 	padding:			0.25em 0.5em 0.25em 0.5em;
+	display:			inline-block;
 	background-color:		#AAAAAA;
 	color:				#EEEEEE;
 	text-decoration:		none;
