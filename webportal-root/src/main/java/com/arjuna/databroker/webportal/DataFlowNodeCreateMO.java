@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
+import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
 @ManagedBean(name="dataflownodecreate")
@@ -96,7 +99,7 @@ public class DataFlowNodeCreateMO implements Serializable
 
     public void setFactoryProperties(List<PropertyVO> factoryProperties)
     {
-    	_factoryProperties = factoryProperties;
+        _factoryProperties = factoryProperties;
     }
 
     public List<PropertyVO> getMetaProperties()
@@ -157,14 +160,29 @@ public class DataFlowNodeCreateMO implements Serializable
 
         if (_dataFlowClient != null)
         {
-            _factoryNames = _dataFlowClient.getFactoryNames(_serviceRootURL, _dataFlowId, _type);
+            try
+            {
+                _factoryNames = _dataFlowClient.getFactoryNames(_serviceRootURL, _dataFlowId, _type);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
-            if (_factoryNames.size() == 1)
+            if ((_factoryNames != null) && (_factoryNames.size() == 1))
                 _factoryName = _factoryNames.get(0);
 
             if (_factoryName != null)
             {
-                List<String> metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
+                List<String> metaPropertyNames = Collections.emptyList();
+                try
+                {
+                    metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
+                }
+                catch (RequestProblemException requestProblemException)
+                {
+                    _errorMessage = requestProblemException.getMessage();
+                }
 
                 if (! metaPropertyNames.isEmpty())
                 {
@@ -175,7 +193,15 @@ public class DataFlowNodeCreateMO implements Serializable
                 else
                 {
                     _metaProperties = new LinkedList<PropertyVO>();
-                    List<String> propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, Collections.<String, String>emptyMap());
+                    List<String> propertyNames = Collections.emptyList();
+                    try
+                    {
+                        propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, Collections.<String, String>emptyMap());
+                    }
+                    catch (RequestProblemException requestProblemException)
+                    {
+                        _errorMessage = requestProblemException.getMessage();
+                    }
 
                     _properties = new LinkedList<PropertyVO>();
                     for (String propertyName: propertyNames)
@@ -193,7 +219,15 @@ public class DataFlowNodeCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doFactoryNameSubmit");
 
-        List<String> metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
+        List<String> metaPropertyNames = Collections.emptyList();
+        try
+        {
+            metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            _errorMessage = requestProblemException.getMessage();
+        }
 
         if (! metaPropertyNames.isEmpty())
         {
@@ -204,7 +238,15 @@ public class DataFlowNodeCreateMO implements Serializable
         else
         {
             _metaProperties = new LinkedList<PropertyVO>();
-            List<String> propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, Collections.<String, String>emptyMap());
+            List<String> propertyNames = Collections.emptyList();
+            try
+            {
+                propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, Collections.<String, String>emptyMap());
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
             _properties = new LinkedList<PropertyVO>();
             for (String propertyName: propertyNames)
@@ -218,7 +260,15 @@ public class DataFlowNodeCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doMetaPropertiesSubmit");
 
-        List<String> propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, listToMap(_metaProperties));
+        List<String> propertyNames = Collections.emptyList();
+        try
+        {
+            propertyNames = _dataFlowClient.getPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName, listToMap(_metaProperties));
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            _errorMessage = requestProblemException.getMessage();
+        }
 
         _properties = new LinkedList<PropertyVO>();
         for (String propertyName: propertyNames)
@@ -253,7 +303,16 @@ public class DataFlowNodeCreateMO implements Serializable
         logger.log(Level.FINE, "DataFlowNodeCreateMO.doCreate");
 
         if (_dataFlowClient != null)
-            _dataFlowClient.createDataFlowNode(_serviceRootURL, _dataFlowId, _type, _factoryName, listToMap(_metaProperties), _name, listToMap(_properties));
+        {
+            try
+            {
+                _dataFlowClient.createDataFlowNode(_serviceRootURL, _dataFlowId, _type, _factoryName, listToMap(_metaProperties), _name, listToMap(_properties));
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
         else
             _errorMessage = "Unable to contact DataBroker";
 

@@ -259,9 +259,21 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doRemoveSourceDataFlowNode: [" + _sourceDataFlowNode + "]");
 
         if ((_sourceDataFlowNode != null) && (! "".equals(_sourceDataFlowNode)))
-            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sourceDataFlowNode);
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sourceDataFlowNode);
 
-        load();
+                load();
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Source node not specified";
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
@@ -272,9 +284,21 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doRemoveProcessorDataFlowNode: [" + _processorDataFlowNode + "]");
 
         if ((_processorDataFlowNode != null) && (! "".equals(_processorDataFlowNode)))
-            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _processorDataFlowNode);
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _processorDataFlowNode);
 
-        load();
+                load();
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Processor node not specified";
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
@@ -284,9 +308,21 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doRemoveSinkDataFlowNode: [" + _sinkDataFlowNode + "]");
 
         if ((_sinkDataFlowNode != null) && (! "".equals(_sinkDataFlowNode)))
-            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sinkDataFlowNode);
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _sinkDataFlowNode);
 
-        load();
+                load();
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Sink node not specified";
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
@@ -296,9 +332,21 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doRemoveServiceDataFlowNode: [" + _serviceDataFlowNode + "]");
 
         if ((_serviceDataFlowNode != null) && (! "".equals(_serviceDataFlowNode)))
-            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _serviceDataFlowNode);
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _serviceDataFlowNode);
 
-        load();
+                load();
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Service node not specified";
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
@@ -308,9 +356,21 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doRemoveStoreDataFlowNode: [" + _storeDataFlowNode + "]");
 
         if ((_storeDataFlowNode != null) && (! "".equals(_storeDataFlowNode)))
-            _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _storeDataFlowNode);
+        {
+            _errorMessage = null;
+            try
+            {
+                _dataFlowClient.removeDataFlowNode(_serviceRootURL, _id, _storeDataFlowNode);
 
-        load();
+                load();
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Store node not specified";
 
         return "/dataflows/dataflow?faces-redirect=true";
     }
@@ -369,7 +429,15 @@ public class DataFlowMO implements Serializable
             List<DataFlowNodeLinkSummary>    dataFlowNodeLinks         = new LinkedList<DataFlowNodeLinkSummary>();
             List<DataFlowNodeFactorySummary> dataFlowNodeFactories     = new LinkedList<DataFlowNodeFactorySummary>();
 
-            String id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeLinks, dataFlowNodeFactories);
+            String id = null;
+            try
+            {
+                id = _dataFlowClient.getDataFlow(_serviceRootURL, _id, attributesMap, propertiesMap, dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeLinks, dataFlowNodeFactories);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
             if (id != null)
             {
@@ -394,7 +462,8 @@ public class DataFlowMO implements Serializable
                 _dataFlowNodeProperties     = null;
                 _dataFlowNodeFactories      = null;
 
-                _errorMessage = "Unsuccessful query of DataBroker!";
+                if (_errorMessage == null)
+                    _errorMessage = "Unsuccessful query of DataBroker!";
             }
 
             _sourceDataFlowNode     = "";

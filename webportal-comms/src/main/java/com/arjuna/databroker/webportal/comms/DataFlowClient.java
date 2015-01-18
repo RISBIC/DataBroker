@@ -35,6 +35,7 @@ public class DataFlowClient
     private static final Logger logger = Logger.getLogger(DataFlowClient.class.getName());
 
     public List<String> getDataFlowNodeClassNames(String serviceRootURL, String dataflowId, String factoryName)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.getDataFlowNodeClassNames: " + serviceRootURL + ", " + dataflowId + ", " + factoryName);
 
@@ -56,6 +57,10 @@ public class DataFlowClient
                 return Collections.emptyList();
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getDataFlowNodeClassNames'", throwable);
@@ -65,6 +70,7 @@ public class DataFlowClient
     }
 
     public List<String> getFactoryNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.getFactoryNames: " + serviceRootURL + ", " + dataFlowId);
 
@@ -86,6 +92,10 @@ public class DataFlowClient
                 return Collections.emptyList();
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getFactoryNames'", throwable);
@@ -95,6 +105,7 @@ public class DataFlowClient
     }
 
     public List<String> getMetaPropertyNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.getMetaPropertyNames: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName);
 
@@ -117,6 +128,10 @@ public class DataFlowClient
                 return Collections.emptyList();
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getMetaPropertyNames'", throwable);
@@ -126,6 +141,7 @@ public class DataFlowClient
     }
 
     public List<String> getPropertyNames(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName, Map<String, String> metaProperties)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.getPropertyNames: " + serviceRootURL + ", " + dataFlowId + "," + dataFlowNodeClassName + "," + factoryName + "," + metaProperties);
 
@@ -148,6 +164,10 @@ public class DataFlowClient
                 return Collections.emptyList();
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getPropertyNames'", throwable);
@@ -157,6 +177,7 @@ public class DataFlowClient
     }
 
     public String createDataFlowNode(String serviceRootURL, String dataFlowId, String dataFlowNodeClassName, String factoryName, Map<String, String> metaProperties, String name, Map<String, String> properties)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.createDataFlowNode: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeClassName +  ", "  + factoryName + ", " + metaProperties + ", " + name + ", " + properties);
 
@@ -180,6 +201,10 @@ public class DataFlowClient
                 return null;
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.createDataFlowNode'", throwable);
@@ -189,6 +214,7 @@ public class DataFlowClient
     }
 
     public Boolean removeDataFlowNode(String serviceRootURL, String dataFlowId, String dataFlowNodeid)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.removeDataFlowNode: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeid);
 
@@ -210,6 +236,10 @@ public class DataFlowClient
                 return null;
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.removeDataFlowNode'", throwable);
@@ -219,6 +249,7 @@ public class DataFlowClient
     }
 
     public String getDataFlow(String serviceRootURL, String dataFlowId, Map<String, String> attributes, Map<String, String> properties, Map<String, Map<String, String>> dataFlowNodeAttributesMap, Map<String, Map<String, String>> dataFlowNodePropertiesMap, List<DataFlowNodeLinkSummary> dataFlowNodeLinks, List<DataFlowNodeFactorySummary> dataFlowNodeFactories)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
@@ -272,6 +303,10 @@ public class DataFlowClient
 
                 return null;
             }
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
         }
         catch (Throwable throwable)
         {
