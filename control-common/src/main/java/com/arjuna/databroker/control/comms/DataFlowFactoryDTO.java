@@ -42,4 +42,5 @@ public class DataFlowFactoryDTO implements Serializable
     }
 
     private String              _name;
-    private Map<String, String> _properties;}
+    private Map<String, String> _properties;
+}

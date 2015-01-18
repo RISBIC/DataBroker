@@ -120,6 +120,57 @@ public class DataFlowWS
     }
 
     @GET
+    @Path("{dataflowid}/_info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DataFlowNodeFactoryDTO getFactoryInfoJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("factoryname") String factoryName)
+    {
+        logger.log(Level.FINE, "DataFlowWS.getFactoryInfoJSON");
+
+        if (_dataFlowInventory != null)
+        {
+            if (dataFlowId != null)
+            {
+                DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
+
+                if ((dataFlow != null) && (dataFlow.getDataFlowNodeFactoryInventory() !=  null))
+                {
+                    DataFlowNodeFactory dataFlowNodeFactory = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory(factoryName);
+
+                    if (dataFlowNodeFactory != null)
+                    {
+                        try
+                        {
+                            List<Class<? extends DataFlowNode>> dataFlowNodeFactoryClasses = dataFlowNodeFactory.getClasses();
+
+                            Boolean dataSourceFactory    = dataFlowNodeFactoryClasses.contains(DataSource.class);
+                            Boolean dataSinkFactory      = dataFlowNodeFactoryClasses.contains(DataSink.class);;
+                            Boolean dataProcessorFactory = dataFlowNodeFactoryClasses.contains(DataProcessor.class);;
+                            Boolean dataServiceFactory   = dataFlowNodeFactoryClasses.contains(DataService.class);;
+                            Boolean dataStoreFactory     = dataFlowNodeFactoryClasses.contains(DataStore.class);;
+
+                            return new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory);
+                        }
+                        catch (Throwable throwable)
+                        {
+                            logger.log(Level.WARNING, "Problem while obtaining meta property names from data flow node factory: ", throwable);
+
+                            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+                        }
+                    }
+                    else
+                        throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+                }
+                else
+                    throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+            }
+            else
+                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+        }
+        else
+            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    }
+
+    @GET
     @Path("{dataflowid}/_metapropertynames")
     @Produces(MediaType.APPLICATION_JSON)
     public PropertyNamesDTO getMetaPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName)
@@ -297,7 +348,7 @@ public class DataFlowWS
                         Boolean dataServiceFactory   = dataFlowNodeFactoryClasses.contains(DataService.class);;
                         Boolean dataStoreFactory     = dataFlowNodeFactoryClasses.contains(DataStore.class);;
 
-                        dataFlowNodeFactories.add(new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory));
+                        dataFlowNodeFactories.add(new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory));
                     }
                     dataFlowDTO.setDataFlowNodeFactories(dataFlowNodeFactories);
 

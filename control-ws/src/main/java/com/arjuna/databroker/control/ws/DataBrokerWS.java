@@ -61,7 +61,7 @@ public class DataBrokerWS
                 Boolean dataServiceFactory   = dataFlowNodeFactoryClasses.contains(DataService.class);;
                 Boolean dataStoreFactory     = dataFlowNodeFactoryClasses.contains(DataStore.class);;
 
-                dataFlowNodeFactories.add(new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory));
+                dataFlowNodeFactories.add(new DataFlowNodeFactoryDTO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataSourceFactory, dataSinkFactory, dataProcessorFactory, dataServiceFactory, dataStoreFactory));
             }
             dataBrokerDTO.setDataFlowNodeFactories(dataFlowNodeFactories);
 

@@ -5,6 +5,7 @@
 package com.arjuna.databroker.control.comms;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class DataFlowNodeFactoryDTO implements Serializable
 {
@@ -14,9 +15,10 @@ public class DataFlowNodeFactoryDTO implements Serializable
     {
     }
 
-    public DataFlowNodeFactoryDTO(String name, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
+    public DataFlowNodeFactoryDTO(String name, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
         _name                 = name;
+        _properties           = properties;
         _dataSourceFactory    = dataSourceFactory;
         _dataSinkFactory      = dataSinkFactory;
         _dataProcessorFactory = dataProcessorFactory;
@@ -32,6 +34,16 @@ public class DataFlowNodeFactoryDTO implements Serializable
     public void setName(String name)
     {
         _name = name;
+    }
+
+    public Map<String, String> getProperties()
+    {
+        return _properties;
+    }
+
+    public void setProperties(Map<String, String> properties)
+    {
+        _properties = properties;
     }
 
     public Boolean isDataSourceFactory()
@@ -82,10 +94,11 @@ public class DataFlowNodeFactoryDTO implements Serializable
         _dataStoreFactory = dataStoreFactory;
     }
 
-    private String  _name;
-    private Boolean _dataSourceFactory;
-    private Boolean _dataSinkFactory;
-    private Boolean _dataProcessorFactory;
-    private Boolean _dataServiceFactory;
-    private Boolean _dataStoreFactory;
+    private String              _name;
+    private Map<String, String> _properties;
+    private Boolean             _dataSourceFactory;
+    private Boolean             _dataSinkFactory;
+    private Boolean             _dataProcessorFactory;
+    private Boolean             _dataServiceFactory;
+    private Boolean             _dataStoreFactory;
 }
