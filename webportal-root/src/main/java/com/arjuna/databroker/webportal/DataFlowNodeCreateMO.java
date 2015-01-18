@@ -27,15 +27,16 @@ public class DataFlowNodeCreateMO implements Serializable
 
     public DataFlowNodeCreateMO()
     {
-        _serviceRootURL = null;
-        _dataFlowId     = null;
-        _type           = null;
-        _factoryNames   = null;
-        _factoryName    = null;
-        _metaProperties = null;
-        _name           = null;
-        _properties     = null;
-        _errorMessage   = null;
+        _serviceRootURL    = null;
+        _dataFlowId        = null;
+        _type              = null;
+        _factoryNames      = null;
+        _factoryName       = null;
+        _factoryProperties = null;
+        _metaProperties    = null;
+        _name              = null;
+        _properties        = null;
+        _errorMessage      = null;
     }
 
     public String getServiceRootURL()
@@ -88,6 +89,16 @@ public class DataFlowNodeCreateMO implements Serializable
         _factoryName = factoryName;
     }
 
+    public List<PropertyVO> getFactoryProperties()
+    {
+        return _factoryProperties;
+    }
+
+    public void setFactoryProperties(List<PropertyVO> factoryProperties)
+    {
+    	_factoryProperties = factoryProperties;
+    }
+
     public List<PropertyVO> getMetaProperties()
     {
         return _metaProperties;
@@ -136,12 +147,13 @@ public class DataFlowNodeCreateMO implements Serializable
         _dataFlowId     = dataFlowId;
         _type           = type;
 
-        _factoryNames   = null;
-        _factoryName    = null;
-        _metaProperties = null;
-        _name           = null;
-        _properties     = null;
-        _errorMessage   = null;
+        _factoryNames      = null;
+        _factoryName       = null;
+        _factoryProperties = null;
+        _metaProperties    = null;
+        _name              = null;
+        _properties        = null;
+        _errorMessage      = null;
 
         if (_dataFlowClient != null)
         {
@@ -272,9 +284,10 @@ public class DataFlowNodeCreateMO implements Serializable
 
     private String           _serviceRootURL;
     private String           _dataFlowId;
+    private String           _type;
     private List<String>     _factoryNames;
     private String           _factoryName;
-    private String           _type;
+    private List<PropertyVO> _factoryProperties;
     private List<PropertyVO> _metaProperties;
     private String           _name;
     private List<PropertyVO> _properties;

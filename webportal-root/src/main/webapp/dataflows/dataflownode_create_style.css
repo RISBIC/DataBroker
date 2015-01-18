@@ -177,6 +177,19 @@ span.dataflownodecreate-property-name
 	padding:		0.5em 0.5em 0.5em 0.5em;
 }
 
+textarea[disabled].dataflownodecreate-property-value
+{
+	display:		block;
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	resize:			vertical;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
 input[type="text"].dataflownodecreate-property-value
 {
 	margin:			0;

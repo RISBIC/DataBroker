@@ -42,6 +42,19 @@
                             <h:commandLink styleClass="dataflownodecreate-button" action="#{dataflownodecreate.doCancel}" value="Cancel" rendered="#{dataflownodecreate.metaProperties == null}"/>
                         </h:panelGroup>
                     </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{not empty dataflownodecreate.factoryProperties}">
+                        <h:panelGroup styleClass="dataflownodecreate-subtitle" layout="block">
+                            <h:outputText styleClass="dataflownodecreate-subtitle" value="Factory Properties"/>
+                        </h:panelGroup>
+                        <h:dataTable styleClass="dataflownodecreate-properties" headerClass="dataflownodecreate-properties-header" columnClasses="dataflownodecreate-properties-column-one,dataflownodecreate-properties-column-two" value="#{dataflownodecreate.factoryProperties}" var="_factoryProperties">
+                            <h:column>
+                                <h:outputText styleClass="dataflownodecreate-property-name" value="#{_factoryProperties.name}"/>
+                            </h:column>
+                            <h:column>
+                                <h:inputTextarea styleClass="dataflownodecreate-property-value" value="#{_factoryProperties.value}" disabled="true"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
                     <h:panelGroup layout="block" rendered="#{not empty dataflownodecreate.metaProperties}">
                         <h:panelGroup styleClass="dataflownodecreate-subtitle" layout="block">
                             <h:outputText styleClass="dataflownodecreate-subtitle" value="Meta Properties"/>
