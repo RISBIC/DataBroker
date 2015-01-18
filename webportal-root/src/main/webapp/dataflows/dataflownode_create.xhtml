@@ -32,7 +32,7 @@
                         </h:panelGroup>
                         <h:panelGrid styleClass="dataflownodecreate-selections" columnClasses="dataflownodecreate-selections-column-one,dataflownodecreate-selections-column-two" columns="2">
                             <h:outputText styleClass="dataflownodecreate-selection-name" value="Factory Name"/>
-                            <h:selectOneMenu styleClass="dataflownodecreate-selection-value" value="#{dataflownodecreate.factoryName}">
+                            <h:selectOneMenu styleClass="dataflownodecreate-selection-value" value="#{dataflownodecreate.factoryName}" disabled="#{(dataflownodecreate.metaProperties != null) and (dataflownodecreate.factoryNames.size() != 1)}">
                                 <f:selectItems value="#{dataflownodecreate.factoryNames}" var="factoryName" itemLabel="#{factoryName}" itemValue="#{factoryName}"/>
                             </h:selectOneMenu>
                         </h:panelGrid>

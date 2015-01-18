@@ -108,6 +108,17 @@ select.dataflownodecreate-selection-value
 	color:			#111111;
 }
 
+select.dataflownodecreate-selection-value[disabled]
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
 table.dataflownodecreate-properties
 {
 	margin:			0 -0.5em 0 -0.5em;
