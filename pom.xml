@@ -71,6 +71,7 @@
         <module>webportal-comms</module>
         <module>webportal-root</module>
         <module>webportal-ear</module>
+        <module>tests</module>
     </modules>
 
     <repositories>
