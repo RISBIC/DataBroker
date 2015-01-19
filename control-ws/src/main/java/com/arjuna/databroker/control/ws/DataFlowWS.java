@@ -39,8 +39,11 @@ import com.arjuna.databroker.data.DataService;
 import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.DataStore;
+import com.arjuna.databroker.data.InvalidClassException;
+import com.arjuna.databroker.data.InvalidMetaPropertyException;
 import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
+import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
 import com.arjuna.databroker.data.connector.ObservableDataProvider;
 import com.arjuna.databroker.data.connector.ObserverDataConsumer;
@@ -174,7 +177,7 @@ public class DataFlowWS
     @Path("{dataflowid}/_metapropertynames")
     @Produces(MediaType.APPLICATION_JSON)
     public PropertyNamesDTO getMetaPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName)
-        throws InvalidPropertyException, MissingPropertyException
+        throws InvalidClassException
     {
         logger.log(Level.FINE, "DataFlowWS.getMetaPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName);
 
@@ -189,18 +192,9 @@ public class DataFlowWS
                     DataFlowNodeFactory dataFlowNodeFactory = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory(factoryName);
                     if (dataFlowNodeFactory != null)
                     {
-                        try
-                        {
-                            List<String> metaPropertyNames = dataFlowNodeFactory.getMetaPropertyNames(Utils.stringToClass(dataFlowNodeClassName));
+                        List<String> metaPropertyNames = dataFlowNodeFactory.getMetaPropertyNames(Utils.stringToClass(dataFlowNodeClassName));
 
-                            return new PropertyNamesDTO(metaPropertyNames);
-                        }
-                        catch (Throwable throwable)
-                        {
-                            logger.log(Level.WARNING, "Problem while obtaining meta property names from data flow node factory: ", throwable);
-
-                            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+                        return new PropertyNamesDTO(metaPropertyNames);
                     }
                     else
                         throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
@@ -220,7 +214,7 @@ public class DataFlowWS
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public PropertyNamesDTO getPropertyNamesJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, PropertiesDTO metaProperties)
-        throws InvalidPropertyException, MissingPropertyException
+        throws InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException
     {
         logger.log(Level.FINE, "DataFlowWS.getPropertyNamesJSON: " + dataFlowId + ", " + dataFlowNodeClassName +  ", " + factoryName + ", " + metaProperties);
 
@@ -235,18 +229,9 @@ public class DataFlowWS
                     DataFlowNodeFactory dataFlowNodeFactory = dataFlow.getDataFlowNodeFactoryInventory().getDataFlowNodeFactory(factoryName);
                     if (dataFlowNodeFactory != null)
                     {
-                        try
-                        {
-                            List<String> propertyNames = dataFlowNodeFactory.getPropertyNames(Utils.stringToClass(dataFlowNodeClassName), metaProperties.getProperties());
+                        List<String> propertyNames = dataFlowNodeFactory.getPropertyNames(Utils.stringToClass(dataFlowNodeClassName), metaProperties.getProperties());
 
-                            return new PropertyNamesDTO(propertyNames);
-                        }
-                        catch (Throwable throwable)
-                        {
-                            logger.log(Level.WARNING, "Problem while obtaining property names from data flow node factory: ", throwable);
-
-                            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                        }
+                        return new PropertyNamesDTO(propertyNames);
                     }
                     else
                         throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
@@ -266,7 +251,7 @@ public class DataFlowWS
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String createDataFlowNodeJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodeclassname") String dataFlowNodeClassName, @QueryParam("factoryname") String factoryName, @QueryParam("name") String name, CreatePropertiesDTO createProperties)
-        throws InvalidNameException, InvalidPropertyException, MissingPropertyException
+        throws InvalidNameException, InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
         logger.log(Level.FINE, "DataFlowWS.createDataFlowNodeJSON: " + dataFlowId + ", " + dataFlowNodeClassName + ", " + factoryName + ", " + name + ", " + createProperties);
 
@@ -284,18 +269,9 @@ public class DataFlowWS
                         Class<? extends DataFlowNode> dataFlowNodeClass = Utils.stringToClass(dataFlowNodeClassName);
                         if (dataFlowNodeClass != null)
                         {
-                            try
-                            {
-                                DataFlowNode dataFlowNode = _dataFlowNodeLifeCycleControl.createDataFlowNode(dataFlow, dataFlowNodeFactory, name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());
+                            DataFlowNode dataFlowNode = _dataFlowNodeLifeCycleControl.createDataFlowNode(dataFlow, dataFlowNodeFactory, name, dataFlowNodeClass, createProperties.getMetaProperties(), createProperties.getProperties());
 
-                                return dataFlowNode.getName();
-                            }
-                            catch (Throwable throwable)
-                            {
-                                logger.log(Level.WARNING, "Problem while creating a data flow node: ", throwable);
-
-                                throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
-                            }
+                            return dataFlowNode.getName();
                         }
                         else
                             throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
