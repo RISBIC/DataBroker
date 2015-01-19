@@ -13,11 +13,11 @@
         <version>1.0.0p1m3l</version>
     </parent>
 
-    <artifactId>webportal-root</artifactId>
+    <artifactId>adminportal-root</artifactId>
 
     <packaging>war</packaging>
 
-    <name>WebPortal Root</name>
+    <name>AdminPortal Root</name>
 
     <dependencies>
         <dependency>
