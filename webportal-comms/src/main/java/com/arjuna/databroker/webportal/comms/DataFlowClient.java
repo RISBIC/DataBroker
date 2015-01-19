@@ -10,15 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
-
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.util.GenericType;
 import org.jboss.resteasy.util.HttpResponseCodes;
-
 import com.arjuna.databroker.control.comms.ClassNamesDTO;
 import com.arjuna.databroker.control.comms.CreatePropertiesDTO;
 import com.arjuna.databroker.control.comms.DataFlowDTO;
@@ -50,11 +47,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity().getClassNames();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.getDataFlowNodeClassNames: status = " + response.getStatus());
 
-                return Collections.emptyList();
+                throw new RequestProblemException("Problem during request of class names");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -65,7 +64,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getDataFlowNodeClassNames'", throwable);
 
-            return Collections.emptyList();
+            throw new RequestProblemException("Problem requesting of class names");
         }
     }
 
@@ -85,11 +84,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity().getFactoryNames();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.getFactoryNames: status = " + response.getStatus());
 
-                return Collections.emptyList();
+                throw new RequestProblemException("Problem during request of factory names");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -100,7 +101,49 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getFactoryNames'", throwable);
 
-            return Collections.emptyList();
+            throw new RequestProblemException("Problem requesting of factory names");
+        }
+    }
+
+    public DataFlowNodeFactorySummary getFactoryInfo(String serviceRootURL, String dataFlowId, String factoryName)
+        throws RequestProblemException
+    {
+        logger.log(Level.FINE, "DataFlowClient.getFactoryInfo: " + serviceRootURL + ", " + dataFlowId);
+
+        try
+        {
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/_factoryinfo");
+            request.pathParameter("dataflowid", dataFlowId);
+            request.queryParameter("factoryname", factoryName);
+            request.accept(MediaType.APPLICATION_JSON);
+
+            ClientResponse<DataFlowNodeFactoryDTO> response = request.get(new GenericType<DataFlowNodeFactoryDTO>() {});
+
+            if (response.getStatus() == HttpResponseCodes.SC_OK)
+            {
+                DataFlowNodeFactoryDTO dataFlowNodeFactoryDTO = response.getEntity();
+                
+                return new DataFlowNodeFactorySummary(dataFlowNodeFactoryDTO.getName(), dataFlowNodeFactoryDTO.getProperties(), dataFlowNodeFactoryDTO.isDataSourceFactory(), dataFlowNodeFactoryDTO.isDataSinkFactory(), dataFlowNodeFactoryDTO.isDataProcessorFactory(), dataFlowNodeFactoryDTO.isDataServiceFactory(), dataFlowNodeFactoryDTO.isDataStoreFactory()
+);
+            }
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
+            else
+            {
+                logger.log(Level.WARNING, "DataFlowClient.getFactoryInfo: status = " + response.getStatus());
+
+                throw new RequestProblemException("Problem during request of factory information");
+            }
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'DataFlowClient.getFactoryInfo'", throwable);
+
+            throw new RequestProblemException("Problem requesting of factory information");
         }
     }
 
@@ -121,11 +164,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity().getPropertyNames();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.getMetaPropertyNames: status = " + response.getStatus());
 
-                return Collections.emptyList();
+                throw new RequestProblemException("Problem during request of meta-property names");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -136,7 +181,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getMetaPropertyNames'", throwable);
 
-            return Collections.emptyList();
+            throw new RequestProblemException("Problem requesting of meta-property names");
         }
     }
 
@@ -157,11 +202,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity().getPropertyNames();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.getPropertyNames: status = " + response.getStatus());
 
-                return Collections.emptyList();
+                throw new RequestProblemException("Problem during request of property names");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -172,7 +219,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getPropertyNames'", throwable);
 
-            return Collections.emptyList();
+            throw new RequestProblemException("Problem requesting of property names");
         }
     }
 
@@ -194,11 +241,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.createDataFlowNode: status = " + response.getStatus());
 
-                return null;
+                throw new RequestProblemException("Problem during request of creation data flow node");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -209,7 +258,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.createDataFlowNode'", throwable);
 
-            return null;
+            throw new RequestProblemException("Problem requesting of creation data flow node");
         }
     }
 
@@ -229,11 +278,13 @@ public class DataFlowClient
 
             if (response.getStatus() == HttpResponseCodes.SC_OK)
                 return response.getEntity();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.removeDataFlowNode: status = " + response.getStatus());
 
-                return null;
+                throw new RequestProblemException("Problem during request of removal data flow node");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -244,7 +295,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.removeDataFlowNode'", throwable);
 
-            return null;
+            throw new RequestProblemException("Problem requesting of removal data flow node");
         }
     }
 
@@ -291,17 +342,19 @@ public class DataFlowClient
 
                 dataFlowNodeFactories.clear();
                 for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataFlow.getDataFlowNodeFactories())
-                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
                 return dataFlow.getId();
             }
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataFlowClient.getDataFlow: status = " + response.getStatus());
 
-                return null;
+                throw new RequestProblemException("Problem during request of getting data flow");
             }
         }
         catch (RequestProblemException requestProblemException)
@@ -312,7 +365,7 @@ public class DataFlowClient
         {
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.getDataFlow'", throwable);
 
-            return null;
+            throw new RequestProblemException("Problem requesting of getting data flow");
         }
     }
 }

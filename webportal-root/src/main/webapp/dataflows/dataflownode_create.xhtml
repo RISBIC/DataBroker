@@ -37,7 +37,7 @@
                             </h:selectOneMenu>
                         </h:panelGrid>
                         <h:panelGroup styleClass="dataflownodecreate-actions" layout="block">
-                            <h:commandLink styleClass="dataflownodecreate-button" action="#{dataflownodecreate.doFactoryNameSubmit}" value="Submit" rendered="#{dataflownodecreate.metaProperties == null}"/>
+                            <h:commandLink styleClass="dataflownodecreate-button" action="#{dataflownodecreate.doFactoryNameSubmit}" value="Submit" rendered="#{(dataflownodecreate.metaProperties == null) and (dataflownodecreate.factoryNames.size() != 0)}"/>
                             <h:commandLink styleClass="dataflownodecreate-button" action="#{dataflownodecreate.doFactoryNameReset}" value="Reset" rendered="#{(dataflownodecreate.metaProperties != null) and (dataflownodecreate.factoryNames.size() != 1)}"/>
                             <h:commandLink styleClass="dataflownodecreate-button" action="#{dataflownodecreate.doCancel}" value="Cancel" rendered="#{dataflownodecreate.metaProperties == null}"/>
                         </h:panelGroup>

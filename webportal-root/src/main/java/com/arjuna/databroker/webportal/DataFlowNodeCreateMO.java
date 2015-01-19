@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
+import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
@@ -222,6 +222,12 @@ public class DataFlowNodeCreateMO implements Serializable
         List<String> metaPropertyNames = Collections.emptyList();
         try
         {
+            DataFlowNodeFactorySummary dataFlowNodeFactorySummary = _dataFlowClient.getFactoryInfo(_serviceRootURL, _dataFlowId, _factoryName);
+            _factoryName       = dataFlowNodeFactorySummary.getName();
+            _factoryProperties = new LinkedList<PropertyVO>();
+            for (Entry<String, String> property: dataFlowNodeFactorySummary.getProperties().entrySet())
+                _factoryProperties.add(new PropertyVO(property.getKey(), property.getValue()));
+
             metaPropertyNames = _dataFlowClient.getMetaPropertyNames(_serviceRootURL, _dataFlowId, _type, _factoryName);
         }
         catch (RequestProblemException requestProblemException)

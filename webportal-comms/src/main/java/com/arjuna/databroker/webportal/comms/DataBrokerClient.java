@@ -43,7 +43,7 @@ public class DataBrokerClient
 
                 List<DataFlowNodeFactorySummary> dataFlowNodeFactorySummaries = new LinkedList<DataFlowNodeFactorySummary>();
                 for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataBrokerDTO.getDataFlowNodeFactories())
-                    dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 return new DataBrokerSummary(dataFlowSummaries, dataFlowNodeFactorySummaries);
             }

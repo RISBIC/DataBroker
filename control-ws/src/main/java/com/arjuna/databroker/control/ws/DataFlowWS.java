@@ -120,7 +120,7 @@ public class DataFlowWS
     }
 
     @GET
-    @Path("{dataflowid}/_info")
+    @Path("{dataflowid}/_factoryinfo")
     @Produces(MediaType.APPLICATION_JSON)
     public DataFlowNodeFactoryDTO getFactoryInfoJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("factoryname") String factoryName)
     {
