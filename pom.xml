@@ -72,8 +72,10 @@
         <module>server-ear</module>
         <module>webportal-store</module>
         <module>webportal-comms</module>
-        <module>webportal-root</module>
-        <module>webportal-ear</module>
+        <module>userportal-root</module>
+        <module>userportal-ear</module>
+        <module>adminportal-root</module>
+        <module>adminportal-ear</module>
     </modules>
 
     <repositories>

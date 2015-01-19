@@ -13,51 +13,16 @@
         <version>1.0.0p1m3l</version>
     </parent>
 
-    <artifactId>webportal-ear</artifactId>
+    <artifactId>uaerportal-ear</artifactId>
 
     <packaging>ear</packaging>
 
-    <name>WebPortal EAR</name>
+    <name>UserPortal EAR</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.jena</groupId>
-            <artifactId>jena-core</artifactId>
-            <version>${version.org.apache.jena}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.jena</groupId>
-            <artifactId>jena-iri</artifactId>
-            <version>1.0.1</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>com.arjuna.databroker</groupId>
-            <artifactId>control-common</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>webportal-store</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>webportal-comms</artifactId>
-            <version>${version.com.arjuna.databroker}</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>com.arjuna.databroker</groupId>
-            <artifactId>webportal-root</artifactId>
+            <artifactId>userportal-root</artifactId>
             <version>${version.com.arjuna.databroker}</version>
             <type>war</type>
         </dependency>
@@ -70,26 +35,9 @@
                 <artifactId>maven-ear-plugin</artifactId>
                 <configuration>
                     <modules>
-                        <jarModule>
-                            <groupId>org.jboss.resteasy</groupId>
-                            <artifactId>resteasy-jaxrs</artifactId>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                        </jarModule>
-                        <ejbModule>
-                            <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>control-common</artifactId>
-                        </ejbModule>
-                        <ejbModule>
-                            <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>webportal-store</artifactId>
-                        </ejbModule>
-                        <ejbModule>
-                            <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>webportal-comms</artifactId>
-                        </ejbModule>
                         <webModule>
                             <groupId>com.arjuna.databroker</groupId>
-                            <artifactId>webportal-root</artifactId>
+                            <artifactId>userportal-root</artifactId>
                             <contextRoot>/</contextRoot>
                         </webModule>
                     </modules>
