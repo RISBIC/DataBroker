@@ -98,7 +98,7 @@ public class DataBrokerMO implements Serializable
             _errorMessage   = "Problem Loading Information";
         }
 
-        return "/dataflows/databroker?faces-redirect=true";
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
     public String doReload()
@@ -107,7 +107,7 @@ public class DataBrokerMO implements Serializable
 
         reload();
 
-        return "/dataflows/databroker?faces-redirect=true";
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
     public String doRemoveDataFlow(String dataFlowId)
@@ -116,7 +116,7 @@ public class DataBrokerMO implements Serializable
 
         reload();
 
-        return "/dataflows/databroker?faces-redirect=true";
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
     private void removeDataFlow(String dataFlowName)

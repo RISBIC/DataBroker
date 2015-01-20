@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="../template.xhtml">
+        <ui:define name="title">DataBroker</ui:define>
+
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" href="databroker_style.css"/>
+        </ui:define>
+
+        <ui:define name="body">
+            <ui:include src="/fragments/header.xhtml">
+                <ui:param name="titletext" value="DataBroker"/>
+            </ui:include>
+            <ui:include src="/fragments/navigation_reload.xhtml">
+                <ui:param name="doreloadobject" value="#{databroker}"/>
+                <ui:param name="doreloadaction" value="doReload"/>
+            </ui:include>
+            <h:form styleClass="tab-bar">
+                <h:commandLink styleClass="tab-current" action="/dataflows/databroker_dataflows?faces-redirect=true" value="Data Flows"/>
+                <h:commandLink styleClass="tab" action="/dataflows/databroker_dataflownodefactories?faces-redirect=true" value="Data Flow Node Factories"/>
+            </h:form>
+            <h:form styleClass="databroker">
+                <h:panelGroup styleClass="databroker" layout="block">
+                    <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databroker.errorMessage}">
+                        <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
+                        <h:outputText styleClass="databroker-error-message" value="#{databroker.errorMessage}"/>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="databroker-summary" layout="block" rendered="#{empty databroker.errorMessage}">
+                        <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-column-one,databroker-column-two,databroker-column-three" value="#{databroker.dataFlowSummaries}" var="_dataFlowSummary">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Name"/>
+                                </f:facet>
+                                <h:outputText value="#{_dataFlowSummary.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText styleClass="databroker-header" value="Actions"/>
+                                    <h:commandLink styleClass="databroker-button" action="#{dataflowcreate.doLoad(databroker.serviceRootURL)}" value="Add"/>
+                                </f:facet>
+                                <h:commandLink styleClass="databroker-button" action="#{dataflow.doLoad(databroker.serviceRootURL, _dataFlowSummary.name)}" value="Examine"/>
+                                <h:commandLink styleClass="databroker-button" action="#{databroker.doRemoveDataFlow(_dataFlowSummary.name)}" value="Remove"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
