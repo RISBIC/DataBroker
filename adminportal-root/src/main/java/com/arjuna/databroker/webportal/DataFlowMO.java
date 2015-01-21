@@ -254,6 +254,15 @@ public class DataFlowMO implements Serializable
         return "#";
     }
 
+    public String doReloadToNodesTab()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doReloadToNodesTab");
+
+        load();
+
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
+    }
+
     public String doToAttributesTab()
     {
         return "/dataflows/dataflow_attributes?faces-redirect=true";

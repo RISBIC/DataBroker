@@ -110,6 +110,15 @@ public class DataBrokerMO implements Serializable
         return "#";
     }
 
+    public String doReloadToDataFlowsTab()
+    {
+        logger.log(Level.FINE, "DataBrokerMO.doReloadToDataFlowsTab");
+
+        reload();
+
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
+    }
+
     public String doToDataFlowsTab()
     {
         return "/dataflows/databroker_dataflows?faces-redirect=true";
