@@ -16,8 +16,7 @@ body
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 8em 1em 8em;
-	height:			100%;
+	padding:		1em 4em 1em 4em;
 	background-image:	url('background.png.html'); /* Needing 'html' postfix looks like a bug in JSF */
 	background-position:	left top;
 	background-repeat:	no-repeat;

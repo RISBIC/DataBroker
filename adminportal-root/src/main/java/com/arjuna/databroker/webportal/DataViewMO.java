@@ -101,7 +101,7 @@ public class DataViewMO implements Serializable
 
         load();
 
-        return "/dataviews/dataview?faces-redirect=true";
+        return "#";
     }
 
     public void load()

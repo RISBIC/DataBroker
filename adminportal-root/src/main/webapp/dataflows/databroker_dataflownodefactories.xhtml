@@ -21,11 +21,14 @@
                 <ui:param name="doreloadaction" value="doReload"/>
             </ui:include>
             <h:form styleClass="tab-bar">
-                <h:commandLink styleClass="tab" action="/dataflows/databroker_dataflows?faces-redirect=true" value="Data Flows"/>
-                <h:commandLink styleClass="tab-current" action="/dataflows/databroker_dataflownodefactories?faces-redirect=true" value="Data Flow Node Factories"/>
+                <h:commandLink styleClass="tab" action="#{databroker.doToDataFlowsTab}" value="Data Flows"/>
+                <h:commandLink styleClass="tab-current" action="#{databroker.doToDataFlowNodeFactoriesTab}" value="Data Flow Node Factories"/>
             </h:form>
             <h:form styleClass="databroker">
                 <h:panelGroup styleClass="databroker" layout="block">
+                    <h:panelGroup styleClass="databroker-title" layout="block">
+                        <h:outputText styleClass="databroker-title" value="Data Flow Node Factories"/>
+                    </h:panelGroup>
                     <h:panelGroup styleClass="databroker-error" layout="block" rendered="#{not empty databroker.errorMessage}">
                         <h:outputText styleClass="databroker-error-title" value="Error Message: "/>
                         <h:outputText styleClass="databroker-error-message" value="#{databroker.errorMessage}"/>

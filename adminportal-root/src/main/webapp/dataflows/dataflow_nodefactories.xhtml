@@ -20,6 +20,11 @@
                 <ui:param name="doreloadobject" value="#{dataflow}"/>
                 <ui:param name="doreloadaction" value="doReload"/>
             </ui:include>
+            <h:form styleClass="tab-bar">
+                <h:commandLink styleClass="tab" action="#{dataflow.doToAttributesTab}" value="Data Flow Attributes"/>
+                <h:commandLink styleClass="tab" action="#{dataflow.doToNodesTab}#" value="Data Flow Nodes"/>
+                <h:commandLink styleClass="tab-current" action="#{dataflow.doToNodeFactoriesTab}" value="Data Flow Node Factories"/>
+            </h:form>
             <h:form styleClass="dataflow">
                 <h:panelGroup styleClass="dataflow" layout="block">
                     <h:panelGroup styleClass="dataflow-error" layout="block" rendered="#{not empty dataflow.errorMessage}">

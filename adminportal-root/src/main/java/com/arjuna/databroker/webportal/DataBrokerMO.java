@@ -107,7 +107,17 @@ public class DataBrokerMO implements Serializable
 
         reload();
 
+        return "#";
+    }
+
+    public String doToDataFlowsTab()
+    {
         return "/dataflows/databroker_dataflows?faces-redirect=true";
+    }
+
+    public String doToDataFlowNodeFactoriesTab()
+    {
+        return "/dataflows/databroker_dataflownodefactories?faces-redirect=true";
     }
 
     public String doRemoveDataFlow(String dataFlowId)

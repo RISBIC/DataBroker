@@ -113,7 +113,7 @@ public class MetadataListMO implements Serializable
 
         load();
 
-        return "/dataviews/metadatalist?faces-redirect=true";
+        return "#";
     }
 
     private void load()

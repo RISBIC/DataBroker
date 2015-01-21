@@ -123,7 +123,7 @@ public class MetadataMO implements Serializable
 
         load();
 
-        return "/dataviews/metadata?faces-redirect=true";
+        return "#";
     }
 
     private void load()
