@@ -104,6 +104,15 @@ public class DataViewMO implements Serializable
         return "#";
     }
 
+    public String doToPageReload()
+    {
+        logger.log(Level.FINE, "DataViewMO.doToPageReload: " + _serviceRootURL + ", " + _requesterId + ", " + _userId);
+
+        load();
+
+        return "/dataviews/dataview?faces-redirect=true";
+    }
+
     public void load()
     {
         logger.log(Level.FINE, "DataViewMO.load");

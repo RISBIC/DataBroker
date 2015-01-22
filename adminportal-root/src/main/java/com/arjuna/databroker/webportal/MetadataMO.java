@@ -126,6 +126,15 @@ public class MetadataMO implements Serializable
         return "#";
     }
 
+    public String doToPageReload()
+    {
+        logger.log(Level.FINE, "DataViewMO.doToPageReload: " + _serviceRootURL + ", " + _requesterId + ", " + _userId);
+
+        load();
+
+        return "/dataviews/metadata?faces-redirect=true";
+    }
+
     private void load()
     {
         logger.log(Level.FINE, "MetadataMO.load");
