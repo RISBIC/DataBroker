@@ -13,7 +13,7 @@
         <version>1.0.0p1m3l</version>
     </parent>
 
-    <artifactId>uaerportal-ear</artifactId>
+    <artifactId>userportal-ear</artifactId>
 
     <packaging>ear</packaging>
 
