@@ -36,6 +36,8 @@ a.searchhome-link
 	border-bottom-left-radius:	2em;
 	-moz-border-radius-bottomleft:	2em;
 	background-image:		url('pattern.png');
+	background-position:		right center;
+	background-repeat:		repeat-y;
 }
 
 a.searchhome-link:link

@@ -90,7 +90,7 @@
                         <webModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>adminportal-root</artifactId>
-                            <contextRoot>/adminportal</contextRoot>
+                            <contextRoot>/admin</contextRoot>
                         </webModule>
                     </modules>
                 </configuration>
