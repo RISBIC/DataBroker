@@ -21,8 +21,8 @@
                 <ui:param name="doreloadaction" value="doReload"/>
             </ui:include>
             <h:form styleClass="tab-bar">
-                <h:commandLink styleClass="tab-current" action="#" value="Data Flows"/>
-                <h:commandLink styleClass="tab" action="#" value="Data Flow Node Factories"/>
+                <h:commandLink styleClass="tab-current" action="#{databroker.doToDataFlowsTab}" value="Data Flows"/>
+                <h:commandLink styleClass="tab" action="#{databroker.doToDataFlowNodeFactoriesTab}" value="Data Flow Node Factories"/>
             </h:form>
             <h:form styleClass="databroker">
                 <h:panelGroup styleClass="databroker" layout="block">
@@ -48,53 +48,6 @@
                                 </f:facet>
                                 <h:commandLink styleClass="databroker-button" action="#{dataflow.doLoad(databroker.serviceRootURL, _dataFlowSummary.name)}" value="Examine"/>
                                 <h:commandLink styleClass="databroker-button" action="#{databroker.doRemoveDataFlow(_dataFlowSummary.name)}" value="Remove"/>
-                            </h:column>
-                        </h:dataTable>
-                        <h:panelGroup styleClass="databroker-title" layout="block">
-                            <h:outputText styleClass="databroker-title" value="Data Flow Node Factories"/>
-                        </h:panelGroup>
-                        <h:dataTable styleClass="databroker" headerClass="databroker-header" columnClasses="databroker-factories-column-name,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-create,databroker-factories-column-actions" value="#{databroker.dataFlowNodeFactorySummaries}" var="_dataFlowNodeFactorySummary">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Name"/>
-                                </f:facet>
-                                <h:outputText value="#{_dataFlowNodeFactorySummary.name}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Create Data Source"/>
-                                </f:facet>
-                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactorySummary.dataSourceFactory}" disabled="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Create Data Sink"/>
-                                </f:facet>
-                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactorySummary.dataSinkFactory}" disabled="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Create Data Processor"/>
-                                </f:facet>
-                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactorySummary.dataProcessorFactory}" disabled="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Create Data Service"/>
-                                </f:facet>
-                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactorySummary.dataServiceFactory}" disabled="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Create Data Store"/>
-                                </f:facet>
-                                <h:selectBooleanCheckbox value="#{_dataFlowNodeFactorySummary.dataStoreFactory}" disabled="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText styleClass="databroker-header" value="Actions"/>
-                                </f:facet>
-                                <h:commandLink styleClass="databroker-button" action="#" value="Examine"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>

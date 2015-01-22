@@ -243,7 +243,7 @@ public class DataFlowCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowCreateMO.doCancel");
 
-        return "/dataflows/databroker?faces-redirect=true";
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
     public String doCreate()
@@ -275,7 +275,7 @@ public class DataFlowCreateMO implements Serializable
     {
         logger.log(Level.FINE, "DataFlowCreateMO.doDone");
 
-        return "/dataflows/databroker?faces-redirect=true";
+        return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
     private String           _serviceRootURL;

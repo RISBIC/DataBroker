@@ -242,7 +242,7 @@ public class DataFlowMO implements Serializable
 
         load();
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_attributes?faces-redirect=true";
     }
 
     public String doReload()
@@ -251,7 +251,31 @@ public class DataFlowMO implements Serializable
 
         load();
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "#";
+    }
+
+    public String doReloadToNodesTab()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doReloadToNodesTab");
+
+        load();
+
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
+    }
+
+    public String doToAttributesTab()
+    {
+        return "/dataflows/dataflow_attributes?faces-redirect=true";
+    }
+
+    public String doToNodesTab()
+    {
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
+    }
+
+    public String doToNodeFactoriesTab()
+    {
+        return "/dataflows/dataflow_nodefactories?faces-redirect=true";
     }
 
     public String doRemoveSourceDataFlowNode()
@@ -275,9 +299,8 @@ public class DataFlowMO implements Serializable
         else
             _errorMessage = "Source node not specified";
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
-
 
     public String doRemoveProcessorDataFlowNode()
     {
@@ -300,7 +323,7 @@ public class DataFlowMO implements Serializable
         else
             _errorMessage = "Processor node not specified";
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveSinkDataFlowNode()
@@ -324,7 +347,7 @@ public class DataFlowMO implements Serializable
         else
             _errorMessage = "Sink node not specified";
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveServiceDataFlowNode()
@@ -348,7 +371,7 @@ public class DataFlowMO implements Serializable
         else
             _errorMessage = "Service node not specified";
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveStoreDataFlowNode()
@@ -372,7 +395,7 @@ public class DataFlowMO implements Serializable
         else
             _errorMessage = "Store node not specified";
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doCreateLink()
@@ -391,7 +414,7 @@ public class DataFlowMO implements Serializable
             _errorMessage = requestProblemException.getMessage();
         }
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveLink()
@@ -410,7 +433,7 @@ public class DataFlowMO implements Serializable
             _errorMessage = requestProblemException.getMessage();
         }
 
-        return "/dataflows/dataflow?faces-redirect=true";
+        return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public void load()

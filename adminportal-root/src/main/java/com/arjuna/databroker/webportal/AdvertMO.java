@@ -181,7 +181,7 @@ public class AdvertMO implements Serializable
 
             load();
 
-            return "/dataviews/dataadvert?faces-redirect=true";
+            return "/dataviews/dataadvert_tree?faces-redirect=true";
         }
     }
 
@@ -199,7 +199,7 @@ public class AdvertMO implements Serializable
 
             load();
 
-            return "/dataviews/dataadvert?faces-redirect=true";
+            return "/dataviews/dataadvert_tree?faces-redirect=true";
         }
     }
 
@@ -213,8 +213,18 @@ public class AdvertMO implements Serializable
 
             load();
 
-            return "/dataadverts/dataadvert?faces-redirect=true";
+            return "#";
         }
+    }
+
+    public String doToTreeTab()
+    {
+        return "/dataviews/dataadvert_tree?faces-redirect=true";
+    }
+
+    public String doToSearchTab()
+    {
+        return "/dataviews/dataadvert_search?faces-redirect=true";
     }
 
     public String doAsyncLoad(String serviceRootURL, String requesterId, String userId)
@@ -233,7 +243,7 @@ public class AdvertMO implements Serializable
 
             asyncLoad();
 
-            return "/dataviews/dataadvert?faces-redirect=true";
+            return "/dataviews/dataadvert_tree?faces-redirect=true";
         }
     }
 
@@ -251,7 +261,7 @@ public class AdvertMO implements Serializable
 
             asyncLoad();
 
-            return "/dataviews/dataadvert?faces-redirect=true";
+            return "/dataviews/dataadvert_tree?faces-redirect=true";
         }
     }
 
@@ -265,13 +275,13 @@ public class AdvertMO implements Serializable
 
             asyncLoad();
 
-            return "/dataadverts/dataadvert?faces-redirect=true";
+            return "/dataviews/dataadvert?faces-redirect=true";
         }
     }
 
     public String doRefresh()
     {
-        return "/dataadverts/dataadvert?faces-redirect=true";
+        return "/dataviews/dataadvert?faces-redirect=true";
     }
 
     private void load()

@@ -16,8 +16,7 @@ body
 {
 	margin:			0;
 	border:			0;
-	padding:		1em 8em 1em 8em;
-	height:			100%;
+	padding:		1em 4em 1em 4em;
 	background-image:	url('background.png.html'); /* Needing 'html' postfix looks like a bug in JSF */
 	background-position:	left top;
 	background-repeat:	no-repeat;
@@ -213,5 +212,93 @@ a.location-right:active
 {
 	background-color:	#777777;
 	color:			#EEEEEE;
+	text-decoration:	none;
+}
+
+form.tab-bar
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 2em 0em 1em;
+	background-color:	#EEA05D;
+}
+
+a.tab
+{
+	margin:				0 0 0 1em;
+	border:				0;
+	padding:			0.125em 1em 0.125em 1em;
+	font-size:			1em;
+	border-top-left-radius:		0.75em;
+	-moz-border-radius-topleft:	0.75em;
+	border-top-right-radius:	0.75em;
+	-moz-border-radius-topright:	0.75em;
+}
+
+a.tab:link
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.tab:visited
+{
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.tab:hover
+{
+	background-color:	#EE7711;
+	color:			#EEEEEE;
+	text-decoration:	none;	
+}
+
+a.tab:active
+{
+	background-color:	#FFFFFF;
+	color:			#CC7733;
+	text-decoration:	none;
+}
+
+a.tab-current
+{
+	margin:				0 0 0 1em;
+	border:				0;
+	padding:			0.125em 1em 0.125em 1em;
+	font-size:			1em;
+	border-top-left-radius:		0.75em;
+	-moz-border-radius-topleft:	0.75em;
+	border-top-right-radius:	0.75em;
+	-moz-border-radius-topright:	0.75em;
+}
+
+a.tab-current:link
+{
+	background-color:	#FFFFFF;
+	color:			#CC7733;
+	text-decoration:	none;	
+}
+
+a.tab-current:visited
+{
+	background-color:	#FFFFFF;
+	color:			#CC7733;
+	text-decoration:	none;	
+}
+
+a.tab-current:hover
+{
+	background-color:	#FFFFFF;
+	color:			#EE7711;
+	text-decoration:	none;	
+}
+
+a.tab-current:active
+{
+	background-color:	#FFFFFF;
+	color:			#EE7711;
 	text-decoration:	none;
 }
