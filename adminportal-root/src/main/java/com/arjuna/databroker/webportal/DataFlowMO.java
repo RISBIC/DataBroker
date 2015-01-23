@@ -34,22 +34,23 @@ public class DataFlowMO implements Serializable
         _serviceRootURL = null;
         _id             = null;
 
-        _attributes                 = null;
-        _properties                 = null;
-        _dataFlowNodesJSON          = null;
-        _dataFlowNodeId             = null;
-        _dataFlowNodeMetaProperties = null;
-        _dataFlowNodeAttributes     = null;
-        _dataFlowNodeProperties     = null;
-        _dataFlowNodeFactories      = null;
-        _sourceDataFlowNode         = "";
-        _processorDataFlowNode      = "";
-        _sinkDataFlowNode           = "";
-        _serviceDataFlowNode        = "";
-        _storeDataFlowNode          = "";
-        _linkSourceDataFlowNode     = "";
-        _linkSinkDataFlowNode       = "";
-        _linkedDataFlowNodes        = false;
+        _attributes                  = null;
+        _properties                  = null;
+        _dataFlowNodesJSON           = null;
+        _dataFlowNodeId              = null;
+        _dataFlowNodeMetaProperties  = null;
+        _dataFlowNodeAttributes      = null;
+        _dataFlowNodeProperties      = null;
+        _dataFlowNodeFactories       = null;
+        _selectedDataFlowNodeFactory = null;
+        _sourceDataFlowNode          = "";
+        _processorDataFlowNode       = "";
+        _sinkDataFlowNode            = "";
+        _serviceDataFlowNode         = "";
+        _storeDataFlowNode           = "";
+        _linkSourceDataFlowNode      = "";
+        _linkSinkDataFlowNode        = "";
+        _linkedDataFlowNodes         = false;
 
         _errorMessage = null;
     }
@@ -121,6 +122,11 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINER, "DataFlowMO.getSourceDataFlowNode: " + _sourceDataFlowNode);
 
         return _sourceDataFlowNode;
+    }
+
+    public DataFlowNodeFactorySummaryVO getSelectedDatFlowNodeFactory()
+    {
+        return _selectedDataFlowNodeFactory;
     }
 
     public void setSourceDataFlowNode(String sourceDataFlowNode)
@@ -436,6 +442,25 @@ public class DataFlowMO implements Serializable
         return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
+    public String doExamineDataFlowNodeFactory(String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataFlowMO.doExamineDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
+
+        try
+        {
+            _errorMessage = null;
+            for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _dataFlowNodeFactories)
+                if (dataFlowNodeFactorySummary.getName().equals(dataFlowNodeFactoryName))
+                    _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
+        }
+        catch (Throwable throwable)
+        {
+            _errorMessage = "Problem obtaining information about selected data flow node factory";
+        }
+
+        return "/dataflows/dataflow_nodefactory_attributes?faces-redirect=true";
+    }
+    
     public void load()
     {
         logger.log(Level.FINE, "DataFlowMO.load");
@@ -472,7 +497,7 @@ public class DataFlowMO implements Serializable
 
                 _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
                 for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
-                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
             }
             else
             {
@@ -584,6 +609,7 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeAttributes;
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
+    private DataFlowNodeFactorySummaryVO       _selectedDataFlowNodeFactory;
     private String                             _sourceDataFlowNode;
     private String                             _processorDataFlowNode;
     private String                             _sinkDataFlowNode;
