@@ -14,10 +14,10 @@ public class LocationVO implements Serializable
     {
     }
 
-    public LocationVO(String name, String page)
+    public LocationVO(String name, Location location)
     {
-        _name = name;
-        _page = page;
+        _name     = name;
+        _location = location;
     }
 
     public String getName()
@@ -30,16 +30,21 @@ public class LocationVO implements Serializable
         _name = name;
     }
 
-    public String getPage()
+    public Location getLocation()
     {
-        return _page;
+        return _location;
     }
 
-    public void setPage(String page)
+    public void setLocation(Location location)
     {
-        _page = page;
+        _location = location;
     }
 
-    private String _name;
-    private String _page;
+    public String doToPage()
+    {
+        return _location.doToPage();
+    }
+
+    private String   _name;
+    private Location _location;
 }
