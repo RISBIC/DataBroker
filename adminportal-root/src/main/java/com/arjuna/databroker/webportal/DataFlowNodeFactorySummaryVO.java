@@ -16,9 +16,10 @@ public class DataFlowNodeFactorySummaryVO implements Serializable
     {
     }
 
-    public DataFlowNodeFactorySummaryVO(String name, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
+    public DataFlowNodeFactorySummaryVO(Map<String, String> attributes, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
-        _name                 = name;
+    	_name                 = attributes.get("Name");
+        _attributes           = PropertyVO.fromMap(attributes);
         _properties           = PropertyVO.fromMap(properties);
         _dataSourceFactory    = dataSourceFactory;
         _dataSinkFactory      = dataSinkFactory;
@@ -32,9 +33,14 @@ public class DataFlowNodeFactorySummaryVO implements Serializable
         return _name;
     }
 
-    public void setName(String name)
+    public List<PropertyVO> getAttributes()
     {
-        _name = name;
+        return _attributes;
+    }
+
+    public void setAttributes(List<PropertyVO> attributes)
+    {
+        _attributes = attributes;
     }
 
     public List<PropertyVO> getProperties()
@@ -96,6 +102,7 @@ public class DataFlowNodeFactorySummaryVO implements Serializable
     }
 
     private String           _name;
+    private List<PropertyVO> _attributes;
     private List<PropertyVO> _properties;
     private boolean          _dataSourceFactory;
     private boolean          _dataSinkFactory;

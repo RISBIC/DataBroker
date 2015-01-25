@@ -15,9 +15,9 @@ public class DataFlowNodeFactorySummary implements Serializable
     {
     }
 
-    public DataFlowNodeFactorySummary(String name, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
+    public DataFlowNodeFactorySummary(Map<String, String> attributes, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
-        _name                 = name;
+        _attributes           = attributes;
         _properties           = properties;
         _dataSourceFactory    = dataSourceFactory;
         _dataSinkFactory      = dataSinkFactory;
@@ -26,14 +26,14 @@ public class DataFlowNodeFactorySummary implements Serializable
         _dataStoreFactory     = dataStoreFactory;
     }
 
-    public String getName()
+    public Map<String, String> getAttributes()
     {
-        return _name;
+        return _attributes;
     }
 
-    public void setName(String name)
+    public void setAttributes(Map<String, String> attributes)
     {
-        _name = name;
+        _attributes = attributes;
     }
 
     public Map<String, String> getProperties()
@@ -94,7 +94,7 @@ public class DataFlowNodeFactorySummary implements Serializable
         _dataStoreFactory = dataStoreFactory;
     }
 
-    private String              _name;
+    private Map<String, String> _attributes;
     private Map<String, String> _properties;
     private Boolean             _dataSourceFactory;
     private Boolean             _dataSinkFactory;

@@ -174,7 +174,7 @@ public class DataBrokerMO implements Serializable
                 for (DataFlowSummary dataFlowSummary: dataBrokerSummary.getDataFlowSummaries())
                     _dataFlowSummaries.add(new DataFlowSummaryVO(dataFlowSummary.getName()));
                 for (DataFlowNodeFactorySummary dataFlowNodeFactorySummary: dataBrokerSummary.getDataFlowNodeFactorySummaries())
-                    _dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getName(), dataFlowNodeFactorySummary.getProperties(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
+                    _dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getAttributes(), dataFlowNodeFactorySummary.getProperties(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
             }
             else
                 _errorMessage = "Unable to connect to DataBroker for information";

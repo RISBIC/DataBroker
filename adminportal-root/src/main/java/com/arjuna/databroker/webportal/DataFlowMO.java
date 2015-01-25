@@ -117,16 +117,16 @@ public class DataFlowMO implements Serializable
         return _dataFlowNodeFactories;
     }
 
+    public DataFlowNodeFactorySummaryVO getSelectedDataFlowNodeFactory()
+    {
+        return _selectedDataFlowNodeFactory;
+    }
+
     public String getSourceDataFlowNode()
     {
         logger.log(Level.FINER, "DataFlowMO.getSourceDataFlowNode: " + _sourceDataFlowNode);
 
         return _sourceDataFlowNode;
-    }
-
-    public DataFlowNodeFactorySummaryVO getSelectedDatFlowNodeFactory()
-    {
-        return _selectedDataFlowNodeFactory;
     }
 
     public void setSourceDataFlowNode(String sourceDataFlowNode)
@@ -447,11 +447,12 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doExamineDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
 
         try
-        {
+        {        	
             _errorMessage = null;
             for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _dataFlowNodeFactories)
-                if (dataFlowNodeFactorySummary.getName().equals(dataFlowNodeFactoryName))
-                    _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
+            	for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
+                    if (property.getName().equals("Name") && property.getValue().equals(dataFlowNodeFactoryName))
+                        _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
         }
         catch (Throwable throwable)
         {
@@ -497,7 +498,7 @@ public class DataFlowMO implements Serializable
 
                 _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
                 for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
-                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getAttributes(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
             }
             else
             {

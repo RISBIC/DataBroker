@@ -122,7 +122,7 @@ public class DataFlowClient
             {
                 DataFlowNodeFactoryDTO dataFlowNodeFactoryDTO = response.getEntity();
                 
-                return new DataFlowNodeFactorySummary(dataFlowNodeFactoryDTO.getName(), dataFlowNodeFactoryDTO.getProperties(), dataFlowNodeFactoryDTO.isDataSourceFactory(), dataFlowNodeFactoryDTO.isDataSinkFactory(), dataFlowNodeFactoryDTO.isDataProcessorFactory(), dataFlowNodeFactoryDTO.isDataServiceFactory(), dataFlowNodeFactoryDTO.isDataStoreFactory()
+                return new DataFlowNodeFactorySummary(dataFlowNodeFactoryDTO.getAttribute(), dataFlowNodeFactoryDTO.getProperties(), dataFlowNodeFactoryDTO.isDataSourceFactory(), dataFlowNodeFactoryDTO.isDataSinkFactory(), dataFlowNodeFactoryDTO.isDataProcessorFactory(), dataFlowNodeFactoryDTO.isDataServiceFactory(), dataFlowNodeFactoryDTO.isDataStoreFactory()
 );
             }
             else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
@@ -341,7 +341,7 @@ public class DataFlowClient
 
                 dataFlowNodeFactories.clear();
                 for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataFlow.getDataFlowNodeFactories())
-                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    dataFlowNodeFactories.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getAttribute(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 logger.log(Level.FINE, "DataFlowClient.getDataFlow: " + serviceRootURL + ", " + dataFlowId + ", " + attributes + ", " + properties + ", " + dataFlowNodeAttributesMap + ", " + dataFlowNodePropertiesMap + ", " + dataFlowNodeLinks + ", " + dataFlowNodeFactories);
 
