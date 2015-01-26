@@ -268,9 +268,9 @@ public class DataFlowClient
 
         try
         {
-            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/{dataflowiodeid}");
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/{dataflownodeid}");
             request.pathParameter("dataflowid", dataFlowId);
-            request.pathParameter("dataflowiodeid", dataFlowNodeid);
+            request.pathParameter("dataflownodeid", dataFlowNodeid);
             request.accept(MediaType.APPLICATION_JSON);
 
             ClientResponse<Boolean> response = request.delete(new GenericType<Boolean>() {});
@@ -295,6 +295,80 @@ public class DataFlowClient
             logger.log(Level.WARNING, "Problem in 'DataFlowClient.removeDataFlowNode'", throwable);
 
             throw new RequestProblemException("Problem requesting of removal data flow node");
+        }
+    }
+
+    public Boolean addDataFlowNodeFactory(String serviceRootURL, String dataFlowId, String dataFlowNodeFactoryName)
+        throws RequestProblemException
+    {
+        logger.log(Level.FINE, "DataFlowClient.addDataFlowNodeFactory: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeFactoryName);
+
+        try
+        {
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/_factories");
+            request.pathParameter("dataflowid", dataFlowId);
+            request.queryParameter("dataflownodefactoryname", dataFlowNodeFactoryName);
+            request.accept(MediaType.APPLICATION_JSON);
+
+            ClientResponse<Boolean> response = request.post(new GenericType<Boolean>() {});
+
+            if (response.getStatus() == HttpResponseCodes.SC_OK)
+                return response.getEntity();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
+            else
+            {
+                logger.log(Level.WARNING, "DataFlowClient.addDataFlowNodeFactory: status = " + response.getStatus());
+
+                throw new RequestProblemException("Problem during request of addition of data flow node factory");
+            }
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'DataFlowClient.addDataFlowNodeFactory'", throwable);
+
+            throw new RequestProblemException("Problem requesting of addition of data flow node factory");
+        }
+    }
+
+    public Boolean removeDataFlowNodeFactory(String serviceRootURL, String dataFlowId, String dataFlowNodeFactoryName)
+        throws RequestProblemException
+    {
+        logger.log(Level.FINE, "DataFlowClient.removeDataFlowNodeFactory: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeFactoryName);
+
+        try
+        {
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/_factories");
+            request.pathParameter("dataflowid", dataFlowId);
+            request.queryParameter("dataflownodefactoryname", dataFlowNodeFactoryName);
+            request.accept(MediaType.APPLICATION_JSON);
+
+            ClientResponse<Boolean> response = request.delete(new GenericType<Boolean>() {});
+
+            if (response.getStatus() == HttpResponseCodes.SC_OK)
+                return response.getEntity();
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
+            else
+            {
+                logger.log(Level.WARNING, "DataFlowClient.removeDataFlowNodeFactory: status = " + response.getStatus());
+
+                throw new RequestProblemException("Problem during request of removal of data flow node factory");
+            }
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'DataFlowClient.removeDataFlowNodeFactory'", throwable);
+
+            throw new RequestProblemException("Problem requesting of removal of data flow node factory");
         }
     }
 

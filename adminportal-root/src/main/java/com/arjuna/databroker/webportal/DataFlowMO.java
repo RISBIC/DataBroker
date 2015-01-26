@@ -483,6 +483,10 @@ public class DataFlowMO implements Serializable
         try
         {
             _errorMessage = null;
+            if (_dataFlowClient.addDataFlowNodeFactory(_serviceRootURL, _id, dataFlowNodeFactoryName))
+                load();
+            else
+                _errorMessage = "Problem adding selected data flow node factory to data flow";
         }
         catch (Throwable throwable)
         {
@@ -499,6 +503,10 @@ public class DataFlowMO implements Serializable
         try
         {
             _errorMessage = null;
+            if (_dataFlowClient.removeDataFlowNodeFactory(_serviceRootURL, _id, dataFlowNodeFactoryName))
+                load();
+            else
+                _errorMessage = "Problem adding selected data flow node factory to data flow";
         }
         catch (Throwable throwable)
         {
