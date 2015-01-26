@@ -160,6 +160,178 @@ td.databroker-factories-column-actions
 	text-align:		center;
 }
 
+table.databroker-attributes
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.databroker-attributes-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.databroker-attributes-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.databroker-attributes-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.databroker-attribute-name
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="text"][disabled].databroker-attribute-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+div.databroker-properties
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 0 1em 0;
+	width:			100%;
+}
+
+table.databroker-properties
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+th.databroker-properties-header
+{
+	margin:			0;
+	border:			0;
+	padding:		1em 1em 1em 1em;
+	background-color:	#CC7733;
+	color:			#EEEEEE;
+}
+
+td.databroker-properties-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.databroker-properties-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.databroker-property-name
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+textarea[disabled].databroker-property-value
+{
+	display:		block;
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	resize:			vertical;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+input[type="text"][disabled].databroker-property-value
+{
+	margin:			0;
+	border:			thin solid #CCCCCC;
+	padding:		0.5em 1em 0.5em 1em;
+	width:			100%;
+	box-sizing:		border-box;
+	font-size:		1em;
+	color:			#111111;
+}
+
+table.databroker-nodefactory
+{
+	margin:			0 -0.5em 0 -0.5em;
+	border:			0;
+	padding:		0;
+	width:			100%;
+	border-spacing:		0.5em;
+}
+
+td.databroker-nodefactory-column-one
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+	background-color:	#DDDDDD;
+	color:			#111111;
+	width:			20%;
+}
+
+td.databroker-nodefactory-column-two
+{
+	margin:			0;
+	border:			0;
+	padding:		0;
+	color:			#111111;
+	width:			80%;
+}
+
+span.databroker-nodefactory-name
+{
+	margin:			0;
+	border:			0;
+	padding:		0.5em 0.5em 0.5em 0.5em;
+}
+
+input[type="checkbox"][disabled].databroker-nodefactory-value
+{
+	width:			2em;
+	height:			2em;
+}
+
 span.databroker-actions
 {
 	margin:			0;

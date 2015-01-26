@@ -34,6 +34,7 @@ public class DataBrokerMO implements Serializable
         _serviceRootURL               = null;
         _dataFlowSummaries            = new LinkedList<DataFlowSummaryVO>();
         _dataFlowNodeFactorySummaries = new LinkedList<DataFlowNodeFactorySummaryVO>();
+        _selectedDataFlowNodeFactory  = null;
         _errorMessage                 = null;
     }
 
@@ -65,6 +66,11 @@ public class DataBrokerMO implements Serializable
     public void setDataFlowNodeFactorySummaries(List<DataFlowNodeFactorySummaryVO> dataFlowNodeFactorySummaries)
     {
         _dataFlowNodeFactorySummaries = dataFlowNodeFactorySummaries;
+    }
+
+    public DataFlowNodeFactorySummaryVO getSelectedDataFlowNodeFactory()
+    {
+        return _selectedDataFlowNodeFactory;
     }
 
     public String getErrorMessage()
@@ -138,6 +144,26 @@ public class DataBrokerMO implements Serializable
         return "/dataflows/databroker_dataflows?faces-redirect=true";
     }
 
+    public String doExamineDataFlowNodeFactory(String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataBrokerMO.doExamineDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
+
+        try
+        {
+            _errorMessage = null;
+            for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _dataFlowNodeFactorySummaries)
+                for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
+                    if (property.getName().equals("Name") && property.getValue().equals(dataFlowNodeFactoryName))
+                        _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
+        }
+        catch (Throwable throwable)
+        {
+            _errorMessage = "Problem obtaining information about selected data flow node factory";
+        }
+
+        return "/dataflows/databroker_dataflownodefactory_attributes?faces-redirect=true";
+    }
+
     private void removeDataFlow(String dataFlowName)
     {
         _errorMessage = null;
@@ -167,14 +193,22 @@ public class DataBrokerMO implements Serializable
 
         if (_serviceRootURL != null)
         {
-            DataBrokerSummary dataBrokerSummary = _dataBrokerClient.getDataBrokerSummaries(_serviceRootURL);
+            DataBrokerSummary dataBrokerSummary = null;
+            try
+            {
+                dataBrokerSummary = _dataBrokerClient.getDataBrokerSummaries(_serviceRootURL);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
             if (dataBrokerSummary != null)
             {
                 for (DataFlowSummary dataFlowSummary: dataBrokerSummary.getDataFlowSummaries())
                     _dataFlowSummaries.add(new DataFlowSummaryVO(dataFlowSummary.getName()));
                 for (DataFlowNodeFactorySummary dataFlowNodeFactorySummary: dataBrokerSummary.getDataFlowNodeFactorySummaries())
-                    _dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getName(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
+                    _dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getAttributes(), dataFlowNodeFactorySummary.getProperties(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
             }
             else
                 _errorMessage = "Unable to connect to DataBroker for information";
@@ -186,6 +220,7 @@ public class DataBrokerMO implements Serializable
     private String                             _serviceRootURL;
     private List<DataFlowSummaryVO>            _dataFlowSummaries;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactorySummaries;
+    private DataFlowNodeFactorySummaryVO       _selectedDataFlowNodeFactory;
     private String                             _errorMessage;
 
     @EJB
