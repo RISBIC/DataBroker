@@ -48,9 +48,26 @@
                                 <h:outputText styleClass="dataflow-property-name" value="#{_property.name}"/>
                             </h:column>
                             <h:column>
-                                <h:inputText styleClass="dataflow-property-value" value="#{_property.value}" disabled="true"/>
+                                <h:inputTextarea styleClass="dataflow-property-value" value="#{_property.value}" disabled="true"/>
                             </h:column>
                         </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="dataflow-properties" layout="block" rendered="#{not empty dataflow.selectedDataFlowNodeFactory}">
+                         <h:panelGroup styleClass="dataflow-title" layout="block">
+                            <h:outputText styleClass="dataflow-title" value="Creates"/>
+                        </h:panelGroup>
+                        <h:panelGrid styleClass="dataflow-nodefactory" columns="2" columnClasses="dataflow-nodefactory-column-one,dataflow-nodefactory-column-two">
+                            <h:outputText class="dataflow-nodefactory-name" value="Creates Data Source"/>
+                            <h:selectBooleanCheckbox class="dataflow-nodefactory-value" value="#{dataflow.selectedDataFlowNodeFactory.dataSourceFactory}" disabled="true"/>
+                            <h:outputText class="dataflow-nodefactory-name" value="Creates Data Sink"/>
+                            <h:selectBooleanCheckbox class="dataflow-nodefactory-value" value="#{dataflow.selectedDataFlowNodeFactory.dataSinkFactory}" disabled="true"/>
+                            <h:outputText class="dataflow-nodefactory-name" value="Creates Data Processor"/>
+                            <h:selectBooleanCheckbox class="dataflow-nodefactory-value" value="#{dataflow.selectedDataFlowNodeFactory.dataProcessorFactory}" disabled="true"/>
+                            <h:outputText class="dataflow-nodefactory-name" value="Creates Data Service"/>
+                            <h:selectBooleanCheckbox class="dataflow-nodefactory-value" value="#{dataflow.selectedDataFlowNodeFactory.dataServiceFactory}" disabled="true"/>
+                            <h:outputText class="dataflow-nodefactory-name" value="Creates Data Store"/>
+                            <h:selectBooleanCheckbox class="dataflow-nodefactory-value" value="#{dataflow.selectedDataFlowNodeFactory.dataStoreFactory}" disabled="true"/>
+                        </h:panelGrid>
                     </h:panelGroup>
                 </h:panelGroup>
             </h:form>

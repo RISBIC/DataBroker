@@ -80,15 +80,15 @@
                                     <h:outputText styleClass="dataflow-factories-header" value="Actions"/>
                                 </f:facet>
                                 <h:commandLink styleClass="dataflow-factory-button" action="#{dataflow.doExamineDataFlowNodeFactory(_dataFlowNodeFactory.name)}" value="Examine"/>
-                                <h:commandLink styleClass="dataflow-factory-button" action="#" value="Remove"/>
+                                <h:commandLink styleClass="dataflow-factory-button" action="#{dataflow.doRemoveDataFlowNodeFactory(_dataFlowNodeFactory.name)}" value="Uninstall"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>
                     <h:panelGroup styleClass="dataflow-title" layout="block">
                         <h:outputText styleClass="dataflow-title" value="Available Data Flow Node Factories"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="dataflow-factories" layout="block" rendered="#{not empty dataflow.dataFlowNodeFactories}">
-                        <h:dataTable styleClass="dataflow-factories" headerClass="dataflow-factories-header" columnClasses="dataflow-factories-column-name,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-actions" value="#{dataflow.dataFlowNodeFactories}" var="_dataFlowNodeFactory">
+                    <h:panelGroup styleClass="dataflow-factories" layout="block" rendered="#{not empty dataflow.availableDataFlowNodeFactories}">
+                        <h:dataTable styleClass="dataflow-factories" headerClass="dataflow-factories-header" columnClasses="dataflow-factories-column-name,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-create,dataflow-factories-column-actions" value="#{dataflow.availableDataFlowNodeFactories}" var="_dataFlowNodeFactory">
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputText value="Name"/>
@@ -130,7 +130,7 @@
                                     <h:outputText styleClass="dataflow-factories-header" value="Actions"/>
                                 </f:facet>
                                 <h:commandLink styleClass="dataflow-factory-button" action="#{dataflow.doExamineDataFlowNodeFactory(_dataFlowNodeFactory.name)}" value="Examine"/>
-                                <h:commandLink styleClass="dataflow-factory-button" action="#" value="Install"/>
+                                <h:commandLink styleClass="dataflow-factory-button" action="#{dataflow.doAddDataFlowNodeFactory(_dataFlowNodeFactory.name)}" value="Install"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>

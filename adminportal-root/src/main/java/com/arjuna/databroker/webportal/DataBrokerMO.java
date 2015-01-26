@@ -167,7 +167,15 @@ public class DataBrokerMO implements Serializable
 
         if (_serviceRootURL != null)
         {
-            DataBrokerSummary dataBrokerSummary = _dataBrokerClient.getDataBrokerSummaries(_serviceRootURL);
+            DataBrokerSummary dataBrokerSummary = null;
+            try
+            {
+                dataBrokerSummary = _dataBrokerClient.getDataBrokerSummaries(_serviceRootURL);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
 
             if (dataBrokerSummary != null)
             {

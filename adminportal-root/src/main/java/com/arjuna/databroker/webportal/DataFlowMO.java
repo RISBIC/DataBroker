@@ -7,6 +7,7 @@ package com.arjuna.databroker.webportal;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -15,6 +16,8 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import com.arjuna.databroker.webportal.comms.DataBrokerClient;
+import com.arjuna.databroker.webportal.comms.DataBrokerSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
@@ -115,6 +118,11 @@ public class DataFlowMO implements Serializable
     public List<DataFlowNodeFactorySummaryVO> getDataFlowNodeFactories()
     {
         return _dataFlowNodeFactories;
+    }
+
+    public List<DataFlowNodeFactorySummaryVO> getAvailableDataFlowNodeFactories()
+    {
+        return _availableDataFlowNodeFactories;
     }
 
     public DataFlowNodeFactorySummaryVO getSelectedDataFlowNodeFactory()
@@ -453,6 +461,12 @@ public class DataFlowMO implements Serializable
             	for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
                     if (property.getName().equals("Name") && property.getValue().equals(dataFlowNodeFactoryName))
                         _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
+
+            if (_selectedDataFlowNodeFactory == null)
+                for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _availableDataFlowNodeFactories)
+                    for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
+                        if (property.getName().equals("Name") && property.getValue().equals(dataFlowNodeFactoryName))
+                            _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
         }
         catch (Throwable throwable)
         {
@@ -461,7 +475,39 @@ public class DataFlowMO implements Serializable
 
         return "/dataflows/dataflow_nodefactory_attributes?faces-redirect=true";
     }
-    
+
+    public String doAddDataFlowNodeFactory(String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataFlowMO.doAddDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
+
+        try
+        {
+            _errorMessage = null;
+        }
+        catch (Throwable throwable)
+        {
+            _errorMessage = "Problem adding selected data flow node factory";
+        }
+
+        return "/dataflows/dataflow_nodefactories?faces-redirect=true";
+    }
+
+    public String doRemoveDataFlowNodeFactory(String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataFlowMO.doRemoveDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
+
+        try
+        {
+            _errorMessage = null;
+        }
+        catch (Throwable throwable)
+        {
+            _errorMessage = "Problem removing selected data flow node factory";
+        }
+
+        return "/dataflows/dataflow_nodefactories?faces-redirect=true";
+    }
+
     public void load()
     {
         logger.log(Level.FINE, "DataFlowMO.load");
@@ -478,6 +524,16 @@ public class DataFlowMO implements Serializable
             List<DataFlowNodeLinkSummary>    dataFlowNodeLinks         = new LinkedList<DataFlowNodeLinkSummary>();
             List<DataFlowNodeFactorySummary> dataFlowNodeFactories     = new LinkedList<DataFlowNodeFactorySummary>();
 
+            DataBrokerSummary dataBrokerSummary = null;
+            try
+            {
+                dataBrokerSummary = _dataBrokerClient.getDataBrokerSummaries(_serviceRootURL);
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+
             String id = null;
             try
             {
@@ -488,28 +544,43 @@ public class DataFlowMO implements Serializable
                 _errorMessage = requestProblemException.getMessage();
             }
 
-            if (id != null)
+            if ((id != null) && (dataBrokerSummary != null))
             {
+                _availableDataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
+                for (DataFlowNodeFactorySummary dataFlowNodeFactorySummary: dataBrokerSummary.getDataFlowNodeFactorySummaries())
+                    _availableDataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactorySummary.getAttributes(), dataFlowNodeFactorySummary.getProperties(), dataFlowNodeFactorySummary.isDataSourceFactory(), dataFlowNodeFactorySummary.isDataSinkFactory(), dataFlowNodeFactorySummary.isDataProcessorFactory(), dataFlowNodeFactorySummary.isDataServiceFactory(), dataFlowNodeFactorySummary.isDataStoreFactory()));
+
                 _attributes = PropertyVO.fromMap(attributesMap);
                 _properties = PropertyVO.fromMap(propertiesMap);
 
                 _dataFlowNodesJSON = dataFlowNodesToJSON(dataFlowNodeAttributesMap, dataFlowNodePropertiesMap, dataFlowNodeLinks);
                 logger.log(Level.FINER, "DataFlowMO.load - dataFlowNodesJSON = " + _dataFlowNodesJSON);
 
-                _dataFlowNodeFactories = new LinkedList<DataFlowNodeFactorySummaryVO>();
+                _dataFlowNodeFactories          = new LinkedList<DataFlowNodeFactorySummaryVO>();
                 for (DataFlowNodeFactorySummary dataFlowNodeFactory: dataFlowNodeFactories)
+                {
                     _dataFlowNodeFactories.add(new DataFlowNodeFactorySummaryVO(dataFlowNodeFactory.getAttributes(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+
+                    ListIterator<DataFlowNodeFactorySummaryVO> availableDataFlowNodeFactoryIterator = _availableDataFlowNodeFactories.listIterator();
+                    while (availableDataFlowNodeFactoryIterator.hasNext())
+                    {
+                        DataFlowNodeFactorySummaryVO availableDataFlowNodeFactory = availableDataFlowNodeFactoryIterator.next();
+                        if (availableDataFlowNodeFactory.getName().equals(dataFlowNodeFactory.getAttributes().get("Name")))
+                            availableDataFlowNodeFactoryIterator.remove();
+                    }
+                }
             }
             else
             {
-                _attributes                 = null;
-                _properties                 = null;
-                _dataFlowNodesJSON          = null;
-                _dataFlowNodeId             = null;
-                _dataFlowNodeMetaProperties = null;
-                _dataFlowNodeAttributes     = null;
-                _dataFlowNodeProperties     = null;
-                _dataFlowNodeFactories      = null;
+                _attributes                     = null;
+                _properties                     = null;
+                _dataFlowNodesJSON              = null;
+                _dataFlowNodeId                 = null;
+                _dataFlowNodeMetaProperties     = null;
+                _dataFlowNodeAttributes         = null;
+                _dataFlowNodeProperties         = null;
+                _dataFlowNodeFactories          = null;
+                _availableDataFlowNodeFactories = null;
 
                 if (_errorMessage == null)
                     _errorMessage = "Unsuccessful query of DataBroker!";
@@ -610,6 +681,7 @@ public class DataFlowMO implements Serializable
     private List<PropertyVO>                   _dataFlowNodeAttributes;
     private List<PropertyVO>                   _dataFlowNodeProperties;
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
+    private List<DataFlowNodeFactorySummaryVO> _availableDataFlowNodeFactories;
     private DataFlowNodeFactorySummaryVO       _selectedDataFlowNodeFactory;
     private String                             _sourceDataFlowNode;
     private String                             _processorDataFlowNode;
@@ -624,6 +696,9 @@ public class DataFlowMO implements Serializable
 
     @EJB
     private DataFlowClient _dataFlowClient;
+
+    @EJB
+    private DataBrokerClient _dataBrokerClient;
 
     @EJB
     private DataFlowNodeLinkClient _dataFlowNodeLinkClient;
