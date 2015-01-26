@@ -75,7 +75,7 @@
                                 <f:facet name="header">
                                     <h:outputText styleClass="databroker-header" value="Actions"/>
                                 </f:facet>
-                                <h:commandLink styleClass="databroker-button" action="#" value="Examine"/>
+                                <h:commandLink styleClass="databroker-button" action="#{databroker.doExamineDataFlowNodeFactory(_dataFlowNodeFactorySummary.name)}" value="Examine"/>
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>

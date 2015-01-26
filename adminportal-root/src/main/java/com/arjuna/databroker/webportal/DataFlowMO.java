@@ -455,7 +455,7 @@ public class DataFlowMO implements Serializable
         logger.log(Level.FINE, "DataFlowMO.doExamineDataFlowNodeFactory: [" + dataFlowNodeFactoryName + "]");
 
         try
-        {        	
+        {
             _errorMessage = null;
             for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _dataFlowNodeFactories)
             	for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
