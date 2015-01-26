@@ -223,7 +223,7 @@ public class DataFlowNodeCreateMO implements Serializable
         try
         {
             DataFlowNodeFactorySummary dataFlowNodeFactorySummary = _dataFlowClient.getFactoryInfo(_serviceRootURL, _dataFlowId, _factoryName);
-            _factoryName       = dataFlowNodeFactorySummary.getName();
+            _factoryName       = dataFlowNodeFactorySummary.getAttributes().get("Name");
             _factoryProperties = new LinkedList<PropertyVO>();
             for (Entry<String, String> property: dataFlowNodeFactorySummary.getProperties().entrySet())
                 _factoryProperties.add(new PropertyVO(property.getKey(), property.getValue()));

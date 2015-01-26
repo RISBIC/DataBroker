@@ -5,6 +5,7 @@
 package com.arjuna.databroker.control.comms;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DataFlowNodeFactoryDTO implements Serializable
@@ -17,7 +18,8 @@ public class DataFlowNodeFactoryDTO implements Serializable
 
     public DataFlowNodeFactoryDTO(String name, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
-        _name                 = name;
+        _attributes           = new HashMap<String, String>();
+        _attributes.put("Name", name);
         _properties           = properties;
         _dataSourceFactory    = dataSourceFactory;
         _dataSinkFactory      = dataSinkFactory;
@@ -26,14 +28,25 @@ public class DataFlowNodeFactoryDTO implements Serializable
         _dataStoreFactory     = dataStoreFactory;
     }
 
-    public String getName()
+    public DataFlowNodeFactoryDTO(Map<String, String> attributes, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
-        return _name;
+        _attributes           = attributes;
+        _properties           = properties;
+        _dataSourceFactory    = dataSourceFactory;
+        _dataSinkFactory      = dataSinkFactory;
+        _dataProcessorFactory = dataProcessorFactory;
+        _dataServiceFactory   = dataServiceFactory;
+        _dataStoreFactory     = dataStoreFactory;
     }
 
-    public void setName(String name)
+    public Map<String, String> getAttribute()
     {
-        _name = name;
+        return _attributes;
+    }
+
+    public void setAttribute(Map<String, String> attributes)
+    {
+    	_attributes = attributes;
     }
 
     public Map<String, String> getProperties()
@@ -94,7 +107,7 @@ public class DataFlowNodeFactoryDTO implements Serializable
         _dataStoreFactory = dataStoreFactory;
     }
 
-    private String              _name;
+    private Map<String, String> _attributes;
     private Map<String, String> _properties;
     private Boolean             _dataSourceFactory;
     private Boolean             _dataSinkFactory;

@@ -33,6 +33,7 @@ import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataFlowInventory;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataFlowNodeFactory;
+import com.arjuna.databroker.data.DataFlowNodeFactoryInventory;
 import com.arjuna.databroker.data.DataProcessor;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataService;
@@ -383,6 +384,66 @@ public class DataFlowWS
             throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
     }
 
+    @POST
+    @Path("{dataflowid}/_factories")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean addDataFlowNodeFactoryJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodefactoryname") String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataFlowWS.addDataFlowNodeFactoryJSON: " + dataFlowId + ", " + dataFlowNodeFactoryName);
+
+        if (_dataFlowInventory != null)
+        {
+            if ((dataFlowId != null) && (dataFlowNodeFactoryName != null))
+            {
+                DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
+
+                if ((dataFlow != null) && (dataFlow.getDataFlowNodeFactoryInventory() != null))
+                {
+                    DataFlowNodeFactory dataFlowNodeFactory = _dataFlowNodeFactoryInventory.getDataFlowNodeFactory(dataFlowNodeFactoryName);
+
+                    if (dataFlowNodeFactory != null)
+                    {
+                        dataFlow.getDataFlowNodeFactoryInventory().addDataFlowNodeFactory(dataFlowNodeFactory);
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                    throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+            }
+            else
+                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+        }
+        else
+            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    }
+
+    @DELETE
+    @Path("{dataflowid}/_factories")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean removeDataFlowNodeFactoryJSON(@PathParam("dataflowid") String dataFlowId, @QueryParam("dataflownodefactoryname") String dataFlowNodeFactoryName)
+    {
+        logger.log(Level.FINE, "DataFlowWS.removeDataFlowNodeFactoryJSON: " + dataFlowId + ", " + dataFlowNodeFactoryName);
+
+        if (_dataFlowInventory != null)
+        {
+            if ((dataFlowId != null) && (dataFlowNodeFactoryName != null))
+            {
+                DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
+
+                if ((dataFlow != null) && (dataFlow.getDataFlowNodeFactoryInventory() != null))
+                    return dataFlow.getDataFlowNodeFactoryInventory().removeDataFlowNodeFactory(dataFlowNodeFactoryName);
+                else
+                    throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+            }
+            else
+                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+        }
+        else
+            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+    }
+
     private List<DataFlowNodeLinkDTO> getDataFlowLinks(DataProvider<?> dataProducer)
     {
         List<DataFlowNodeLinkDTO> dataFlowLinks = new LinkedList<DataFlowNodeLinkDTO>();
@@ -399,6 +460,8 @@ public class DataFlowWS
 
     @EJB(name="DataFlowInventory")
     private DataFlowInventory _dataFlowInventory;
+    @EJB(name="DataFlowNodeFactoryInventory")
+    private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory;
     @EJB(name="DataFlowNodeLifeCycleControl")
     private DataFlowNodeLifeCycleControl _dataFlowNodeLifeCycleControl;
 }

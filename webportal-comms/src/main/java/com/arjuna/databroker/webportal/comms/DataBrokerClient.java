@@ -23,6 +23,7 @@ public class DataBrokerClient
     private static final Logger logger = Logger.getLogger(DataBrokerClient.class.getName());
 
     public DataBrokerSummary getDataBrokerSummaries(String serviceRootURL)
+        throws RequestProblemException
     {
         logger.log(Level.FINE, "DataBrokerClient.getDataBrokerSummaries: " + serviceRootURL);
 
@@ -43,22 +44,24 @@ public class DataBrokerClient
 
                 List<DataFlowNodeFactorySummary> dataFlowNodeFactorySummaries = new LinkedList<DataFlowNodeFactorySummary>();
                 for (DataFlowNodeFactoryDTO dataFlowNodeFactory: dataBrokerDTO.getDataFlowNodeFactories())
-                    dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getName(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
+                    dataFlowNodeFactorySummaries.add(new DataFlowNodeFactorySummary(dataFlowNodeFactory.getAttribute(), dataFlowNodeFactory.getProperties(), dataFlowNodeFactory.isDataSourceFactory(), dataFlowNodeFactory.isDataSinkFactory(), dataFlowNodeFactory.isDataProcessorFactory(), dataFlowNodeFactory.isDataServiceFactory(), dataFlowNodeFactory.isDataStoreFactory()));
 
                 return new DataBrokerSummary(dataFlowSummaries, dataFlowNodeFactorySummaries);
             }
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
             else
             {
                 logger.log(Level.WARNING, "DataBrokerClient.getDataBrokerSummaries: status = " + response.getStatus());
 
-                return null;
+                throw new RequestProblemException("Problem during request of data broker summary");
             }
         }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataBrokerClient.getDataBrokerSummaries'", throwable);
 
-            return null;
+            throw new RequestProblemException("Problem during request of data broker summary");
         }
     }
 }

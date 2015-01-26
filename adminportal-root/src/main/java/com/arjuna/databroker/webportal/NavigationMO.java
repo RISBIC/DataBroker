@@ -21,10 +21,10 @@ public class NavigationMO implements Serializable
     {
         _locations = new LinkedList<LocationVO>();
 
-        _locations.add(new LocationVO("Home", "/index?faces-redirect=true"));
-        _locations.add(new LocationVO("Search", "/search/searchhome?faces-redirect=true"));
-        _locations.add(new LocationVO("Create", "/create/createhome?faces-redirect=true"));
-        _locations.add(new LocationVO("Config", "/config/confighome?faces-redirect=true"));
+        _locations.add(new LocationVO("Home", new FixedLocation("/index?faces-redirect=true")));
+        _locations.add(new LocationVO("Search", new FixedLocation("/search/searchhome?faces-redirect=true")));
+        _locations.add(new LocationVO("Create", new FixedLocation("/create/createhome?faces-redirect=true")));
+        _locations.add(new LocationVO("Config", new FixedLocation("/config/confighome?faces-redirect=true")));
     }
 
     public List<LocationVO> getLocations()
@@ -34,7 +34,7 @@ public class NavigationMO implements Serializable
 
     public String doGoTo(String name)
     {
-        String page = null;
+        Location location = null;
 
         ListIterator<LocationVO> locationIterator = _locations.listIterator();
 
@@ -42,8 +42,8 @@ public class NavigationMO implements Serializable
         {
             LocationVO currentLocation = locationIterator.next();
 
-            if ((page == null) && name.equals(currentLocation.getName()))
-                page = currentLocation.getPage();
+            if ((location == null) && name.equals(currentLocation.getName()))
+                location = currentLocation.getLocation();
 
 //            if (page != null)
 //                locationIterator.remove();
@@ -51,8 +51,8 @@ public class NavigationMO implements Serializable
 //                page = currentLocation.getPage();
         }
 
-        if (page != null)
-            return page;
+        if (location != null)
+            return location.doToPage();
         else
             return "#";
     }
