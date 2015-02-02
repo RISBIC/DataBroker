@@ -20,17 +20,17 @@
             <h:form styleClass="dataflow">
                 <h:panelGroup styleClass="dataflow" layout="block">
                         <h:panelGroup styleClass="dataflow-title" layout="block">
-                            <h:outputText styleClass="dataflow-title" value="Data Flow Node Factory"/>
+                            <h:outputText styleClass="dataflow-title" value="Data Flow Node"/>
                         </h:panelGroup>
                     <h:panelGroup styleClass="dataflow-error" layout="block" rendered="#{not empty dataflow.errorMessage}">
                         <h:outputText styleClass="dataflow-error-title" value="Error Message: "/>
                         <h:outputText styleClass="dataflow-error-message" value="#{dataflow.errorMessage}"/>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="dataflow-attributes" layout="block" rendered="#{not empty dataflow.selectedDataFlowNodeFactory}">
+                    <h:panelGroup styleClass="dataflow-attributes" layout="block" rendered="#{not empty dataflow.selectedDataFlowNode}">
                         <h:panelGroup styleClass="dataflow-title" layout="block">
                             <h:outputText styleClass="dataflow-title" value="Attributes"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflow-attributes" headerClass="dataflow-attributes-header" columnClasses="dataflow-attributes-column-one,dataflow-attributes-column-two" value="#{dataflow.selectedDataFlowNodeFactory.attributes}" var="_attribute">
+                        <h:dataTable styleClass="dataflow-attributes" headerClass="dataflow-attributes-header" columnClasses="dataflow-attributes-column-one,dataflow-attributes-column-two" value="#{dataflow.selectedDataFlowNode.attributes}" var="_attribute">
                             <h:column>
                                <h:outputText styleClass="dataflow-attribute-name" value="#{_attribute.name}"/>
                             </h:column>
@@ -43,7 +43,7 @@
                         <h:panelGroup styleClass="dataflow-title" layout="block">
                             <h:outputText styleClass="dataflow-title" value="Properties"/>
                         </h:panelGroup>
-                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.selectedDataFlowNodeFactory.properties}" var="_property">
+                        <h:dataTable styleClass="dataflow-properties" headerClass="dataflow-properties-header" columnClasses="dataflow-properties-column-one,dataflow-properties-column-two" value="#{dataflow.selectedDataFlowNode.properties}" var="_property">
                             <h:column>
                                 <h:outputText styleClass="dataflow-property-name" value="#{_property.name}"/>
                             </h:column>
