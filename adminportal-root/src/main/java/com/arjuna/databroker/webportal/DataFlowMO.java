@@ -46,6 +46,7 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeProperties      = null;
         _dataFlowNodeFactories       = null;
         _selectedDataFlowNodeFactory = null;
+        _dataFlowNode                = "";
         _sourceDataFlowNode          = "";
         _processorDataFlowNode       = "";
         _sinkDataFlowNode            = "";
@@ -128,6 +129,20 @@ public class DataFlowMO implements Serializable
     public DataFlowNodeFactorySummaryVO getSelectedDataFlowNodeFactory()
     {
         return _selectedDataFlowNodeFactory;
+    }
+
+    public String getDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getDataFlowNode: " + _dataFlowNode);
+
+        return _dataFlowNode;
+    }
+
+    public void setDataFlowNode(String dataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setDataFlowNode: " + dataFlowNode);
+
+        _dataFlowNode = dataFlowNode;
     }
 
     public String getSourceDataFlowNode()
@@ -290,6 +305,11 @@ public class DataFlowMO implements Serializable
     public String doToNodeFactoriesTab()
     {
         return "/dataflows/dataflow_nodefactories?faces-redirect=true";
+    }
+
+    public String doExamineDataFlowNode()
+    {
+        return "/dataflows/dataflow_node_attributes?faces-redirect=true";
     }
 
     public String doRemoveSourceDataFlowNode()
@@ -594,6 +614,7 @@ public class DataFlowMO implements Serializable
                     _errorMessage = "Unsuccessful query of DataBroker!";
             }
 
+            _dataFlowNode           = "";
             _sourceDataFlowNode     = "";
             _processorDataFlowNode  = "";
             _sinkDataFlowNode       = "";
@@ -691,6 +712,7 @@ public class DataFlowMO implements Serializable
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
     private List<DataFlowNodeFactorySummaryVO> _availableDataFlowNodeFactories;
     private DataFlowNodeFactorySummaryVO       _selectedDataFlowNodeFactory;
+    private String                             _dataFlowNode;
     private String                             _sourceDataFlowNode;
     private String                             _processorDataFlowNode;
     private String                             _sinkDataFlowNode;

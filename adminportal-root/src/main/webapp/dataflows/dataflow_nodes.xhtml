@@ -52,6 +52,9 @@
                             </script>
                         </div>
                     </h:panelGroup>
+                    <a4j:jsFunction name="selectDataFlowNode" render="operations_upper,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.dataFlowNode}"/>
+                    </a4j:jsFunction>
                     <a4j:jsFunction name="selectSourceDataFlowNode" render="operations_upper,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.sourceDataFlowNode}"/>
                     </a4j:jsFunction>
@@ -76,6 +79,9 @@
                     <a4j:jsFunction name="linkedDataFlowNodes" render="operations_upper,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.linkedDataFlowNodes}"/>
                     </a4j:jsFunction>
+                    <h:panelGroup id="operations_upper" styleClass="dataflow-actions" layout="block">
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doExamineDataFlowNode()}" value="Examine Node" disabled="#{empty dataflow.selectedDataFlowNode}"/>
+                    </h:panelGroup>
                     <h:panelGroup id="operations_upper" styleClass="dataflow-actions" layout="block">
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor"/>
