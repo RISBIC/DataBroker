@@ -1,0 +1,132 @@
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+  font-family: 'Raleway', sans-serif;
+}
+
+h2.has-add-new {
+  position: relative;
+}
+
+h2.has-add-new a{
+  position: absolute;
+  top: 0;
+  margin-left: 10px;
+}
+
+a {
+  -webkit-transition: color .25s ease-in-out;
+  -moz-transition: color .25s ease-in-out;
+  -o-transition: color .25s ease-in-out;
+  transition: color .25s ease-in-out;
+}
+
+a:hover, a:active {
+  text-decoration: none;
+  color: #660000;
+}
+
+a:visited {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+html, body {
+  height: 100%;
+  color: #464646;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -280px;
+}
+
+.push {
+  height: 280px;
+}
+
+.footer {
+  height: 280px;
+  padding: 40px 0;
+  background-color: #f5f5f5;
+}
+
+body {
+  background-color: #F7F7F7;
+}
+
+.header, .footer {
+  background-color: #FCFCFC;
+}
+
+.header {
+  -webkit-box-shadow: 0px 1px 5px 0px #d0d0d0;
+  -moz-box-shadow: 0px 1px 5px 0px #d0d0d0;
+  box-shadow: 0px 1px 5px 0px #d0d0d0;
+}
+
+.header .title {
+  float: left;
+  line-height: 40px;
+  margin: 5px 0;
+}
+
+.header .navigation {
+  float: left;
+}
+
+.header .navigation .navigation-item {
+  text-align: center;
+  line-height: 20px;
+  display: block;
+  float: left;
+  padding: 5px 10px;
+  margin: 0 10px;
+  color: inherit
+  /*border-bottom: 5px solid #a80000;*/
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.header .navigation .navigation-item:hover {
+  opacity: 1;
+  color: #a80000;
+  text-decoration: none;
+}
+
+.header .navigation .navigation-item i {
+  line-height: 55px;
+  display: block;
+  font-size: 25px;
+  text-align: center;
+}
+
+.header .navigation .navigation-item span {
+  line-height: 20px;
+}
+
+.header .header-login {
+  margin: 10px 0;
+}
+
+.header .header-login .input-group {
+  margin: 0 0 5px 0;
+}
+
+.header .header-login .input-group i {
+  width: 12px;
+  text-align: center;
+}
+
+.footer {
+  -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
+  -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;
+  box-shadow:         0px -1px 5px 0px #d0d0d0;
+}
+
+.content {
+  padding: 20px 0;
+}
