@@ -11,7 +11,7 @@
 
 angular.module('authentication', []);
 angular.module('core', []);
-angular.module('listings', []);
+angular.module('licences', []);
 angular.module('users', []);
 
 angular.module('authentication').constant('AUTH_EVENTS', {
@@ -65,7 +65,7 @@ angular.module('authentication').config(['$httpProvider', function ($httpProvide
 
 }]);
 
-var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.router', 'authentication', 'core', 'listings', 'users'];
+var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.router', 'authentication', 'core', 'licences', 'users'];
 
 var app = angular.module('mainApp', modules);
 
@@ -77,13 +77,11 @@ app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, Authentication
 
   $rootScope.global = Global;
 
-
-
   $rootScope.$on('$stateChangeStart', function (event, next) {
 
     var authorizedRoles = next.data.authorizedRoles;
 
-    if(next.name === 'authentication.login' || next.name === 'authentication.login'){
+    if(next.name === 'login'){
       if(Global.session !== null){
         event.preventDefault();}
     }

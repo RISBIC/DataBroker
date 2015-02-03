@@ -23,7 +23,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="wrapper">
+    <div class="wrapper" ng-controller="ApplicationController">
       <header class="header" ng-include="'core/views/header.view.html'"></header>
       <section class="content">
         <div class="container" ui-view=""></div>
@@ -74,9 +74,9 @@
     <script src="core/config/core.routes.js"></script>
     <script src="core/controllers/application.controller.js"></script>
     <script src="core/services/global.service.js"></script>
-    <script src="listings/config/listings.routes.js"></script>
-    <script src="listings/controllers/listings.controller.js"></script>
-    <script src="listings/services/listings.service.js"></script>
+    <script src="licences/config/licences.routes.js"></script>
+    <script src="licences/controllers/licences.controller.js"></script>
+    <script src="licences/services/licences.service.js"></script>
     <script src="users/config/interceptor.config.js"></script>
     <script src="users/config/users.routes.js"></script>
     <script src="users/controllers/users.controller.js"></script>

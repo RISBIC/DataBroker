@@ -85,6 +85,8 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
 
       //return (this.isAuthenticated() && (authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
 
+      $log.info(Global);
+
       return ((authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
 
     }

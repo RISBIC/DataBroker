@@ -8,11 +8,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
     $stateProvider.
       state('home', {
-        url: '/',
+        url: '/home',
         templateUrl: 'core/views/home.view.html',
         controller: 'ApplicationController',
         data: {
-          authorizedRoles: ['public']
+          authorizedRoles: ['user']
         }
       });
   }
