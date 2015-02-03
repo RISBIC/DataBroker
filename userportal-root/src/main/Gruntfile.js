@@ -301,27 +301,16 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          flatten: true,
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            '*/assets/images/**/*.{webp}'
+            '*/views/**/*.html',
+            '*/assets/images/**/*.{webp}',
+            '*/assets/fonts/**/*.*'
           ]
-        }, {
-          expand: true,
-          flatten: true,
-          filter: 'isFile',
-          dest: '<%= yeoman.dist %>/fonts',
-          src: [ '<%= yeoman.app %>/**/fonts/**/*.*']
-        }, {
-          expand: true,
-          flatten: true,
-          filter: 'isFile',
-          dest: '<%= yeoman.dist %>/views',
-          src: [ '<%= yeoman.app %>/**/views/**/*.html']
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -341,7 +330,7 @@ module.exports = function (grunt) {
       },
       styles: {
         expand: true,
-        cwd: '<%= yeoman.app %>/styles',
+        cwd: '<%= yeoman.app %>/',
         dest: '.tmp/styles/',
         src: '**/*.css'
       }
