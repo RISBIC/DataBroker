@@ -22,6 +22,7 @@ import com.arjuna.databroker.webportal.comms.DataFlowClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkClient;
+import com.arjuna.databroker.webportal.comms.DataFlowNodeSummary;
 import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
@@ -309,7 +310,32 @@ public class DataFlowMO implements Serializable
 
     public String doExamineDataFlowNode()
     {
-        return "/dataflows/dataflow_node_attributes?faces-redirect=true";
+        logger.log(Level.FINE, "DataFlowMO.doExamineDataFlowNode: [" + _dataFlowNode + "]");
+
+        if ((_dataFlowNode != null) && (! "".equals(_dataFlowNode)))
+        {
+            _errorMessage = null;
+            try
+            {
+                DataFlowNodeSummary dataFlowNodeSummary = _dataFlowClient.getDataFlowNodeInfo(_serviceRootURL, _id, _dataFlowNode);
+
+                _dataFlowNodeAttributes = new LinkedList<PropertyVO>();
+                _dataFlowNodeAttributes.add(new PropertyVO("Name", dataFlowNodeSummary.getName()));
+                _dataFlowNodeAttributes.add(new PropertyVO("Type", dataFlowNodeSummary.getType()));
+                _dataFlowNodeProperties = PropertyVO.fromMap(dataFlowNodeSummary.getProperties());
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Processor node not specified";
+
+        if (_errorMessage == null)
+            return "/dataflows/dataflow_node_attributes?faces-redirect=true";
+        else
+            return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveSourceDataFlowNode()

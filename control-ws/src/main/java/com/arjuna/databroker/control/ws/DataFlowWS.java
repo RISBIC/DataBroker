@@ -359,6 +359,56 @@ public class DataFlowWS
         return dataFlowDTO;
     }
 
+    @GET
+    @Path("{dataflowid}/{dataflownodeid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public DataFlowNodeDTO getDataFlowNodeJSON(@PathParam("dataflowid") String dataFlowId, @PathParam("dataflownodeid") String dataflowNodeId)
+    {
+        logger.log(Level.FINE, "DataFlowWS.getDataFlowNodeJSON: " + dataFlowId + ", " + dataflowNodeId);
+
+        DataFlowNodeDTO dataFlowNodeDTO = new DataFlowNodeDTO();
+        if (_dataFlowInventory != null)
+        {
+            if (dataFlowId != null)
+            {
+                DataFlow dataFlow = _dataFlowInventory.getDataFlow(dataFlowId);
+
+                if (dataFlow != null)
+                {
+                    DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataflowNodeId);
+                    
+                    if (dataFlowNode != null)
+                    {
+                        dataFlowNodeDTO.setName(dataFlowNode.getName());
+
+                        if (dataFlowNode instanceof DataSource)
+                            dataFlowNodeDTO.setType("DataSource");
+                        else if (dataFlowNode instanceof DataSink)
+                            dataFlowNodeDTO.setType("DataSink");
+                        else if (dataFlowNode instanceof DataProcessor)
+                            dataFlowNodeDTO.setType("DataProcessor");
+                        else if (dataFlowNode instanceof DataService)
+                            dataFlowNodeDTO.setType("DataService");
+                        else if (dataFlowNode instanceof DataStore)
+                            dataFlowNodeDTO.setType("DataStore");
+
+                        dataFlowNodeDTO.setProperties(dataFlowNode.getProperties());
+                    }
+                    else
+                        throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+                }
+                else
+                    throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+            }
+            else
+                throw new WebApplicationException(HttpURLConnection.HTTP_NOT_FOUND);
+        }
+        else
+            throw new WebApplicationException(HttpURLConnection.HTTP_INTERNAL_ERROR);
+
+        return dataFlowNodeDTO;
+    }
+
     @DELETE
     @Path("{dataflowid}/{dataflownodeid}")
     @Produces(MediaType.APPLICATION_JSON)

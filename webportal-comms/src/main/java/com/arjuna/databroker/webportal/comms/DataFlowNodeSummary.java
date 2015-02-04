@@ -2,26 +2,20 @@
  * Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.databroker.control.comms;
+package com.arjuna.databroker.webportal.comms;
 
 import java.io.Serializable;
 import java.util.Map;
 
-public class DataFlowNodeDTO implements Serializable
+public class DataFlowNodeSummary implements Serializable
 {
-    private static final long serialVersionUID = 5190675476292790717L;
+    private static final long serialVersionUID = -5710731910468133935L;
 
-    public static final String DATASOURCE_TYPE    = "DataSource";
-    public static final String DATASINK_TYPE      = "DataSink";
-    public static final String DATAPROCESSOR_TYPE = "DataProcessor";
-    public static final String DATASERVICE_TYPE   = "DataService";
-    public static final String DATASTORE_TYPE     = "DataStore";
-
-    public DataFlowNodeDTO()
+    public DataFlowNodeSummary()
     {
     }
 
-    public DataFlowNodeDTO(String name, String type, Map<String, String> properties)
+    public DataFlowNodeSummary(String name, String type, Map<String, String> properties)
     {
         _name       = name;
         _type       = type;

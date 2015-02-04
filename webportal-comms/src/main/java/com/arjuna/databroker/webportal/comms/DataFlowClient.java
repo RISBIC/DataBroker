@@ -121,9 +121,8 @@ public class DataFlowClient
             if (response.getStatus() == HttpResponseCodes.SC_OK)
             {
                 DataFlowNodeFactoryDTO dataFlowNodeFactoryDTO = response.getEntity();
-                
-                return new DataFlowNodeFactorySummary(dataFlowNodeFactoryDTO.getAttribute(), dataFlowNodeFactoryDTO.getProperties(), dataFlowNodeFactoryDTO.isDataSourceFactory(), dataFlowNodeFactoryDTO.isDataSinkFactory(), dataFlowNodeFactoryDTO.isDataProcessorFactory(), dataFlowNodeFactoryDTO.isDataServiceFactory(), dataFlowNodeFactoryDTO.isDataStoreFactory()
-);
+
+                return new DataFlowNodeFactorySummary(dataFlowNodeFactoryDTO.getAttribute(), dataFlowNodeFactoryDTO.getProperties(), dataFlowNodeFactoryDTO.isDataSourceFactory(), dataFlowNodeFactoryDTO.isDataSinkFactory(), dataFlowNodeFactoryDTO.isDataProcessorFactory(), dataFlowNodeFactoryDTO.isDataServiceFactory(), dataFlowNodeFactoryDTO.isDataStoreFactory());
             }
             else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
                 throw new RequestProblemException(response.getEntity(String.class));
@@ -260,6 +259,48 @@ public class DataFlowClient
             throw new RequestProblemException("Problem requesting of creation data flow node");
         }
     }
+
+    public DataFlowNodeSummary getDataFlowNodeInfo(String serviceRootURL, String dataFlowId, String dataFlowNodeid)
+        throws RequestProblemException
+    {
+        logger.log(Level.FINE, "DataFlowClient.getDataFlowNodeInfo: " + serviceRootURL + ", " + dataFlowId + ", " + dataFlowNodeid);
+
+        try
+        {
+            ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/dataflow/{dataflowid}/{dataflownodeid}");
+            request.pathParameter("dataflowid", dataFlowId);
+            request.pathParameter("dataflownodeid", dataFlowNodeid);
+            request.accept(MediaType.APPLICATION_JSON);
+
+            ClientResponse<DataFlowNodeDTO> response = request.get(new GenericType<DataFlowNodeDTO>() {});
+
+            if (response.getStatus() == HttpResponseCodes.SC_OK)
+            {
+                DataFlowNodeDTO dataFlowNodeDTO = response.getEntity();
+
+                return new DataFlowNodeSummary(dataFlowNodeDTO.getName(), dataFlowNodeDTO.getType(), dataFlowNodeDTO.getProperties());
+            }
+            else if (response.getStatus() == HttpResponseCodes.SC_BAD_REQUEST)
+                throw new RequestProblemException(response.getEntity(String.class));
+            else
+            {
+                logger.log(Level.WARNING, "DataFlowClient.getDataFlowNodeInfo: status = " + response.getStatus());
+
+                throw new RequestProblemException("Problem during request of data flow node info");
+            }
+        }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'DataFlowClient.getDataFlowNodeInfo'", throwable);
+
+            throw new RequestProblemException("Problem requesting of data flow node info");
+        }
+    }
+
 
     public Boolean removeDataFlowNode(String serviceRootURL, String dataFlowId, String dataFlowNodeid)
         throws RequestProblemException
