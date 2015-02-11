@@ -52,31 +52,37 @@
                             </script>
                         </div>
                     </h:panelGroup>
-                    <a4j:jsFunction name="selectSourceDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectDataFlowNode" render="operations_upper,operations_middle,operations_lower">
+                        <a4j:param name="name" assignTo="#{dataflow.dataFlowNode}"/>
+                    </a4j:jsFunction>
+                    <a4j:jsFunction name="selectSourceDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.sourceDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectProcessorDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectProcessorDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.processorDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectSinkDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectSinkDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.sinkDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectServiceDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectServiceDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.serviceDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectStoreDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectStoreDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.storeDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectLinkSourceDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectLinkSourceDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.linkSourceDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="selectLinkSinkDataFlowNode" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="selectLinkSinkDataFlowNode" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.linkSinkDataFlowNode}"/>
                     </a4j:jsFunction>
-                    <a4j:jsFunction name="linkedDataFlowNodes" render="operations_upper,operations_lower">
+                    <a4j:jsFunction name="linkedDataFlowNodes" render="operations_upper,operations_middle,operations_lower">
                         <a4j:param name="name" assignTo="#{dataflow.linkedDataFlowNodes}"/>
                     </a4j:jsFunction>
                     <h:panelGroup id="operations_upper" styleClass="dataflow-actions" layout="block">
+                        <h:commandLink styleClass="dataflow-button" action="#{dataflow.doExamineDataFlowNode()}" value="Examine Node" disabled="#{empty dataflow.dataFlowNode}"/>
+                    </h:panelGroup>
+                    <h:panelGroup id="operations_middle" styleClass="dataflow-actions" layout="block">
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSource')}" value="Add Data Source"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataProcessor')}" value="Add Data Processor"/>
                         <h:commandLink styleClass="dataflow-button" action="#{dataflownodecreate.doLoad(dataflow.serviceRootURL, dataflow.id, 'DataSink')}" value="Add Data Sink"/>

@@ -69,6 +69,8 @@
         <module>metadata-rdf</module>
         <module>metadata-ws</module>
         <module>metadata-store</module>
+        <module>publishingportal-root</module>
+        <module>publishingportal-ear</module>
         <module>server-ear</module>
         <module>webportal-store</module>
         <module>webportal-comms</module>
