@@ -2,9 +2,15 @@
 
 angular.module('users').factory('AuthenticationService', ['$rootScope', '$state', '$log', '$q', '$http', '$window', 'AUTH_EVENTS', 'CONFIG', 'USER_ROLES', 'Global', function ($rootScope, $state, $log, $q, $http, $window, AUTH_EVENTS, CONFIG, USER_ROLES, Global) {
   return {
-    login: function(username, password){
+    login: function(email, password){
 
-      var deferred = $q.defer();
+      return {
+        email: email,
+        name: 'John Doe',
+        roles: ['user']
+      };
+
+      /*var deferred = $q.defer();
 
       $http({
         method: 'POST',
@@ -54,7 +60,7 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
           $log.info(config);
         });
 
-      return deferred.promise;
+      return deferred.promise;*/
     },
     logout: function(){
 
@@ -70,8 +76,8 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
     },
     isAuthenticated: function() {
 
-      if(Global.session === null && JSON.parse($window.sessionStorage.getItem('escSession') !== null)){
-        Global.setSession(JSON.parse($window.sessionStorage.getItem('escSession')));
+      if(Global.session === null && JSON.parse($window.sessionStorage.getItem('publishingSession') !== null)){
+        Global.setSession(JSON.parse($window.sessionStorage.getItem('publishingSession')));
       }
 
       return !!Global.session;
@@ -83,12 +89,7 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
         authorizedRoles = [authorizedRoles];
       }
 
-      //return (this.isAuthenticated() && (authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
-
-      $log.info(Global);
-
-      return ((authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
-
+      return (this.isAuthenticated() && (authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
     }
   };
 }]);

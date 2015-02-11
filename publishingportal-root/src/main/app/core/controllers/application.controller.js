@@ -1,15 +1,13 @@
 'use strict';
 
-angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', 'AuthenticationService', 'AUTH_EVENTS',
-  function($log, $scope, $state, AuthenticationService, AUTH_EVENTS) {
-
-    $scope.welcome = 'Hello World!';
+angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS',
+  function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS) {
 
     $scope.button = function(){
 
       AuthenticationService.logout();
 
-      $window.sessionStorage.removeItem('escSession');
+      $window.sessionStorage.removeItem('publishingSession');
 
       $state.go('login')
 
@@ -19,13 +17,21 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
 
       $log.info('Login Success: Storing Session');
 
-      $window.sessionStorage.setItem('escSession', JSON.stringify(Global.session));
+      $window.sessionStorage.setItem('publishingSession', JSON.stringify(Global.session));
 
-      $log.info('escSession');
-      $log.info(JSON.parse($window.sessionStorage.getItem('escSession')));
+      $log.info('publishingSession');
+      $log.info(JSON.parse($window.sessionStorage.getItem('publishingSession')));
+
+      $state.go('home');
 
     }, true);
 
+    $scope.$on(AUTH_EVENTS.notAuthenticated, function(){
+
+      $log.warn('Not Authenticated Event');
+
+      $state.go('login');
+    }, true);
 
   }
 ]);

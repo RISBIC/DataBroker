@@ -88,6 +88,7 @@ app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, Authentication
     else {
       if (!AuthenticationService.isAuthorized(authorizedRoles)) {
         event.preventDefault();
+
         if (AuthenticationService.isAuthenticated()) {
           $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
         } else {

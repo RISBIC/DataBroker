@@ -13,7 +13,7 @@ angular.module('users').factory('AuthenticationInterceptor', ['$log', '$rootScop
   return {
     request: function(config) {
 
-      var sessionInfo = JSON.parse($window.sessionStorage.getItem('escSession'));
+      var sessionInfo = JSON.parse($window.sessionStorage.getItem('publishingSession'));
 
       if (config.url.indexOf(CONFIG.apiURL) > -1 && sessionInfo !== null) {
         config.headers.Authorization = sessionInfo.sessionToken;

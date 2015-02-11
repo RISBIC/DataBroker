@@ -1,20 +1,16 @@
 'use strict';
 
-angular.module('users').controller('UsersController', ['$log', '$scope', '$state', 'Global',
-  function($log, $scope, $state, Global) {
+angular.module('users').controller('UsersController', ['$log', '$scope', '$rootScope', '$state', 'Global', 'AuthenticationService', 'AUTH_EVENTS',
+  function($log, $scope, $rootScope, $state, Global, AuthenticationService, AUTH_EVENTS) {
 
     $scope.login = function(){
 
       $log.info($scope.user);
 
-      var user = {
-        email: $scope.user.email,
-        roles: ['user']
-      };
+      Global.setSession(AuthenticationService.login($scope.user.email, $scope.user.password));
 
-      Global.setSession(user);
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
-      $state.go('home');
 
     };
 
