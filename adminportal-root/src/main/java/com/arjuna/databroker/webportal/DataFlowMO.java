@@ -22,6 +22,7 @@ import com.arjuna.databroker.webportal.comms.DataFlowClient;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkSummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeFactorySummary;
 import com.arjuna.databroker.webportal.comms.DataFlowNodeLinkClient;
+import com.arjuna.databroker.webportal.comms.DataFlowNodeSummary;
 import com.arjuna.databroker.webportal.comms.RequestProblemException;
 
 @SessionScoped
@@ -46,6 +47,7 @@ public class DataFlowMO implements Serializable
         _dataFlowNodeProperties      = null;
         _dataFlowNodeFactories       = null;
         _selectedDataFlowNodeFactory = null;
+        _dataFlowNode                = "";
         _sourceDataFlowNode          = "";
         _processorDataFlowNode       = "";
         _sinkDataFlowNode            = "";
@@ -128,6 +130,20 @@ public class DataFlowMO implements Serializable
     public DataFlowNodeFactorySummaryVO getSelectedDataFlowNodeFactory()
     {
         return _selectedDataFlowNodeFactory;
+    }
+
+    public String getDataFlowNode()
+    {
+        logger.log(Level.FINER, "DataFlowMO.getDataFlowNode: " + _dataFlowNode);
+
+        return _dataFlowNode;
+    }
+
+    public void setDataFlowNode(String dataFlowNode)
+    {
+        logger.log(Level.FINER, "DataFlowMO.setDataFlowNode: " + dataFlowNode);
+
+        _dataFlowNode = dataFlowNode;
     }
 
     public String getSourceDataFlowNode()
@@ -290,6 +306,36 @@ public class DataFlowMO implements Serializable
     public String doToNodeFactoriesTab()
     {
         return "/dataflows/dataflow_nodefactories?faces-redirect=true";
+    }
+
+    public String doExamineDataFlowNode()
+    {
+        logger.log(Level.FINE, "DataFlowMO.doExamineDataFlowNode: [" + _dataFlowNode + "]");
+
+        if ((_dataFlowNode != null) && (! "".equals(_dataFlowNode)))
+        {
+            _errorMessage = null;
+            try
+            {
+                DataFlowNodeSummary dataFlowNodeSummary = _dataFlowClient.getDataFlowNodeInfo(_serviceRootURL, _id, _dataFlowNode);
+
+                _dataFlowNodeAttributes = new LinkedList<PropertyVO>();
+                _dataFlowNodeAttributes.add(new PropertyVO("Name", dataFlowNodeSummary.getName()));
+                _dataFlowNodeAttributes.add(new PropertyVO("Type", dataFlowNodeSummary.getType()));
+                _dataFlowNodeProperties = PropertyVO.fromMap(dataFlowNodeSummary.getProperties());
+            }
+            catch (RequestProblemException requestProblemException)
+            {
+                _errorMessage = requestProblemException.getMessage();
+            }
+        }
+        else
+            _errorMessage = "Processor node not specified";
+
+        if (_errorMessage == null)
+            return "/dataflows/dataflow_node_attributes?faces-redirect=true";
+        else
+            return "/dataflows/dataflow_nodes?faces-redirect=true";
     }
 
     public String doRemoveSourceDataFlowNode()
@@ -594,6 +640,7 @@ public class DataFlowMO implements Serializable
                     _errorMessage = "Unsuccessful query of DataBroker!";
             }
 
+            _dataFlowNode           = "";
             _sourceDataFlowNode     = "";
             _processorDataFlowNode  = "";
             _sinkDataFlowNode       = "";
@@ -691,6 +738,7 @@ public class DataFlowMO implements Serializable
     private List<DataFlowNodeFactorySummaryVO> _dataFlowNodeFactories;
     private List<DataFlowNodeFactorySummaryVO> _availableDataFlowNodeFactories;
     private DataFlowNodeFactorySummaryVO       _selectedDataFlowNodeFactory;
+    private String                             _dataFlowNode;
     private String                             _sourceDataFlowNode;
     private String                             _processorDataFlowNode;
     private String                             _sinkDataFlowNode;

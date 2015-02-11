@@ -63,6 +63,8 @@ DataFlowLinkEdit.prototype.doUnselect = function(item)
         selectLinkSourceDataFlowNode("");
         selectLinkSinkDataFlowNode("");
     }
+    selectDataFlowNode("");
+
     this.dataFlowControl.redraw();
 }
 
@@ -73,30 +75,35 @@ DataFlowLinkEdit.prototype.doSelect = function(item)
         item.bodyStyle   = DataFlowLinkEdit.SELECTED_PROCESSOR_BODYSTYLE;
         item.borderStyle = DataFlowLinkEdit.SELECTED_PROCESSOR_BORDERSTYLE;
         selectProcessorDataFlowNode(item.name);
+        selectDataFlowNode(item.name);
     }
     else if (item instanceof SourceGlyph)
     {
         item.bodyStyle   = DataFlowLinkEdit.SELECTED_SOURCE_BODYSTYLE
         item.borderStyle = DataFlowLinkEdit.SELECTED_SOURCE_BORDERSTYLE;
         selectSourceDataFlowNode(item.name);
+        selectDataFlowNode(item.name);
     }
     else if (item instanceof SinkGlyph)
     {
         item.bodyStyle   = DataFlowLinkEdit.SELECTED_SINK_BODYSTYLE;
         item.borderStyle = DataFlowLinkEdit.SELECTED_SINK_BORDERSTYLE;
         selectSinkDataFlowNode(item.name);
+        selectDataFlowNode(item.name);
     }
     else if (item instanceof ServiceGlyph)
     {
         item.bodyStyle   = DataFlowLinkEdit.SELECTED_SERVICE_BODYSTYLE;
         item.borderStyle = DataFlowLinkEdit.SELECTED_SERVICE_BORDERSTYLE;
         selectServiceDataFlowNode(item.name);
+        selectDataFlowNode(item.name);
     }
     else if (item instanceof StoreGlyph)
     {
         item.bodyStyle   = DataFlowLinkEdit.SELECTED_STORE_BODYSTYLE;
         item.borderStyle = DataFlowLinkEdit.SELECTED_STORE_BORDERSTYLE;
         selectStoreDataFlowNode(item.name);
+        selectDataFlowNode(item.name);
     }
     else if (item instanceof ProducerGlyph)
     {
