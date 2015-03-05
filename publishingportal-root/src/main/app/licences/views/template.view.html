@@ -1,0 +1,12 @@
+<section class="new-licence" ng-init="getTemplate()">
+  <form role="form" class="col-md-6" ng-submit="createLicence()">
+    <div class="form-group" ng-repeat="field in template">
+      <label class="form-label">{{field.label}}</label>
+      <input class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
+      <p class="help-block">{{field.purpose}}</p>
+    </div>
+    <div class="form-group" class="col-md-6">
+      <button type="submit" class="btn btn-default">Submit</button>
+    </div>
+  </form>
+</section>

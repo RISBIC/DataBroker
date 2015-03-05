@@ -65,11 +65,8 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
     logout: function(){
 
       Global.setSession(null);
-
+      $window.sessionStorage.removeItem('publishingSession');
       $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-
-      $state.go('authentication.login');
-
     },
     register: function(){
 
@@ -89,7 +86,7 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
         authorizedRoles = [authorizedRoles];
       }
 
-      return (this.isAuthenticated() && (authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
+      return (authorizedRoles.indexOf('public') !== -1 || this.isAuthenticated() && ($window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
     }
   };
 }]);

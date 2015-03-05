@@ -1,0 +1,11 @@
+.licences .licence-summary {
+  -webkit-transition: color .25s ease-in-out;
+  -moz-transition: color .25s ease-in-out;
+  -o-transition: color .25s ease-in-out;
+  transition: color .25s ease-in-out;
+}
+
+.licences .licence-summary:hover {
+  color: #a80000;
+  cursor: pointer;
+}

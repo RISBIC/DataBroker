@@ -1,1 +1,17 @@
-<h2>licences</h2>
+<section class="licence" ng-init="getLicence()">
+  <h2>{{licence.name}}</h2>
+  <h4>{{licence.createddate | date:'medium'}}</h4>
+  <h4 am-time-ago="licence.createddate" am-preprocess="utc"></h4>
+  <hr>
+  <p>{{licence.comment}}</p>
+  <hr>
+  <form role="form" class="col-md-6">
+    <div class="form-group" ng-repeat="field in licence.fieldsdetails">
+      <label class="form-label">{{field.label}}</label>
+      <input class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" disabled="{{!field.mutable}}">
+      <p class="help-block">{{field.purpose}}</p>
+    </div>
+  </form>
+</section>
+
+

@@ -1,0 +1,8 @@
+<h1>1. Choose A Template</h1>
+<hr>
+<ul class="list-unstyled templates" ng-init="getTemplates()">
+  <li ng-repeat="template in templates" ui-sref="template({templateId: template.id})" class="clearfix template-summary">
+      <h3>{{template.name}}</h3>
+      <p>{{template.purpose}}</p>
+  </li>
+</ul>

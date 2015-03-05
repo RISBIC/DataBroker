@@ -8,7 +8,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
     $stateProvider.
       state('home', {
-        url: '/home',
+        url: '/',
         templateUrl: 'core/views/home.view.html',
         controller: 'ApplicationController',
         data: {
