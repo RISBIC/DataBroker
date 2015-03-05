@@ -9,8 +9,16 @@ angular.module('users').config(['$stateProvider',
         url: '/users',
         templateUrl: 'users/views/users.view.html',
         data: {
-          authorizedRoles: ['user']
+          authorizedRoles: ['users']
         }
-      });
+      }).
+        state('login', {
+            url: '/users/login',
+            templateUrl: 'users/views/login.view.html',
+            controller: 'UsersController',
+            data: {
+                authorizedRoles: ['public']
+            }
+        });
   }
 ]);

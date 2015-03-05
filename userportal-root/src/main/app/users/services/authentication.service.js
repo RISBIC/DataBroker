@@ -1,92 +1,96 @@
 'use strict';
 
 angular.module('users').factory('AuthenticationService', ['$rootScope', '$state', '$log', '$q', '$http', '$window', 'AUTH_EVENTS', 'CONFIG', 'USER_ROLES', 'Global', function ($rootScope, $state, $log, $q, $http, $window, AUTH_EVENTS, CONFIG, USER_ROLES, Global) {
-  return {
-    login: function(username, password){
+    return {
+        login: function(email, password){
 
-      var deferred = $q.defer();
-
-      $http({
-        method: 'POST',
-        url: CONFIG.apiURL + 'account/token',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
-        transformRequest: function(obj) {
-          var str = [];
-          for(var p in obj){
-            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-          }
-          return str.join('&');
-        },
-        data: {username: username, password: password }
-      })
-        .success(function(token) {
-
-          $http({
-            method: 'GET',
-            url: CONFIG.apiURL + 'users/current',
-            headers: {
-              'Authorization': token.jwt,
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+            if (email === 'admin@domain.com') {
+                return {
+                    email: email,
+                    name: 'John Doe',
+                    roles: ['users']
+                };
+            } else {
+                return {
+                    email: email,
+                    name: 'John Dee',
+                    roles: []
+                };
             }
-          })
-            .success(function(user) {
 
-              user.sessionToken = token.jwt;
-              user.roles = user.admin ? [USER_ROLES.admin, USER_ROLES.user] : [USER_ROLES.user];
-              deferred.resolve(user);
+            /*var deferred = $q.defer();
+             $http({
+             method: 'POST',
+             url: CONFIG.apiURL + 'account/token',
+             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'},
+             transformRequest: function(obj) {
+             var str = [];
+             for(var p in obj){
+             str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+             }
+             return str.join('&');
+             },
+             data: {username: username, password: password }
+             })
+             .success(function(token) {
+             $http({
+             method: 'GET',
+             url: CONFIG.apiURL + 'users/current',
+             headers: {
+             'Authorization': token.jwt,
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+             }
+             })
+             .success(function(user) {
+             user.sessionToken = token.jwt;
+             user.roles = user.admin ? [USER_ROLES.admin, USER_ROLES.user] : [USER_ROLES.user];
+             deferred.resolve(user);
+             })
+             .error(function(data, status, headers, config) {
+             $log.info(data);
+             $log.info(status);
+             $log.info(headers);
+             $log.info(config);
+             });
+             })
+             .error(function(data, status, headers, config) {
+             $log.info(data);
+             $log.info(status);
+             $log.info(headers);
+             $log.info(config);
+             });
+             return deferred.promise;*/
+        },
+        logout: function(){
 
-            })
-            .error(function(data, status, headers, config) {
+            Global.setSession(null);
+            $window.sessionStorage.removeItem('userPortalSession');
 
-              $log.info(data);
-              $log.info(status);
-              $log.info(headers);
-              $log.info(config);
-            });
+            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
 
-        })
-        .error(function(data, status, headers, config) {
+            $state.go('login');
 
-          $log.info(data);
-          $log.info(status);
-          $log.info(headers);
-          $log.info(config);
-        });
+        },
+        register: function(){
 
-      return deferred.promise;
-    },
-    logout: function(){
+        },
+        isAuthenticated: function() {
 
-      Global.setSession(null);
+            if(Global.session === null && JSON.parse($window.sessionStorage.getItem('userPortalSession') !== null)){
+                Global.setSession(JSON.parse($window.sessionStorage.getItem('userPortalSession')));
+            }
 
-      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+            return !!Global.session;
+        },
+        isAuthorized: function (authorizedRoles) {
 
-      $state.go('authentication.login');
+            if (!angular.isArray(authorizedRoles)) {
 
-    },
-    register: function(){
+                authorizedRoles = [authorizedRoles];
+            }
 
-    },
-    isAuthenticated: function() {
-
-      if(Global.session === null && JSON.parse($window.sessionStorage.getItem('escSession') !== null)){
-        Global.setSession(JSON.parse($window.sessionStorage.getItem('escSession')));
-      }
-
-      return !!Global.session;
-    },
-    isAuthorized: function (authorizedRoles) {
-
-      if (!angular.isArray(authorizedRoles)) {
-
-        authorizedRoles = [authorizedRoles];
-      }
-
-      //return (this.isAuthenticated() && (authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
-
-      return ((authorizedRoles.indexOf('public') !== -1 || $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
-
-    }
-  };
+            return (authorizedRoles.indexOf('public') !== -1  || ( this.isAuthenticated() && $window._.intersection(authorizedRoles, Global.session.roles).length === authorizedRoles.length));
+        }
+    };
 }]);
