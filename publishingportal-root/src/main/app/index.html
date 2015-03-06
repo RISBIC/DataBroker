@@ -5,7 +5,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link href='http://fonts.googleapis.com/css?family=Raleway:600,400,300' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css' />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -15,6 +15,8 @@
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="core/assets/css/core.css">
+    <link rel="stylesheet" href="licences/assets/css/licences.css">
+    <link rel="stylesheet" href="users/assets/css/users.css">
     <!-- endbuild -->
   </head>
   <body ng-app="mainApp">
@@ -64,6 +66,8 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
     <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -77,6 +81,7 @@
     <script src="licences/config/licences.routes.js"></script>
     <script src="licences/controllers/licences.controller.js"></script>
     <script src="licences/services/licences.service.js"></script>
+    <script src="licences/services/templates.service.js"></script>
     <script src="users/config/interceptor.config.js"></script>
     <script src="users/config/users.routes.js"></script>
     <script src="users/controllers/users.controller.js"></script>

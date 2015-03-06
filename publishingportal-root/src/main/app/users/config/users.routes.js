@@ -6,7 +6,7 @@ angular.module('users').config(['$stateProvider',
 
     $stateProvider.
       state('login', {
-        url: '/',
+        url: '/login',
         templateUrl: 'users/views/login.view.html',
         data: {
           authorizedRoles: ['public']

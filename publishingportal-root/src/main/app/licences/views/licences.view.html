@@ -1,5 +1,9 @@
-<ul class="list-unstyled">
-  <li ui-sref="licence({licenceId: 1})">licence 1</li>
-  <li ui-sref="licence({licenceId: 2})">licence 2</li>
-  <li ui-sref="licence({licenceId: 3})">licence 3</li>
+<h1>My Licences</h1>
+<hr>
+<ul class="list-unstyled licences" ng-init="getLicences()">
+  <li ng-repeat="licence in licences" ui-sref="licence({licenceId: licence.id})" class="clearfix licence-summary">
+      <h3>{{licence.name}}</h3>
+      <p>{{licence.comment}}</p>
+      <h5>{{licence.createddate | date:'medium'}} - <span am-time-ago="licence.createddate" am-preprocess="utc"></span></h5>
+  </li>
 </ul>

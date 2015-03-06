@@ -20,6 +20,22 @@ angular.module('licences').config(['$stateProvider',
         data: {
           authorizedRoles: ['user']
         }
+      }).
+      state('templates', {
+        url: '/templates',
+        templateUrl: 'licences/views/templates.view.html',
+        controller: 'LicencesController',
+        data: {
+          authorizedRoles: ['user']
+        }
+      }).
+      state('template', {
+        url: '/templates/:templateId',
+        templateUrl: 'licences/views/template.view.html',
+        controller: 'LicencesController',
+        data: {
+          authorizedRoles: ['user']
+        }
       });
   }
 ]);

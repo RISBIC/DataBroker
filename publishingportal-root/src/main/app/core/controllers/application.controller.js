@@ -3,14 +3,8 @@
 angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS',
   function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS) {
 
-    $scope.button = function(){
-
+    $scope.logout = function(){
       AuthenticationService.logout();
-
-      $window.sessionStorage.removeItem('publishingSession');
-
-      $state.go('login')
-
     };
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function(){
@@ -22,13 +16,20 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
       $log.info('publishingSession');
       $log.info(JSON.parse($window.sessionStorage.getItem('publishingSession')));
 
-      $state.go('home');
+      $state.go('licences');
 
     }, true);
 
     $scope.$on(AUTH_EVENTS.notAuthenticated, function(){
 
       $log.warn('Not Authenticated Event');
+
+      $state.go('login');
+    }, true);
+
+    $scope.$on(AUTH_EVENTS.logoutSuccess, function(){
+
+      $log.info('Logged Out');
 
       $state.go('login');
     }, true);

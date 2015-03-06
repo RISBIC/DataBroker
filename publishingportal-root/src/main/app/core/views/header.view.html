@@ -1,23 +1,29 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-2">
-      <h1 class="title">Publishing Portal</h1>
+    <div class="col-md-4">
+      <img src="http://dummyimage.com/120x85&text=Logo" alt="" class="pull-left" />
+      <h1 class="title">Publishing<br>Portal<i class="fa fa-cloud-upload"></i></h1>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-8">
       <ul class="list-inline navigation pull-right">
         <li>
-          <a class="navigation-item h4" ui-sref="home">
+          <a class="navigation-item h4" ui-sref-active="active" ui-sref="licences">
             <i class="fa fa-bookmark"></i>
             <span>My Licences</span>
           </a>
         </li>
         <li>
-          <a class="navigation-item h4" ui-sref="licences">
+          <a class="navigation-item h4" ui-sref-active="active" ui-sref="templates">
             <i class="fa fa-rocket"></i>
             <span>New Licence</span>
           </a>
         </li>
-
+        <li>
+          <a class="navigation-item h4" ui-sref-active="active" ng-click="logout()">
+            <i class="fa fa-sign-out"></i>
+            <span>Logout</span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
