@@ -1,1 +1,5 @@
-<h2>listing</h2>
+<p ng-show="searchString != ''"><a ui-sref="listings()"><< Back to search</a></p>
+<h2>{{currentListing.name}}</h2>
+<p>{{currentListing.date | date : 'd MMMM yyyy'}}</p>
+<p>Authored by {{currentListing.author}} </p>
+<p>{{currentListing.description}}</p>

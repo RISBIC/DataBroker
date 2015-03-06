@@ -15,6 +15,7 @@
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="core/assets/css/core.css">
+    <link rel="stylesheet" href="users/assets/css/users.css">
     <!-- endbuild -->
   </head>
   <body ng-app="mainApp">
@@ -65,6 +66,8 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -76,9 +79,12 @@
     <script src="core/services/global.service.js"></script>
     <script src="listings/config/listings.routes.js"></script>
     <script src="listings/controllers/listings.controller.js"></script>
+    <script src="listings/controllers/listing.controller.js"></script>
     <script src="listings/services/listings.service.js"></script>
+    <script src="listings/services/search.service.js"></script>
     <script src="users/config/interceptor.config.js"></script>
     <script src="users/config/users.routes.js"></script>
+    <script src="users/services/users.service.js"></script>
     <script src="users/controllers/users.controller.js"></script>
     <script src="users/services/authentication.service.js"></script>
     <!-- endbuild -->

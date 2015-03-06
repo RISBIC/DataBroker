@@ -16,7 +16,7 @@ angular.module('listings').config(['$stateProvider',
       state('listing', {
         url: '/listings/:listingId',
         templateUrl: 'listings/views/listing.view.html',
-        controller: 'ListingsController',
+        controller: 'ListingController',
         data: {
           authorizedRoles: ['public']
         }

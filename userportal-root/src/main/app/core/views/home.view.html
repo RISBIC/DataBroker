@@ -2,9 +2,9 @@
   <div class="col-md-12">
     <h1>I'm looking for data about...</h1>
     <div class="input-group input-group-lg">
-      <input type="text" class="form-control">
+      <input type="search" ng-value="searchString" ng-keyup="submitSearch($event)" ng-model="searchString" class="form-control">
       <span class="input-group-btn">
-        <a ui-sref="adverts({query: ''})" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></a>
+        <a ui-sref="listings({query: searchString})" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></a>
       </span>
     </div>
   </div>

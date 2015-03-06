@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('UsersController', ['$log', '$scope', '$rootScope', '$state', 'Global', 'AuthenticationService', 'AUTH_EVENTS',
-    function($log, $scope, $rootScope, $state, Global, AuthenticationService, AUTH_EVENTS) {
+angular.module('users').controller('UsersController', ['$log', '$scope', '$rootScope', '$state', 'Global', 'AuthenticationService', 'AUTH_EVENTS', 'Users',
+    function($log, $scope, $rootScope, $state, Global, AuthenticationService, AUTH_EVENTS, Users) {
 
         $scope.login = function(){
 
@@ -13,6 +13,10 @@ angular.module('users').controller('UsersController', ['$log', '$scope', '$rootS
 
 
         };
+
+      $scope.users = Users.all();
+
+      $scope.user = Users.one(Number($state.params.id));
 
     }
 ]);

@@ -1,1 +1,17 @@
-<p>Users list goes here</p>
+<ul class="user-list list-unstyled">
+  <li ng-repeat="user in users">
+
+    <div class="row">
+      <div class="col-md-1">
+        <i class="fa fa-user"></i>
+      </div>
+      <div class="col-md-11">
+        <h2><a ui-sref="user({id: user.id})">{{user.displayName}}</a></h2>
+
+        <p>{{user.email}}</p>
+
+        <p>{{user.role}}</p>
+      </div>
+    </div>
+  </li>
+</ul>

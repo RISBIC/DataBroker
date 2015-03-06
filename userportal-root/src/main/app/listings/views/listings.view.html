@@ -1,5 +1,19 @@
-<ul class="list-unstyled">
-  <li ui-sref="listings({listingId: 1})">listing 1</li>
-  <li ui-sref="listings({listingId: 2})">listing 2</li>
-  <li ui-sref="listings({listingId: 3})">listing 3</li>
+<div class="col-m-12">
+    <div class="input-group input-group-lg">
+        <input type="text" ng-value="searchString" autofocus ng-model="searchString" class="form-control">
+      <span class="input-group-btn">
+        <a ui-sref="listings({query: searchString})" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></a>
+      </span>
+    </div>
+</div>
+<ul class="list-unstyled" ng-hide="searchString === ''">
+
+    <li ng-repeat="listing in listings | filter : searchString">
+        <a ui-sref="listing({listingId: listing.id})">
+            <h2>{{listing.name}}</h2>
+            <p>{{listing.date | date : 'd MMMM yyyy'}}</p>
+            <p>Authored by {{listing.author}} </p>
+            <p>{{listing.description}}</p>
+        </a>
+    </li>
 </ul>

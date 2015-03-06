@@ -121,6 +121,11 @@ body {
   text-align: center;
 }
 
+.login-controls a span{
+    font-size: 14px;
+    padding-top: 5px;
+}
+
 .footer {
   -webkit-box-shadow: 0px -1px 5px 0px #d0d0d0;
   -moz-box-shadow:    0px -1px 5px 0px #d0d0d0;

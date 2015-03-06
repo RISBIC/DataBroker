@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS',
-    function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS) {
+angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS', 'Search',
+    function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS, Search) {
 
         $scope.button = function(){
 
@@ -9,7 +9,7 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
 
             $window.sessionStorage.removeItem('userPortalSession');
 
-            $state.go('login')
+            $state.go('login');
 
         };
 
@@ -34,7 +34,6 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
         }, true);
 
         $scope.loggedin = function() {
-            console.log(Global.getSession());
             return Global.getSession();
         };
 
@@ -42,8 +41,25 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
             return AuthenticationService.isAuthorized(roles);
         };
 
+        $scope.login = function() {
+            $state.go('login');
+        };
+
         $scope.logout = function() {
             AuthenticationService.logout();
+        };
+
+        $scope.searchString = Search.query;
+
+        $scope.$watch('searchString', function(val) {
+            Search.query = val;
+        });
+
+        $scope.submitSearch = function($event) {
+
+            if ($event.keyCode === 13) {
+                $state.go('listings');
+            }
         }
 
     }

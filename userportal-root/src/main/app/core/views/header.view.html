@@ -1,9 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-2">
-      <h1 class="title">Web Portal</h1>
-    </div>
-    <div class="col-md-7">
+      <div class="col-md-2">
+          <img src="http://dummyimage.com/120x85/a80000/fff.png&text=LOGO" alt="Logo"/>
+      </div>
+        <div class="col-md-5">
+          <h1 class="title">Advert Portal</h1>
+        </div>
+    <div class="col-md-5">
       <ul class="list-inline navigation pull-right">
         <li>
           <a class="navigation-item h4" ui-sref="home">
@@ -23,16 +26,19 @@
             <span>Users</span>
           </a>
         </li>
+          <li ng-show="!loggedin()" ng-click="login()">
+              <a class="navigation-item h4" href="#">
+                  <i class="fa fa-sign-in"></i>
+                  <span>Log In</span>
+              </a>
+          </li>
           <li ng-show="loggedin()" ng-click="logout()">
               <a class="navigation-item h4" href="#">
-                  <i class="fa fa-mail-forward"></i>
+                  <i class="fa fa-sign-out"></i>
                   <span>Log Out</span>
               </a>
           </li>
       </ul>
-    </div>
-    <div class="col-md-3">
-
     </div>
   </div>
 </div>

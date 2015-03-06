@@ -1,0 +1,7 @@
+ul.user-list li {
+  display: block;
+}
+
+ul.user-list li i.fa {
+  font-size: 90px;
+}
