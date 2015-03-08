@@ -77,6 +77,14 @@ public class DummyMetadataContentStore implements MetadataContentStore
     }
 
     @Override
+    public void createOverwrite(String id, String content)
+    {
+        logger.log(Level.FINE, "MetadataUtils.createOverwrite: \"" + id + "\"");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String createChild(String parentId, String descriptionId, String content)
     {
         logger.log(Level.FINE, "MetadataUtils.createChild: \"" + parentId + "\", \"" + descriptionId + "\"");
