@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('licences').controller('LicencesController', ['$scope', '$state', '$window', 'Licences', 'Templates',
-  function ($scope, $state, $window, Licences, Templates) {
+angular.module('licences').controller('LicencesController', ['$scope', '$state', '$window', '$upload', 'Licences', 'Templates',
+  function ($scope, $state, $window, $upload, Licences, Templates) {
 
     var templates = [];
 
@@ -31,7 +31,29 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
     };
 
     $scope.createLicence = function(){
-      console.log($scope.template);
+
+      var payload = {
+        name: $scope.licence.name,
+        comment: $scope.licence.comments,
+        templateid: $state.params.templateId,
+        fieldvalues: []
+      };
+
+      angular.forEach($scope.template, function(field){
+
+        payload.fieldvalues.push({
+          name: field.name,
+          value: field.value
+        });
+      });
+
+      console.log(payload);
+
+      Licences.save(payload, function(){
+
+      });
+
+      $state.go('create.upload');
     };
   }
 ]);
