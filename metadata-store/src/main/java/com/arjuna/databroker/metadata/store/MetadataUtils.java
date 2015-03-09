@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class MetadataUtils implements MetadataContentStore
 {

@@ -81,7 +81,7 @@ public class AdvertsWS
     {
         "http://rdfs.arjuna.com/datasource#DataSource",
         "http://rdfs.arjuna.com/jdbc/postgresql#Database",
-        "http://rdfs.arjuna.com/xssf#Spreadsheet"
+        "http://rdfs.arjuna.com/xssf#Workbook"
     };
 
     private void scanMetadataBlob(String metadataBlogId, Map<String, AdvertNodeDTO> advertMap)
@@ -125,6 +125,8 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/access#hasAccessInfo",
         "http://rdfs.arjuna.com/jdbc/postgresql#hasDatabaseTable",
         "http://rdfs.arjuna.com/jdbc/postgresql#hasTableField",
+        "http://rdfs.arjuna.com/xssf#hasSheet",
+        "http://rdfs.arjuna.com/xssf#hasColumn"
     };
 
     private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<String, AdvertNodeDTO> advertMap)
@@ -133,7 +135,6 @@ public class AdvertsWS
         {
             AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
 
-            List<String> childNodeIds = new LinkedList<String>();
             for (String knownChildPropertyURI: knownChildPropertyURIs)
             {
                 Property     knownChildProperty = subject.getModel().getProperty(knownChildPropertyURI);
@@ -146,10 +147,9 @@ public class AdvertsWS
 
                     AdvertNodeDTO childAdvertNode = scanSubject(childSubject, metadataBlogId, false, advertMap);
 
-                    childNodeIds.add(childAdvertNode.getId());
+                    advertNode.getChildNodeIds().add(childAdvertNode.getId());
                 }
             }
-            advertNode.setChildNodeIds(childNodeIds);
 
             return advertNode;
         }
@@ -196,8 +196,8 @@ public class AdvertsWS
             Date         dataCreated  = null;
             Date         dateUpdate   = null;
             String       owner        = null;
-            List<String> tags         = Collections.<String>emptyList();
-            List<String> childNodeIds = Collections.<String>emptyList();
+            List<String> tags         = new LinkedList<String>();
+            List<String> childNodeIds = new LinkedList<String>();
 
             if (titleStatement != null)
                 name = titleStatement.getString();
