@@ -6,7 +6,7 @@ angular.module('listings').config(['$stateProvider',
 
     $stateProvider.
       state('listings', {
-        url: '/listings',
+        url: '/listings/search/:query',
         templateUrl: 'listings/views/listings.view.html',
         controller: 'ListingsController',
         data: {
