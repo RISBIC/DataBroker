@@ -1,0 +1,60 @@
+
+
+.hidden {
+  display:none;
+}
+
+.node, .node:hover {
+  cursor: pointer;
+}
+
+.overlay{
+  /*border-right: 1px solid #ddd;*/
+}
+
+.node circle {
+  fill: #fff;
+  stroke: #a80000;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size:10px;
+  font-family:sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.templink {
+  fill: none;
+  stroke: red;
+  stroke-width: 3px;
+}
+
+.ghostCircle.show{
+  display:block;
+}
+
+.ghostCircle, .activeDrag .ghostCircle{
+  display: none;
+}
+
+tree {
+  width: 80%;
+}
+
+tree, #infopanel {
+  float: left;
+}
+
+#infopanel {
+  width: 20%;
+}
+
+.panel-inner {
+  padding: 20px;
+}

@@ -58,9 +58,14 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
         $scope.submitSearch = function($event) {
 
             if ($event.keyCode === 13) {
-                $state.go('listings');
+                $state.go('listings', {query: $scope.searchString});
             }
-        }
+        };
+
+      $scope.$on('AUTH_EVENTS.logoutSuccess', function(){
+        $scope.searchString = '';
+
+      });
 
     }
 ]);

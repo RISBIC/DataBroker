@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('users').factory('AuthenticationService', ['$rootScope', '$state', '$log', '$q', '$http', '$window', 'AUTH_EVENTS', 'CONFIG', 'USER_ROLES', 'Global', function ($rootScope, $state, $log, $q, $http, $window, AUTH_EVENTS, CONFIG, USER_ROLES, Global) {
+angular.module('users').factory('AuthenticationService', ['$rootScope', '$state', '$log', '$q', '$http', '$window', 'AUTH_EVENTS', 'CONFIG', 'USER_ROLES', 'Global', 'Search', function ($rootScope, $state, $log, $q, $http, $window, AUTH_EVENTS, CONFIG, USER_ROLES, Global, Search) {
     return {
         login: function(email, password){
 
@@ -68,6 +68,8 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
             $window.sessionStorage.removeItem('userPortalSession');
 
             $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+
+          Search.query = '';
 
             $state.go('login');
 

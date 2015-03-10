@@ -6,13 +6,14 @@
       </span>
     </div>
 </div>
-<ul class="list-unstyled" ng-hide="searchString === ''">
+<ul class="list-unstyled">
 
-    <li ng-repeat="listing in listings | filter : searchString">
+    <li ng-repeat="listing in listings | filterListings : searchString track by listing.id">
         <a ui-sref="listing({listingId: listing.id})">
+          <!--<a href="/#/listings/{{listing.id}}">-->
             <h2>{{listing.name}}</h2>
-            <p>{{listing.date | date : 'd MMMM yyyy'}}</p>
-            <p>Authored by {{listing.author}} </p>
+            <p>Last Updated: {{listing.dateUpdated | date : 'd MMMM yyyy'}}</p>
+            <p>Owned by {{listing.owner}} </p>
             <p>{{listing.description}}</p>
         </a>
     </li>

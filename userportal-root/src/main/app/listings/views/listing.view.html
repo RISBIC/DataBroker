@@ -1,5 +1,20 @@
+<style>
+  .content .container {
+    width: 100%;
+  }
+</style>
 <p ng-show="searchString != ''"><a ui-sref="listings()"><< Back to search</a></p>
 <h2>{{currentListing.name}}</h2>
 <p>{{currentListing.date | date : 'd MMMM yyyy'}}</p>
-<p>Authored by {{currentListing.author}} </p>
+<p>Owned by {{currentListing.owner}} </p>
 <p>{{currentListing.description}}</p>
+<tree>
+</tree>
+<div id="infopanel">
+  <form action="">
+    <div class="form-group" ng-repeat="field in fields">
+      <label ng-show="field.value !== ''" for="">{{field.label}}</label>
+      <textarea ng-show="field.value !== ''" name="" id="" class="form-control">{{field.value}}</textarea>
+    </div>
+  </form>
+</div>
