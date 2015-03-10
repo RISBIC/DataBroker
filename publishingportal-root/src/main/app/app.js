@@ -65,12 +65,13 @@ angular.module('authentication').config(['$httpProvider', function ($httpProvide
 
 }]);
 
-var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.router', 'angularMoment', 'authentication', 'core', 'licences', 'users'];
+var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.router', 'angularMoment', 'angularFileUpload', 'authentication', 'core', 'licences', 'users'];
 
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-  apiURL: 'http://playground-arjunatech.rhcloud.com/ws/'
+  apiURL: 'http://127.0.0.1/agreement-gateway/ws/'
+  //apiURL: 'http://playground-arjunatech.rhcloud.com/ws/'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {

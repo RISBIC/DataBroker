@@ -21,7 +21,15 @@ angular.module('licences').config(['$stateProvider',
           authorizedRoles: ['user']
         }
       }).
-      state('templates', {
+      state('create', {
+        url: '/create',
+        templateUrl: 'licences/views/create.view.html',
+        controller: 'LicencesController',
+        data: {
+          authorizedRoles: ['user']
+        }
+      }).
+      state('create.templates', {
         url: '/templates',
         templateUrl: 'licences/views/templates.view.html',
         controller: 'LicencesController',
@@ -29,13 +37,21 @@ angular.module('licences').config(['$stateProvider',
           authorizedRoles: ['user']
         }
       }).
-      state('template', {
+      state('create.template', {
         url: '/templates/:templateId',
         templateUrl: 'licences/views/template.view.html',
         controller: 'LicencesController',
         data: {
           authorizedRoles: ['user']
         }
-      });
+      }).
+      state('create.upload', {
+        url: '/templates/:templateId/upload',
+        templateUrl: 'licences/views/upload.view.html',
+        controller: 'LicencesController',
+        data: {
+          authorizedRoles: ['user']
+        }
+    });
   }
 ]);

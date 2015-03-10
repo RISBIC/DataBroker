@@ -1,5 +1,15 @@
 <section class="new-licence" ng-init="getTemplate()">
   <form role="form" class="col-md-6" ng-submit="createLicence()">
+    <div class="form-group">
+      <label class="form-label">Licence Name</label>
+      <input class="form-control" type="text" name="licencename" ng-model="licence.name" required>
+      <p class="help-block">The name of the new licence agreement</p>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Comments</label>
+      <textarea name="licencecomments" ng-model="licence.comments" required></textarea>
+      <p class="help-block"></p>
+    </div>
     <div class="form-group" ng-repeat="field in template">
       <label class="form-label">{{field.label}}</label>
       <input class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
