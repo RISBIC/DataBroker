@@ -120,6 +120,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
             console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
           }).success(function (data, status, headers, config) {
             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            $state.go('licences');
           });
         }
       }
