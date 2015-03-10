@@ -7,10 +7,10 @@
     </div>
     <div class="form-group">
       <label class="form-label">Comments</label>
-      <textarea name="licencecomments" ng-model="licence.comments" required></textarea>
+      <textarea class="form-control" name="licencecomments" ng-model="licence.comment" required></textarea>
       <p class="help-block"></p>
     </div>
-    <div class="form-group" ng-repeat="field in template">
+    <div class="form-group" ng-repeat="field in template" ng-if="field.name != 'status'">
       <label class="form-label">{{field.label}}</label>
       <input class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
       <p class="help-block">{{field.purpose}}</p>

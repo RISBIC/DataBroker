@@ -1,11 +1,24 @@
-.licences .licence-summary {
+.licences .licence-summary,
+.templates .template-summary{
   -webkit-transition: color .25s ease-in-out;
   -moz-transition: color .25s ease-in-out;
   -o-transition: color .25s ease-in-out;
   transition: color .25s ease-in-out;
 }
 
-.licences .licence-summary:hover {
+.licences .licence-summary:hover,
+.templates .template-summary:hover{
   color: #a80000;
   cursor: pointer;
+}
+
+.licence-wizard li.active {
+  color: #a80000;
+}
+
+.licence textarea,
+.new-licence textarea {
+  resize: none;
+  overflow: scroll;
+  height: 200px;
 }

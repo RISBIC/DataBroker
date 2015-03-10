@@ -1,6 +1,10 @@
-<ul class="list-inline">
-  <li>1. Choose Template</li>
-  <li>2. Create Licence</li>
-  <li>3. Upload Data</li>
-</ul>
-<div ui-view=""></div>
+<section class="licence-wizard">
+  <ul class="list-inline">
+    <li ng-class="{active: $state.current.name === 'create.templates'}">1. Choose Template</li>
+    <li ng-class="{active: $state.current.name === 'create.template'}">2. Create Licence</li>
+    <li ng-class="{active: $state.current.name === 'create.upload'}">3. Upload Data</li>
+  </ul>
+  <hr>
+  <div ui-view=""></div>
+</section>
+

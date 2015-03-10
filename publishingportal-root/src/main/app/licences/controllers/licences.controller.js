@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('licences').controller('LicencesController', ['$scope', '$state', '$window', '$upload', 'Licences', 'Templates',
-  function ($scope, $state, $window, $upload, Licences, Templates) {
+angular.module('licences').controller('LicencesController', ['$scope', '$state', '$window', '$upload', 'CONFIG', 'Licences', 'Templates',
+  function ($scope, $state, $window, $upload, CONFIG, Licences, Templates) {
+
+    $scope.$state = $state;
 
     var templates = [];
 
@@ -34,7 +36,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       var payload = {
         name: $scope.licence.name,
-        comment: $scope.licence.comments,
+        comment: $scope.licence.comment,
         templateid: $state.params.templateId,
         fieldvalues: []
       };
@@ -49,11 +51,78 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      Licences.save(payload, function(){
+      Licences.save(payload, function(response){
+        console.log('response');
+        console.log(response);
+
+        var status = $window._.result($window._.find(response.fieldvalues, 'name', 'status'), 'value');
+
+        console.log('response');
+        console.log(status);
+
+        if(status === 'active'){
+          $state.go('create.upload');
+        }
+        else {
+          console.log('Not Active');
+        }
+      }, function(error){
+
+        console.log('Error');
+        console.log(error);
 
       });
+    };
 
-      $state.go('create.upload');
+    $scope.updateLicence = function(){
+
+      var payload = {
+        name: $scope.licence.name,
+        comment: $scope.licence.comment,
+        templateid: $state.params.templateId,
+        fieldvalues: []
+      };
+
+      angular.forEach($scope.template, function(field){
+
+        payload.fieldvalues.push({
+          name: field.name,
+          value: field.value
+        });
+      });
+
+      console.log(payload);
+
+      Licences.update({id: $state.params.licenceId}, payload);
+
+      $state.go('licences');
+    };
+
+    $scope.$watch('files', function () {
+
+      console.log($scope.files);
+
+      //$scope.upload($scope.files);
+    });
+
+    $scope.upload = function () {
+
+      console.log($scope.files);
+
+      if ($scope.files && $scope.files.length) {
+        for (var i = 0; i < $scope.files.length; i++) {
+          var file = $scope.files[i];
+          $upload.upload({
+            url: CONFIG.uploadURL,
+            file: file
+          }).progress(function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+          }).success(function (data, status, headers, config) {
+            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+          });
+        }
+      }
     };
   }
 ]);

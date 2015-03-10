@@ -70,8 +70,9 @@ var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', '
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-  apiURL: 'http://127.0.0.1/agreement-gateway/ws/'
-  //apiURL: 'http://playground-arjunatech.rhcloud.com/ws/'
+  apiURL: 'http://127.0.0.1/agreement-gateway/ws/',
+  //apiURL: 'http://playground-arjunatech.rhcloud.com/ws/',
+  uploadURL: 'http://127.0.0.1/binaryservice/servlet/endpoints/demo'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {
