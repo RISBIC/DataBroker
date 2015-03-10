@@ -134,13 +134,22 @@ public class MetadataListMO implements Serializable
 
                     Property rdfTypeProperty    = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
                     Property dataSourceProperty = model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
-
-                    StmtIterator statements = model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+                    Property workbookProperty   = model.getProperty("http://rdfs.arjuna.com/xssf#", "Workbook");
 
                     _items.clear();
-                    while (statements.hasNext())
+
+                    StmtIterator dataSourceStatements = model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+                    while (dataSourceStatements.hasNext())
                     {
-                        MetadataItemVO item = buildItem(model, statements.nextStatement().getSubject(), "Data Source");
+                        MetadataItemVO item = buildItem(model, dataSourceStatements.nextStatement().getSubject(), "Data Source");
+
+                        if (item != null)
+                            _items.add(item);
+                    }
+                    StmtIterator workbookStatements = model.listStatements(null, rdfTypeProperty, workbookProperty);
+                    while (workbookStatements.hasNext())
+                    {
+                        MetadataItemVO item = buildItem(model, workbookStatements.nextStatement().getSubject(), "Workbook");
 
                         if (item != null)
                             _items.add(item);
@@ -178,6 +187,11 @@ public class MetadataListMO implements Serializable
         Property producesDataSet = model.getProperty("http://rdfs.arjuna.com/datasource#", "producesDataSet");
         Property hasField        = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasField");
         Property hasType         = model.getProperty("http://rdfs.arjuna.com/datasource#", "hasType");
+        Property hasSheet        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasSheet");
+        Property hasColumn       = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasColumn");
+        Property hasLabel        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasLabel");
+        Property hasIndex        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasIndex");
+        Property hasXType        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasType");
 
         Statement summaryStatement = resource.getProperty(hasSummary);
         if (summaryStatement != null)
@@ -203,6 +217,18 @@ public class MetadataListMO implements Serializable
         if (protocolStatement != null)
             items.add(new MetadataItemVO("Protocol: ", protocolStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
+        Statement labelStatement = resource.getProperty(hasLabel);
+        if (labelStatement != null)
+            items.add(new MetadataItemVO("Label: ", labelStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement indexStatement = resource.getProperty(hasIndex);
+        if (indexStatement != null)
+            items.add(new MetadataItemVO("Index: ", indexStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
+        Statement xtypeStatement = resource.getProperty(hasXType);
+        if (xtypeStatement != null)
+            items.add(new MetadataItemVO("Type: ", xtypeStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+
         StmtIterator statements = model.listStatements(resource, (Property) null, (RDFNode) null);
         while (statements.hasNext())
         {
@@ -219,6 +245,10 @@ public class MetadataListMO implements Serializable
                 subItem = buildItem(model, subStatement.getResource(), "Data Field");
             else if (hasType.equals(subStatement.getPredicate()))
                 subItem = buildItem(model, subStatement.getResource(), "Data Type");
+            else if (hasSheet.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getResource(), "Sheet");
+            else if (hasColumn.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getResource(), "Column");
 
             if (subItem != null)
                 items.add(subItem);
