@@ -16,6 +16,6 @@ public class InvalidMetaPropertyExceptionHandler implements ExceptionMapper<Inva
     @Override
     public Response toResponse(InvalidMetaPropertyException invalidMetaPropertyException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(invalidMetaPropertyException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(invalidMetaPropertyException.getMessage()).build();
     }
 }

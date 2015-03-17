@@ -11,14 +11,14 @@ public interface DataProvider<T>
 {
     /**
      * Returns the data flow node associated with the data consumer.
-     * 
+     *
      * @return the data flow node associated with the data consumer
      */
     public DataFlowNode getDataFlowNode();
 
     /**
      * Initiate the production of a data item by the associated data flow node.
-     * 
+     *
      * @param data the data to be produced
      */
     public void produce(T data);

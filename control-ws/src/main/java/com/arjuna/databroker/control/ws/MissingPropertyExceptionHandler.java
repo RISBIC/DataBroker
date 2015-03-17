@@ -16,6 +16,6 @@ public class MissingPropertyExceptionHandler implements ExceptionMapper<MissingP
     @Override
     public Response toResponse(MissingPropertyException missingPropertyException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(missingPropertyException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(missingPropertyException.getMessage()).build();
     }
 }

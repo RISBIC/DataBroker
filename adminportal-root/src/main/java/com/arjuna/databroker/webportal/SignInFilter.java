@@ -49,5 +49,5 @@ public class SignInFilter implements Filter
     public void destroy()
     {
         logger.info("SignInFilter.destroy");
-    } 
+    }
 }

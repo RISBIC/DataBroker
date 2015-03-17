@@ -376,7 +376,7 @@ public class DataFlowWS
                 if (dataFlow != null)
                 {
                     DataFlowNode dataFlowNode = dataFlow.getDataFlowNodeInventory().getDataFlowNode(dataflowNodeId);
-                    
+
                     if (dataFlowNode != null)
                     {
                         dataFlowNodeDTO.setName(dataFlowNode.getName());

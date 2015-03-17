@@ -14,7 +14,7 @@ public interface ObserverDataConsumer<T> extends DataConsumer<T>
 {
     /**
      * Cause the consuming of a data item by the associated data flow node.
-     * 
+     *
      * @param dataProvider the data provider which has produced the data
      * @param data the data to be consumed
      */

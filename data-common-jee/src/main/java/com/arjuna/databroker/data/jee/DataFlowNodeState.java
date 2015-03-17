@@ -13,14 +13,14 @@ public interface DataFlowNodeState
 {
     /**
      * Returns the state associated with the of data flow node.
-     * 
+     *
      * @return the state associated with the of data flow node.
      */
     public Serializable getState();
 
     /**
      * Sets the state associated with the of data flow node.
-     * 
+     *
      * @param state the state associated with the of data flow node.
      */
     public void setState(Serializable state);

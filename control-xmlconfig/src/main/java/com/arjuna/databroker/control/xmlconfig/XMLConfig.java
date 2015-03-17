@@ -366,7 +366,7 @@ public class XMLConfig
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("variable"))
                 valid &= parseVariable((Element) childNode, problems, variableMapping, update);
-            else 
+            else
             {
                 processUnexpectedNode(childNode, problems);
                 valid = false;
@@ -401,7 +401,7 @@ public class XMLConfig
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("metaProperty"))
                 valid &= parseProperty((Element) childNode, problems, variableMapping, metaProperties);
-            else 
+            else
             {
                 processUnexpectedNode(childNode, problems);
                 valid = false;
@@ -436,7 +436,7 @@ public class XMLConfig
                 continue;
             else if ((childNode.getNodeType() == Node.ELEMENT_NODE) && childNode.getNodeName().equals("property"))
                 valid &= parseProperty((Element) childNode, problems, variableMapping, properties);
-            else 
+            else
             {
                 processUnexpectedNode(childNode, problems);
                 valid = false;

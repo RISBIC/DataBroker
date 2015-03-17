@@ -25,7 +25,7 @@ public class DataFlowNodeEntity implements Serializable
     public DataFlowNodeEntity(String id, String name, Map<String, String> properties, String nodeClassName, DataFlowEntity dataFlow, Serializable state)
     {
         _id         = id;
-        _name       = name;               
+        _name       = name;
         _properties = properties;
         _className  = nodeClassName;
         _dataFlow   = dataFlow;

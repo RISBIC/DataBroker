@@ -16,6 +16,6 @@ public class DataFlowNodeLinkManagementExceptionHandler implements ExceptionMapp
     @Override
     public Response toResponse(DataFlowNodeLinkManagementException dataFlowNodeLinkManagementException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(dataFlowNodeLinkManagementException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(dataFlowNodeLinkManagementException.getMessage()).build();
     }
 }

@@ -16,6 +16,6 @@ public class InvalidPropertyExceptionHandler implements ExceptionMapper<InvalidP
     @Override
     public Response toResponse(InvalidPropertyException invalidPropertyException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(invalidPropertyException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(invalidPropertyException.getMessage()).build();
     }
 }

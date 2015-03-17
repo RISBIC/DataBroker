@@ -19,9 +19,9 @@ import java.util.List;
  * <li>desired name is obtained;</li>
  * <li>call {@code createDataFlow}.</li>
  * </ul>
- * <p>It is also possible to retain the values of metaProperties and properties, to form a type of template, from which 
+ * <p>It is also possible to retain the values of metaProperties and properties, to form a type of template, from which
  * multiple data flow instances could be created, using {@code createDataFlow}.
- * 
+ *
  * <p>It is possible, if not probable, that meta property names and property names could be empty, so no values
  * need be specified.
  */
@@ -50,7 +50,7 @@ public interface DataFlowFactory
 
     /**
      * Returns the list of property names required.
-     * 
+     *
      * @param metaProperties the meta properties required to obtain the property names
      * @return the list of property names required
      * @throws InvalidMetaPropertyException thrown if a meta property is invalid
@@ -61,7 +61,7 @@ public interface DataFlowFactory
 
     /**
      * Creates a data flow instance.
-     * 
+     *
      * @param name the intended name of the data flow
      * @param metaProperties the meta properties required to create the data flow
      * @param properties the properties required to create the data flow

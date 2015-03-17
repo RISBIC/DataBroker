@@ -16,6 +16,6 @@ public class InvalidDataFlowExceptionHandler implements ExceptionMapper<InvalidD
     @Override
     public Response toResponse(InvalidDataFlowException invalidDataFlowException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(invalidDataFlowException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(invalidDataFlowException.getMessage()).build();
     }
 }
