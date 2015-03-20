@@ -77,6 +77,74 @@ public class AdvertsWS
         }
     }
 
+    @GET
+    @Path("/adverts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "][" + metadataId + "]");
+        try
+        {
+            if ((requesterId == null) && (userId != null))
+            {
+                logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
+                return Collections.emptyList();
+            }
+
+            List<AdvertNodeDTO> result = new LinkedList<AdvertNodeDTO>();
+            if (_accessControlUtils.canRead(metadataId, requesterId, userId))
+            {
+                Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+                scanMetadataBlob(metadataId, advertMap);
+
+                result.addAll(advertMap.values());
+            }
+
+            return result;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getAdverts: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
+    @Path("/adverts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId, @QueryParam("metadatapath") String metadataPath)
+    {
+        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "][" + metadataId + "][" + metadataPath + "]");
+        try
+        {
+            if ((requesterId == null) && (userId != null))
+            {
+                logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "], metadataPath=[" + metadataPath + "]");
+                return Collections.emptyList();
+            }
+
+            List<AdvertNodeDTO> result = new LinkedList<AdvertNodeDTO>();
+            if (_accessControlUtils.canRead(metadataId, requesterId, userId))
+            {
+                Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+                searchMetadataBlob(metadataId, metadataPath, advertMap);
+
+                result.addAll(advertMap.values());
+            }
+
+            return result;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getAdverts: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
     private static final String[] knownRootNodeTypeURIs =
     {
         "http://rdfs.arjuna.com/datasource#DataSource",
@@ -85,6 +153,39 @@ public class AdvertsWS
     };
 
     private void scanMetadataBlob(String metadataBlogId, Map<String, AdvertNodeDTO> advertMap)
+    {
+        try
+        {
+            String content = _metadataContentStore.getContent(metadataBlogId);
+
+            Model  model  = ModelFactory.createDefaultModel();
+            Reader reader = new StringReader(content);
+            model.read(reader, null);
+            reader.close();
+
+            Property rdfTypeProperty = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
+
+            for (String knownRootNodeTypeURI: knownRootNodeTypeURIs)
+            {
+                Resource     knownRootNodeTypeResource = model.getResource(knownRootNodeTypeURI);
+                StmtIterator statements                = model.listStatements(null, rdfTypeProperty, knownRootNodeTypeResource);
+
+                while (statements.hasNext())
+                {
+                    Statement statement = statements.nextStatement();
+                    Resource  subject   = statement.getSubject();
+
+                    scanSubject(subject, metadataBlogId, true, advertMap);
+                }
+            }
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Unable to map metadata blob", throwable);
+        }
+    }
+
+    private void searchMetadataBlob(String metadataBlogId, String metadataPath, Map<String, AdvertNodeDTO> advertMap)
     {
         try
         {

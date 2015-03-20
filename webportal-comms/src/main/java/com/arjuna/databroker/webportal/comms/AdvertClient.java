@@ -56,4 +56,81 @@ public class AdvertClient
 
         return adverts;
     }
+
+    public List<AdvertNodeSummary> getAdverts(String serviceRootURL, String requesterId, String userId, String metadataId)
+    {
+        List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
+
+        try
+        {
+            if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
+            {
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts");
+                request.queryParameter("requesterid", requesterId);
+                request.queryParameter("userId", userId);
+                request.queryParameter("metadataid", metadataId);
+
+                ClientResponse<List<AdvertNodeDTO>> response = request.get(new GenericType<List<AdvertNodeDTO>>() {});
+
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
+                {
+                    List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
+
+                    logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
+
+                    for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
+                        adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
+                }
+                else
+                    logger.log(Level.WARNING, "Problem in 'getAdverts' getting entity " + response.getStatus());
+            }
+            else
+                logger.log(Level.WARNING, "Invalid parameter in 'getAdverts' for getting adverts");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'getAdverts'", throwable);
+        }
+
+        return adverts;
+    }
+
+    public List<AdvertNodeSummary> getAdverts(String serviceRootURL, String requesterId, String userId, String metadataId, String metadataPath)
+    {
+        List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
+
+        try
+        {
+            if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
+            {
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts");
+                request.queryParameter("requesterid", requesterId);
+                request.queryParameter("userId", userId);
+                request.queryParameter("metadataid", metadataId);
+                request.queryParameter("metadatapath", metadataPath);
+
+                ClientResponse<List<AdvertNodeDTO>> response = request.get(new GenericType<List<AdvertNodeDTO>>() {});
+
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
+                {
+                    List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
+
+                    logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
+
+                    for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
+                        adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
+                }
+                else
+                    logger.log(Level.WARNING, "Problem in 'getAdverts' getting entity " + response.getStatus());
+            }
+            else
+                logger.log(Level.WARNING, "Invalid parameter in 'getAdverts' for getting adverts");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'getAdverts'", throwable);
+        }
+
+        return adverts;
+    }
 }
