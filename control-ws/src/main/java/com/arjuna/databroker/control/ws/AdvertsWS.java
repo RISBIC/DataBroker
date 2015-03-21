@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -23,7 +22,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
@@ -42,11 +40,59 @@ public class AdvertsWS
     private static final Logger logger = Logger.getLogger(AdvertsWS.class.getName());
 
     @GET
+    @Path("/adverts/_ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getMetadataIds(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getMetadataIds: [" + requesterId + "][" + userId + "]");
+        try
+        {
+            if ((requesterId == null) && (userId != null))
+            {
+                logger.log(Level.WARNING, "getMetadataIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
+                return Collections.emptyList();
+            }
+
+            return _accessControlUtils.listAccessable(requesterId, userId);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getMetadataIds: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
+    @Path("/adverts/_paths")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getMetadataRootPaths(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("matedataid") String matedataId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getMetadataRootPathIds: [" + requesterId + "][" + userId + "]");
+        try
+        {
+            if ((requesterId == null) && (userId != null))
+            {
+                logger.log(Level.WARNING, "getMetadataRootPathIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
+                return Collections.emptyList();
+            }
+
+            return _accessControlUtils.listAccessable(requesterId, userId);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getMetadataRootPathIds: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
     @Path("/adverts")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
     {
-        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "]");
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "]");
         try
         {
             if ((requesterId == null) && (userId != null))
@@ -82,7 +128,7 @@ public class AdvertsWS
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
     {
-        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "][" + metadataId + "]");
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "]");
         try
         {
             if ((requesterId == null) && (userId != null))
@@ -116,7 +162,7 @@ public class AdvertsWS
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId, @QueryParam("metadatapath") String metadataPath)
     {
-        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "][" + metadataId + "][" + metadataPath + "]");
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "][" + metadataPath + "]");
         try
         {
             if ((requesterId == null) && (userId != null))

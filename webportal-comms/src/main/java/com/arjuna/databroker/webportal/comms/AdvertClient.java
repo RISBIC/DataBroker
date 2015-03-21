@@ -8,17 +8,89 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
+
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 import org.jboss.resteasy.util.GenericType;
 import org.jboss.resteasy.util.HttpResponseCodes;
+
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 
 @Stateless
 public class AdvertClient
 {
     private static final Logger logger = Logger.getLogger(AdvertClient.class.getName());
+
+    public List<String> getMetadataIds(String serviceRootURL, String requesterId, String userId)
+    {
+        List<String> metadataIds = new LinkedList<String>();
+
+        try
+        {
+            if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
+            {
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_ids");
+                request.queryParameter("requesterid", requesterId);
+                request.queryParameter("userId", userId);
+
+                ClientResponse<List<String>> response = request.get(new GenericType<List<String>>() {});
+
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
+                {
+                    metadataIds = response.getEntity();
+
+                    logger.log(Level.FINE, "Received 'getMetadataIds' number " + metadataIds.size());
+                }
+                else
+                    logger.log(Level.WARNING, "Problem in 'getMetadataIds' getting entity " + response.getStatus());
+            }
+            else
+                logger.log(Level.WARNING, "Invalid parameter in 'getMetadataIds' for getting adverts");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'getMetadataIds'", throwable);
+        }
+
+        return metadataIds;
+    }
+
+    public List<String> getMetadataRootPaths(String serviceRootURL, String requesterId, String userId, String matedataId)
+    {
+        List<String> paths = new LinkedList<String>();
+
+        try
+        {
+            if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
+            {
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_paths");
+                request.queryParameter("requesterid", requesterId);
+                request.queryParameter("userId", userId);
+                request.queryParameter("matedataid", matedataId);
+
+                ClientResponse<List<String>> response = request.get(new GenericType<List<String>>() {});
+
+                if (response.getStatus() == HttpResponseCodes.SC_OK)
+                {
+                    paths = response.getEntity();
+
+                    logger.log(Level.FINE, "Received 'getMetadataRootPaths' number " + paths.size());
+                }
+                else
+                    logger.log(Level.WARNING, "Problem in 'getMetadataRootPaths' getting entity " + response.getStatus());
+            }
+            else
+                logger.log(Level.WARNING, "Invalid parameter in 'getMetadataRootPaths' for getting adverts");
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Problem in 'getMetadataRootPaths'", throwable);
+        }
+
+        return paths;
+    }
 
     public List<AdvertNodeSummary> getAdverts(String serviceRootURL, String requesterId, String userId)
     {
