@@ -92,7 +92,7 @@ public class AdvertsWS
     }
 
     @GET
-    @Path("/adverts")
+    @Path("/adverts/_all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
     {
@@ -128,7 +128,7 @@ public class AdvertsWS
     }
 
     @GET
-    @Path("/adverts")
+    @Path("/adverts/_blob")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
     {
@@ -162,7 +162,7 @@ public class AdvertsWS
     }
 
     @GET
-    @Path("/adverts")
+    @Path("/adverts/_path")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId, @QueryParam("metadatapath") String metadataPath)
     {
