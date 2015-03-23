@@ -27,6 +27,8 @@ public class AdvertClient
     {
         List<String> metadataIds = new LinkedList<String>();
 
+        logger.log(Level.FINE, "AdvertClient.getMetadataIds: serviceRootURL=[" + serviceRootURL + "], requesterId=[" + requesterId + "], userId=[" + userId + "]");
+
         try
         {
             if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
@@ -57,9 +59,11 @@ public class AdvertClient
         return metadataIds;
     }
 
-    public List<String> getMetadataRootPaths(String serviceRootURL, String requesterId, String userId, String matedataId)
+    public List<String> getMetadataRootPaths(String serviceRootURL, String requesterId, String userId, String metadataId)
     {
         List<String> paths = new LinkedList<String>();
+
+        logger.log(Level.FINE, "AdvertClient.getMetadataRootPaths: serviceRootURL=[" + serviceRootURL + "], requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
 
         try
         {
@@ -68,7 +72,7 @@ public class AdvertClient
                 ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_paths");
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
-                request.queryParameter("matedataid", matedataId);
+                request.queryParameter("metadataid", metadataId);
 
                 ClientResponse<List<String>> response = request.get(new GenericType<List<String>>() {});
 
@@ -96,11 +100,13 @@ public class AdvertClient
     {
         List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
 
+        logger.log(Level.FINE, "AdvertClient.getAdverts: serviceRootURL=[" + serviceRootURL + "], requesterId=[" + requesterId + "], userId=[" + userId + "]");
+
         try
         {
             if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
             {
-                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts");
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_all");
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
 
@@ -110,7 +116,7 @@ public class AdvertClient
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
 
-                    logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
+                    logger.log(Level.FINE, "Received (all) 'adverts' number " + advertNodeDTOs.size());
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
                         adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
@@ -133,11 +139,13 @@ public class AdvertClient
     {
         List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
 
+        logger.log(Level.FINE, "AdvertClient.getAdverts: serviceRootURL=[" + serviceRootURL + "], requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
+
         try
         {
             if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
             {
-                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts");
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_blob");
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
                 request.queryParameter("metadataid", metadataId);
@@ -148,7 +156,7 @@ public class AdvertClient
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
 
-                    logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
+                    logger.log(Level.FINE, "Received (blog) 'adverts' number " + advertNodeDTOs.size());
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
                         adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
@@ -171,11 +179,13 @@ public class AdvertClient
     {
         List<AdvertNodeSummary> adverts = new LinkedList<AdvertNodeSummary>();
 
+        logger.log(Level.FINE, "AdvertClient.getAdverts: serviceRootURL=[" + serviceRootURL + "], requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "], metadataPath=[" + metadataPath + "]");
+
         try
         {
             if ((serviceRootURL != null) && (requesterId != null) && (userId != null))
             {
-                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts");
+                ClientRequest request = new ClientRequest(serviceRootURL + "/control/ws/metadata/adverts/_path");
                 request.queryParameter("requesterid", requesterId);
                 request.queryParameter("userId", userId);
                 request.queryParameter("metadataid", metadataId);
@@ -187,7 +197,7 @@ public class AdvertClient
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
 
-                    logger.log(Level.FINE, "Received 'adverts' number " + advertNodeDTOs.size());
+                    logger.log(Level.FINE, "Received (path) 'adverts' number " + advertNodeDTOs.size());
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
                         adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
