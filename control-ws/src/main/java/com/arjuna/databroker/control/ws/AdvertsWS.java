@@ -66,18 +66,22 @@ public class AdvertsWS
     @GET
     @Path("/adverts/_paths")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getMetadataRootPaths(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("matedataid") String matedataId)
+    public List<String> getMetadataRootPaths(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
     {
         logger.log(Level.FINE, "AdvertsWS.getMetadataRootPathIds: [" + requesterId + "][" + userId + "]");
         try
         {
-            if ((requesterId == null) && (userId != null))
+            if (((requesterId == null) && (userId != null)) || (metadataId == null))
             {
-                logger.log(Level.WARNING, "getMetadataRootPathIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
+                logger.log(Level.WARNING, "getMetadataRootPathIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
                 return Collections.emptyList();
             }
 
-            return _accessControlUtils.listAccessable(requesterId, userId);
+            Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+            scanMetadataBlob(metadataId, advertMap);
+
+            return new LinkedList<String>(advertMap.keySet());
         }
         catch (Throwable throwable)
         {
@@ -131,7 +135,7 @@ public class AdvertsWS
         logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "]");
         try
         {
-            if ((requesterId == null) && (userId != null))
+            if (((requesterId == null) && (userId != null)) || (metadataId != null))
             {
                 logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
                 return Collections.emptyList();
@@ -165,23 +169,22 @@ public class AdvertsWS
         logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "][" + metadataPath + "]");
         try
         {
-            if ((requesterId == null) && (userId != null))
+            if (((requesterId == null) && (userId != null)) || (metadataId == null) || (metadataPath == null))
             {
                 logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "], metadataPath=[" + metadataPath + "]");
                 return Collections.emptyList();
             }
 
-            List<AdvertNodeDTO> result = new LinkedList<AdvertNodeDTO>();
             if (_accessControlUtils.canRead(metadataId, requesterId, userId))
             {
                 Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
 
-                searchMetadataBlob(metadataId, metadataPath, advertMap);
+                searchMetadataPath(metadataId, metadataPath, advertMap);
 
-                result.addAll(advertMap.values());
+                return new LinkedList<AdvertNodeDTO>(advertMap.values());
             }
-
-            return result;
+            else
+                return Collections.<AdvertNodeDTO>emptyList();
         }
         catch (Throwable throwable)
         {
@@ -231,7 +234,7 @@ public class AdvertsWS
         }
     }
 
-    private void searchMetadataBlob(String metadataBlogId, String metadataPath, Map<String, AdvertNodeDTO> advertMap)
+    private void searchMetadataPath(String metadataBlogId, String metadataPath, Map<String, AdvertNodeDTO> advertMap)
     {
         try
         {
@@ -242,25 +245,13 @@ public class AdvertsWS
             model.read(reader, null);
             reader.close();
 
-            Property rdfTypeProperty = model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
+            Resource subject = model.getResource(metadataPath);
 
-            for (String knownRootNodeTypeURI: knownRootNodeTypeURIs)
-            {
-                Resource     knownRootNodeTypeResource = model.getResource(knownRootNodeTypeURI);
-                StmtIterator statements                = model.listStatements(null, rdfTypeProperty, knownRootNodeTypeResource);
-
-                while (statements.hasNext())
-                {
-                    Statement statement = statements.nextStatement();
-                    Resource  subject   = statement.getSubject();
-
-                    scanSubject(subject, metadataBlogId, true, advertMap);
-                }
-            }
+            scanSubject(subject, metadataBlogId, true, advertMap);
         }
         catch (Throwable throwable)
         {
-            logger.log(Level.WARNING, "Unable to map metadata blob", throwable);
+            logger.log(Level.WARNING, "Unable to map metadata path", throwable);
         }
     }
 
