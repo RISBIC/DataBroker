@@ -7,20 +7,20 @@ package com.arjuna.databroker.data;
 import java.util.Map;
 
 /**
- * DataFlowNode is an interface through which the state of a data flow node can be examined. 
+ * DataFlowNode is an interface through which the state of a data flow node can be examined.
  */
 public interface DataFlowNode
 {
     /**
      * Returns the data flow associated with the data flow node.
-     * 
+     *
      * @return the data flow associated with the data flow node
      */
     public DataFlow getDataFlow();
 
     /**
      * Sets the data flow associated with the data flow node.
-     * 
+     *
      * @param dataFlow the data flow to be associated with the data flow node
      */
     public void setDataFlow(DataFlow dataFlow)

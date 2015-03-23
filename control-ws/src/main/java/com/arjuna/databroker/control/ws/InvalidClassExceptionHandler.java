@@ -16,6 +16,6 @@ public class InvalidClassExceptionHandler implements ExceptionMapper<InvalidClas
     @Override
     public Response toResponse(InvalidClassException invalidClassException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(invalidClassException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(invalidClassException.getMessage()).build();
     }
 }

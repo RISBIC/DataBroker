@@ -57,6 +57,10 @@ public class DataBrokerClient
                 throw new RequestProblemException("Problem during request of data broker summary");
             }
         }
+        catch (RequestProblemException requestProblemException)
+        {
+            throw requestProblemException;
+        }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "Problem in 'DataBrokerClient.getDataBrokerSummaries'", throwable);

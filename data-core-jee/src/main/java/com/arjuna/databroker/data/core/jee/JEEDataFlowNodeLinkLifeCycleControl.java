@@ -54,26 +54,26 @@ public class JEEDataFlowNodeLinkLifeCycleControl implements DataFlowNodeLinkLife
         {
             DataProvider<T> dataProvider = getSourceProvider(sourceDataFlowNode, linkClass);
             DataConsumer<T> dataConsumer = getSinkConsumer(sinkDataFlowNode, linkClass);
-    
+
             if ((dataProvider != null) && (dataConsumer != null))
             {
                 if ((dataProvider instanceof ObservableDataProvider) && (dataConsumer instanceof ObserverDataConsumer))
                 {
                     ObservableDataProvider<T> observableDataProvider = (ObservableDataProvider<T>) dataProvider;
                     ObserverDataConsumer<T>   observerDataConsumer   = (ObserverDataConsumer<T>) dataConsumer;
-    
+
                     observableDataProvider.addDataConsumer(observerDataConsumer);
                 }
                 else if ((dataProvider instanceof NamedDataProvider) && (dataConsumer instanceof ReferrerDataConsumer))
                 {
                     NamedDataProvider<T>    namedDataProvider    = (NamedDataProvider<T>) dataProvider;
                     ReferrerDataConsumer<T> referrerDataConsumer = (ReferrerDataConsumer<T>) dataConsumer;
-    
+
                     referrerDataConsumer.addReferredTo(namedDataProvider.getName(referrerDataConsumer.getNameClass()));
                 }
                 else
                     throw new NoCompatableCommonDataTransportTypeException("No common data transport for class " + linkClass.getName());
-    
+
                 DataFlowEntity     dataFlowEntity           = _dataFlowUtils.find(dataFlow.getName());
                 DataFlowNodeEntity sourceDataFlowNodeEntity = _dataFlowNodeUtils.find(sourceDataFlowNode.getName(), dataFlowEntity);
                 DataFlowNodeEntity sinkDataFlowNodeEntity   = _dataFlowNodeUtils.find(sinkDataFlowNode.getName(), dataFlowEntity);

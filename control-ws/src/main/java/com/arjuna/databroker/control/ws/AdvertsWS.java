@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -23,7 +22,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
@@ -42,11 +40,63 @@ public class AdvertsWS
     private static final Logger logger = Logger.getLogger(AdvertsWS.class.getName());
 
     @GET
+    @Path("/adverts/_ids")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getMetadataIds(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getMetadataIds: [" + requesterId + "][" + userId + "]");
+        try
+        {
+            if ((requesterId == null) && (userId != null))
+            {
+                logger.log(Level.WARNING, "getMetadataIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "]");
+                return Collections.emptyList();
+            }
+
+            return _accessControlUtils.listAccessable(requesterId, userId);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getMetadataIds: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
+    @Path("/adverts/_paths")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getMetadataRootPaths(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getMetadataRootPathIds: [" + requesterId + "][" + userId + "]");
+        try
+        {
+            if (((requesterId == null) && (userId != null)) || (metadataId == null))
+            {
+                logger.log(Level.WARNING, "getMetadataRootPathIds: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
+                return Collections.emptyList();
+            }
+
+            Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+            scanMetadataBlob(metadataId, advertMap);
+
+            return new LinkedList<String>(advertMap.keySet());
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getMetadataRootPathIds: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
     @Path("/adverts")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId)
     {
-        logger.log(Level.FINE, "AdvertsWS.listMetadata: [" + requesterId + "][" + userId + "]");
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "]");
         try
         {
             if ((requesterId == null) && (userId != null))
@@ -77,11 +127,78 @@ public class AdvertsWS
         }
     }
 
+    @GET
+    @Path("/adverts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "]");
+        try
+        {
+            if (((requesterId == null) && (userId != null)) || (metadataId != null))
+            {
+                logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
+                return Collections.emptyList();
+            }
+
+            List<AdvertNodeDTO> result = new LinkedList<AdvertNodeDTO>();
+            if (_accessControlUtils.canRead(metadataId, requesterId, userId))
+            {
+                Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+                scanMetadataBlob(metadataId, advertMap);
+
+                result.addAll(advertMap.values());
+            }
+
+            return result;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getAdverts: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @GET
+    @Path("/adverts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<AdvertNodeDTO> getAdverts(@QueryParam("requesterid") String requesterId, @QueryParam("userid") String userId, @QueryParam("metadataid") String metadataId, @QueryParam("metadatapath") String metadataPath)
+    {
+        logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "][" + metadataPath + "]");
+        try
+        {
+            if (((requesterId == null) && (userId != null)) || (metadataId == null) || (metadataPath == null))
+            {
+                logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "], metadataPath=[" + metadataPath + "]");
+                return Collections.emptyList();
+            }
+
+            if (_accessControlUtils.canRead(metadataId, requesterId, userId))
+            {
+                Map<String, AdvertNodeDTO> advertMap = new HashMap<String, AdvertNodeDTO>();
+
+                searchMetadataPath(metadataId, metadataPath, advertMap);
+
+                return new LinkedList<AdvertNodeDTO>(advertMap.values());
+            }
+            else
+                return Collections.<AdvertNodeDTO>emptyList();
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "getAdverts: Unable to metadata", throwable);
+
+            return Collections.emptyList();
+        }
+    }
+
     private static final String[] knownRootNodeTypeURIs =
     {
         "http://rdfs.arjuna.com/datasource#DataSource",
         "http://rdfs.arjuna.com/jdbc/postgresql#Database",
-        "http://rdfs.arjuna.com/xssf#Spreadsheet"
+        "http://rdfs.arjuna.com/xssf#Workbook"
     };
 
     private void scanMetadataBlob(String metadataBlogId, Map<String, AdvertNodeDTO> advertMap)
@@ -117,6 +234,27 @@ public class AdvertsWS
         }
     }
 
+    private void searchMetadataPath(String metadataBlogId, String metadataPath, Map<String, AdvertNodeDTO> advertMap)
+    {
+        try
+        {
+            String content = _metadataContentStore.getContent(metadataBlogId);
+
+            Model  model  = ModelFactory.createDefaultModel();
+            Reader reader = new StringReader(content);
+            model.read(reader, null);
+            reader.close();
+
+            Resource subject = model.getResource(metadataPath);
+
+            scanSubject(subject, metadataBlogId, true, advertMap);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Unable to map metadata path", throwable);
+        }
+    }
+
     private static final String[] knownChildPropertyURIs =
     {
         "http://rdfs.arjuna.com/datasource#hasDataService",
@@ -125,6 +263,8 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/access#hasAccessInfo",
         "http://rdfs.arjuna.com/jdbc/postgresql#hasDatabaseTable",
         "http://rdfs.arjuna.com/jdbc/postgresql#hasTableField",
+        "http://rdfs.arjuna.com/xssf#hasSheet",
+        "http://rdfs.arjuna.com/xssf#hasColumn"
     };
 
     private AdvertNodeDTO scanSubject(Resource subject, String metadataBlogId, Boolean rootNode, Map<String, AdvertNodeDTO> advertMap)
@@ -133,7 +273,6 @@ public class AdvertsWS
         {
             AdvertNodeDTO advertNode = obtainAdvertNode(subject, metadataBlogId, rootNode, advertMap);
 
-            List<String> childNodeIds = new LinkedList<String>();
             for (String knownChildPropertyURI: knownChildPropertyURIs)
             {
                 Property     knownChildProperty = subject.getModel().getProperty(knownChildPropertyURI);
@@ -146,10 +285,9 @@ public class AdvertsWS
 
                     AdvertNodeDTO childAdvertNode = scanSubject(childSubject, metadataBlogId, false, advertMap);
 
-                    childNodeIds.add(childAdvertNode.getId());
+                    advertNode.getChildNodeIds().add(childAdvertNode.getId());
                 }
             }
-            advertNode.setChildNodeIds(childNodeIds);
 
             return advertNode;
         }
@@ -196,8 +334,8 @@ public class AdvertsWS
             Date         dataCreated  = null;
             Date         dateUpdate   = null;
             String       owner        = null;
-            List<String> tags         = Collections.<String>emptyList();
-            List<String> childNodeIds = Collections.<String>emptyList();
+            List<String> tags         = new LinkedList<String>();
+            List<String> childNodeIds = new LinkedList<String>();
 
             if (titleStatement != null)
                 name = titleStatement.getString();

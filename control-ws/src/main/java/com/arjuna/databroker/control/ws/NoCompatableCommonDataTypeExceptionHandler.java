@@ -16,6 +16,6 @@ public class NoCompatableCommonDataTypeExceptionHandler implements ExceptionMapp
     @Override
     public Response toResponse(NoCompatableCommonDataTypeException noCompatableCommonDataTypeException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(noCompatableCommonDataTypeException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(noCompatableCommonDataTypeException.getMessage()).build();
     }
 }

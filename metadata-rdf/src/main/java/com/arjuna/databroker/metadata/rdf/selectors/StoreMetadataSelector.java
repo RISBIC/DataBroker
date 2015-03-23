@@ -23,7 +23,7 @@ public class StoreMetadataSelector implements MetadataSelector
 
     public StoreMetadataSelector(MetadataContentStore metadataContentStore, String id)
     {
-        _metadataContentStore = metadataContentStore; 
+        _metadataContentStore = metadataContentStore;
         _id                   = id;
     }
 

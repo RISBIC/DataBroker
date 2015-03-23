@@ -506,6 +506,7 @@ public class AdvertMO implements Serializable
         else
             _errorMessage = "Failed to obtain adverts from \"" + _serviceRootURLs + "\"";
     }
+
     private String advertsToJSON(List<AdvertVO> adverts)
     {
         StringBuffer result = new StringBuffer();

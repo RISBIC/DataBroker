@@ -13,7 +13,7 @@ public class StoreMetadatasSelector implements MetadatasSelector
 {
     public StoreMetadatasSelector(MetadataContentStore metadataContentStore, List<String> ids)
     {
-        _metadataContentStore = metadataContentStore; 
+        _metadataContentStore = metadataContentStore;
         _ids                  = ids;
     }
 

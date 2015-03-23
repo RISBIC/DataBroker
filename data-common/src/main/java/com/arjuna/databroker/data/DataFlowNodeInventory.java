@@ -13,14 +13,14 @@ public interface DataFlowNodeInventory
 {
     /**
      * Returns the data flow nodes within the data flow node inventory.
-     * 
+     *
      * @return the data flow nodes within the data flow node inventory
      */
     public Collection<DataFlowNode> getDataFlowNodes();
 
     /**
      * Returns the data flow nodes within the data flow node inventory, of the specified data class
-     * 
+     *
      * @param dataClass the required data class by the data flow node
      * @return the data flow nodes within the data flow node inventory, of the specified data class
      */
@@ -28,7 +28,7 @@ public interface DataFlowNodeInventory
 
     /**
      * Returns a named data flow node, if it is within the data flow node inventory.
-     * 
+     *
      * @param name the name of the desired data flow node
      * @return the data flow node
      */
@@ -36,7 +36,7 @@ public interface DataFlowNodeInventory
 
     /**
      * Returns a named data flow node, if supports a the specified class, if it is within the data flow node inventory.
-     * 
+     *
      * @param name the name of the desired data flow node
      * @param dataClass the required data class by the data flow node
      * @return the data flow node
@@ -45,7 +45,7 @@ public interface DataFlowNodeInventory
 
     /**
      * Adds a data flow node to the data flow node inventory.
-     * 
+     *
      * @param dataFlowNode the data flow node to be added to the node inventory
      * @return indicates if a data flow node was added to the data flow node inventory
      */
@@ -53,7 +53,7 @@ public interface DataFlowNodeInventory
 
     /**
      * Removes a named data flow node from the data flow node inventory.
-     * 
+     *
      * @param name the name of the data flow node to be removed from the data flow node inventory
      * @return indicates if a data flow node was removed from the data flow node inventory
      */
@@ -61,7 +61,7 @@ public interface DataFlowNodeInventory
 
     /**
      * Removes a specified data flow node from the data flow node inventory.
-     * 
+     *
      * @param dataFlowNode the data flow node to be removed from the data flow node inventory
      * @return indicates if a data flow node was removed from the data flow node inventory
      */

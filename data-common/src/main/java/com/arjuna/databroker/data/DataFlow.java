@@ -7,7 +7,7 @@ package com.arjuna.databroker.data;
 import java.util.Map;
 
 /**
- * DataFlow is an interface through which the state of a data flow can be examined. 
+ * DataFlow is an interface through which the state of a data flow can be examined.
  */
 public interface DataFlow
 {

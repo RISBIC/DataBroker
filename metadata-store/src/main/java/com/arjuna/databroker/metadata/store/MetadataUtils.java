@@ -6,6 +6,7 @@ package com.arjuna.databroker.metadata.store;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -19,7 +20,7 @@ import javax.persistence.TypedQuery;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class MetadataUtils implements MetadataContentStore
 {
@@ -185,6 +186,35 @@ public class MetadataUtils implements MetadataContentStore
         {
             throwable.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public void createOverwrite(String id, String content)
+    {
+        logger.log(Level.FINE, "MetadataUtils.create: \"" + id + "\"");
+
+        try
+        {
+            MetadataEntity metadata = _entityManager.find(MetadataEntity.class, id);
+            if (metadata == null)
+            {
+                metadata = new MetadataEntity(id, null, null, content);
+
+                AccessControlEntity accessControl = new AccessControlEntity(UUID.randomUUID().toString(), metadata, null, null, true, true, true, true, true, true);
+
+                _entityManager.persist(metadata);
+                _entityManager.persist(accessControl);
+            }
+            else
+            {
+                metadata.setContent(content);
+                _entityManager.merge(metadata);
+            }
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
         }
     }
 

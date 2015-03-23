@@ -16,6 +16,6 @@ public class NoCompatableCommonDataTransportTypeExceptionHandler implements Exce
     @Override
     public Response toResponse(NoCompatableCommonDataTransportTypeException noCompatableCommonDataTransportTypeException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(noCompatableCommonDataTransportTypeException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(noCompatableCommonDataTransportTypeException.getMessage()).build();
     }
 }

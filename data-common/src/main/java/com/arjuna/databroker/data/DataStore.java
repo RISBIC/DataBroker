@@ -13,14 +13,14 @@ public interface DataStore extends DataFlowNode
 {
     /**
      * Returns the data classes of the data consumers, of the data store.
-     * 
+     *
      * @return the data classes of the data consumers, of the data store
      */
     public Collection<Class<?>> getDataConsumerDataClasses();
 
     /**
      * Returns the data consumer, of the specified data class, of the data store.
-     * 
+     *
      * @param dataClass the required data class
      * @return the data consumer, of the specified data class, of the data store
      */
@@ -28,14 +28,14 @@ public interface DataStore extends DataFlowNode
 
     /**
      * Returns the data classes of the data providers, of the data store.
-     * 
+     *
      * @return the data classes of the data providers, of the data store
      */
     public Collection<Class<?>> getDataProviderDataClasses();
 
     /**
      * Returns the data provider, of the specified data class, of the data store.
-     * 
+     *
      * @param dataClass the required data class
      * @return the data provider, of the specified data class, of the data store
      */
