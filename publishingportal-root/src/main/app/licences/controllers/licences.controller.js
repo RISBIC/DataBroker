@@ -43,6 +43,16 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       angular.forEach($scope.template, function(field){
 
+        if(field.type === 'checkbox'){
+          field.value = {};
+
+          angular.forEach(field.optionvalues, function(option, index){
+            field.value['checkbox' + index] = option.value;
+          });
+        }
+
+        console.log(field);
+
         payload.fieldvalues.push({
           name: field.name,
           value: field.value
@@ -51,7 +61,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      Licences.save(payload, function(response){
+      /*Licences.save(payload, function(response){
         console.log('response');
         console.log(response);
 
@@ -71,7 +81,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         console.log('Error');
         console.log(error);
 
-      });
+      });*/
     };
 
     $scope.updateLicence = function(){
@@ -93,7 +103,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      Licences.update({id: $state.params.licenceId}, payload);
+      Licences.update({agreementId: $state.params.licenceId}, payload);
 
       $state.go('licences');
     };
