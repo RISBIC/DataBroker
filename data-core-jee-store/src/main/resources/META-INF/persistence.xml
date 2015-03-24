@@ -10,7 +10,7 @@
         <jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
         <class>com.arjuna.databroker.data.jee.store.DataFlowEntity</class>
         <class>com.arjuna.databroker.data.jee.store.DataFlowNodeEntity</class>
-        <class>com.arjuna.databroker.data.jee.store.DataFlowLinkEntity</class>
+        <class>com.arjuna.databroker.data.jee.store.DataFlowNodeLinkEntity</class>
         <properties>
             <property name="hibernate.dialect"      value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

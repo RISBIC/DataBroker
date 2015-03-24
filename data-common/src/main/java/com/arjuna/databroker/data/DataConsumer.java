@@ -11,7 +11,7 @@ public interface DataConsumer<T>
 {
     /**
      * Returns the data flow node associated with the data consumer.
-     * 
+     *
      * @return the data flow node associated with the data consumer
      */
     public DataFlowNode getDataFlowNode();

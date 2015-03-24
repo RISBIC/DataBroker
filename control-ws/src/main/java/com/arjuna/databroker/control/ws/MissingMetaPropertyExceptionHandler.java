@@ -16,6 +16,6 @@ public class MissingMetaPropertyExceptionHandler implements ExceptionMapper<Miss
     @Override
     public Response toResponse(MissingMetaPropertyException missingMetaPropertyException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(missingMetaPropertyException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(missingMetaPropertyException.getMessage()).build();
     }
 }

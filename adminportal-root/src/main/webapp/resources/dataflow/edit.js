@@ -79,10 +79,10 @@ DataFlowEdit.prototype.doSelect = function(item)
     {
         this.operations.innerHTML = "<span class=\"dataflow-operations-label\">Data Flow</span>" +
                                     "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Source\" onclick=\"dataFlowEdit.addSourceToDataFlow()\">" +
-                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Processor\" onclick=\"dataFlowEdit.addProcessorToDataFlow()\">" + 
+                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Processor\" onclick=\"dataFlowEdit.addProcessorToDataFlow()\">" +
                                     "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Sink\" onclick=\"dataFlowEdit.addSinkToDataFlow()\">" +
-                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Service\" onclick=\"dataFlowEdit.addServiceToDataFlow()\">" + 
-                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Store\" onclick=\"dataFlowEdit.addStoreToDataFlow()\">"; 
+                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Service\" onclick=\"dataFlowEdit.addServiceToDataFlow()\">" +
+                                    "<input class=\"dataflow-operation\" type=\"button\" value=\"Add Data Store\" onclick=\"dataFlowEdit.addStoreToDataFlow()\">";
         item.borderStyle = "#cc7733";
         selectDataFlowNode("DataFlow: " + null);
     }

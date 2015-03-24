@@ -157,7 +157,7 @@
                 <configuration>
                     <ejbVersion>${ejb-api.version}</ejbVersion>
                 </configuration>
-             </plugin>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

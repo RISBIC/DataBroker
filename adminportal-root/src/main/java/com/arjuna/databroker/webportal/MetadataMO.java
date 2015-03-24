@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
 import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
+import com.arjuna.databroker.webportal.tree.WorkbookTreeNode;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -153,14 +154,22 @@ public class MetadataMO implements Serializable
 
                 Property rdfTypeProperty    = _model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
                 Property dataSourceProperty = _model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
-
-                StmtIterator statements = _model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+                Property workbookProperty   = _model.getProperty("http://rdfs.arjuna.com/xssf#", "Workbook");
 
                 _rootNodes.clear();
-                while (statements.hasNext())
+
+                StmtIterator dataSourceStatements = _model.listStatements(null, rdfTypeProperty, dataSourceProperty);
+                while (dataSourceStatements.hasNext())
                 {
-                    Statement statement = statements.nextStatement();
+                    Statement statement = dataSourceStatements.nextStatement();
                     _rootNodes.add(new DataSourceTreeNode(_model, statement.getSubject()));
+                }
+
+                StmtIterator workbookStatements = _model.listStatements(null, rdfTypeProperty, workbookProperty);
+                while (workbookStatements.hasNext())
+                {
+                    Statement statement = workbookStatements.nextStatement();
+                    _rootNodes.add(new WorkbookTreeNode(_model, statement.getSubject()));
                 }
                 _errorMessage = null;
             }

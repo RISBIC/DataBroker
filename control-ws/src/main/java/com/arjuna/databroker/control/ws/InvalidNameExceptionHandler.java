@@ -16,6 +16,6 @@ public class InvalidNameExceptionHandler implements ExceptionMapper<InvalidNameE
     @Override
     public Response toResponse(InvalidNameException invalidNameException)
     {
-        return Response.status(Status.BAD_REQUEST).entity(invalidNameException.getMessage()).build(); 
+        return Response.status(Status.BAD_REQUEST).entity(invalidNameException.getMessage()).build();
     }
 }

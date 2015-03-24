@@ -22,5 +22,7 @@ public interface MetadataContentStore
 
     public List<String> getChildrenIds(String id);
 
+    public void createOverwrite(String id, String content);
+
     public String createChild(String parentId, String descriptionId, String content);
 }

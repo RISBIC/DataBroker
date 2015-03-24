@@ -56,5 +56,5 @@ public abstract class AbstractJEEDataFlow implements DataFlow
     private String                       _name;
     private Map<String, String>          _properties;
     private DataFlowNodeInventory        _dataFlowNodeInventory;
-    private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory; 
+    private DataFlowNodeFactoryInventory _dataFlowNodeFactoryInventory;
 }

@@ -21,9 +21,9 @@ import java.util.Map;
  * <li>desired name is obtained;</li>
  * <li>call {@code createDataFlow}.</li>
  * </ul>
- * <p>It is also possible to retain the values of metaProperties and properties, to form a type of template, from which 
+ * <p>It is also possible to retain the values of metaProperties and properties, to form a type of template, from which
  * multiple data flow instances could be created, using {@code createDataFlow}.
- * 
+ *
  * <p>It is possible, if not probable, that meta property names and property names could be empty, so no values
  * need be specified.
  */
@@ -52,7 +52,7 @@ public interface DataFlowNodeFactory
 
     /**
      * Returns the list of meta property names required.
-     * 
+     *
      * @param dataFlowNodeClass the class of the data flow node
      * @return the list of meta property names required
      * @throws InvalidClassException thrown if the value of data flow node class is invalid
@@ -62,7 +62,7 @@ public interface DataFlowNodeFactory
 
     /**
      * Returns the list of property names required.
-     * 
+     *
      * @param dataFlowNodeClass the class of the data flow node
      * @param metaProperties the meta properties required to obtain the property names
      * @return the list of property names required
@@ -75,7 +75,7 @@ public interface DataFlowNodeFactory
 
     /**
      * Returns a created data flow node.
-     * 
+     *
      * @param name the intended name of the data flow node
      * @param dataFlowNodeClass the class of the data flow node
      * @param metaProperties the meta properties required to create the data flow node

@@ -154,17 +154,17 @@
     </error-page>
 
     <error-page>
-        <error-code>401</error-code>  
+        <error-code>401</error-code>
         <location>/errors/unauthorized.html</location>
     </error-page>
 
     <error-page>
-        <error-code>403</error-code>  
+        <error-code>403</error-code>
         <location>/errors/forbidden.html</location>
     </error-page>
 
     <error-page>
-        <error-code>404</error-code>  
+        <error-code>404</error-code>
         <location>/errors/not_found.html</location>
     </error-page>
 </web-app>
