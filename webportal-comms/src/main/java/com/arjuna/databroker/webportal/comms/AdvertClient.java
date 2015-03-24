@@ -156,7 +156,7 @@ public class AdvertClient
                 {
                     List<AdvertNodeDTO> advertNodeDTOs = response.getEntity();
 
-                    logger.log(Level.FINE, "Received (blog) 'adverts' number " + advertNodeDTOs.size());
+                    logger.log(Level.FINE, "Received (blob) 'adverts' number " + advertNodeDTOs.size());
 
                     for (AdvertNodeDTO advertNodeDTO: advertNodeDTOs)
                         adverts.add(new AdvertNodeSummary(advertNodeDTO.getId(), advertNodeDTO.getMetadataId(), advertNodeDTO.getMetadataPath(), advertNodeDTO.getRootNode(), advertNodeDTO.getNodeClass(), advertNodeDTO.getName(), advertNodeDTO.getSummary(), advertNodeDTO.getDescription(), advertNodeDTO.getDateCreated(), advertNodeDTO.getDateUpdate(), advertNodeDTO.getOwner(), advertNodeDTO.getTags(), advertNodeDTO.getChildNodeIds()));
