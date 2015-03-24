@@ -135,7 +135,7 @@ public class AdvertsWS
         logger.log(Level.FINE, "AdvertsWS.getAdverts: [" + requesterId + "][" + userId + "][" + metadataId + "]");
         try
         {
-            if (((requesterId == null) && (userId != null)) || (metadataId != null))
+            if (((requesterId == null) && (userId != null)) || (metadataId == null))
             {
                 logger.log(Level.WARNING, "getAdverts: Invalid parameters: requesterId=[" + requesterId + "], userId=[" + userId + "], metadataId=[" + metadataId + "]");
                 return Collections.emptyList();
