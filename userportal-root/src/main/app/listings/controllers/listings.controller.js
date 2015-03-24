@@ -16,7 +16,10 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
 
 
 
-        $scope.listings = Listings.all();
+      Listings.get({}, function(listings){
+        //console.log(listings.advertnodes);
+        $scope.listings = listings.advertnodes;
+      });
 
         $scope.$on('AUTH_EVENTS.logoutSuccess', function(){
           $scope.searchString = '';

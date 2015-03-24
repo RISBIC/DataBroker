@@ -5,7 +5,9 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
 
         $scope.searchString = Search.query;
 
-        $scope.currentListing = Listings.one($state.params.listingId);
+        Listings.get({advertID: $state.params.listingId}, function(advert){
+          $scope.currentListing = advert;
+        });
 
       console.log($state);
 
