@@ -20,12 +20,13 @@
           <input value="{{option.value}}" ng-model="option.value" type="{{field.type}}">{{option.label}}
         </label>
       </div>
-      <input ng-if="field.type != 'select' && field.type != 'checkbox'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
+      <input ng-if="field.type != 'select' && field.type != 'checkbox'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
       <select ng-if="field.type == 'select'" class="form-control" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
         <option value="{{option.value}}" ng-repeat="option in field.optionvalues">{{option.label}}</option>
       </select>
       <i class="fa fa-check"></i>
       <p class="help-block">{{field.purpose}}</p>
+      <p class="help-block">{{field.validations[0].regex}}</p>
     </div>
     <div class="form-group" class="col-md-6">
       <button type="submit" class="btn btn-default" ng-disabled="newLicence.$invalid">Submit</button>

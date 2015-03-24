@@ -27,8 +27,23 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.getTemplate = function () {
       var template = Templates.get({templateId: $state.params.templateId}, function() {
+
+        angular.forEach(template['fieldsdetails'], function(field){
+
+          angular.forEach(field.validations, function(validator){
+
+            var flag = validator.regex.substring(validator.regex.lastIndexOf('/') + 1);
+
+            //String to RegEx wraggle
+            validator.regex = validator.regex.replace('/' + flag, '');
+            validator.regex = validator.regex.replace('/', '');
+
+            //Convert to native type
+            validator.regex = new RegExp(validator.regex, 'i');
+          });
+        });
+
         $scope.template = template['fieldsdetails'];
-        console.log(templates);
       });
     };
 
