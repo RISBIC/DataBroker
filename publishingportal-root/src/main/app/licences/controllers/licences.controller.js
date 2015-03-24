@@ -39,7 +39,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
             validator.regex = validator.regex.replace('/', '');
 
             //Convert to native type
-            validator.regex = new RegExp(validator.regex, 'i');
+            validator.regex = new RegExp(validator.regex, flag);
           });
         });
 
@@ -59,10 +59,15 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       angular.forEach($scope.template, function(field){
 
         if(field.type === 'checkbox'){
-          field.value = {};
+          field.value = [];
 
           angular.forEach(field.optionvalues, function(option, index){
-            field.value['checkbox' + index] = option.value;
+
+            console.log(option);
+            if(option.value === true){
+              field.value.push(option.key);
+            }
+
           });
         }
 
@@ -76,7 +81,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      /*Licences.save(payload, function(response){
+      Licences.save(payload, function(response){
         console.log('response');
         console.log(response);
 
@@ -96,7 +101,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         console.log('Error');
         console.log(error);
 
-      });*/
+      });
     };
 
     $scope.updateLicence = function(){
