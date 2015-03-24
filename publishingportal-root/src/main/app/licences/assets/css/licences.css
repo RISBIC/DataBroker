@@ -22,3 +22,28 @@
   overflow: scroll;
   height: 200px;
 }
+
+.new-licence .form-group {
+  position: relative;
+}
+
+.new-licence .form-group .form-control{
+  padding: 6px 25px;
+}
+
+.new-licence .form-group .fa-check {
+  position: absolute;
+  color: #00b200;
+  left: -15px;
+  top: 35px;
+  opacity: 0;
+  -webkit-transition: all .25s ease-in-out;
+  -moz-transition: all .25s ease-in-out;
+  -o-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+
+.new-licence .form-group input.ng-valid.ng-touched + .fa-check {
+  left: 5px;
+  opacity: 1;
+}

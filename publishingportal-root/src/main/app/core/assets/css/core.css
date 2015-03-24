@@ -143,3 +143,15 @@ body {
 .content {
   padding: 20px 0;
 }
+
+input.ng-invalid.ng-touched {
+  border-color: #cc0000;
+}
+
+input.ng-invalid.ng-touched + p.help-block{
+  color: #cc0000;
+}
+
+input.ng-valid.ng-touched {
+  border-color: #00b200;
+}
