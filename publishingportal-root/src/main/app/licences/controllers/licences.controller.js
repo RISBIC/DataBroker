@@ -27,8 +27,23 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.getTemplate = function () {
       var template = Templates.get({templateId: $state.params.templateId}, function() {
+
+        angular.forEach(template['fieldsdetails'], function(field){
+
+          angular.forEach(field.validations, function(validator){
+
+            var flag = validator.regex.substring(validator.regex.lastIndexOf('/') + 1);
+
+            //String to RegEx wraggle
+            validator.regex = validator.regex.replace('/' + flag, '');
+            validator.regex = validator.regex.replace('/', '');
+
+            //Convert to native type
+            validator.regex = new RegExp(validator.regex, flag);
+          });
+        });
+
         $scope.template = template['fieldsdetails'];
-        console.log(templates);
       });
     };
 
@@ -44,10 +59,15 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       angular.forEach($scope.template, function(field){
 
         if(field.type === 'checkbox'){
-          field.value = {};
+          field.value = [];
 
           angular.forEach(field.optionvalues, function(option, index){
-            field.value['checkbox' + index] = option.value;
+
+            console.log(option);
+            if(option.value === true){
+              field.value.push(option.key);
+            }
+
           });
         }
 
@@ -61,7 +81,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      /*Licences.save(payload, function(response){
+      Licences.save(payload, function(response){
         console.log('response');
         console.log(response);
 
@@ -81,7 +101,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         console.log('Error');
         console.log(error);
 
-      });*/
+      });
     };
 
     $scope.updateLicence = function(){
