@@ -14,7 +14,7 @@ angular.module('listings').config(['$stateProvider',
         }
       }).
       state('listing', {
-        url: '/listings/:listingId',
+        url: '/listings/:listingId/:metadataPath',
         templateUrl: 'listings/views/listing.view.html',
         controller: 'ListingController',
         data: {

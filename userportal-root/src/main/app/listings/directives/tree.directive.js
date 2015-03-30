@@ -9,6 +9,9 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
         $timeout(function() {
 
           function updateTree(treeData) {
+
+            if (! treeData) return;
+
             var d3 = $window.d3;
 
             // Calculate total nodes, max label length
@@ -392,8 +395,8 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
               link.enter().insert('path', 'g')
                 .attr('class', 'link')
                 .attr('d', function (d) {
-                  console.log(d);
-                  console.count('Links');
+                  //console.log(d);
+                  //console.count('Links');
                   var o = {
                     x: source.x0,
                     y: source.y0

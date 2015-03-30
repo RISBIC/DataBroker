@@ -8,8 +8,8 @@
 </div>
 <ul class="list-unstyled">
 
-    <li ng-repeat="listing in listings | filterListings : searchString track by listing.id">
-        <a ui-sref="listing({listingId: listing.id})">
+    <li ng-repeat="listing in listings | filterListings : searchString">
+        <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">
           <!--<a href="/#/listings/{{listing.id}}">-->
             <h2>{{listing.name}}</h2>
             <p>Last Updated: {{listing.dateUpdated | date : 'd MMMM yyyy'}}</p>
