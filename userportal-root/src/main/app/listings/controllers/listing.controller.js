@@ -79,10 +79,22 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
         });
       }
 
+      function calcType(key, value) {
+        if (key === 'metadataPath' || key === 'metadataId') {
+          return 'hidden';
+        } else if (value instanceof Array){
+          return 'nglist';
+        } else {
+          return 'textarea';
+        }
+      }
+
       $scope.updateFields = function(d) {
         $scope.fields = [];
 
-        var excludedProperties = ['_children', 'children', 'depth', 'id', 'parent', 'x', 'x0', 'y', 'y0', 'isRootNode', 'metadataPath', 'metadataId', 'requesterId', 'serviceURL', 'childNodeIds', 'dateCreated', 'dateUpdated', 'access', 'nodeClass', '$$hashKey'];
+        console.log(d);
+
+        var excludedProperties = ['_children', 'children', 'depth', 'id', 'parent', 'x', 'x0', 'y', 'y0', 'isRootNode', /*'metadataPath', 'metadataId',*/ 'requesterId', 'serviceURL', 'childNodeIds', 'dateCreated', 'dateUpdated', 'access', 'nodeClass', '$$hashKey'];
 
         for (var key in d) {
 
@@ -90,23 +102,36 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
             console.log(toTitleCase(key));
             var field = {
               label: toTitleCase(key),
-              //label: key,
+              key: key,
               value: d[key],
               id: key,
-              formFieldType: ((typeof d[key] !== 'string' || (typeof d[key] === 'string' && d[key].length < 35) ? 'text' : 'textarea'))
+              formFieldType: calcType(key, d[key]),
+              isArray: d[key] instanceof Array
             };
 
             $scope.fields.push(field);
-
-            jQuery('textarea').each(function () {
-              this.style.height = this.scrollHeight + 'px'
-            });
-
           }
         }
 
         console.log($scope.fields);
         $scope.$apply();
+
+        jQuery('textarea').each(function () {
+          this.style.height = this.scrollHeight + 'px'
+        });
+      }
+
+      $scope.submitFields = function($event) {
+        $event.preventDefault();
+
+        console.log(
+          $window._.map($scope.fields, function(d){
+            return {
+              key: d.key,
+              value: d.value
+            }
+          })
+        );
       }
 
 

@@ -3,6 +3,7 @@
     width: 100%;
   }
 </style>
+
 <p ng-show="searchString != ''"><a ui-sref="listings()"><< Back to search</a></p>
 <h2>{{currentListing.name}}</h2>
 <p>{{currentListing.date | date : 'd MMMM yyyy'}}</p>
@@ -11,10 +12,14 @@
 <tree>
 </tree>
 <div id="infopanel">
-  <form action="">
+  <form action="" ng-submit="submitFields($event)">
     <div class="form-group" ng-repeat="field in fields">
-      <label ng-show="field.value !== ''" for="">{{field.label}}</label>
-      <textarea ng-show="field.value !== ''" name="" id="" class="form-control">{{field.value}}</textarea>
+      <label ng-if="field.formFieldType !== 'hidden'" for="">{{field.label}} {{field.isArray ? '(e.g item1,item2,item3)' : ''}}</label>
+      <input type="hidden" class="form-control" ng-if="field.formFieldType === 'hidden'" ng-model="field.value" />
+      <input type="text" class="form-control" ng-if="field.formFieldType === 'nglist'" ng-attr-ng-list="{{field.isArray}}" ng-model="field.value" />
+      <textarea ng-if="field.formFieldType === 'textarea'" class="form-control" name="" id="" cols="30" ng-model="field.value"></textarea>
+
     </div>
+    <input ng-if="fields.length > 0" type="submit" value="Save"/>
   </form>
 </div>
