@@ -14,16 +14,33 @@
     </div>
     <hr>
     <div class="form-group" ng-repeat="field in template">
-      <label class="form-label">{{field.label}}</label>
+      <label ng-if="field.type != 'hidden'" class="form-label">{{field.label}}</label>
+
+      <!-- Render Checkbox -->
       <div class="checkbox" ng-if="field.type == 'checkbox'" ng-repeat="option in field.optionvalues">
         <label>
           <input value="{{option.value}}" ng-model="option.value" type="{{field.type}}">{{option.label}}
         </label>
       </div>
-      <input ng-if="field.type != 'select' && field.type != 'checkbox'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+
+      <!-- Render Select List -->
       <select ng-if="field.type == 'select'" class="form-control" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required">
-        <option value="{{option.value}}" ng-repeat="option in field.optionvalues">{{option.label}}</option>
+        <option value="{{option.key}}" ng-repeat="option in field.optionvalues" ng-selected="option.value == 'true'">{{option.label}}</option>
       </select>
+
+      <!-- Render Textarea -->
+      <textarea ng-if="field.type == 'textarea'" class="form-control" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required"></textarea>
+
+      <!-- Render Radio List -->
+      <div ng-if="field.type == 'radio'" ng-repeat="option in field.optionvalues" class="radio">
+        <label><input type="{{field.type}}" name="{{field.name}}" ng-model="field.value" value="{{option.value}}">{{option.label}}</label>
+      </div>
+
+      <!-- Render Range -->
+      <input ng-if="field.type == 'range'" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" min="{{field.optionvalues[0].value}}" max="{{field.optionvalues[1].value}}" ng-model="field.value">
+
+      <!-- Render Text, Date, Number etc -->
+      <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
       <i class="fa fa-check"></i>
       <p class="help-block">{{field.purpose}}</p>
     </div>
