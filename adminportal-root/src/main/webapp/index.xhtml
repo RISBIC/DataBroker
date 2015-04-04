@@ -17,6 +17,10 @@
                 <ui:param name="titletext" value="DataBroker Portal"/>
             </ui:include>
             <ui:include src="/fragments/navigation.xhtml"/>
+            <h:form styleClass="tab-bar">
+                <h:commandLink styleClass="tab-current" action="/create/createhome?faces-redirect=true" value="DataBrokers"/>
+                <h:commandLink styleClass="tab" action="/config/confighome?faces-redirect=true" value="Configure"/>
+            </h:form>
             <h:form styleClass="home">
                 <h:panelGroup styleClass="home" layout="block">
                     <h:commandLink styleClass="home-link" action="/search/searchhome?faces-redirect=true">
