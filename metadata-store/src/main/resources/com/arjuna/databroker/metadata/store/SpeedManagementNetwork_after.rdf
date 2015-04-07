@@ -9,6 +9,9 @@
         <d:hasTitle>Speed Management Network</d:hasTitle>
         <d:hasSummary>The Speed Management Network Data Source from Newcastle City Council</d:hasSummary>
         <d:hasDetails>The vehicle flow data at 120 outstations pulled every 5 minutes</d:hasDetails>
+        <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
+        <d:hasDateUpdate>2015-04-04T12:00:00+0000</d:hasDateUpdate>
+        <d:hasOwner>Newcastle City Council</d:hasOwner>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecordFeedService"/>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
     </ds:DataSource>
@@ -16,6 +19,9 @@
     <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#VehicleRecordFeedService">
         <d:hasTitle>Vehicle Record Feed Service</d:hasTitle>
         <d:hasSummary>Speed Management Network Vehicle Record Feed Service</d:hasSummary>
+        <d:hasDateCreated>2013-12-04T12:00:00+0000</d:hasDateCreated>
+        <d:hasDateUpdate>2015-04-04T12:00:00+0000</d:hasDateUpdate>
+        <d:hasOwner>Newcastle City Council</d:hasOwner>
         <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
         <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecords"/>
     </ds:DataService>
@@ -23,6 +29,9 @@
     <ds:DataService rdf:about="http://newcastle.gov.uk/SMN#OutstationService">
         <d:hasTitle>Outstation Service</d:hasTitle>
         <d:hasSummary>Speed Management Network Data Outstation Service</d:hasSummary>
+        <d:hasDateCreated>2013-12-04T12:00:00+0000</d:hasDateCreated>
+        <d:hasDateUpdate>2015-04-04T12:00:00+0000</d:hasDateUpdate>
+        <d:hasOwner>Newcastle City Council</d:hasOwner>
         <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
         <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#Outstations"/>
     </ds:DataService>
@@ -37,6 +46,9 @@
 
     <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#VehicleRecords">
         <d:hasTitle>Vehicle Records Data Set</d:hasTitle>
+        <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
+        <d:hasDateUpdate>2015-01-04T12:00:00+0000</d:hasDateUpdate>
+        <d:hasOwner>Newcastle City Council</d:hasOwner>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#time"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#lane"/>
@@ -48,6 +60,9 @@
 
     <ds:DataSet rdf:about="http://newcastle.gov.uk/SMN#Outstations">
         <d:hasTitle>Outstations Data Set</d:hasTitle>
+        <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
+        <d:hasDateUpdate>2015-01-04T12:00:00+0000</d:hasDateUpdate>
+        <d:hasOwner>Newcastle City Council</d:hasOwner>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#name"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#description"/>

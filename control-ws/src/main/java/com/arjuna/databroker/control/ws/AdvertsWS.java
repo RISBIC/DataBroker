@@ -6,6 +6,7 @@ package com.arjuna.databroker.control.ws;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -317,12 +318,18 @@ public class AdvertsWS
         {
             logger.log(Level.FINE, "createAdvertNode: subject - " + subject.getURI());
 
-            Property  hasTitle         = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
-            Property  hasSummary       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
-            Property  hasDetails       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
-            Statement titleStatement   = subject.getProperty(hasTitle);
-            Statement summaryStatement = subject.getProperty(hasSummary);
-            Statement detailsStatement = subject.getProperty(hasDetails);
+            Property  hasTitle             = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+            Property  hasSummary           = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+            Property  hasDetails           = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+            Property  hasDateCreated       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateCreated");
+            Property  hasDateUpdate        = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateUpdate");
+            Property  hasOwner             = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
+            Statement titleStatement       = subject.getProperty(hasTitle);
+            Statement summaryStatement     = subject.getProperty(hasSummary);
+            Statement detailsStatement     = subject.getProperty(hasDetails);
+            Statement dateCreatedStatement = subject.getProperty(hasDateCreated);
+            Statement dateUpdateStatement  = subject.getProperty(hasDateUpdate);
+            Statement ownerStatement       = subject.getProperty(hasOwner);
 
             String       id           = UUID.randomUUID().toString();
             String       metadataId   = metadataBlogId;
@@ -331,11 +338,13 @@ public class AdvertsWS
             String       name         = null;
             String       summary      = null;
             String       description  = null;
-            Date         dataCreated  = null;
+            Date         dateCreated  = null;
             Date         dateUpdate   = null;
             String       owner        = null;
             List<String> tags         = new LinkedList<String>();
             List<String> childNodeIds = new LinkedList<String>();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
             if (titleStatement != null)
                 name = titleStatement.getString();
@@ -343,8 +352,14 @@ public class AdvertsWS
                 summary = summaryStatement.getString();
             if (detailsStatement != null)
                 description = detailsStatement.getString();
+            if (dateCreatedStatement != null)
+                dateCreated = dateFormat.parse(dateCreatedStatement.getString());
+            if (dateUpdateStatement != null)
+                dateUpdate = dateFormat.parse(dateUpdateStatement.getString());
+            if (ownerStatement != null)
+                owner = ownerStatement.getString();
 
-            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dataCreated, dateUpdate, owner, tags, childNodeIds);
+            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dateCreated, dateUpdate, owner, tags, childNodeIds);
         }
         catch (Throwable throwable)
         {
@@ -360,3 +375,4 @@ public class AdvertsWS
     @EJB
     private AccessControlUtils _accessControlUtils;
 }
+
