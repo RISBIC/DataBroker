@@ -125,12 +125,14 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
         $event.preventDefault();
 
         console.log(
-          $window._.map($scope.fields, function(d){
-            return {
-              key: d.key,
-              value: d.value
-            }
-          })
+          JSON.stringify(
+            $window._.map($scope.fields, function(d){
+              return {
+                key: d.key,
+                value: d.value
+              }
+            })
+          )
         );
       }
 

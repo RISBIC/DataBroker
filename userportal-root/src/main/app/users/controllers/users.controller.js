@@ -5,11 +5,13 @@ angular.module('users').controller('UsersController', ['$log', '$scope', '$rootS
 
         $scope.login = function(){
 
-            $log.info($scope.user);
+            //$log.info($scope.user);
 
-            Global.setSession(AuthenticationService.login($scope.user.email, $scope.user.password));
+            //Global.setSession(AuthenticationService.login($scope.user.email, $scope.user.password));
 
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
+            $scope.loginfailed = true;
 
 
         };

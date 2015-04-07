@@ -4,7 +4,9 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
     return {
         login: function(email, password){
 
-            if (email === 'admin@domain.com') {
+          return false;
+
+            /*if (email === 'admin@domain.com') {
                 return {
                     email: email,
                     name: 'John Doe',
@@ -16,7 +18,7 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
                     name: 'John Dee',
                     roles: []
                 };
-            }
+            }*/
 
             /*var deferred = $q.defer();
              $http({
@@ -83,7 +85,8 @@ angular.module('users').factory('AuthenticationService', ['$rootScope', '$state'
                 Global.setSession(JSON.parse($window.sessionStorage.getItem('userPortalSession')));
             }
 
-            return !!Global.session;
+            //return !!Global.session;
+          return false;
         },
         isAuthorized: function (authorizedRoles) {
 
