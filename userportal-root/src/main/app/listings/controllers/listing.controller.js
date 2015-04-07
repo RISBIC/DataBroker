@@ -94,7 +94,7 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
 
         console.log(d);
 
-        var excludedProperties = ['_children', 'children', 'depth', 'id', 'parent', 'x', 'x0', 'y', 'y0', 'isRootNode', /*'metadataPath', 'metadataId',*/ 'requesterId', 'serviceURL', 'childNodeIds', 'dateCreated', 'dateUpdated', 'access', 'nodeClass', '$$hashKey'];
+        var excludedProperties = ['_children', 'children', 'depth', 'id', 'parent', 'x', 'x0', 'y', 'y0', 'isRootNode', /*'metadataPath', 'metadataId',*/ 'requesterId', 'serviceURL', 'childNodeIds', 'dateCreated', 'dateUpdate', 'dateUpdated', 'access', 'nodeClass', '$$hashKey'];
 
         for (var key in d) {
 
