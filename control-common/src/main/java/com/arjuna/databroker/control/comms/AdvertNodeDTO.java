@@ -137,14 +137,14 @@ public class AdvertNodeDTO implements Serializable
         _dateCreated = dateCreated;
     }
 
-    public Date getDateUpdate()
+    public Date getDateUpdated()
     {
-        return _dateUpdate;
+        return _dateUpdated;
     }
 
-    public void setDateUpdate(Date dateUpdate)
+    public void setDateUpdated(Date dateUpdated)
     {
-        _dateUpdate = dateUpdate;
+        _dateUpdated = dateUpdated;
     }
 
     public String getOwner()
