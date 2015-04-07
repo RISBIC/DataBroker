@@ -47,6 +47,11 @@ public class Variable
         _value = value;
     }
 
+    public String toString()
+    {
+        return "{" + _name + "," + _label + "," + _value + "}";
+    }
+
     private String _name;
     private String _label;
     private String _value;
