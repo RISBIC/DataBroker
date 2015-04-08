@@ -504,7 +504,7 @@ public class DataFlowMO implements Serializable
         {
             _errorMessage = null;
             for (DataFlowNodeFactorySummaryVO dataFlowNodeFactorySummary: _dataFlowNodeFactories)
-            	for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
+                for (PropertyVO property: dataFlowNodeFactorySummary.getAttributes())
                     if (property.getName().equals("Name") && property.getValue().equals(dataFlowNodeFactoryName))
                         _selectedDataFlowNodeFactory = dataFlowNodeFactorySummary;
 

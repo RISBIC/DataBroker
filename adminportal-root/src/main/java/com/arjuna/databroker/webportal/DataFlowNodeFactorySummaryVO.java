@@ -18,7 +18,7 @@ public class DataFlowNodeFactorySummaryVO implements Serializable
 
     public DataFlowNodeFactorySummaryVO(Map<String, String> attributes, Map<String, String> properties, Boolean dataSourceFactory, Boolean dataSinkFactory, Boolean dataProcessorFactory, Boolean dataServiceFactory, Boolean dataStoreFactory)
     {
-    	_name                 = attributes.get("Name");
+        _name                 = attributes.get("Name");
         _attributes           = PropertyVO.fromMap(attributes);
         _properties           = PropertyVO.fromMap(properties);
         _dataSourceFactory    = dataSourceFactory;

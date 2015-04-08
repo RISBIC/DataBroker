@@ -46,7 +46,7 @@ public class DataFlowNodeFactoryDTO implements Serializable
 
     public void setAttribute(Map<String, String> attributes)
     {
-    	_attributes = attributes;
+        _attributes = attributes;
     }
 
     public Map<String, String> getProperties()

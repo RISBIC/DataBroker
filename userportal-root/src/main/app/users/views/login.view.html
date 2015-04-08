@@ -10,6 +10,10 @@
             <input type="password" class="form-control" ng-model="user.password" id="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-default">Log in</button>
+      <br/><br/>
+        <div class="alert alert-danger" ng-show="loginfailed">
+          Login failed. Please ensure an account exists for this user.
+        </div>
 
     </form>
 </div>

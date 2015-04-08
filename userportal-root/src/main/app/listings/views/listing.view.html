@@ -6,9 +6,10 @@
 
 <p ng-show="searchString != ''"><a ui-sref="listings()"><< Back to search</a></p>
 <h2>{{currentListing.name}}</h2>
-<p>{{currentListing.date | date : 'd MMMM yyyy'}}</p>
-<p>Owned by {{currentListing.owner}} </p>
-<p>{{currentListing.description}}</p>
+<p ng-if="currentListing.dateUpdate">Last Updated: {{currentListing.dateUpdate | date : 'd MMMM yyyy'}}</p>
+<p ng-if="currentListing.dateUpdated">Last Updated: {{currentListing.dateUpdated | date : 'd MMMM yyyy'}}</p>
+<p ng-if="currentListing.owner">Owned by {{currentListing.owner}} </p>
+<p ng-if="currentListing.description">{{currentListing.description}}</p>
 <tree>
 </tree>
 <div id="infopanel">

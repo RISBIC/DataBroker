@@ -12,9 +12,10 @@
         <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">
           <!--<a href="/#/listings/{{listing.id}}">-->
             <h2>{{listing.name}}</h2>
-            <p>Last Updated: {{listing.dateUpdated | date : 'd MMMM yyyy'}}</p>
-            <p>Owned by {{listing.owner}} </p>
-            <p>{{listing.description}}</p>
+            <p ng-if="listing.dateUpdate">Last Updated: {{listing.dateUpdate | date : 'd MMMM yyyy'}}</p>
+            <p ng-if="listing.dateUpdated">Last Updated: {{listing.dateUpdated | date : 'd MMMM yyyy'}}</p>
+            <p ng-if="listing.owner">Owned by {{listing.owner}} </p>
+            <p ng-if="listing.description">{{listing.description}}</p>
         </a>
     </li>
 </ul>
