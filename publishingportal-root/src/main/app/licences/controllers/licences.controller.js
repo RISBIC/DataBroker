@@ -28,22 +28,26 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
     $scope.getTemplate = function () {
       var template = Templates.get({templateId: $state.params.templateId}, function() {
 
-        angular.forEach(template['fieldsdetails'], function(field){
+        angular.forEach(template.sections, function(section, sectionIndex) {
 
-          angular.forEach(field.validations, function(validator){
+          angular.forEach(section.fieldsDetails, function (field, fieldIndex) {
 
-            var flag = validator.regex.substring(validator.regex.lastIndexOf('/') + 1);
+            angular.forEach(field.validations, function (validator) {
 
-            //String to RegEx wraggle
-            validator.regex = validator.regex.replace('/' + flag, '');
-            validator.regex = validator.regex.replace('/', '');
+              var flag = validator.regex.substring(validator.regex.lastIndexOf('/') + 1);
 
-            //Convert to native type
-            validator.regex = new RegExp(validator.regex, flag);
+              //String to RegEx wraggle
+              validator.regex = validator.regex.replace('/' + flag, '');
+              validator.regex = validator.regex.replace('/', '');
+
+              //Convert to native type
+              validator.regex = new RegExp(validator.regex, flag);
+
+            });
           });
         });
 
-        $scope.template = template['fieldsdetails'];
+        $scope.template = template;
       });
     };
 
@@ -129,8 +133,6 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
     };
 
     $scope.$watch('files', function () {
-
-      console.log($scope.files);
 
       //$scope.upload($scope.files);
     });
