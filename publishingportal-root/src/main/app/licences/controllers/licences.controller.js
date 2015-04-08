@@ -60,46 +60,38 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         fieldvalues: []
       };
 
-      angular.forEach($scope.template, function(field){
+      angular.forEach($scope.template.sections, function(section){
 
-        if(field.type === 'checkbox'){
+        angular.forEach(section.fieldsDetails, function(field){
+
+          if(field.type === 'checkbox'){
           field.value = [];
 
-          angular.forEach(field.optionvalues, function(option, index){
+          angular.forEach(field.optionvalues, function(option){
 
-            console.log(option);
-            if(option.value === true){
-              field.value.push(option.key);
-            }
+            var state = {};
+
+            state[option.key] = option.value;
+
+            field.value.push(state);
 
           });
         }
-
-        console.log(field);
 
         payload.fieldvalues.push({
           name: field.name,
           value: field.value
         });
       });
-
-      console.log(payload);
+    });
 
       Licences.save(payload, function(response){
         console.log('response');
         console.log(response);
+        console.log(response.agreementid);
 
-        var status = $window._.result($window._.find(response.fieldvalues, 'name', 'status'), 'value');
+        $state.go('licence', {'licenceId': response.agreementid});
 
-        console.log('response');
-        console.log(status);
-
-        if(status === 'active'){
-          $state.go('create.upload');
-        }
-        else {
-          console.log('Not Active');
-        }
       }, function(error){
 
         console.log('Error');
@@ -117,11 +109,14 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         fieldvalues: []
       };
 
-      angular.forEach($scope.template, function(field){
+      angular.forEach($scope.template, function(section) {
+        angular.forEach(section.fieldDetails, function (field) {
+          console.log(field);
 
-        payload.fieldvalues.push({
-          name: field.name,
-          value: field.value
+          payload.fieldvalues.push({
+            name: field.name,
+            value: field.value
+          });
         });
       });
 
