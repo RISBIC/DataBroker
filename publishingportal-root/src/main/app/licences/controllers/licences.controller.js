@@ -90,7 +90,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         console.log(response);
         console.log(response.agreementid);
 
-        $state.go('licence', {'licenceId': response.agreementid});
+        $state.go('licences');
 
       }, function(error){
 
