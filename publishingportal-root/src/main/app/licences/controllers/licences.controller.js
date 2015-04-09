@@ -109,9 +109,22 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         fieldvalues: []
       };
 
-      angular.forEach($scope.template, function(section) {
-        angular.forEach(section.fieldDetails, function (field) {
-          console.log(field);
+      angular.forEach($scope.template.sections, function(section) {
+        angular.forEach(section.fieldsdetails, function (field) {
+
+          if(field.type === 'checkbox'){
+            field.value = [];
+
+            angular.forEach(field.optionvalues, function(option){
+
+              var state = {};
+
+              state[option.key] = option.value;
+
+              field.value.push(state);
+
+            });
+          }
 
           payload.fieldvalues.push({
             name: field.name,
