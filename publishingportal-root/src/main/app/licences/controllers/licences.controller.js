@@ -102,12 +102,16 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.updateLicence = function(){
 
+      console.log('Beginning Update...')
+
       var payload = {
         name: $scope.licence.name,
         comment: $scope.licence.comment,
         templateid: $state.params.templateId,
         fieldvalues: []
       };
+
+      console.log(payload);
 
       angular.forEach($scope.template.sections, function(section) {
         angular.forEach(section.fieldsdetails, function (field) {
@@ -126,6 +130,8 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
             });
           }
 
+          console.log(field.name + ': ' + field.value);
+
           payload.fieldvalues.push({
             name: field.name,
             value: field.value
@@ -143,14 +149,24 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.upload = function (files) {
 
-      console.log(files);
+      var endpoint = '';
+
+      //finds the endpoint property in the field details
+      angular.forEach($scope.licence.sections, function(section){
+
+        endpoint = $window._.find(section.fieldsdetails, function(details){
+
+          return details.name === $scope.licence.endpointfieldname
+
+        });
+
+      });
 
       if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
           var file = files[i];
           $upload.upload({
-            url: 'upload/url',
-            fields: {'username': $scope.username},
+            url: endpoint.value,
             file: file
           }).progress(function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
