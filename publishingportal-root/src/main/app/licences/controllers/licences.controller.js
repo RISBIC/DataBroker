@@ -113,7 +113,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      angular.forEach($scope.template.sections, function(section) {
+      angular.forEach($scope.licence.sections, function(section) {
         angular.forEach(section.fieldsdetails, function (field) {
 
           if(field.type === 'checkbox'){
