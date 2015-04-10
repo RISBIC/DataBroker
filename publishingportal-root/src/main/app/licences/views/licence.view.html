@@ -46,15 +46,15 @@
         <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
         <p class="help-block">{{field.purpose}}</p>
       </div>
-      <div class="form-group" class="col-md-6">
-        <button type="submit" class="btn btn-default" ng-disabled="updateLicence.$invalid">Save</button>
-      </div>
     </fieldset>
     <fieldset ng-if="licence.endpointfieldname != null">
       <legend>Data Upload</legend>
-      <button class="btn btn-default" ng-file-select ng-model="files"><span ng-hide="files">Choose File...</span><span ng-show="files">{{files[0].name}}</span></button>
-      <button class="btn btn-default" ng-if="files" ng-click="upload()">Upload</button>
+        <div class="btn btn-default" ng-file-select ng-file-change="upload($files)">Add Data</div>
     </fieldset>
+    <hr>
+    <div class="form-group" class="col-md-6">
+      <button type="submit" class="btn btn-default" ng-disabled="updateLicence.$invalid">Save</button>
+    </div>
 </section>
 
 

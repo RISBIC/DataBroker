@@ -140,27 +140,23 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       $state.go('licences');
     };
 
-    $scope.$watch('files', function () {
 
-      //$scope.upload($scope.files);
-    });
+    $scope.upload = function (files) {
 
-    $scope.upload = function () {
+      console.log(files);
 
-      console.log($scope.files);
-
-      if ($scope.files && $scope.files.length) {
-        for (var i = 0; i < $scope.files.length; i++) {
-          var file = $scope.files[i];
+      if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
           $upload.upload({
-            url: CONFIG.uploadURL,
+            url: 'upload/url',
+            fields: {'username': $scope.username},
             file: file
           }).progress(function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
           }).success(function (data, status, headers, config) {
             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-            $state.go('licences');
           });
         }
       }
