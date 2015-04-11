@@ -24,13 +24,13 @@ public class AdvertNodeDTO implements Serializable
         _summary      = null;
         _description  = null;
         _dateCreated  = null;
-        _dateUpdate   = null;
+        _dateUpdated  = null;
         _owner        = null;
         _tags         = Collections.emptyList();
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeDTO(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeDTO(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdated, String owner, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
         _metadataId   = metadataId;
@@ -41,7 +41,7 @@ public class AdvertNodeDTO implements Serializable
         _summary      = summary;
         _description  = description;
         _dateCreated  = dataCreated;
-        _dateUpdate   = dateUpdate;
+        _dateUpdated  = dateUpdated;
         _owner        = owner;
         _tags         = tags;
         _childNodeIds = childNodeIds;
@@ -137,14 +137,14 @@ public class AdvertNodeDTO implements Serializable
         _dateCreated = dateCreated;
     }
 
-    public Date getDateUpdate()
+    public Date getDateUpdated()
     {
-        return _dateUpdate;
+        return _dateUpdated;
     }
 
-    public void setDateUpdate(Date dateUpdate)
+    public void setDateUpdated(Date dateUpdated)
     {
-        _dateUpdate = dateUpdate;
+        _dateUpdated = dateUpdated;
     }
 
     public String getOwner()
@@ -186,7 +186,7 @@ public class AdvertNodeDTO implements Serializable
     private String       _summary;
     private String       _description;
     private Date         _dateCreated;
-    private Date         _dateUpdate;
+    private Date         _dateUpdated;
     private String       _owner;
     private List<String> _tags;
     private List<String> _childNodeIds;
