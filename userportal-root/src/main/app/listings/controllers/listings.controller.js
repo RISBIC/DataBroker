@@ -18,6 +18,11 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
 
       Listings.get({}, function(listings){
         //console.log(listings.advertnodes);
+
+        /*angular.forEach(listings.advertnodes, function(val, key){
+          listings.advertnodes[key].name = null;
+        });*/
+
         $scope.listings = listings.advertnodes;
       });
 
@@ -27,11 +32,15 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
         });
     }
 ]).filter('filterListings', function() {
-  return function( items, name) {
+  return function( items, searchString) {
     var filtered = [];
-    if (name) {
+    if (searchString) {
       angular.forEach(items, function(item) {
-        if(item.name.toLowerCase().indexOf(name.toLowerCase()) != -1) {
+        if(item.name && item.name !== null && (item.name.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
+          filtered.push(item);
+        } else if(item.owner && item.owner !== null && (item.owner.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
+          filtered.push(item);
+        } else if(item.summary && item.summary !== null && (item.summary.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
           filtered.push(item);
         }
       });

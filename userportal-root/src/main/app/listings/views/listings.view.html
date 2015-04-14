@@ -11,11 +11,12 @@
     <li ng-repeat="listing in listings | filterListings : searchString">
         <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">
           <!--<a href="/#/listings/{{listing.id}}">-->
-            <h2>{{listing.name}}</h2>
+            <h2 ng-if="listing.name">{{listing.name}}</h2>
+            <h2 ng-if="! listing.name">Unnamed</h2>
             <p ng-if="listing.dateUpdate">Last Updated: {{listing.dateUpdate | date : 'd MMMM yyyy'}}</p>
             <p ng-if="listing.dateUpdated">Last Updated: {{listing.dateUpdated | date : 'd MMMM yyyy'}}</p>
             <p ng-if="listing.owner">Owned by {{listing.owner}} </p>
-            <p ng-if="listing.description">{{listing.description}}</p>
+            <p ng-if="listing.summary">{{listing.summary}}</p>
         </a>
     </li>
 </ul>
