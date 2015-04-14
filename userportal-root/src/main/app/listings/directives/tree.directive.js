@@ -459,9 +459,9 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 
 
         scope.$watch('treeData',function(){
-          if ($window.d3.scale) {
+
             updateTree(scope.treeData);
-          }
+
         });
 
         });
