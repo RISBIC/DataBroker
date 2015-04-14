@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
   function ($window, Listings, $timeout) {
@@ -197,9 +197,13 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 // Function to center node when clicked/dropped so node doesn't get lost when collapsing/moving with large amount of children.
 
             function centerNode(source) {
-              scale = zoomListener.scale();
-              x = -source.y0;
-              y = -source.x0;
+
+
+              var scale = zoomListener.scale();
+
+
+              var x = -source.y0;
+              var y = -source.x0;
               x = x * scale + viewerWidth / 2;
               y = y * scale + viewerHeight / 2;
               d3.select('g').transition()
@@ -455,7 +459,9 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 
 
         scope.$watch('treeData',function(){
-          updateTree(scope.treeData);
+          if ($window.d3.scale) {
+            updateTree(scope.treeData);
+          }
         });
 
         });
