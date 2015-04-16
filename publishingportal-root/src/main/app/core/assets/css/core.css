@@ -144,7 +144,7 @@ body {
   padding: 20px 0;
 }
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
   border-color: #cc0000;
 }
 
@@ -154,4 +154,8 @@ input.ng-invalid.ng-touched + p.help-block{
 
 input.ng-valid.ng-touched {
   border-color: #00b200;
+}
+
+label span.required {
+  color: #cc0000;
 }

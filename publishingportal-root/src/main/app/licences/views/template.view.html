@@ -3,13 +3,13 @@
     <fieldset>
       <legend>Licence Name</legend>
       <div class="form-group">
-        <label class="form-label">Licence Name</label>
+        <label class="form-label">Licence Name <span class="required">*</span></label>
         <input class="form-control" type="text" name="licencename" ng-model="licence.name" required>
         <i class="fa fa-check"></i>
         <p class="help-block">The name of the new licence agreement</p>
       </div>
       <div class="form-group">
-        <label class="form-label">Comments</label>
+        <label class="form-label">Comments <span class="required">*</span></label>
         <textarea class="form-control" name="licencecomments" ng-model="licence.comment" required></textarea>
         <i class="fa fa-check"></i>
         <p class="help-block"></p>
@@ -18,7 +18,7 @@
     <fieldset ng-repeat="section in template.sections">
       <legend>{{section.headertext}}</legend>
       <div class="form-group" ng-repeat="field in section.fieldsDetails">
-        <label ng-if="field.type != 'hidden'" class="form-label">{{field.label}}</label>
+        <label ng-if="field.type != 'hidden'" class="form-label">{{field.label}} <span class="required">{{field.required ? '*' : ''}}</span></label>
 
         <!-- Render Checkbox -->
         <div class="checkbox" ng-if="field.type == 'checkbox'" ng-repeat="option in field.optionvalues">
@@ -37,19 +37,27 @@
 
         <!-- Render Radio List -->
         <div ng-if="field.type == 'radio'" ng-repeat="option in field.optionvalues" class="radio">
-          <label><input type="{{field.type}}" name="{{field.name}}" ng-model="field.value" value="{{option.value}}">{{option.label}}</label>
+          <label><input type="{{field.type}}" name="{{field.name}}" ng-model="field.value" value="{{option.value}}" ng-required="field.required">{{option.label}}</label>
         </div>
 
         <!-- Render Range -->
         <input ng-if="field.type == 'range'" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" min="{{field.optionvalues[0].value}}" max="{{field.optionvalues[1].value}}" ng-model="field.value">
 
-        <!-- Render Text, Date, Number etc -->
-        <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+        <!-- Render Text, Number etc -->
+        <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range' && field.type != 'date'" datepicker-popup=="yyyy/MM/dd" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+
+        <!-- Render Date -->
+        <input ng-if="field.type === 'date'" ng-init="addDatePicker()" readonly class="inactive-date-picker form-control" type="text" name="{{field.name}}" value="{{field.value}}" datepicker-append-to-body="true" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+
+
         <i class="fa fa-check"></i>
         <p class="help-block">{{field.purpose}}</p>
       </div>
     </fieldset>
     <div class="form-group" class="col-md-6">
+      <div class="alert alert-warning" ng-show="newLicence.$invalid">
+        Please ensure all fields marked as * have been completed correctly
+      </div>
       <button type="submit" class="btn btn-default" ng-disabled="newLicence.$invalid">Submit</button>
     </div>
   </form>

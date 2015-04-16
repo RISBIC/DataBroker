@@ -7,6 +7,13 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     var templates = [];
 
+    $scope.addDatePicker = function() {
+      $('.inactive-date-picker').datepicker({
+        format: 'yyyy/mm/dd',
+        autoclose: true
+      }).removeClass('inactive-date-picker')
+    };
+
     $scope.getLicences = function(){
       var licences = Licences.get({}, function() {
         $scope.licences = licences['summaries'];
