@@ -14,6 +14,28 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       }).removeClass('inactive-date-picker')
     };
 
+    $scope.isEndpointAvailableVar = null;
+
+    $scope.isEndpointAvailable = function() {
+      if ($scope.isEndpointAvailableVar !== null) return $scope.isEndpointAvailableVar;
+
+      if ($scope.licence === undefined) return false;
+
+      if ($scope.licence.hasOwnProperty('endpointfieldname')) {
+        angular.forEach($scope.licence.sections, function(section, sectionIndex) {
+
+          angular.forEach(section.fieldsdetails, function (field, fieldIndex) {
+
+            if(field.name === $scope.licence.endpointfieldname) {
+              $scope.isEndpointAvailableVar = (field.value !== null && field.value !== '');
+            }
+
+          });
+        });
+      }
+
+    };
+
     $scope.getLicences = function(){
       var licences = Licences.get({}, function() {
         $scope.licences = licences['summaries'];

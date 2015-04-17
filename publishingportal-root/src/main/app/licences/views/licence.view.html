@@ -55,7 +55,12 @@
     <div class="form-group" class="col-md-6">
       <input type="submit" value="Save Changes" class="btn btn-default" ng-disabled="updateLicence.$invalid || updateLicence.$pristine" />
     </div>
-    <fieldset ng-if="licence.endpointfieldname != null">
+    <div class="form-group" class="col-md-6">
+      <div class="alert alert-warning" ng-if="! isEndpointAvailable()">
+        Data Upload is not available as no endpoint has been defined.
+      </div>
+    </div>
+    <fieldset ng-if="isEndpointAvailable()">
       <legend>Data Upload</legend>
         <div class="btn btn-default" ng-file-select ng-file-change="upload($files)">Add Data</div>
     </fieldset>
