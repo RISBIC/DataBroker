@@ -28,10 +28,13 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
             if(field.name === $scope.licence.endpointfieldname) {
               $scope.isEndpointAvailableVar = (field.value !== null && field.value !== '');
+              return $scope.isEndpointAvailableVar;
             }
 
           });
         });
+      } else {
+        return false;
       }
 
     };
