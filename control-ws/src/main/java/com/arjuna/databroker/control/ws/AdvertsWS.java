@@ -318,18 +318,20 @@ public class AdvertsWS
         {
             logger.log(Level.FINE, "createAdvertNode: subject - " + subject.getURI());
 
-            Property  hasTitle              = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
-            Property  hasSummary            = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
-            Property  hasDetails            = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
-            Property  hasDateCreated        = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateCreated");
-            Property  hasDateUpdated        = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateUpdated");
-            Property  hasOwner              = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
-            Statement titleStatement        = subject.getProperty(hasTitle);
-            Statement summaryStatement      = subject.getProperty(hasSummary);
-            Statement detailsStatement      = subject.getProperty(hasDetails);
-            Statement dateCreatedStatement  = subject.getProperty(hasDateCreated);
-            Statement dateUpdatedStatement  = subject.getProperty(hasDateUpdated);
-            Statement ownerStatement        = subject.getProperty(hasOwner);
+            Property     hasTitle             = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+            Property     hasSummary           = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+            Property     hasDetails           = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+            Property     hasDateCreated       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateCreated");
+            Property     hasDateUpdated       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateUpdated");
+            Property     hasOwner             = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
+            Property     hasTag               = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTag");
+            Statement    titleStatement       = subject.getProperty(hasTitle);
+            Statement    summaryStatement     = subject.getProperty(hasSummary);
+            Statement    detailsStatement     = subject.getProperty(hasDetails);
+            Statement    dateCreatedStatement = subject.getProperty(hasDateCreated);
+            Statement    dateUpdatedStatement = subject.getProperty(hasDateUpdated);
+            Statement    ownerStatement       = subject.getProperty(hasOwner);
+            StmtIterator tagStatements        = subject.getModel().listStatements(subject, hasTag, (RDFNode) null);
 
             String       id           = UUID.randomUUID().toString();
             String       metadataId   = metadataBlogId;
@@ -358,6 +360,12 @@ public class AdvertsWS
                 dateUpdated = dateFormat.parse(dateUpdatedStatement.getString());
             if (ownerStatement != null)
                 owner = ownerStatement.getString();
+            while ((tagStatements != null) && tagStatements.hasNext())
+            {
+                Statement tagStatement = tagStatements.nextStatement();
+                if (tagStatement != null)
+                    tags.add(tagStatement.getString());
+            }
 
             advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dateCreated, dateUpdated, owner, tags, childNodeIds);
         }

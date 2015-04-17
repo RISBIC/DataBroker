@@ -12,6 +12,10 @@
         <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
         <d:hasDateUpdated>2015-04-04T12:00:00+0000</d:hasDateUpdated>
         <d:hasOwner>Newcastle City Council</d:hasOwner>
+        <d:hasTag>Newcastle City Council</d:hasTag>
+        <d:hasTag>NCC</d:hasTag>
+        <d:hasTag>Speed Management Network</d:hasTag>
+        <d:hasTag>SMN</d:hasTag>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecordFeedService"/>
         <ds:hasDataService rdf:resource="http://newcastle.gov.uk/SMN#OutstationService"/>
     </ds:DataSource>
@@ -22,6 +26,8 @@
         <d:hasDateCreated>2013-12-04T12:00:00+0000</d:hasDateCreated>
         <d:hasDateUpdated>2015-04-04T12:00:00+0000</d:hasDateUpdated>
         <d:hasOwner>Newcastle City Council</d:hasOwner>
+        <d:hasTag>Vehicle Record</d:hasTag>
+        <d:hasTag>Vehicle</d:hasTag>
         <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
         <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#VehicleRecords"/>
     </ds:DataService>
@@ -32,12 +38,15 @@
         <d:hasDateCreated>2013-12-04T12:00:00+0000</d:hasDateCreated>
         <d:hasDateUpdated>2015-04-04T12:00:00+0000</d:hasDateUpdated>
         <d:hasOwner>Newcastle City Council</d:hasOwner>
-        <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
+        <d:hasTag>SMN Outstation</d:hasTag>
+        <d:hasTag>Outstation</d:hasTag>
+       <a:hasAccessInfo rdf:resource="http://newcastle.gov.uk/SMN#AccessInfo"/>
         <ds:producesDataSet rdf:resource="http://newcastle.gov.uk/SMN#Outstations"/>
     </ds:DataService>
 
     <a:AccessInfo rdf:about="http://newcastle.gov.uk/SMN#AccessInfo">
         <d:hasTitle>SMN Access Info</d:hasTitle>
+        <d:hasTag>Access Info</d:hasTag>
         <a:useUsername>ncc</a:useUsername>
         <a:usePassword>68006f9fa9b5a29be610f95bef1b0ca0</a:usePassword>
         <a:useServiceURL>http://smn-testarjuna.rhcloud.com/smn</a:useServiceURL>
@@ -49,6 +58,7 @@
         <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
         <d:hasDateUpdated>2015-01-04T12:00:00+0000</d:hasDateUpdated>
         <d:hasOwner>Newcastle City Council</d:hasOwner>
+        <d:hasTag>Vehicle</d:hasTag>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#time"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#lane"/>
@@ -63,6 +73,7 @@
         <d:hasDateCreated>2013-11-04T12:00:00+0000</d:hasDateCreated>
         <d:hasDateUpdated>2015-01-04T12:00:00+0000</d:hasDateUpdated>
         <d:hasOwner>Newcastle City Council</d:hasOwner>
+        <d:hasTag>Outstations</d:hasTag>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#outstationId"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#name"/>
         <ds:hasField rdf:resource="http://newcastle.gov.uk/SMN#description"/>
@@ -76,6 +87,7 @@
         <d:hasTitle>time</d:hasTitle>
         <d:hasSummary>Long</d:hasSummary>
         <d:hasDetails>The time at which the vehicle record was generated (The time at which the vehicle record was generated in milliseconds since midnight Coordinated Universal Time (UTC), 1 January 1970, not counting leap seconds)</d:hasDetails>
+        <d:hasTag>Time</d:hasTag>
         <ds:hasName>time</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Long"/>
     </ds:Field>
@@ -84,6 +96,7 @@
         <d:hasTitle>outstationId</d:hasTitle>
         <d:hasSummary>Short</d:hasSummary>
         <d:hasDetails>The outstation id at which the vehicle record was generated</d:hasDetails>
+        <d:hasTag>Outstation</d:hasTag>
         <ds:hasName>outstationId</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
@@ -114,6 +127,7 @@
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#speed">
         <d:hasTitle>speed</d:hasTitle>
         <d:hasSummary>The speed of the vehicle (The speed of the vehicle in kilometre per hour (km/h))</d:hasSummary>
+        <d:hasTag>Speed</d:hasTag>
         <ds:hasName>speed</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
@@ -145,18 +159,22 @@
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#speedlimit">
         <d:hasTitle>speedlimit</d:hasTitle>
+        <d:hasTag>Speed Limit</d:hasTag>
+        <d:hasTag>Speed</d:hasTag>
         <ds:hasName>speedlimit</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Short"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#latitude">
         <d:hasTitle>latitude</d:hasTitle>
+        <d:hasTag>Location</d:hasTag>
         <ds:hasName>latitude</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
     </ds:Field>
 
     <ds:Field rdf:about="http://newcastle.gov.uk/SMN#longitude">
         <d:hasTitle>longitude</d:hasTitle>
+        <d:hasTag>Location</d:hasTag>
         <ds:hasName>longitude</ds:hasName>
         <ds:hasType rdf:resource="http://newcastle.gov.uk/SMN#Float"/>
     </ds:Field>
