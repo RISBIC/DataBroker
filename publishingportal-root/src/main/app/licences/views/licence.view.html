@@ -1,5 +1,6 @@
 <section class="licence" ng-init="getLicence()">
-  <h2>{{licence.name}}</h2>
+  <h2>{{licence.name}} <span class="label label-default label-h2" ng-show="licenceState()">Status: {{licenceState()}}</span></h2>
+
   <form role="form" name="updateLicenceForm" class="col-md-6" ng-submit="updateLicence()">
     <fieldset>
       <legend>Licence Name</legend>

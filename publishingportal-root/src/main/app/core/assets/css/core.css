@@ -159,3 +159,10 @@ input.ng-valid.ng-touched {
 label span.required {
   color: #cc0000;
 }
+
+h2 span.label-h2 {
+  font-size: 12px;
+  position: relative;
+  top: -5px;
+  background-color: #A80000;
+}

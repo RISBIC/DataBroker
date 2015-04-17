@@ -14,6 +14,23 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       }).removeClass('inactive-date-picker')
     };
 
+    function retrieveFieldValue(fieldName, fieldString) {
+      var theValue = '';
+
+        angular.forEach($scope.licence.sections, function(section, sectionIndex) {
+
+          angular.forEach(section.fieldsdetails, function (field, fieldIndex) {
+
+            if(field.name === $scope.licence[fieldString]) {
+              theValue = field.value;
+            }
+
+          });
+        });
+
+      return theValue;
+    }
+
     $scope.isEndpointAvailableVar = null;
 
     $scope.isEndpointAvailable = function() {
@@ -21,18 +38,29 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       if ($scope.licence === undefined) return false;
 
-      if ($scope.licence.hasOwnProperty('endpointfieldname')) {
-        angular.forEach($scope.licence.sections, function(section, sectionIndex) {
+      console.log($scope.licence);
 
-          angular.forEach(section.fieldsdetails, function (field, fieldIndex) {
+      var fieldValue = retrieveFieldValue($scope.licence.endpointfieldname, 'endpointfieldname');
 
-            if(field.name === $scope.licence.endpointfieldname) {
-              $scope.isEndpointAvailableVar = (field.value !== null && field.value !== '');
-              return $scope.isEndpointAvailableVar;
-            }
+      if (fieldValue) {
+        return $scope.isEndpointAvailableVar = fieldValue;
+      } else {
+        return false;
+      }
 
-          });
-        });
+    };
+
+    $scope.licenceStateVar = null;
+
+    $scope.licenceState = function() {
+      if ($scope.licenceStateVar !== null) return $scope.licenceStateVar;
+
+      if ($scope.licence === undefined) return false;
+
+      var fieldValue = retrieveFieldValue($scope.licence.statefieldname, 'statefieldname');
+
+      if (fieldValue) {
+        return $scope.licenceStateVar = fieldValue;
       } else {
         return false;
       }
