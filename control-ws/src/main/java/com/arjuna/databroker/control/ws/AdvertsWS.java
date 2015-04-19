@@ -393,7 +393,12 @@ public class AdvertsWS
 
             String line = bufferedReader.readLine();
             while (line != null)
-                lines.add(line.trim());
+            {
+                line = line.trim();
+                if (! "".equals(line))
+                    lines.add(line);
+                line = bufferedReader.readLine();
+            }
 
             bufferedReader.close();
 
