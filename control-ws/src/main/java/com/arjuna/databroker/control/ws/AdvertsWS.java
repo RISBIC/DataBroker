@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -27,7 +26,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
@@ -382,6 +380,31 @@ public class AdvertsWS
         return advertNode;
     }
 
+    private void loadPropertyFiles()
+    {
+        try
+        {
+            File knownRootNodeTypesConfigFile = new File(System.getProperty("jboss.server.config.dir"), "knownrootnodetypes.conf");
+
+            String[] knownRootNodeTypeURIs = loadPropertyLines(knownRootNodeTypesConfigFile);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Failed to load 'knownrootnodetypes.conf'", throwable);
+        }
+
+        try
+        {
+            File knownChildPropertiesConfigFile = new File(System.getProperty("jboss.server.config.dir"), "knownclildproperties.conf");
+
+            String[] knownChildPropertyURIs = loadPropertyLines(knownChildPropertiesConfigFile);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Failed to load 'knownclildproperties.conf'", throwable);
+        }
+    }
+    
     private String[] loadPropertyLines(File file)
     {
         try
