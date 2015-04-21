@@ -4,6 +4,9 @@
 
 package com.arjuna.databroker.control.ws;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
@@ -16,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -23,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import com.arjuna.databroker.control.comms.AdvertNodeDTO;
 import com.arjuna.databroker.metadata.MetadataContentStore;
 import com.arjuna.databroker.metadata.store.AccessControlUtils;
@@ -375,6 +380,35 @@ public class AdvertsWS
         }
 
         return advertNode;
+    }
+
+    private String[] loadPropertyLines(File file)
+    {
+        try
+        {
+            List<String> lines =new LinkedList<String>();
+
+            FileReader     fileReader     = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String line = bufferedReader.readLine();
+            while (line != null)
+            {
+                line = line.trim();
+                if (! "".equals(line))
+                    lines.add(line);
+                line = bufferedReader.readLine();
+            }
+
+            bufferedReader.close();
+
+            return lines.toArray(new String[0]);
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "Failed to load Property Lines", throwable);
+            return new String[0];
+        }
     }
 
     @EJB
