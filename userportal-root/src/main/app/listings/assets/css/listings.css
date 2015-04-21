@@ -65,6 +65,6 @@ tree, #infopanel {
   padding: 5px 10px;
 }
 
-.breadcrumb li a {
-
+#word-cloud svg text:hover {
+  cursor: pointer;
 }

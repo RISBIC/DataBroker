@@ -9,7 +9,7 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <h2>Available Data</h2>
+        <h2>Available Adverts</h2>
         <ul class="list-unstyled">
           <li ng-repeat="listing in rootListings">
             <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">{{listing.name}}</a>
@@ -17,7 +17,7 @@
         </ul>
       </div>
       <div class="col-md-6">
-
+        <div id="word-cloud" class="word-cloud" word-cloud trends="trends" style="margin: 40px auto;"></div>
       </div>
     </div>
   </div>

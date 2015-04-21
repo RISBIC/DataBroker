@@ -71,20 +71,88 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
       // Home page logic
 
       Listings.get({}, function(listings){
-        //console.log(listings.advertnodes);
 
-        $scope.rootListings = $window._.filter(listings.advertnodes, function(d){
-          if (d.name) {
-            return d.isRootNode;
-          } else {
-            // This has no name - find the children
+        var rootListings = $window._.filter(listings.advertnodes, function(d){
+          return d.isRootNode;
+        });
 
+        // Check each item have a name - if not use the children
+        $window._.each(rootListings, function(d){
+
+          if (d.name === null || d.name === ''){
+            if (d.childNodeIds.length) {
+              $window._.each(d.childNodeIds, function(child){
+                var childNode = $window._.find(listings.advertnodes, function(searchNode){
+                  return searchNode.id === child;
+                });
+
+                if (childNode.name) {
+                  rootListings.push(childNode);
+                }
+              });
+            }
           }
 
         });
 
+        $scope.rootListings = rootListings;
+
+        // Generate word cloud data
+
+        var tags = [];
+
+        $window._.each(listings.advertnodes, function(d){
+          if (d.tags) {
+            tags.concat(d.tags);
+          }
+        });
+
+
+        if (tags.length > 0) {
+          $scope.tags = tags;
+        } else {
+          $scope.tags = [
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'Newcastle',
+            'smn',
+            'smn',
+            'smn',
+            'databroker',
+            'databroker',
+            'databroker',
+            'databroker',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed',
+            'speed'
+          ];
+        }
+
+
 
       });
+
+      $scope.navToSearch = function(term) {
+        Search.query = term;
+        $state.go('listings');
+      }
 
     }
 ]);

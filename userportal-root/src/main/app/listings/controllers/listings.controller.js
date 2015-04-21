@@ -37,7 +37,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
     if (searchString) {
       angular.forEach(items, function(item) {
         if(item.name && item.name !== null && (item.name.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
-          filtered.push(item);
+          filtered.unshift(item);
         } else if(item.owner && item.owner !== null && (item.owner.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
           filtered.push(item);
         } else if(item.summary && item.summary !== null && (item.summary.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
