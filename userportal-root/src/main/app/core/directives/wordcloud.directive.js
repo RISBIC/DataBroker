@@ -59,7 +59,7 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
                         .style('opacity', 1);
                     text.style('font-family', function(d) { return d.font; })
                         .style('fill', function(d) { return fill(d.text.toLowerCase()); })
-                        .text(function(d) { return d.text; });
+                        .text(function(d) { return d.text; }).style('opacity', 1);
                     var exitGroup = background.append('g')
                         .attr('transform', vis.attr('transform'));
                     var exitGroupNode = exitGroup.node();

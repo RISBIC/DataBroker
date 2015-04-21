@@ -68,3 +68,7 @@ tree, #infopanel {
 #word-cloud svg text:hover {
   cursor: pointer;
 }
+
+#word-cloud:hover svg text {
+  opacity: 1;
+}
