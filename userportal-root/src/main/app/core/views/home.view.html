@@ -7,5 +7,18 @@
         <a ui-sref="listings({query: searchString})" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></a>
       </span>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Available Data</h2>
+        <ul class="list-unstyled">
+          <li ng-repeat="listing in rootListings">
+            <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">{{listing.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+
+      </div>
+    </div>
   </div>
 </div>

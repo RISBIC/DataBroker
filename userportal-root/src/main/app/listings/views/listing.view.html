@@ -6,10 +6,19 @@
 
 <p ng-show="searchString != ''"><a ui-sref="listings()"><< Back to search</a></p>
 <h2>{{currentListing.name}}</h2>
+<div class="">
+  <ol class="breadcrumb">
+    <li ng-repeat="item in breadcrumbs" ng-class="{active: $last}">
+      <a ng-if="!$last" ui-sref="listing({listingId: item.metadataId, metadataPath: item.metadataPath})">{{item.name}}</a>
+      <span ng-if="$last" class="active">{{item.name}}</span>
+    </li>
+  </ol>
+</div>
 <p ng-if="currentListing.dateUpdate">Last Updated: {{currentListing.dateUpdate | date : 'd MMMM yyyy'}}</p>
 <p ng-if="currentListing.dateUpdated">Last Updated: {{currentListing.dateUpdated | date : 'd MMMM yyyy'}}</p>
 <p ng-if="currentListing.owner">Owned by {{currentListing.owner}} </p>
 <p ng-if="currentListing.description">{{currentListing.description}}</p>
+
 <tree>
 </tree>
 <div id="infopanel">
@@ -21,6 +30,6 @@
       <textarea ng-if="field.formFieldType === 'textarea'" class="form-control" name="" id="" cols="30" ng-model="field.value"></textarea>
 
     </div>
-    <input ng-if="fields.length > 0" type="submit" value="Save"/>
+    <input ng-if="fields.length > 0 && 1 != 1" type="submit" value="Save"/>
   </form>
 </div>

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS', 'Search',
-    function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS, Search) {
+angular.module('core').controller('ApplicationController', ['$log', '$scope', '$state', '$window', 'Global', 'AuthenticationService', 'AUTH_EVENTS', 'Search', 'Listings',
+    function($log, $scope, $state, $window, Global, AuthenticationService, AUTH_EVENTS, Search, Listings) {
 
         $scope.button = function(){
 
@@ -64,6 +64,25 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
 
       $scope.$on('AUTH_EVENTS.logoutSuccess', function(){
         $scope.searchString = '';
+
+      });
+
+
+      // Home page logic
+
+      Listings.get({}, function(listings){
+        //console.log(listings.advertnodes);
+
+        $scope.rootListings = $window._.filter(listings.advertnodes, function(d){
+          if (d.name) {
+            return d.isRootNode;
+          } else {
+            // This has no name - find the children
+
+          }
+
+        });
+
 
       });
 

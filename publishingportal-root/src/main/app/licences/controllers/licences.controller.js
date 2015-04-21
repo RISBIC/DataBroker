@@ -7,7 +7,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     var templates = [];
 
-    $scope.addDatePicker = function() {
+    $scope.addDatePicker = function () {
       $('.inactive-date-picker').datepicker({
         format: 'yyyy/mm/dd',
         autoclose: true
@@ -17,28 +17,26 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
     function retrieveFieldValue(fieldName, fieldString) {
       var theValue = '';
 
-        angular.forEach($scope.licence.sections, function(section, sectionIndex) {
+      angular.forEach($scope.licence.sections, function (section, sectionIndex) {
 
-          angular.forEach(section.fieldsdetails, function (field, fieldIndex) {
+        angular.forEach(section.fieldsdetails, function (field, fieldIndex) {
 
-            if(field.name === $scope.licence[fieldString]) {
-              theValue = field.value;
-            }
+          if (field.name === $scope.licence[fieldString]) {
+            theValue = field.value;
+          }
 
-          });
         });
+      });
 
       return theValue;
     }
 
     $scope.isEndpointAvailableVar = null;
 
-    $scope.isEndpointAvailable = function() {
+    $scope.isEndpointAvailable = function () {
       if ($scope.isEndpointAvailableVar !== null) return $scope.isEndpointAvailableVar;
 
       if ($scope.licence === undefined) return false;
-
-      console.log($scope.licence);
 
       var fieldValue = retrieveFieldValue($scope.licence.endpointfieldname, 'endpointfieldname');
 
@@ -52,7 +50,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.licenceStateVar = null;
 
-    $scope.licenceState = function() {
+    $scope.licenceState = function () {
       if ($scope.licenceStateVar !== null) return $scope.licenceStateVar;
 
       if ($scope.licence === undefined) return false;
@@ -67,28 +65,28 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     };
 
-    $scope.getLicences = function(){
-      var licences = Licences.get({}, function() {
+    $scope.getLicences = function () {
+      var licences = Licences.get({}, function () {
         $scope.licences = licences['summaries'];
       });
     };
 
     $scope.getLicence = function () {
-      var licence = Licences.get({agreementId: $state.params.licenceId}, function() {
+      var licence = Licences.get({agreementId: $state.params.licenceId}, function () {
         $scope.licence = licence;
       });
     };
 
-    $scope.getTemplates = function(){
-      templates = Templates.get({}, function() {
+    $scope.getTemplates = function () {
+      templates = Templates.get({}, function () {
         $scope.templates = templates['summaries'];
       });
     };
 
     $scope.getTemplate = function () {
-      var template = Templates.get({templateId: $state.params.templateId}, function() {
+      var template = Templates.get({templateId: $state.params.templateId}, function () {
 
-        angular.forEach(template.sections, function(section, sectionIndex) {
+        angular.forEach(template.sections, function (section, sectionIndex) {
 
           angular.forEach(section.fieldsDetails, function (field, fieldIndex) {
 
@@ -111,7 +109,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       });
     };
 
-    $scope.createLicence = function(){
+    $scope.createLicence = function () {
 
       var payload = {
         name: $scope.licence.name,
@@ -120,39 +118,39 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
         fieldvalues: []
       };
 
-      angular.forEach($scope.template.sections, function(section){
+      angular.forEach($scope.template.sections, function (section) {
 
-        angular.forEach(section.fieldsDetails, function(field){
+        angular.forEach(section.fieldsDetails, function (field) {
 
-          if(field.type === 'checkbox'){
-          field.value = [];
+          if (field.type === 'checkbox') {
+            field.value = [];
 
-          angular.forEach(field.optionvalues, function(option){
+            angular.forEach(field.optionvalues, function (option) {
 
-            var state = {};
+              var state = {};
 
-            state[option.key] = option.value;
+              state[option.key] = option.value;
 
-            field.value.push(state);
+              field.value.push(state);
 
+            });
+          }
+
+          payload.fieldvalues.push({
+            name: field.name,
+            value: field.value
           });
-        }
-
-        payload.fieldvalues.push({
-          name: field.name,
-          value: field.value
         });
       });
-    });
 
-      Licences.save(payload, function(response){
+      Licences.save(payload, function (response) {
         console.log('response');
         console.log(response);
         console.log(response.agreementid);
 
         $state.go('licences');
 
-      }, function(error){
+      }, function (error) {
 
         console.log('Error');
         console.log(error);
@@ -160,7 +158,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       });
     };
 
-    $scope.updateLicence = function(){
+    $scope.updateLicence = function () {
 
       console.log('Beginning Update...')
 
@@ -173,13 +171,13 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
       console.log(payload);
 
-      angular.forEach($scope.licence.sections, function(section) {
+      angular.forEach($scope.licence.sections, function (section) {
         angular.forEach(section.fieldsdetails, function (field) {
 
-          if(field.type === 'checkbox'){
+          if (field.type === 'checkbox') {
             field.value = [];
 
-            angular.forEach(field.optionvalues, function(option){
+            angular.forEach(field.optionvalues, function (option) {
 
               var state = {};
 
@@ -212,9 +210,9 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       var endpoint = '';
 
       //finds the endpoint property in the field details
-      angular.forEach($scope.licence.sections, function(section){
+      angular.forEach($scope.licence.sections, function (section) {
 
-        endpoint = $window._.find(section.fieldsdetails, function(details){
+        endpoint = $window._.find(section.fieldsdetails, function (details) {
 
           return details.name === $scope.licence.endpointfieldname
 

@@ -32,6 +32,30 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
 
         var root = $scope.currentListing;
 
+        function getParent(node) {
+
+          if (node === undefined) {
+            return false
+          } else {
+            return $window._.find(advert.advertnodes, function (listing) {
+              return (listing.childNodeIds.indexOf(node.id) !== -1);
+            });
+          }
+
+
+        }
+
+        function createBreadCrumb() {
+
+          $scope.breadcrumbs = [root];
+          var parent = getParent(root);
+
+          while(parent) {
+            $scope.breadcrumbs.unshift(parent);
+            parent = getParent(parent);
+          }
+        }
+
 
 
         function recurse(node) {
@@ -53,8 +77,8 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
         }
 
         recurse(root);
+        createBreadCrumb(root);
 
-        console.log(root);
 
         $scope.treeData = root;
 

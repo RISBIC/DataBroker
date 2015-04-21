@@ -58,3 +58,13 @@ tree, #infopanel {
 .panel-inner {
   padding: 20px;
 }
+
+.breadcrumb {
+  background-color: transparent;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.breadcrumb li a {
+
+}
