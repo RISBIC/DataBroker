@@ -103,7 +103,7 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
 
         $window._.each(listings.advertnodes, function(d){
           if (d.tags) {
-            tags.concat(d.tags);
+            tags = tags.concat(d.tags);
           }
         });
 
