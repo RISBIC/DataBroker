@@ -396,7 +396,7 @@
     </pg:Table>
 
     <pg:Database rdf:about="http://rdf.companieshouse.gov.uk/business_data#databroker">
-        <d:hasTitle>databroker</d:hasTitle>
+        <d:hasTitle>business_data</d:hasTitle>
         <pg:hasDatabaseType>PostgreSQL</pg:hasDatabaseType>
         <pg:hasDatabaseHostName>localhost</pg:hasDatabaseHostName>
         <pg:hasDatabasePortNumber>5432</pg:hasDatabasePortNumber>
