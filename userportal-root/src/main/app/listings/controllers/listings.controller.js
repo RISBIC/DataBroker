@@ -42,6 +42,12 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
           filtered.push(item);
         } else if(item.summary && item.summary !== null && (item.summary.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
           filtered.push(item);
+        } else if (item.tags && item.tags instanceof Array && item.tags.length > 0) {
+          for(var i = 0;i < item.tags.length; i++){
+            if (item.tags[i].toLowerCase() === searchString.toLowerCase()){
+              filtered.push(item);
+            }
+          }
         }
       });
         return filtered;
