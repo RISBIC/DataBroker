@@ -200,7 +200,7 @@
     </pg:Table>
 
     <pg:Database rdf:about="http://rdf.library.newcastle.gov.uk/local_business#databroker">
-        <d:hasTitle>databroker</d:hasTitle>
+        <d:hasTitle>local_business</d:hasTitle>
         <pg:hasDatabaseType>PostgreSQL</pg:hasDatabaseType>
         <pg:hasDatabaseHostName>10.1.20.246</pg:hasDatabaseHostName>
         <pg:hasDatabasePortNumber>0</pg:hasDatabasePortNumber>
