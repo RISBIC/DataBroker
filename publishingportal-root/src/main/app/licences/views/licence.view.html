@@ -64,6 +64,12 @@
     <fieldset ng-if="isEndpointAvailable()">
       <legend>Data Upload</legend>
         <div class="btn btn-default" ng-file-select ng-file-change="upload($files)">Add Data</div>
+        <div class="alert alert-success" ng-if="uploadSuccess">
+          File has been successfully uploaded.
+        </div>
+      <div class="alert alert-danger" ng-if="uploadFailed">
+          File uplaod was unsuccessful, the server encountered an error.
+      </div>
     </fieldset>
   </form>
 </section>

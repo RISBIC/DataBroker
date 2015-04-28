@@ -4,6 +4,8 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
   function ($scope, $state, $window, $upload, CONFIG, Licences, Templates) {
 
     $scope.$state = $state;
+    $scope.uploadSuccess = false;
+    $scope.uploadFailed = false;
 
     var templates = [];
 
@@ -231,6 +233,9 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
             console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
           }).success(function (data, status, headers, config) {
             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            $scope.uploadSuccess = true;
+          }).error(function(data, status, headers, config){
+            $scope.uploadFailed = true;
           });
         }
       }
