@@ -77,6 +77,7 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
                 }
 
                 var layout = d3.layout.cloud()
+                  .rotate(function(d) { return 0; })
                     .timeInterval(10)
                     .size([w, h])
                     .fontSize(function(d) { return fontSize(+d.value); })
