@@ -70,7 +70,7 @@ var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', '
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-    apiURL: '/advert-gateway/ws/'
+    apiURL: '/notice-gateway/ws/'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {
