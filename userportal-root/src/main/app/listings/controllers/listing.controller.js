@@ -28,6 +28,10 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
           return (listing.metadataId === $state.params.listingId && listing.metadataPath === $state.params.metadataPath );
         });
 
+        $scope.root = $window._.find(advert.advertnodes, function(listing){
+          return (listing.isRootNode === true);
+        });
+
         advertNodes = advert.advertnodes;
 
         var root = $scope.currentListing;
@@ -76,11 +80,11 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
           }
         }
 
-        recurse(root);
+        recurse($scope.root);
         createBreadCrumb(root);
 
 
-        $scope.treeData = root;
+        $scope.treeData = $scope.root;
 
       });
 

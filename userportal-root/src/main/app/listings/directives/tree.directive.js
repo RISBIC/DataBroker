@@ -234,7 +234,10 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
             function click(d) {
 
               //console.log(d3.event);
-              console.log(d);
+              //console.log(d);
+              //console.log(this.setAttribute);
+
+              //this.setAttribute('opacity', 1);
 
               scope.updateFields(d);
 
@@ -347,6 +350,36 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
                   outCircle(node);
                 });
 
+              /*node.append('animate');
+
+              node.select('animate')
+                .attr('attributeType', "CSS")
+                .attr('attributeName', "opacity")
+                .attr('from', "1")
+                .attr('to', "0")
+                .attr('dur', function (d) {
+                  if (d.metadataId === scope.currentListing.metadataId && d.metadataPath == scope.currentListing.metadataPath) {
+                    return "0s"
+                  } else {
+                    return "5s"
+                  }
+                })
+                .attr('repeatCount', function (d) {
+                  if (d.metadataId === scope.currentListing.metadataId && d.metadataPath == scope.currentListing.metadataPath) {
+                    return "0"
+                  } else {
+                    return "1"
+                  }
+                });*/
+
+              node.attr('opacity', function (d) {
+                if (d.metadataId === scope.currentListing.metadataId && d.metadataPath == scope.currentListing.metadataPath) {
+                  return 1
+                } else {
+                  return 0.5
+                }
+              });
+
               // Update the text to reflect whether node has children or not.
               node.select('text')
                 .attr('x', function (d) {
@@ -440,6 +473,11 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 
               // Stash the old positions for transition.
               nodes.forEach(function (d) {
+
+                if (d.metadataId === scope.currentListing.metadataId && d.metadataPath == scope.currentListing.metadataPath) {
+                  scope.currentNode = d;
+                }
+
                 d.x0 = d.x;
                 d.y0 = d.y;
               });
@@ -456,7 +494,15 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 // Layout the tree initially and center on the root node.
             update(root);
 //centerNode(root.children[0]);
-            centerNode(root);
+
+            if (scope.currentNode) {
+              centerNode(scope.currentNode)
+            } else {
+              centerNode(root);
+            }
+
+            console.log(scope.currentListing);
+            console.log(treeData);
           }
 
 
