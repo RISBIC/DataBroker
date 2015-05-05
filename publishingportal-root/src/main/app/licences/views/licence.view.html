@@ -1,7 +1,28 @@
 <section class="licence" ng-init="getLicence()">
   <h2>{{licence.name}} <span class="label label-default label-h2" ng-show="licenceState()">Status: {{licenceState()}}</span></h2>
-
-  <form role="form" name="updateLicenceForm" class="col-md-6" ng-submit="updateLicence()">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="btn-group" role="group">
+        <button type="button" ng-hide="editMode" ng-click="editMode = !editMode" class="btn btn-default">Edit</button>
+        <button type="button" ng-show="editMode" class="btn btn-default">Save</button>
+        <button type="button" ng-show="editMode" ng-click="editMode = !editMode" class="btn btn-default">Cancel</button>
+        <button type="button" class="btn btn-default" ng-click="deleteLicence()">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6" ng-if="!editMode">
+      <dl ng-repeat="section in licence.sections">
+        <dt ng-repeat-start="field in section.fieldsdetails">{{field.label}}</dt>
+        <dd ng-repeat-end>
+          <span ng-if="field.type === 'checkbox'">{{field.value}}</span>
+          <ul class="list-unstyled">
+            <li ng-repeat="option in field.value"><i ng-class="{'text-danger': option.value}"></i>{{option.label}}</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  <form role="form" name="updateLicenceForm" class="col-md-6" ng-submit="updateLicence()" ng-if="editMode">
     <fieldset>
       <legend>Licence Name</legend>
       <div class="form-group">
@@ -72,6 +93,7 @@
       </div>
     </fieldset>
   </form>
+  </div>
 </section>
 
 
