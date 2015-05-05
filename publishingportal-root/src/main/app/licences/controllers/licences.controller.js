@@ -76,6 +76,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
     $scope.getLicence = function () {
       var licence = Licences.get({agreementId: $state.params.licenceId}, function () {
         $scope.licence = licence;
+        $scope.originalLicence = angular.copy(licence);
       });
     };
 
@@ -239,6 +240,14 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
           });
         }
       }
+    };
+
+    $scope.deleteLicence = function(){
+
+      Licences.delete({agreementId: $state.params.licenceId});
+
+      $state.go('licences');
+
     };
   }
 ]);

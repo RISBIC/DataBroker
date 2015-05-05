@@ -70,9 +70,7 @@ var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', '
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-//  apiURL: 'http://10.1.20.246/agreement-gateway/ws/',
-  apiURL: 'http://127.0.0.1/agreement-gateway/ws/',
-//  apiURL: 'http://publisherportal-arjunatech.rhcloud.com/agreement-gateway/ws/',
+  apiURL: (location.port === '9000' ? 'http://127.0.0.1' : '') + '/agreement-gateway/ws/'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {

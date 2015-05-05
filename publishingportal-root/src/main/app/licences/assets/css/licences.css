@@ -16,6 +16,14 @@
   color: #a80000;
 }
 
+.licence .btn-group {
+  margin-bottom: 30px;
+}
+
+.licence dd {
+  margin-bottom: 10px;
+}
+
 .licence textarea,
 .new-licence textarea {
   resize: none;
