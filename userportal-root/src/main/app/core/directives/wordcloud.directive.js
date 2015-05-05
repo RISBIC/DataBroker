@@ -13,7 +13,8 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
 
                 var d3 = $window.d3;
 
-                var fill = d3.scale.category20c();
+                var fill = d3.scale.ordinal()
+                  .range(["#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#a50f15","#67000d"]);
 
                 var w = 500,
                     h = 250;
@@ -58,7 +59,7 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
                         .duration(1000)
                         .style('opacity', 1);
                     text.style('font-family', function(d) { return d.font; })
-                        .style('fill', function(d) { return fill(d.text.toLowerCase()); })
+                        .style('fill', function(d) { return fill(d.size); })
                         .text(function(d) { return d.text; }).style('opacity', 1);
                     var exitGroup = background.append('g')
                         .attr('transform', vis.attr('transform'));
@@ -108,7 +109,7 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
                         c.translate(word.x, word.y);
                         c.rotate(word.rotate * Math.PI / 180);
                         c.textAlign = 'center';
-                        c.fillStyle = fill(word.text.toLowerCase());
+                        c.fillStyle = fill(word.size);
                         c.font = word.size + 'px ' + word.font;
                         c.fillText(word.text, 0, 0);
                         c.restore();
