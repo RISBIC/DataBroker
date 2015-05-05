@@ -70,7 +70,7 @@ var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', '
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-    apiURL: '/notice-gateway/ws/'
+    apiURL: (location.port === '9000' ? 'http://127.0.0.1' : '') + '/notice-gateway/ws/'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {
