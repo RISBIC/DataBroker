@@ -105,6 +105,15 @@ angular.module('core').controller('ApplicationController', ['$log', '$scope', '$
           if (d.tags) {
             tags = tags.concat(d.tags);
           }
+
+          if (d.name && d.name.length){
+            tags = tags.concat(d.name.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(' '));
+          }
+
+          if (d.summary && d.summary.length){
+            tags = tags.concat(d.summary.replace(/[\[\]\.,\.#!$%\^&\*;:{}=\-_`~()]/g,"").split(' '));
+          }
+
         });
 
 
