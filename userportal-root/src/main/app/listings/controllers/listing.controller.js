@@ -119,7 +119,8 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
             coreFields = {
               name: 1,
               summary: 2,
-              description: 3
+              description: 3,
+              tags: 4
             };
 
         console.log(d);
