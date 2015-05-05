@@ -115,6 +115,12 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
 
       $scope.updateFields = function(d) {
         $scope.fields = [];
+        var fields = [],
+            coreFields = {
+              name: 1,
+              summary: 2,
+              description: 3
+            };
 
         console.log(d);
 
@@ -133,17 +139,37 @@ angular.module('listings').controller('ListingController', ['$scope', '$state', 
               isArray: d[key] instanceof Array
             };
 
-            $scope.fields.push(field);
+            fields.push(field);
+
+
           }
         }
 
-        console.log($scope.fields);
+        fields.sort(function(a,b){
+
+          if (a.key in coreFields && b.key in coreFields) {
+            return coreFields[a.key] - coreFields[b.key];
+          }
+
+          if (a.key in coreFields && b.key in coreFields === false) {
+            return -1;
+          }
+
+          if (a.key in coreFields === false && b.key in coreFields) {
+            return 1;
+          }
+
+          return 0;
+        });
+
+        $scope.fields = fields;
+
         $scope.$apply();
 
         jQuery('textarea').each(function () {
           this.style.height = this.scrollHeight + 'px'
         });
-      }
+      };
 
       $scope.submitFields = function($event) {
         $event.preventDefault();
