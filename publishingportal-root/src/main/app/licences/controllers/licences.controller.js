@@ -16,6 +16,11 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
       }).removeClass('inactive-date-picker')
     };
 
+    $scope.mutableFilter = function(item){
+
+      return item.mutable;
+    };
+
     function retrieveFieldValue(fieldName, fieldString) {
       var theValue = '';
 
