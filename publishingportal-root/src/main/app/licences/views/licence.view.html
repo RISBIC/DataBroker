@@ -15,8 +15,8 @@
       <dl ng-repeat="section in licence.sections">
         <dt ng-repeat-start="field in section.fieldsdetails">{{field.label}}</dt>
         <dd ng-repeat-end>
-          <span ng-if="field.type === 'checkbox'">{{field.value}}</span>
-          <ul class="list-unstyled">
+          <span ng-if="field.type!=='checkbox'">{{field.value}}</span>
+          <ul ng-if="field.type==='checkbox'" class="list-unstyled">
             <li ng-repeat="option in field.value"><i ng-class="{'text-danger': option.value}"></i>{{option.label}}</li>
           </ul>
         </dd>
