@@ -26,11 +26,12 @@ public class AdvertNodeSummary implements Serializable
         _dateCreated  = null;
         _dateUpdate   = null;
         _owner        = null;
+        _location     = null;
         _tags         = Collections.emptyList();
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean isRootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeSummary(String id, String metadataId, String metadataPath, Boolean isRootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdate, String owner, String location, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
         _metadataId   = metadataId;
@@ -43,6 +44,7 @@ public class AdvertNodeSummary implements Serializable
         _dateCreated  = dataCreated;
         _dateUpdate   = dateUpdate;
         _owner        = owner;
+        _location     = location;
         _tags         = tags;
         _childNodeIds = childNodeIds;
     }
@@ -157,6 +159,16 @@ public class AdvertNodeSummary implements Serializable
         _owner = owner;
     }
 
+    public String getLocation()
+    {
+        return _location;
+    }
+
+    public void setLocation(String location)
+    {
+        _location = location;
+    }
+
     public List<String> getTags()
     {
         return _tags;
@@ -188,6 +200,7 @@ public class AdvertNodeSummary implements Serializable
     private Date         _dateCreated;
     private Date         _dateUpdate;
     private String       _owner;
+    private String       _location;
     private List<String> _tags;
     private List<String> _childNodeIds;
 }
