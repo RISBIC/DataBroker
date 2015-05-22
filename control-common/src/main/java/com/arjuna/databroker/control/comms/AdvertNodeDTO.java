@@ -26,11 +26,12 @@ public class AdvertNodeDTO implements Serializable
         _dateCreated  = null;
         _dateUpdated  = null;
         _owner        = null;
+        _location     = null;
         _tags         = Collections.emptyList();
         _childNodeIds = Collections.emptyList();
     }
 
-    public AdvertNodeDTO(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdated, String owner, List<String> tags, List<String> childNodeIds)
+    public AdvertNodeDTO(String id, String metadataId, String metadataPath, Boolean rootNode, String nodeClass, String name, String summary, String description, Date dataCreated, Date dateUpdated, String owner, String location, List<String> tags, List<String> childNodeIds)
     {
         _id           = id;
         _metadataId   = metadataId;
@@ -43,6 +44,7 @@ public class AdvertNodeDTO implements Serializable
         _dateCreated  = dataCreated;
         _dateUpdated  = dateUpdated;
         _owner        = owner;
+        _location     = location;
         _tags         = tags;
         _childNodeIds = childNodeIds;
     }
@@ -157,6 +159,16 @@ public class AdvertNodeDTO implements Serializable
         _owner = owner;
     }
 
+    public String getLocation()
+    {
+        return _location;
+    }
+
+    public void setLocation(String location)
+    {
+        _location = location;
+    }
+
     public List<String> getTags()
     {
         return _tags;
@@ -188,6 +200,7 @@ public class AdvertNodeDTO implements Serializable
     private Date         _dateCreated;
     private Date         _dateUpdated;
     private String       _owner;
+    private String       _location;
     private List<String> _tags;
     private List<String> _childNodeIds;
 }
