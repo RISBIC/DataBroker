@@ -327,6 +327,7 @@ public class AdvertsWS
             Property     hasDateCreated       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateCreated");
             Property     hasDateUpdated       = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasDateUpdated");
             Property     hasOwner             = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
+            Property     hasLocation          = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasLocation");
             Property     hasTag               = subject.getModel().getProperty("http://rdfs.arjuna.com/description#", "hasTag");
             Statement    titleStatement       = subject.getProperty(hasTitle);
             Statement    summaryStatement     = subject.getProperty(hasSummary);
@@ -334,6 +335,7 @@ public class AdvertsWS
             Statement    dateCreatedStatement = subject.getProperty(hasDateCreated);
             Statement    dateUpdatedStatement = subject.getProperty(hasDateUpdated);
             Statement    ownerStatement       = subject.getProperty(hasOwner);
+            Statement    locationStatement    = subject.getProperty(hasLocation);
             StmtIterator tagStatements        = subject.getModel().listStatements(subject, hasTag, (RDFNode) null);
 
             String       id           = UUID.randomUUID().toString();
@@ -346,6 +348,7 @@ public class AdvertsWS
             Date         dateCreated  = null;
             Date         dateUpdated  = null;
             String       owner        = null;
+            String       location     = null;
             List<String> tags         = new LinkedList<String>();
             List<String> childNodeIds = new LinkedList<String>();
 
@@ -363,6 +366,8 @@ public class AdvertsWS
                 dateUpdated = dateFormat.parse(dateUpdatedStatement.getString());
             if (ownerStatement != null)
                 owner = ownerStatement.getString();
+            if (locationStatement != null)
+                location = locationStatement.getString();
             while ((tagStatements != null) && tagStatements.hasNext())
             {
                 Statement tagStatement = tagStatements.nextStatement();
@@ -370,7 +375,7 @@ public class AdvertsWS
                     tags.add(tagStatement.getString());
             }
 
-            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dateCreated, dateUpdated, owner, tags, childNodeIds);
+            advertNode = new AdvertNodeDTO(id, metadataId, metadataPath, rootNode, nodeClass, name, summary, description, dateCreated, dateUpdated, owner, location, tags, childNodeIds);
         }
         catch (Throwable throwable)
         {
@@ -395,7 +400,7 @@ public class AdvertsWS
 
         try
         {
-            File knownChildPropertiesConfigFile = new File(System.getProperty("jboss.server.config.dir"), "knownclildproperties.conf");
+            File knownChildPropertiesConfigFile = new File(System.getProperty("jboss.server.config.dir"), "knownchildproperties.conf");
 
             String[] knownChildPropertyURIs = loadPropertyLines(knownChildPropertiesConfigFile);
         }
