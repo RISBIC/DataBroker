@@ -30,8 +30,8 @@ angular.module('listings').directive('tree', ['$window', 'Listings', '$timeout',
 
 // size of the diagram
             var viewerWidth = Math.floor(jQuery('body').width() * 75 / 100);
-            //var viewerHeight = jQuery(document).height();
-            var viewerHeight = 400;
+            var viewerHeight = jQuery(document).height() < 500 ? 500 : jQuery(document).height() - 250;
+            //var viewerHeight = 400;
 
             var tree = d3.layout.tree()
               .size([viewerHeight, viewerWidth]);
