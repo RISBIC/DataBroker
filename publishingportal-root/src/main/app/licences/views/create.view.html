@@ -1,9 +1,10 @@
 <section class="licence-wizard">
-  <ul class="list-inline">
-    <li ng-class="{active: $state.current.name === 'create.templates'}">1. Choose Template</li>
-    <li ng-class="{active: $state.current.name === 'create.template'}">2. Create Licence</li>
-    <li ng-class="{active: $state.current.name === 'create.upload'}">3. Upload Data</li>
-  </ul>
+  <div class="alert alert-info" ng-show="$state.current.name === 'create.templates'">
+    Choose a template from which to create a new licence
+  </div>
+  <div class="alert alert-info" ng-show="$state.current.name === 'create.template'">
+    Complete the form to create a new licence. Please ensure all fields marked as * have been completed correctly.
+  </div>
   <hr>
   <div ui-view=""></div>
 </section>

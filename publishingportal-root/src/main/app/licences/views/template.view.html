@@ -3,10 +3,10 @@
     <fieldset>
       <legend>Licence Name</legend>
       <div class="form-group">
-        <label class="form-label">Licence Name <span class="required">*</span></label>
+        <label class="form-label">Your name for this Publication Permission <span class="required">*</span></label>
         <input class="form-control" type="text" name="licencename" ng-model="licence.name" required>
         <i class="fa fa-check"></i>
-        <p class="help-block">The name of the new licence agreement</p>
+        <p class="help-block">No one else sees this name</p>
       </div>
       <div class="form-group">
         <label class="form-label">Comments <span class="required">*</span></label>
@@ -55,9 +55,6 @@
       </div>
     </fieldset>
     <div class="form-group" class="col-md-6">
-      <div class="alert alert-warning" ng-show="newLicence.$invalid">
-        Please ensure all fields marked as * have been completed correctly
-      </div>
       <button type="submit" class="btn btn-default" ng-disabled="newLicence.$invalid">Submit</button>
     </div>
   </form>
