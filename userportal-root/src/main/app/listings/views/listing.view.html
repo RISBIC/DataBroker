@@ -23,13 +23,18 @@
 </tree>
 <div id="infopanel">
   <form action="" ng-submit="submitFields($event)">
-    <div class="form-group" ng-repeat="field in fields">
-      <label ng-if="field.formFieldType !== 'hidden'" for="">{{field.label}} {{field.isArray ? '(e.g item1,item2,item3)' : ''}}</label>
-      <input type="hidden" class="form-control" ng-if="field.formFieldType === 'hidden'" ng-model="field.value" />
+    <div class="form-group" ng-repeat="field in fields" ng-show="field.formFieldType !== 'hidden' && (field.formFieldType === 'nglist' && field.value.length > 0 || field.formFieldType === 'textarea' && field.value && field.value !== '')">
+      <h4>{{field.label}}</h4>
+      <!--<<input type="hidden" class="form-control" ng-if="field.formFieldType === 'hidden'" ng-model="field.value" />
       <input type="text" class="form-control" ng-if="field.formFieldType === 'nglist'" ng-attr-ng-list="{{field.isArray}}" ng-model="field.value" />
-      <textarea ng-if="field.formFieldType === 'textarea'" class="form-control" name="" id="" cols="30" ng-model="field.value"></textarea>
+      <textarea ng-if="field.formFieldType === 'textarea'" class="form-control" name="" cols="30" ng-model="field.value"></textarea>-->
+
+      <input type="hidden" class="form-control" ng-if="field.formFieldType === 'hidden'" ng-model="field.value" />
+      <p class="form-control" ng-if="field.formFieldType === 'nglist' && field.value.length > 0">
+        <span ng-repeat="item in field.value">{{item}}</span>
+      </p>
+      <p ng-if="field.formFieldType === 'textarea' && field.value && field.value !== ''">{{field.value}}</p>
 
     </div>
-    <input ng-if="fields.length > 0 && 1 != 1" type="submit" value="Save"/>
   </form>
 </div>
