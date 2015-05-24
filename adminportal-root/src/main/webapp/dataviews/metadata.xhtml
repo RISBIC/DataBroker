@@ -45,7 +45,13 @@
                                 <h:inputTextarea styleClass="metadata-descriptionvalue" rows="4" readonly="true" value="#{metadatanode.summary}"/>
                                 <h:outputText styleClass="metadata-descriptionlabel" value="Details: "/>
                                 <h:inputTextarea styleClass="metadata-descriptionvalue" rows="24" readonly="true" value="#{metadatanode.details}"/>
-                                <h:outputText styleClass="metadata-descriptionlabel" value=""/>
+				<h:outputText styleClass="metadata-descriptionlabel" value="Owner: "/>
+				<h:inputTextarea styleClass="metadata-descriptionvalue" rows="1" readonly="true" value="#{metadatanode.owner}"/>
+				<h:outputText styleClass="metadata-descriptionlabel" value="Tags: "/>
+				<h:inputTextarea styleClass="metadata-descriptionvalue" rows="1" readonly="true" value="#{metadatanode.tags}"/>
+				<h:outputText styleClass="metadata-descriptionlabel" value="Location: "/>
+				<h:inputTextarea styleClass="metadata-descriptionvalue" rows="1" readonly="true" value="#{metadatanode.location}"/>
+				<h:outputText styleClass="metadata-descriptionlabel" value=""/>
                                 <h:panelGrid columns="2" border="0" cellpadding="0" cellspacing="1em">
                                     <h:commandLink styleClass="metadata-button" action="#{metadatanodeedit.doEdit(metadata.serviceRootURL, metadata.requesterId, metadata.userId, metadata.metadataId, metadatanode.resourceURI, metadatanode.title, metadatanode.summary, metadatanode.details)}" value="Edit"/>
                                     <h:commandLink styleClass="metadata-button" action="#{dataview.doToPageReload}" value="Done"/>

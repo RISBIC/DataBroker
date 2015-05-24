@@ -33,6 +33,12 @@
                         <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="4" value="#{metadatanodeedit.summary}"/>
                         <h:outputText styleClass="metadatanode-descriptionlabel" value="Details: "/>
                         <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="24" value="#{metadatanodeedit.details}"/>
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Owner: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="1" value="#{metadatanodeedit.owner}"/>
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Tags: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="1" value="#{metadatanodeedit.tags}"/>
+                        <h:outputText styleClass="metadatanode-descriptionlabel" value="Location: "/>
+                        <h:inputTextarea styleClass="metadatanode-descriptionvalue" rows="1" value="#{metadatanodeedit.location}"/>
                         <h:outputText styleClass="metadatanode-descriptionlabel" value=" "/>
                         <h:panelGroup>
                             <h:commandLink styleClass="metadatanode-button" action="#{metadatanodeedit.doChangeSubmit}" value="Change"/>

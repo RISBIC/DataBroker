@@ -61,6 +61,36 @@ public class MetadataNodeEditMO implements Serializable
         _details = details;
     }
 
+    public String getOwner()
+    {
+        return _owner;
+    }
+
+    public void setOwner(String owner)
+    {
+        _owner = owner;
+    }
+
+    public String getTags()
+    {
+        return _tags;
+    }
+
+    public void setTags(String tags)
+    {
+        _tags = tags;
+    }
+
+    public String getLocation()
+    {
+        return _location;
+    }
+
+    public void setLocation(String location)
+    {
+        _location = location;
+    }
+
     public String getErrorMessage()
     {
         return _errorMessage;
@@ -121,7 +151,7 @@ public class MetadataNodeEditMO implements Serializable
         _resourceURI = resourceURI;
     }
 
-    public String doEdit(String serviceRootURL, String requesterId, String userId, String metadataId, String resourceURI, String title, String summary, String details)
+    public String doEdit(String serviceRootURL, String requesterId, String userId, String metadataId, String resourceURI, String title, String summary, String details, String owner, String tags, String location)
     {
         _serviceRootURL = serviceRootURL;
         _requesterId    = requesterId;
@@ -131,9 +161,12 @@ public class MetadataNodeEditMO implements Serializable
 
         _errorMessage = null;
 
-        _title   = title;
-        _summary = summary;
-        _details = details;
+        _title    = title;
+        _summary  = summary;
+        _details  = details;
+        _owner    = owner;
+        _tags     = tags;
+        _location = location;
 
         return "/dataviews/metadatanode_edit?faces-redirect=true";
     }
@@ -151,14 +184,20 @@ public class MetadataNodeEditMO implements Serializable
                 model.read(reader, null);
                 reader.close();
 
-                Property hasTitle   = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
-                Property hasSummary = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
-                Property hasDetails = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+                Property hasTitle    = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+                Property hasSummary  = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+                Property hasDetails  = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+                Property hasOwner    = model.getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
+                Property hasTag      = model.getProperty("http://rdfs.arjuna.com/description#", "hasTag");
+                Property hasLocation = model.getProperty("http://rdfs.arjuna.com/description#", "hasLocation");
 
                 Resource resource = model.createResource(_resourceURI);
                 resource.removeAll(hasTitle);
                 resource.removeAll(hasSummary);
                 resource.removeAll(hasDetails);
+                resource.removeAll(hasOwner);
+                resource.removeAll(hasTag);
+                resource.removeAll(hasLocation);
 
                 if (_title != null)
                     resource.addProperty(hasTitle, _title.trim());
@@ -166,6 +205,13 @@ public class MetadataNodeEditMO implements Serializable
                     resource.addProperty(hasSummary, _summary.trim());
                 if ((_details != null))
                     resource.addProperty(hasDetails, _details.trim());
+                if ((_owner != null))
+                    resource.addProperty(hasOwner, _owner.trim());
+		if (_tags != null)
+		    for (String tag: _tags.split(";"))
+                        resource.addProperty(hasTag, tag.trim());
+                if ((_location != null))
+                    resource.addProperty(hasLocation, _location.trim());
 
                 StringWriter writer = new StringWriter();
                 model.write(writer);
@@ -192,6 +238,9 @@ public class MetadataNodeEditMO implements Serializable
     private String _title;
     private String _summary;
     private String _details;
+    private String _owner;
+    private String _tags;
+    private String _location;
 
     private String _errorMessage;
 
