@@ -28,13 +28,12 @@ import java.util.UUID;
 
 public class TestDeployRisbicDKAN extends OpenShiftTestBase
 {
-   private static final String RISBIC_DKAN_REPO = "https://github.com/RISBIC/dkan-openshift";
+   private static final String RISBIC_DKAN_REPO = "https://github.com/mtaylor/dkan-openshift";
 
    @Test
    public void testDeployRisbicDKAN() throws OpenShiftException
    {
-      String appName = "DKANRisbic_" + UUID.randomUUID().toString();
-      PHPApplication dkan = new DKANApplication(username, password, domain, appName, RISBIC_DKAN_REPO);
+      PHPApplication dkan = new DKANApplication(username, password, domain, generateAppName(), RISBIC_DKAN_REPO);
       try
       {
          dkan.deploy();

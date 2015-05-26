@@ -31,7 +31,7 @@ public class TestDeployDKAN extends OpenShiftTestBase
    @Test
    public void testDeployDKAN() throws OpenShiftException
    {
-      PHPApplication dkan = new DKANApplication(username, password, domain, "DKANApplication_" + UUID.randomUUID().toString());
+      PHPApplication dkan = new DKANApplication(username, password, domain, generateAppName());
       try
       {
          dkan.deploy();

@@ -21,6 +21,7 @@ import org.junit.Before;
 
 import java.io.FileReader;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,5 +62,10 @@ public abstract class OpenShiftTestBase
       {
          logger.log(Level.WARNING, "Unable to parse OpenShift properties file. + '" + OPENSHIFT_TEST_PROPERTIES + "'");
       }
+   }
+
+   protected String generateAppName()
+   {
+      return UUID.randomUUID().toString().replace("-", "");
    }
 }
