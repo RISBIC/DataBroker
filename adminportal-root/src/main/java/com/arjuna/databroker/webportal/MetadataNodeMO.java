@@ -56,14 +56,32 @@ public class MetadataNodeMO implements Serializable
         return _details;
     }
 
+    public String getOwner()
+    {
+        return _owner;
+    }
+
+    public String getTags()
+    {
+        return _tags;
+    }
+
+    public String getLocation()
+    {
+        return _location;
+    }
+
     public void clearSelection()
     {
         _name        = "";
         _resourceURI = "";
         _title       = "";
         _summary     = "";
-        _details     = "";
-    }
+        _details     = ""; 
+        _owner       = "";
+        _tags        = "";
+        _location    = "";
+   }
 
     public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent)
     {
@@ -80,12 +98,18 @@ public class MetadataNodeMO implements Serializable
             Model            model            = abstractTreeNode.getModel();
             Resource         resource         = abstractTreeNode.getResource();
 
-            Property  hasTitle         = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
-            Property  hasSummary       = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
-            Property  hasDetails       = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
-            Statement titleStatement   = resource.getProperty(hasTitle);
-            Statement summaryStatement = resource.getProperty(hasSummary);
-            Statement detailsStatement = resource.getProperty(hasDetails);
+            Property  hasTitle          = model.getProperty("http://rdfs.arjuna.com/description#", "hasTitle");
+            Property  hasSummary        = model.getProperty("http://rdfs.arjuna.com/description#", "hasSummary");
+            Property  hasDetails        = model.getProperty("http://rdfs.arjuna.com/description#", "hasDetails");
+            Property  hasOwner          = model.getProperty("http://rdfs.arjuna.com/description#", "hasOwner");
+            Property  hasTag            = model.getProperty("http://rdfs.arjuna.com/description#", "hasTag");
+            Property  hasLocation       = model.getProperty("http://rdfs.arjuna.com/description#", "hasLocation");
+            Statement titleStatement    = resource.getProperty(hasTitle);
+            Statement summaryStatement  = resource.getProperty(hasSummary);
+            Statement detailsStatement  = resource.getProperty(hasDetails);
+            Statement ownerStatement    = resource.getProperty(hasOwner);
+            Statement tagStatement      = resource.getProperty(hasTag);
+            Statement locationStatement = resource.getProperty(hasLocation);
 
             _name = abstractTreeNode.getName();
 
@@ -105,6 +129,18 @@ public class MetadataNodeMO implements Serializable
                 _details = detailsStatement.getString();
             else
                 _details = "";
+
+            if (ownerStatement != null)
+                _owner = ownerStatement.getString();
+            else
+                _owner = "";
+
+            // TODO: Tags
+	    
+            if (locationStatement != null)
+                _location = locationStatement.getString();
+            else
+                _location = "";
         }
         catch (Throwable throwable)
         {
@@ -114,6 +150,9 @@ public class MetadataNodeMO implements Serializable
             _title       = "";
             _summary     = "";
             _details     = "";
+            _owner       = "";
+            _tags        = "";
+            _location    = "";
         }
 
         tree.setRowKey(key);
@@ -124,4 +163,7 @@ public class MetadataNodeMO implements Serializable
     private String _title;
     private String _summary;
     private String _details;
+    private String _owner;
+    private String _tags;
+    private String _location;
 }
