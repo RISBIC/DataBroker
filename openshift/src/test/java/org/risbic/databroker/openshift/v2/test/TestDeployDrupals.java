@@ -32,7 +32,7 @@ public class TestDeployDrupals extends OpenShiftTestBase
    @Test
    public void testDeployWordPress() throws OpenShiftException
    {
-      PHPApplication drupals = new DrupalApplication(username, password, domain, "Drupal_" + UUID.randomUUID().toString());
+      PHPApplication drupals = new DrupalApplication(username, password, domain, generateAppName());
       try
       {
          drupals.deploy();

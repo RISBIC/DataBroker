@@ -31,8 +31,7 @@ public class TestDeployWordPress extends OpenShiftTestBase
    @Test
    public void testDeployWordPress() throws OpenShiftException
    {
-      String appName = "WordPress_" + UUID.randomUUID().toString();
-      PHPApplication wordPress = new WordPressApplication(username, password, domain, appName);
+      PHPApplication wordPress = new WordPressApplication(username, password, domain, generateAppName());
       try
       {
          wordPress.deploy();
