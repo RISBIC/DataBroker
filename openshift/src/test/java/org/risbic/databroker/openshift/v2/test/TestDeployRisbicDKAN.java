@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class TestDeployRisbicDKAN extends OpenShiftTestBase
 {
-   private static final String RISBIC_DKAN_REPO = "https://github.com/mtaylor/dkan-openshift";
+   private static final String RISBIC_DKAN_REPO = "git@github.com:RISBIC/dkan-openshift";
 
    @Test
    public void testDeployRisbicDKAN() throws OpenShiftException
