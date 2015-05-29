@@ -46,6 +46,12 @@
         </dependency>
         <dependency>
             <groupId>com.arjuna.databroker</groupId>
+            <artifactId>openshift</artifactId>
+            <version>${version.com.arjuna.databroker}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arjuna.databroker</groupId>
             <artifactId>control-common</artifactId>
             <version>${version.com.arjuna.databroker}</version>
             <type>jar</type>
@@ -130,6 +136,12 @@
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>metadata-rdf</artifactId>
                             <bundleFileName>metadata-rdf.jar</bundleFileName>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <jarModule>
+                            <groupId>com.arjuna.databroker</groupId>
+                            <artifactId>openshift</artifactId>
+                            <bundleFileName>openshift.jar</bundleFileName>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
                         <ejbModule>
