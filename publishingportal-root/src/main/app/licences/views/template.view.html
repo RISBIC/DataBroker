@@ -16,7 +16,10 @@
       </div>
     </fieldset>
     <fieldset ng-repeat="section in template.sections">
-      <legend>{{section.headertext}}</legend>
+      <legend>{{section.title}}</legend>
+      <div ng-if="section.header" class="alert alert-info">
+        <p>{{section.header}}</p>
+      </div>
       <div class="form-group" ng-repeat="field in section.fieldsDetails">
         <label ng-if="field.type != 'hidden'" class="form-label">{{field.label}} <span class="required">{{field.required ? '*' : ''}}</span></label>
 
@@ -52,6 +55,9 @@
 
         <i class="fa fa-check"></i>
         <p class="help-block">{{field.purpose}}</p>
+      </div>
+      <div ng-if="section.footer" class="alert alert-info">
+        <p>{{section.footer}}</p>
       </div>
     </fieldset>
     <div class="form-group" class="col-md-6">
