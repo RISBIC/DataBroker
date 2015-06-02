@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<!--                                                                                                          -->
+<!-- Copyright (c) 2013-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved. -->
+<!--                                                                                                          -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arjuna.databroker</groupId>
+        <artifactId>system</artifactId>
+        <version>1.0.0p1m3l</version>
+    </parent>
+
+    <artifactId>openshift</artifactId>
+
+    <packaging>jar</packaging>
+
+    <name>OpenShift Support Module</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.openshift</groupId>
+            <artifactId>openshift-java-client</artifactId>
+            <version>2.7.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

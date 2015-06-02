@@ -78,6 +78,7 @@
         <module>userportal-ear</module>
         <module>adminportal-root</module>
         <module>adminportal-ear</module>
+        <module>openshift</module>
         <module>tests</module>
     </modules>
 
