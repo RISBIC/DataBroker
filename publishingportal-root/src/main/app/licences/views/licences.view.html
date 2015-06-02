@@ -1,8 +1,22 @@
 <h1>My Publication Permissions</h1>
 <hr>
 <ul class="list-unstyled licences" ng-init="getLicences()">
-  <li ng-repeat="licence in licences" ui-sref="licence({licenceId: licence.id})" class="clearfix licence-summary">
+  <li ng-repeat="licence in licences | offset: currentPage*itemsPerPage | limitTo: itemsPerPage track by licence.id" ui-sref="licence({licenceId: licence.id})" class="clearfix licence-summary">
       <h3>{{licence.name}}</h3>
       <p>{{licence.comment}}</p>
   </li>
 </ul>
+<div class="pagination">
+  <ul class="list-inline" ng-if="licences.length > itemsPerPage">
+    <li ng-class="prevPageDisabled()">
+      <a href ng-click="prevPage()">« Prev</a>
+    </li>
+    <li ng-repeat="n in range()"
+        ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+      <a href="#">{{n+1}}</a>
+    </li>
+    <li ng-class="nextPageDisabled()">
+      <a href ng-click="nextPage()">Next »</a>
+    </li>
+  </ul>
+</div>
