@@ -18,7 +18,7 @@ angular.module('licences').controller('LicencesController', ['$scope', '$state',
 
     $scope.mutableFilter = function(item){
 
-      return item.mutable;
+      return !item.mutable;
     };
 
     function retrieveFieldValue(fieldName, fieldString) {
