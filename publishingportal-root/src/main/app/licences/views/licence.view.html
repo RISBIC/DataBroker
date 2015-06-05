@@ -17,7 +17,8 @@
       <dl>
         <dt ng-repeat-start="field in section.fieldsdetails | filter:mutableFilter">{{field.label}}</dt>
         <dd ng-repeat-end>
-          <span ng-if="field.type!=='checkbox'">{{field.value}}</span>
+          <span ng-if="field.type=='radio'" ng-repeat="option in field.optionvalues | filter: value == field.value">{{option.label}}</span>
+
           <ul ng-if="field.type==='checkbox'" class="list-unstyled">
             <li ng-repeat="option in field.value"><i ng-class="{'text-danger': option.value}"></i>{{option.label}}</li>
             <span ng-if="field.type !== 'checkbox'">{{field.value}}</span>
@@ -25,6 +26,7 @@
           <ul class="list-unstyled" ng-if="field.type === 'checkbox'">
             <li ng-repeat="option in field.value.split(',')"><i ng-class="{'text-danger': option.value}"></i>{{option}}</li>
           </ul>
+          <span ng-if="field.type!=='checkbox' && field.type!=='radio'">{{field.value}}</span>
         </dd>
       </dl>
       <hr ng-repeat-end>
