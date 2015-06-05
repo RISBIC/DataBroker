@@ -37,19 +37,29 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
     if (searchString) {
       angular.forEach(items, function(item) {
         if(item.name && item.name !== null && (item.name.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
-          filtered.unshift(item);
+          item.score = 2 + (item.isRootNode ? 1 : 0);
+          filtered.push(item);
         } else if(item.owner && item.owner !== null && (item.owner.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
+          item.score = 1;
           filtered.push(item);
         } else if(item.summary && item.summary !== null && (item.summary.toLowerCase().indexOf(searchString.toLowerCase()) != -1)) {
+          item.score = 1;
           filtered.push(item);
         } else if (item.tags && item.tags instanceof Array && item.tags.length > 0) {
           for(var i = 0;i < item.tags.length; i++){
             if (item.tags[i].toLowerCase() === searchString.toLowerCase()){
+              item.score = 1;
               filtered.push(item);
+              i = items.tags.length;
             }
           }
         }
       });
+
+      filtered.sort(function(a,b){
+        return a.score < b.score;
+      });
+
         return filtered;
     } else {
       return items;
