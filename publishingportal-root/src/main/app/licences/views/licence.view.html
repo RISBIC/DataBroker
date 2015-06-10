@@ -17,7 +17,7 @@
       <p>{{originalLicence.comment}}</p>
       <h3 ng-repeat-start="section in licence.sections">{{section.headertext}}</h3>
       <dl>
-        <dt ng-repeat-start="field in section.fieldsdetails | filter:mutableFilter">{{field.label}}</dt>
+        <dt ng-repeat-start="field in section.fieldsdetails">{{field.label}}</dt>
         <dd ng-repeat-end>
           <span ng-if="field.type=='radio'" ng-repeat="option in field.optionvalues | filter: value == field.value">{{option.label}}</span>
 
@@ -49,7 +49,7 @@
       </fieldset>
       <fieldset class="col-md-7" ng-repeat="section in licence.sections">
         <legend>{{section.headertext}}</legend>
-        <div class="form-group" ng-repeat="field in section.fieldsdetails | filter:mutableFilter">
+        <div class="form-group" ng-repeat="field in section.fieldsdetails">
           <label ng-if="field.type != 'hidden'" class="form-label">{{field.label}} <span class="required">{{field.required ? '*' : ''}}</span></label>
 
           <!-- Render Checkbox -->
