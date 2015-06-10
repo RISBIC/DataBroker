@@ -13,6 +13,8 @@
   </div>
   <div class="row">
     <div class="col-md-6" ng-if="!editMode">
+      <h3>Description</h3>
+      <p>{{originalLicence.comment}}</p>
       <h3 ng-repeat-start="section in licence.sections">{{section.headertext}}</h3>
       <dl>
         <dt ng-repeat-start="field in section.fieldsdetails | filter:mutableFilter">{{field.label}}</dt>
