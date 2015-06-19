@@ -55,3 +55,15 @@
   left: 5px;
   opacity: 1;
 }
+
+.popover {
+  max-width: 600px !important;
+}
+
+.popover dd {
+  overflow-wrap: break-word;
+}
+
+.popover .tab-content {
+  padding-top: 10px;
+}

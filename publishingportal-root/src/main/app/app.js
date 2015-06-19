@@ -65,20 +65,16 @@ angular.module('authentication').config(['$httpProvider', function ($httpProvide
 
 }]);
 
-var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.router', 'angularMoment', 'angularFileUpload', 'angular-md5', 'authentication', 'core', 'licences', 'users'];
+var modules = ['ngAnimate', 'ngAria', 'ngCookies', 'ngMessages', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.bootstrap', 'ui.router', 'angularMoment', 'angularFileUpload', 'angular-md5', 'authentication', 'core', 'licences', 'users'];
 
 var app = angular.module('mainApp', modules);
 
 app.constant('CONFIG', {
-  apiURL: (location.port === '9000' ? 'http://127.0.0.1' : '') + '/agreement-gateway/ws/',
+  apiURL: (location.port === '9000' ? 'http://localhost:8080' : '') + '/agreement-gateway/ws/',
   user: {
     email: 'demo@example.com',
     password: '0f359740bd1cda994f8b55330c86d845'
   }
-});
-
-app.constant('CONFIG', {
-  apiURL: (location.port === '9000' ? 'http://127.0.0.1' : '') + '/agreement-gateway/ws/'
 });
 
 app.run(function ($log, $rootScope, $state, $window, AUTH_EVENTS, AuthenticationService, Global) {

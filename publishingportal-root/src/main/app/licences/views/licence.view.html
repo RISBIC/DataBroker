@@ -29,6 +29,7 @@
             <li ng-repeat="option in field.value.split(',')"><i ng-class="{'text-danger': option.value}"></i>{{option}}</li>
           </ul>
           <span ng-if="field.type!=='checkbox' && field.type!=='radio'">{{field.value}}</span>
+          <i ng-if="field.nrSignatures" class="fa fa-check-circle-o text-success" Popover-animation="true" popover-template="'popoverTemplate.html'" popover-title="Non-Repudiation Signatures" popover-placement="right" popover-trigger="click" ng-mouseenter="signatures = field.nrSignatures"></i>
         </dd>
       </dl>
       <hr ng-repeat-end>
@@ -104,5 +105,20 @@
   </div>
   </form>
 </section>
+<!-- Popover Template -->
+<script type="text/ng-template" id="popoverTemplate.html">
+  <tabset>
+    <tab ng-repeat="signature in signatures" heading="{{signature.partyName}}">
+      <dl>
+        <dt>Signature</dt>
+        <dd>{{signature.signature}}</dd>
+        <dt>Encryption Type</dt>
+        <dd>{{signature.encryptionType}}</dd>
+        <dt>Public Key</dt>
+        <dd>{{signature.publicKeyPem}}</dd>
+      </dl>
+    </tab>
+  </tabset>
+</script>
 
 
