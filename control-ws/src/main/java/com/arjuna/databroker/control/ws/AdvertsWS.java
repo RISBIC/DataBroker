@@ -203,7 +203,7 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/datasource#DataSource",
         "http://rdfs.arjuna.com/jdbc/postgresql#Database",
         "http://rdfs.arjuna.com/xssf#Workbook",
-        "http://rdfs.arjuna.com/json#Array"
+        "http://rdfs.arjuna.com/json#Document"
     };
 
     private void scanMetadataBlob(String metadataBlogId, Map<String, AdvertNodeDTO> advertMap)
@@ -270,6 +270,7 @@ public class AdvertsWS
         "http://rdfs.arjuna.com/jdbc/postgresql#hasTableField",
         "http://rdfs.arjuna.com/xssf#hasSheet",
         "http://rdfs.arjuna.com/xssf#hasColumn",
+        "http://rdfs.arjuna.com/json#hasContent",
         "http://rdfs.arjuna.com/json#hasField"
     };
 

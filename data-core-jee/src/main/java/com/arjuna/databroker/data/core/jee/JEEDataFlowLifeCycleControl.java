@@ -44,14 +44,35 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         try
         {
             List<DataFlowEntity> dataFlowEntites = _dataFlowUtils.list();
-
-            for (DataFlowEntity dataFlowEntity: dataFlowEntites)
+            while (! dataFlowEntites.isEmpty())
             {
-                logger.log(Level.FINER, "recreateDataFlows: " + dataFlowEntity.getId() + ", " + dataFlowEntity.getName());
+                logger.log(Level.FINER, "recreateDataFlows: start pass");
+                List<DataFlowEntity> remainingDataFlow = new LinkedList<DataFlowEntity>();
 
-                DataFlow dataFlow = recreateDataFlow(dataFlowEntity);
-                if (dataFlow != null)
-                    _dataFlowInventory.addDataFlow(recreateDataFlow(dataFlowEntity));
+                for (DataFlowEntity dataFlowEntity: dataFlowEntites)
+                {
+                    logger.log(Level.FINER, "recreateDataFlows: " + dataFlowEntity.getId() + ", " + dataFlowEntity.getName());
+
+                    if (isRecreatableDataFlow(dataFlowEntity))
+                    {
+                        DataFlow dataFlow = recreateDataFlow(dataFlowEntity);
+                        if (dataFlow != null)
+                            _dataFlowInventory.addDataFlow(recreateDataFlow(dataFlowEntity));
+                    }
+                    else
+                    {
+                        logger.log(Level.FINER, "recreateDataFlows: postpone " + dataFlowEntity.getId() + ", " + dataFlowEntity.getName());
+                        remainingDataFlow.add(dataFlowEntity);
+                    }
+                }
+
+                dataFlowEntites = remainingDataFlow;
+
+                if (! dataFlowEntites.isEmpty())
+                {
+                    logger.log(Level.FINER, "recreateDataFlows: start scan sleep");
+                    Thread.sleep(10000);
+                }
             }
         }
         catch (Throwable throwable)
@@ -109,6 +130,33 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         }
         else
             return false;
+    }
+
+    private boolean isRecreatableDataFlow(DataFlowEntity dataFlowEntity)
+    {
+        logger.log(Level.FINE, "isRecreatableDataFlow: " + dataFlowEntity.getId());
+
+        try
+        {
+            boolean dataFlowRecreatable = true;
+            for (String dataFlowNodeFactoryClassName: dataFlowEntity.getDataFlowNodeFactoryClassNames())
+            {
+                boolean found = false;
+                for (DataFlowNodeFactory dataFlowNodeFactory: _dataFlowNodeFactoryInventory.getDataFlowNodeFactorys())
+                    if (dataFlowNodeFactoryClassName.equals(dataFlowNodeFactory.getClass().getName()))
+                        found = true;
+
+                dataFlowRecreatable = dataFlowRecreatable && found;
+            }
+
+            return dataFlowRecreatable;
+        }
+        catch (Throwable throwable)
+        {
+            logger.log(Level.WARNING, "recreateDataFlow: Recreate failed - " + dataFlowEntity.getId(), throwable);
+        }
+
+        return false;
     }
 
     private DataFlow recreateDataFlow(DataFlowEntity dataFlowEntity)
