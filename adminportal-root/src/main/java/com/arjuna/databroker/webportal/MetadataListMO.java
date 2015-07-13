@@ -240,7 +240,7 @@ public class MetadataListMO implements Serializable
             items.add(new MetadataItemVO("Type: ", xtypeStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
         Statement hasJSONFieldStatement = resource.getProperty(hasJSONField);
-        if (hasJSONField != null)
+        if (hasJSONFieldStatement != null)
             items.add(new MetadataItemVO("JSON Field: ", hasJSONFieldStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
         StmtIterator statements = model.listStatements(resource, (Property) null, (RDFNode) null);
