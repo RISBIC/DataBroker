@@ -158,7 +158,7 @@ public class MetadataListMO implements Serializable
                     StmtIterator jsonDocStatements = model.listStatements(null, rdfTypeProperty, jsonDocProperty);
                     while (jsonDocStatements.hasNext())
                     {
-                        MetadataItemVO item = buildItem(model, jsonDocStatements.nextStatement().getSubject(), "Document");
+                        MetadataItemVO item = buildItem(model, jsonDocStatements.nextStatement().getSubject(), "JSON Document");
 
                         if (item != null)
                             _items.add(item);
@@ -201,6 +201,7 @@ public class MetadataListMO implements Serializable
         Property hasLabel        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasLabel");
         Property hasIndex        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasIndex");
         Property hasXType        = model.getProperty("http://rdfs.arjuna.com/xssf#", "hasType");
+        Property hasJSONContent  = model.getProperty("http://rdfs.arjuna.com/json#", "hasContent");
         Property hasJSONField    = model.getProperty("http://rdfs.arjuna.com/json#", "hasField");
 
         Statement summaryStatement = resource.getProperty(hasSummary);
@@ -239,9 +240,13 @@ public class MetadataListMO implements Serializable
         if (xtypeStatement != null)
             items.add(new MetadataItemVO("Type: ", xtypeStatement.getString(), Collections.<MetadataItemVO>emptyList()));
 
+        Statement hasJSONContentStatement = resource.getProperty(hasJSONContent);
+        if (hasJSONContentStatement != null)
+            items.add(new MetadataItemVO("JSON Content: ",  hasJSONContentStatement.getSubject().toString(), Collections.<MetadataItemVO>emptyList()));
+
         Statement hasJSONFieldStatement = resource.getProperty(hasJSONField);
         if (hasJSONFieldStatement != null)
-            items.add(new MetadataItemVO("JSON Field: ", hasJSONFieldStatement.getString(), Collections.<MetadataItemVO>emptyList()));
+            items.add(new MetadataItemVO("JSON Field: ", hasJSONFieldStatement.getSubject().toString(), Collections.<MetadataItemVO>emptyList()));
 
         StmtIterator statements = model.listStatements(resource, (Property) null, (RDFNode) null);
         while (statements.hasNext())
@@ -263,6 +268,8 @@ public class MetadataListMO implements Serializable
                 subItem = buildItem(model, subStatement.getResource(), "Sheet");
             else if (hasColumn.equals(subStatement.getPredicate()))
                 subItem = buildItem(model, subStatement.getResource(), "Column");
+            else if (hasJSONContent.equals(subStatement.getPredicate()))
+                subItem = buildItem(model, subStatement.getResource(), "JSON Content");
             else if (hasJSONField.equals(subStatement.getPredicate()))
                 subItem = buildItem(model, subStatement.getResource(), "JSON Field");
 
