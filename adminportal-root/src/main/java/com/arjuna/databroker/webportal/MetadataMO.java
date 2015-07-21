@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import com.arjuna.databroker.webportal.comms.MetadataClient;
 import com.arjuna.databroker.webportal.tree.AbstractTreeNode;
 import com.arjuna.databroker.webportal.tree.DataSourceTreeNode;
+import com.arjuna.databroker.webportal.tree.JSONDocumentTreeNode;
 import com.arjuna.databroker.webportal.tree.WorkbookTreeNode;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -152,9 +153,10 @@ public class MetadataMO implements Serializable
                 _model.read(reader, null);
                 reader.close();
 
-                Property rdfTypeProperty    = _model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
-                Property dataSourceProperty = _model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
-                Property workbookProperty   = _model.getProperty("http://rdfs.arjuna.com/xssf#", "Workbook");
+                Property rdfTypeProperty      = _model.getProperty("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "type");
+                Property dataSourceProperty   = _model.getProperty("http://rdfs.arjuna.com/datasource#", "DataSource");
+                Property workbookProperty     = _model.getProperty("http://rdfs.arjuna.com/xssf#", "Workbook");
+                Property jsonDocumentProperty = _model.getProperty("http://rdfs.arjuna.com/json#", "Document");
 
                 _rootNodes.clear();
 
@@ -170,6 +172,14 @@ public class MetadataMO implements Serializable
                 {
                     Statement statement = workbookStatements.nextStatement();
                     _rootNodes.add(new WorkbookTreeNode(_model, statement.getSubject()));
+                }
+                _errorMessage = null;
+
+                StmtIterator documentStatements = _model.listStatements(null, rdfTypeProperty, jsonDocumentProperty);
+                while (documentStatements.hasNext())
+                {
+                    Statement statement = documentStatements.nextStatement();
+                    _rootNodes.add(new JSONDocumentTreeNode(_model, statement.getSubject()));
                 }
                 _errorMessage = null;
             }
