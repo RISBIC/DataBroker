@@ -1,4 +1,4 @@
-<h1>My Publication Agreements</h1>
+<h1>My Current Publication Agreements</h1>
 <hr>
 <ul class="list-unstyled licences" ng-init="getLicences()">
   <li ng-repeat="licence in licences | offset: currentPage*itemsPerPage | limitTo: itemsPerPage track by licence.id" ui-sref="licence({licenceId: licence.id})" class="clearfix licence-summary">

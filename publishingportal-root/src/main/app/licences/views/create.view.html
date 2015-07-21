@@ -1,13 +1,9 @@
 <section class="licence-wizard">
-  <div class="panel panel-default" ng-show="$state.current.name === 'create.templates'">
-    <div class="panel-body">
-      Choose an appropirate agreement template for the data you wish to publish
-    </div>
+  <div class="well" ng-show="$state.current.name === 'create.templates'">
+    Choose an appropriate agreement template for the data you wish to publish
   </div>
-  <div class="panel panel-default" ng-show="$state.current.name === 'create.template'">
-    <div class="panel-body">
-      Complete the form to create a new agreement. Please ensure all fields marked as * have been completed correctly.
-    </div>
+  <div class="well" ng-show="$state.current.name === 'create.template'">
+    Complete the form to create a new agreement. Please ensure all fields marked as * have been completed correctly.
   </div>
   <hr>
   <div ui-view=""></div>
