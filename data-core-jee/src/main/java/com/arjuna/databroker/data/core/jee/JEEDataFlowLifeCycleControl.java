@@ -37,6 +37,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
 {
     private static final Logger logger = Logger.getLogger(JEEDataFlowLifeCycleControl.class.getName());
 
+    @Override
     public void recreateDataFlows()
     {
         logger.log(Level.FINE, "recreateDataFlows");
@@ -57,7 +58,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
                     {
                         DataFlow dataFlow = recreateDataFlow(dataFlowEntity);
                         if (dataFlow != null)
-                            _dataFlowInventory.addDataFlow(recreateDataFlow(dataFlowEntity));
+                            _dataFlowInventory.addDataFlow(dataFlow);
                     }
                     else
                     {
@@ -81,6 +82,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T extends DataFlow> T createDataFlow(String name, Map<String, String> metaProperties, Map<String, String> properties)
         throws InvalidNameException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
@@ -114,6 +116,7 @@ public class JEEDataFlowLifeCycleControl implements DataFlowLifeCycleControl
         }
     }
 
+    @Override
     public Boolean removeDataFlow(DataFlow dataFlow)
     {
         if (logger.isLoggable(Level.FINE))
