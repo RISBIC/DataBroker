@@ -29,6 +29,7 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
     /**
      * Add named data provider to referrer data consumer.
      *
+     * @param <N> template of name class
      * @param name of the named data provider
      */
     public <N> void addReferredTo(N name);
@@ -36,6 +37,7 @@ public interface ReferrerDataConsumer<T> extends DataConsumer<T>
     /**
      * Remove named data provider from referrer data consumer.
      *
+     * @param <N> template of name class
      * @param name of the named data provider
      */
     public <N> void removeReferredTo(N name);
