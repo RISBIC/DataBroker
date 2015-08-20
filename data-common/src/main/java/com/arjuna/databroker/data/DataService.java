@@ -21,6 +21,7 @@ public interface DataService extends DataFlowNode
     /**
      * Returns the data consumer, of the specified data class, of the data service.
      *
+     * @param <T> template of data consumer returned
      * @param dataClass the required data class
      * @return the data consumer, of the specified data class, of the data service
      */
@@ -36,6 +37,7 @@ public interface DataService extends DataFlowNode
     /**
      * Returns the data provider, of the specified data class, of the data service.
      *
+     * @param <T> template of data provider returned
      * @param dataClass the required data class
      * @return the data provider, of the specified data class, of the data service
      */

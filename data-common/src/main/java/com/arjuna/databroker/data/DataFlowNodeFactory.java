@@ -53,6 +53,7 @@ public interface DataFlowNodeFactory
     /**
      * Returns the list of meta property names required.
      *
+     * @param <T> template of data flow node returned
      * @param dataFlowNodeClass the class of the data flow node
      * @return the list of meta property names required
      * @throws InvalidClassException thrown if the value of data flow node class is invalid
@@ -63,6 +64,7 @@ public interface DataFlowNodeFactory
     /**
      * Returns the list of property names required.
      *
+     * @param <T> template of data flow node returned
      * @param dataFlowNodeClass the class of the data flow node
      * @param metaProperties the meta properties required to obtain the property names
      * @return the list of property names required
@@ -76,6 +78,7 @@ public interface DataFlowNodeFactory
     /**
      * Returns a created data flow node.
      *
+     * @param <T> template of data flow node returned
      * @param name the intended name of the data flow node
      * @param dataFlowNodeClass the class of the data flow node
      * @param metaProperties the meta properties required to create the data flow node

@@ -21,6 +21,7 @@ public interface DataFlowNodeInventory
     /**
      * Returns the data flow nodes within the data flow node inventory, of the specified data class
      *
+     * @param <T> template of data flow node returned
      * @param dataClass the required data class by the data flow node
      * @return the data flow nodes within the data flow node inventory, of the specified data class
      */
@@ -37,6 +38,7 @@ public interface DataFlowNodeInventory
     /**
      * Returns a named data flow node, if supports a the specified class, if it is within the data flow node inventory.
      *
+     * @param <T> template of data flow node returned
      * @param name the name of the desired data flow node
      * @param dataClass the required data class by the data flow node
      * @return the data flow node
