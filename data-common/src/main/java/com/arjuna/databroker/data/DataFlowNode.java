@@ -22,6 +22,8 @@ public interface DataFlowNode
      * Sets the data flow associated with the data flow node.
      *
      * @param dataFlow the data flow to be associated with the data flow node
+     * @throws IllegalStateException if data flow node is not in a state in which its data flow can be set
+     * @throws InvalidDataFlowException if data flow is not valid
      */
     public void setDataFlow(DataFlow dataFlow)
         throws IllegalStateException, InvalidDataFlowException;
@@ -37,6 +39,8 @@ public interface DataFlowNode
      * Sets the name of the data flow node.
      *
      * @param name the name of the data flow node
+     * @throws IllegalStateException if data flow node is not in a state in which its name can be set
+     * @throws InvalidNameException if the name is not valid
      */
     public void setName(String name)
         throws IllegalStateException, InvalidNameException;
@@ -52,6 +56,9 @@ public interface DataFlowNode
      * Sets the properties of the data flow node.
      *
      * @param properties the properties of the data flow node
+     * @throws IllegalStateException if data flow node is not in a state in which its properties can be set
+     * @throws InvalidPropertyException if a property is not valid
+     * @throws MissingPropertyException if a property is missing
      */
     public void setProperties(Map<String, String> properties)
         throws IllegalStateException, InvalidPropertyException, MissingPropertyException;

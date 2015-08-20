@@ -21,6 +21,7 @@ public interface DataSource extends DataFlowNode
     /**
      * Returns the data provider, of the specified data class, of the data source.
      *
+     * @param <T> template of data provider returned
      * @param dataClass the required data class
      * @return the data provider, of the specified data class, of the data source
      */

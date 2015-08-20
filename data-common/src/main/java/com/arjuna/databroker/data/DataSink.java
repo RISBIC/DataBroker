@@ -21,6 +21,7 @@ public interface DataSink extends DataFlowNode
    /**
      * Returns the data consumer, of the specified data class, of the data sink.
      *
+     * @param <T> template of data consumer returned
      * @param dataClass the required data class
      * @return the data consumer, of the specified data class, of the data sink
      */

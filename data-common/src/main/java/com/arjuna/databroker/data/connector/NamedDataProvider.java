@@ -14,6 +14,7 @@ public interface NamedDataProvider<T> extends DataProvider<T>
     /**
      * Gets name associated with the Named Data Provider.
      *
+     * @param <N> template of name class
      * @param nameClass the class of the name required
      *
      * @return name associated with the Named Data Provider

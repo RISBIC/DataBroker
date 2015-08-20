@@ -77,7 +77,7 @@ public class MetadataNodeMO implements Serializable
         _resourceURI = "";
         _title       = "";
         _summary     = "";
-        _details     = ""; 
+        _details     = "";
         _owner       = "";
         _tags        = "";
         _location    = "";
@@ -136,7 +136,7 @@ public class MetadataNodeMO implements Serializable
                 _owner = "";
 
             // TODO: Tags
-	    
+
             if (locationStatement != null)
                 _location = locationStatement.getString();
             else

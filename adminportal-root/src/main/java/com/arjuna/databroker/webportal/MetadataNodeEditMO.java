@@ -207,8 +207,8 @@ public class MetadataNodeEditMO implements Serializable
                     resource.addProperty(hasDetails, _details.trim());
                 if ((_owner != null))
                     resource.addProperty(hasOwner, _owner.trim());
-		if (_tags != null)
-		    for (String tag: _tags.split(";"))
+                if (_tags != null)
+                    for (String tag: _tags.split(";"))
                         resource.addProperty(hasTag, tag.trim());
                 if ((_location != null))
                     resource.addProperty(hasLocation, _location.trim());

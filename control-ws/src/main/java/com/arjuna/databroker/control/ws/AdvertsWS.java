@@ -412,7 +412,7 @@ public class AdvertsWS
             logger.log(Level.WARNING, "Failed to load 'knownclildproperties.conf'", throwable);
         }
     }
-    
+
     private String[] loadPropertyLines(File file)
     {
         try
