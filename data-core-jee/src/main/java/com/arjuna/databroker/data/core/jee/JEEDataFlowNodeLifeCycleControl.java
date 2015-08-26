@@ -212,9 +212,14 @@ public class JEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycleCon
                         }
                         catch (Throwable throwable)
                         {
-                            logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
-                            if (logger.isLoggable(Level.FINE))
-                                logger.log(Level.FINE, "Exception:", throwable);
+                            if (throwable.getCause() != null)
+                                logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed", throwable);
+                            else
+                            {
+                                logger.log(Level.WARNING, "Life cycle operation \"" + method.getName() + "\" failed: " + throwable.toString());
+                                if (logger.isLoggable(Level.FINE))
+                                    logger.log(Level.FINE, "Exception:", throwable);
+                            }
                         }
                     }
                     else
