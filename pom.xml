@@ -174,7 +174,7 @@
             <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
-                <version>7.6.Final</version>
+                <version>7.7.Final</version>
             </plugin>
 
             <plugin>
