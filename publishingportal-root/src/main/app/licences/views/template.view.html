@@ -47,10 +47,10 @@
         <input ng-if="field.type == 'range'" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" min="{{field.optionvalues[0].value}}" max="{{field.optionvalues[1].value}}" ng-model="field.value">
 
         <!-- Render Text, Number etc -->
-        <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range' && field.type != 'date'" datepicker-popup=="yyyy/MM/dd" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+        <input ng-if="field.type != 'select' && field.type != 'checkbox' && field.type != 'textarea' && field.type != 'radio' && field.type != 'range' && field.type != 'date'" class="form-control" type="{{field.type}}" name="{{field.name}}" value="{{field.value}}" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
 
         <!-- Render Date -->
-        <input ng-if="field.type === 'date'" ng-init="addDatePicker()" class="inactive-date-picker form-control" type="text" name="{{field.name}}" value="{{field.value}}" datepicker-append-to-body="true" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
+        <input ng-if="field.type === 'date'" ng-init="addDatePicker()" class="inactive-date-picker form-control" type="text" name="{{field.name}}" value="{{field.value}}" datepicker-append-to-body="true" datepicker-popup=="yyyy/MM/dd" ng-model="field.value" ng-required="field.required" ng-pattern="field.validations[0].regex">
 
 
         <i class="fa fa-check"></i>
