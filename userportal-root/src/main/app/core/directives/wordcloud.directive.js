@@ -16,8 +16,8 @@ angular.module('core').directive('wordCloud',  function ($timeout, $log, $window
                 var fill = d3.scale.ordinal()
                   .range(["#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#a50f15","#67000d"]);
 
-                var w = 500,
-                    h = 250;
+                var w = 550,
+                    h = 360;
 
                 var words = [],
                     max,

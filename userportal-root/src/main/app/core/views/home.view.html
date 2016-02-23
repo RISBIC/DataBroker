@@ -7,19 +7,32 @@
         <a ui-sref="listings({query: searchString})" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></a>
       </span>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 30px;">
       <div class="col-md-6">
-        <h2>Available Data</h2>
-        <ul class="list-unstyled">
-          <li ng-repeat="listing in rootListings">
-            <h4>
-              <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">{{listing.name}}</a>
-            </h4>
-          </li>
-        </ul>
+        <div ng-controller="TagsGroupsController as tagsGroupsCtrl">
+            <div ng-repeat="tagsGroup in tagsGroupsCtrl.tagsGroups" class="col-sm-4">
+                <a ng-click="tagsGroupsCtrl.doSelectTags(tagsGroup.tags)" class="thumbnail" data-tooltip="tooltip" title="{{tagsGroup.tags}}">
+                    <img src="{{tagsGroup.imageURL}}" alt="{{tagsGroup.tags}}">
+                    <div class="caption text-center">{{tagsGroup.tags}}</div>
+                </a>
+            </div>
+        </div>
       </div>
       <div class="col-md-6">
-        <div id="word-cloud" class="word-cloud" word-cloud trends="trends" style="margin: 40px auto;"></div>
+        <div id="word-cloud" class="word-cloud" word-cloud trends="trends" style="margin: 0px auto;"></div>
+      </div>
+
+      <div class="col-md-12">
+        <h2>Available Data</h2>
+        <div class="row">
+          <ul class="list-unstyled">
+            <li ng-repeat="listing in rootListings" class="col-md-6">
+              <h4>
+                <a ui-sref="listing({listingId: listing.metadataId, metadataPath: listing.metadataPath})">{{listing.name}}</a>
+              </h4>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
