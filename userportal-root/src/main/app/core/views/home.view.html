@@ -11,9 +11,9 @@
       <div class="col-md-6">
         <div ng-controller="TagsGroupsController as tagsGroupsCtrl">
             <div ng-repeat="tagsGroup in tagsGroupsCtrl.tagsGroups" class="col-sm-4">
-                <a ng-click="tagsGroupsCtrl.doSelectTags(tagsGroup.tags)" class="thumbnail" data-tooltip="tooltip" title="{{tagsGroup.tags}}">
-                    <img src="{{tagsGroup.imageURL}}" alt="{{tagsGroup.tags}}">
-                    <div class="caption text-center">{{tagsGroup.tags}}</div>
+                <a ng-click="tagsGroupsCtrl.doSelectTags(tagsGroup.tags)" class="thumbnail" data-tooltip="tooltip" title="{{tagsGroup.label}}">
+                    <img src="{{tagsGroup.imageURL}}" alt="{{tagsGroup.label}}">
+                    <div class="caption text-center">{{tagsGroup.label}}</div>
                 </a>
             </div>
         </div>
