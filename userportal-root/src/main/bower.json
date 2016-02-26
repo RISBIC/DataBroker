@@ -1,5 +1,6 @@
 {
   "name": "main",
+  "appPath": "app",
   "version": "0.0.0",
   "dependencies": {
     "angular": "^1.3.0",
@@ -28,7 +29,15 @@
   "overrides": {
     "amd-d3-cloud": {
       "main": "./d3.layout.cloud.js"
+    },
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css"
+      ]
     }
   },
-  "appPath": "app"
+  "resolutions": {
+    "angular": "~1.3.0"
+  }
 }

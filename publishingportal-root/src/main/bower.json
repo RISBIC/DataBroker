@@ -1,5 +1,6 @@
 {
   "name": "main",
+  "appPath": "app",
   "version": "0.0.0",
   "dependencies": {
     "angular": "^1.3.0",
@@ -27,5 +28,15 @@
     "angular-mocks": "~1.3.0",
     "angular-scenario": "~1.3.0"
   },
-  "appPath": "app"
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css"
+      ]
+    }
+  },
+  "resolutions": {
+    "angular": "~1.3.0"
+  }
 }
