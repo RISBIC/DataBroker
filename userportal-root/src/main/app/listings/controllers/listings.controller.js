@@ -50,7 +50,7 @@ angular.module('listings').controller('ListingsController', ['$scope', '$state',
             if (item.tags[i].toLowerCase() === searchString.toLowerCase()){
               item.score = 1;
               filtered.push(item);
-              i = items.tags.length;
+              i = item.tags.length;
             }
           }
         }
